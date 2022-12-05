@@ -2,7 +2,7 @@
     <div class="container-{{ section.id }}">
         {% paginate collections by section.settings.number-of-categories %}
             {% for collection in collections %}
-                <div class="collection-card">
+                <div class="collection-card-{{ section.id }}">
                     <img src="{{ collection.image | img_url: "master" }}">
                     <div class="collection-title-{{ section.id }}">{{ collection.title }}</div>
                     <div class="url-container-{{ section.id }}">
@@ -26,7 +26,7 @@
         gap: 5px;
         width: {{ section.settings.container-width }}%;
     }
-    .collection-card {
+    .collection-card-{{ section.id }} {
         max-width: 668px;
         max-height: 850px;
     }

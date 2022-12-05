@@ -1,10 +1,12 @@
 {
-    "sections": {
-      "first": {
-        "type": "collection-four-choices"
+  "sections": {
+    "first": {
+      "type": "collection-four-choices",
+      "settings": {
       }
-    },
-    "order": [
-      "first"
-    ]
-  }
+    }
+  },
+  "order": [
+    "first"
+  ]
+}

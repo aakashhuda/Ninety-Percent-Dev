@@ -4,9 +4,11 @@
             {% for collection in collections %}
                 <div class="collection-card-{{ section.id }}">
                     <img src="{{ collection.image | img_url: "master" }}">
-                    <div class="collection-title-{{ section.id }}">{{ collection.title }}</div>
-                    <div class="url-container-{{ section.id }}">
-                        <a href="{{ collection.url }}" class="btn-{{ section.id }}">{{ section.settings.button-text }}</a>
+                    <div>
+                        <div class="collection-title-{{ section.id }}">{{ collection.title }}</div>
+                        <div class="url-container-{{ section.id }}">
+                            <a href="{{ collection.url }}" class="btn-{{ section.id }}">{{ section.settings.button-text }}</a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -44,12 +46,49 @@
         padding-bottom: 7px;
         border-bottom: 1px solid #2b2724;
     }
+    {% if section.settings.design-pattern == 'style2' %}
+        .collection-card-{{ section.id }} {
+            position: relative;
+        }
+        .collection-title-{{ section.id }}, .url-container-{{ section.id }} {
+            position: absolute;
+        }
+        .collection-title-{{ section.id }} {
+            color: white;
+            bottom: 50%;
+            right: 50%;
+        }
+        .url-container-{{ section.id }}{
+            bottom: 44%;
+            right: 50%;
+        } 
+        a.btn-{{ section.id }} {
+            color: white;
+            border-bottom-color: white;
+        }
+    {% endif %}
 </style>
 
 {% schema %}
 {
     "name": "Collections Double Item",
     "settings": [
+        {
+            "type": "select",
+            "id": "design-pattern",
+            "label": "Design Pattern",
+            "options": [
+              {
+                "value": "style1",
+                "label": "Style 1"
+              },
+              {
+                "value": "style2",
+                "label": "Style 2"
+              }
+            ],
+            "default": "style1"
+        },
         {
             "type": "range",
             "id": "number-of-categories",

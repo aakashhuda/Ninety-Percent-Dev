@@ -1,10 +1,10 @@
 <section id="collection-wrapper-{{ section.id }}">
     <div class="container-{{ section.id }}">
         {% paginate collections by section.settings.number-of-categories %}
-            {% for collection in collections %}
-                <a href="{{ collection.url }}" class="collection-card-{{ section.id }}">
-                    <img src="{{ collection.image | img_url: "master" }}">
-                    <div class="collection-title-{{ section.id }}">{{ collection.title }}</div>
+            {% for link in linklists["catalog"].links %}
+                <a href="{{ link.url }}" class="collection-card-{{ section.id }}">
+                    <img src="{{ link.image | img_url: "master" }}">
+                    <div class="collection-title-{{ section.id }}">{{ link.title }}</div>
 
                 </a>
             {% endfor %}

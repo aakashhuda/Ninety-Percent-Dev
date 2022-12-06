@@ -1,40 +1,10 @@
 {
   "sections": {
-    "collection-header": {
-      "type": "collection-header",
-      "settings": {
-      }
-    },
     "main-collection": {
       "type": "main-collection-dev"
-    },
-    "promo-grid": {
-      "type": "promo-grid",
-      "blocks": {
-        "banner": {
-          "type": "banner",
-          "settings": {
-            "color_tint": "#E95454"
-          }
-        },
-        "advanced": {
-          "type": "advanced",
-          "settings": {
-          }
-        }
-      },
-      "block_order": [
-        "banner",
-        "advanced"
-      ],
-      "settings": {
-        "space_below": false
-      }
     }
   },
   "order": [
-    "collection-header",
-    "promo-grid",
     "main-collection"
   ]
 }

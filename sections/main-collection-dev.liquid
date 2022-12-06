@@ -1,11 +1,61 @@
 <section id="wrapper-{{ section.id }}">
-    <div class="product-container-{{ section.id }}">
+    <div class="product-collection-{{ section.id }}">
         {% for collection in collections %}
             {% if collection.all_products_count > 0 %}
                 {% for product in collection.products %}
-                    {{ product.title }}
+                    <a href="{{ product.url }}" class="product-container-{{ product.id }}">
+                        {% if product.images.size > 0 %}
+                            <img src="{{ product.images[0] | img_url: 'master' }}">
+                        {% else %}
+                            {{ 'product-1' | placeholder_svg_tag }}
+                        {% endif %}
+                        <div class="product-info-{{ product.id }}">
+                            <div class="title-vendor-{{ product.id }}">
+                                <div class="title-{{ product.id }}">
+                                    {{ product.title }}
+                                </div>
+                                <div class="vendor-{{ product.id }}">
+                                    {{ product.vendor }}
+                                </div>
+                            </div>
+                            <div class="price-{{ product.id }}">
+                                {{ product.price | money }}
+                            </div>
+                        </div>
+                    </a>
                 {% endfor %}
             {% endif %}
         {% endfor %}
     </div>
 </section>
+
+<style>
+    #wrapper-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+    }
+    .product-collection-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 5px;
+        max-width: 1500px;
+    }
+    {% for collection in collections %}
+        {% if collection.all_products_count > 0 %}
+            {% for product in collection.products %}
+                .product-container-{{ product.id }} {
+                    margin-bottom: 100px;
+                }
+                .product-container-{{ product.id }} img {
+                    max-width: 465px;
+                    max-height: 610px;
+                }
+                .product-info-{{ product.id }} {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</style>

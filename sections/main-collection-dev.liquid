@@ -4,11 +4,15 @@
             {% if collection.all_products_count > 0 %}
                 {% for product in collection.products %}
                     <a href="{{ product.url }}" class="product-container-{{ product.id }}">
-                        {% if product.images.size > 0 %}
-                            <img src="{{ product.images[0] | img_url: 'master' }}">
-                        {% else %}
-                            {{ 'product-1' | placeholder_svg_tag }}
-                        {% endif %}
+                        <div class="image-container-{{ product.id }}">
+                            {% if product.images.size > 0 %}
+                                <img src="{{ product.images[0] | img_url: 'master' }}">
+                                <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
+                                <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
+                            {% else %}
+                                {{ 'product-1' | placeholder_svg_tag }}
+                            {% endif %}
+                        </div>
                         <div class="product-info-{{ product.id }}">
                             <div class="title-vendor-{{ product.id }}">
                                 <div class="title-{{ product.id }}">
@@ -56,7 +60,56 @@
                     justify-content: space-between;
                     padding: 10px 10px;
                 }
+                .image-container-{{ product.id }} {
+                    position: relative;
+                }
+                .arrow-{{ product.id }} {
+                    border: solid black;
+                    border-width: 0 1px 1px 0;
+                    display: none;
+                    padding: 12px;
+                    transition: ease-in-out;
+                }
+                .left-{{ product.id }} {
+                    position: absolute;
+                    transform: rotate(135deg);
+                    top: 45%;
+                    left: 15px;
+                }
+                .right-{{ product.id }} {
+                    position: absolute;
+                    transform: rotate(-45deg);
+                    top: 45%;
+                    right: 15px;
+                }
+                .show-arrow-{{ product.id }} {
+                    display: inline-block;
+                }
             {% endfor %}
         {% endif %}
     {% endfor %}
 </style>
+
+<script>
+    // event for showing icons
+    {% for collection in collections %}
+        {% if collection.all_products_count > 0 %}
+            {% for product in collection.products %}
+                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", ()=>{
+                    var arrowLeft = document.querySelector(".left-{{ product.id }}")
+                    var arrowRight = document.querySelector(".right-{{ product.id }}")
+
+                    arrowLeft.classList.add("show-arrow-{{ product.id }}")
+                    arrowRight.classList.add("show-arrow-{{ product.id }}")
+                })
+                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", ()=>{
+                    var arrowLeft = document.querySelector(".left-{{ product.id }}")
+                    var arrowRight = document.querySelector(".right-{{ product.id }}")
+
+                    arrowLeft.classList.remove("show-arrow-{{ product.id }}")
+                    arrowRight.classList.remove("show-arrow-{{ product.id }}")
+                })
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+</script>

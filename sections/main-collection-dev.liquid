@@ -1,57 +1,81 @@
 <section id="wrapper-{{ section.id }}">
-    <div class="product-collection-{{ section.id }}">
-        {% for collection in collections %}
-            {% if collection.all_products_count > 0 %}
-                {% for product in collection.products %}
-                    <div class="product-container-{{ product.id }}">
-                        <div class="image-container-{{ product.id }}">
-                            {% if product.images.size > 0 %}
-                                <ul class="image-list-{{ product.id }}">
-                                    {% for image in product.images %}
-                                        {% if forloop.index == 1 %}
-                                            <li class="image-item-{{ product.id }} active"><img src="{{ image | img_url: 'master' }}"></li>
-                                        {% else %}    
-                                            <li class="image-item-{{ product.id }}"><img src="{{ image | img_url: 'master' }}"></li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                                <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
-                                <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
-                            {% else %}
-                                {{ 'product-1' | placeholder_svg_tag }}
-                            {% endif %}
-                        </div>
-                        <div class="product-info-{{ product.id }}">
-                            <div class="title-vendor-{{ product.id }}">
-                                <div class="title-{{ product.id }}">
-                                    {{ product.title }}
+    {% for collection in collections %}
+        {% if collection.all_products_count > 0 %}
+            {% paginate collection.products by 4 %}
+                <div class="product-collection-{{ section.id }}">
+                    {% for product in collection.products %}
+                        <div class="product-container-{{ product.id }}">
+                            <div class="image-container-{{ product.id }}">
+                                {% if product.images.size > 0 %}
+                                    <ul class="image-list-{{ product.id }}">
+                                        {% for image in product.images %}
+                                            {% if forloop.index == 1 %}
+                                                <li class="image-item-{{ product.id }} active"><img src="{{ image | img_url: 'master' }}"></li>
+                                            {% else %}    
+                                                <li class="image-item-{{ product.id }}"><img src="{{ image | img_url: 'master' }}"></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
+                                    <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
+                                {% else %}
+                                    {{ 'product-1' | placeholder_svg_tag }}
+                                {% endif %}
+                            </div>
+                            <div class="product-info-{{ product.id }}">
+                                <div class="title-vendor-{{ product.id }}">
+                                    <div class="title-{{ product.id }}">
+                                        {{ product.title }}
+                                    </div>
+                                    <div class="vendor-{{ product.id }}">
+                                        {{ product.vendor }}
+                                    </div>
                                 </div>
-                                <div class="vendor-{{ product.id }}">
-                                    {{ product.vendor }}
+                                <div class="price-{{ product.id }}">
+                                    {{ product.price | money }}
                                 </div>
                             </div>
-                            <div class="price-{{ product.id }}">
-                                {{ product.price | money }}
-                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endfor %}
-    </div>
+                    {% endfor %}
+                </div>
+                <div class="pagination-{{ section.id }}">
+                    {% for part in paginate.parts %}
+                        {% if part.is_link %}
+                            {{ part.title | link_to: part.url }}
+                        {% else %}
+                            <span class="current-page-{{ section.id }}">{{ part.title }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endpaginate %}
+        {% endif %}
+    {% endfor %}
+    
 </section>
 
 <style>
     #wrapper-{{ section.id }} {
         display: flex;
         justify-content: center;
+        position: relative;
+    }
+    .pagination-{{ section.id }}{
+        position: absolute;
+        bottom: 0;
     }
     .product-collection-{{ section.id }} {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         flex-wrap: wrap;
         gap: 5px;
         max-width: 1500px;
+    }
+    .current-page-{{ section.id }} {
+        background-color: black;
+        color: white;
+        border: 1px solid black;
+        padding: 5px 9px;
+        border-radius: 100%;
     }
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}

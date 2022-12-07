@@ -106,6 +106,10 @@
                     top: 45%;
                     right: 15px;
                 }
+                .left-{{ product.id }}.disabled, .right-{{ product.id }}.disabled {
+                    border-color: #dddddd;
+                    cursor: none;
+                }
                 .show-arrow-{{ product.id }} {
                     display: inline-block;
                 }
@@ -115,11 +119,9 @@
 </style>
 
 <script>
-    // function for changing class
-    function changeNextImage(productId) {
-        var id = productId
-        var images = document.querySelectorAll(`.image-item-${id}`)
-        console.log(images.length)
+    // function to find index of active class
+    function findActvieIndex(productId){
+        var images = document.querySelectorAll(`.image-item-${productId}`)
         var index;
         for (var i=0; i < images.length; i++){
             if( images[i].classList.contains("active")){
@@ -127,58 +129,103 @@
                 break
             }
         }
+        return {index: index, images: images}
+    }
+    // function for hiding cursor when images are not available
+    function hideCursor(productId, index, imageList, event){
+        var increaseBy = 1
+        var leftIcon = document.querySelector(`.left-${productId}`)
+        var rightIcon = document.querySelector(`.right-${productId}`)
+
+        // checking if the event is not a click event
+        if (event.type != "click"){
+            if (index+1 == imageList.length){
+                rightIcon.classList.add("disabled")
+                leftIcon.classList.remove("disabled")
+            }
+            if (index == 0){
+                leftIcon.classList.add("disabled")
+                rightIcon.classList.remove("disabled")
+            }
+        }
+        // checking if the event is an click event
+        else if(event.type == "click"){
+            if (event.target.classList.contains(`right-${productId}`)){
+                var diff = imageList.length - index
+                if (diff <= 2){
+                    rightIcon.classList.add("disabled")
+                }
+                leftIcon.classList.remove("disabled")
+            }
+            else if (event.target.classList.contains(`left-${productId}`)){
+                if (index <= 1){
+                    leftIcon.classList.add("disabled")
+                }
+                rightIcon.classList.remove("disabled")
+            }
+        }
+    }
+    // function for changing class
+    function changeNextImage(productId, e) {
+        var data = findActvieIndex(productId)
+        var index = data.index
+        var images = data.images
+
         if (images[index + 1] !== undefined){
             images[index].classList.remove("active")
             images[index+1].classList.add("active")
         }
+        hideCursor(productId, index, images, e)
     }
-    function changePreviousImage(productId) {
-        var id = productId
-        var images = document.querySelectorAll(`.image-item-${id}`)
-        console.log(images.length)
-        var index;
-        for (var i=0; i < images.length; i++){
-            if( images[i].classList.contains("active")){
-                index = i
-                break
-            }
-        }
+    function changePreviousImage(productId, e) {
+        var data = findActvieIndex(productId)
+        var index = data.index
+        var images = data.images
+
         if (images[index - 1] !== undefined){
             images[index].classList.remove("active")
             images[index-1].classList.add("active")
         }
+        hideCursor(productId, index, images, e)
     }
     // event for showing icons
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
             {% for product in collection.products %}
                 // hover effect for mouseover
-                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", ()=>{
+                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", (e)=>{
                     var arrowLeft = document.querySelector(".left-{{ product.id }}")
                     var arrowRight = document.querySelector(".right-{{ product.id }}")
 
                     arrowLeft.classList.add("show-arrow-{{ product.id }}")
                     arrowRight.classList.add("show-arrow-{{ product.id }}")
+
+                    var data = findActvieIndex({{ product.id }})
+                    hideCursor({{ product.id }}, data.index, data.images, e)
                 })
                 // hover effect for mouseleave
-                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", ()=>{
+                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", (e)=>{
                     var arrowLeft = document.querySelector(".left-{{ product.id }}")
                     var arrowRight = document.querySelector(".right-{{ product.id }}")
 
                     arrowLeft.classList.remove("show-arrow-{{ product.id }}")
                     arrowRight.classList.remove("show-arrow-{{ product.id }}")
+
+                    var data = findActvieIndex({{ product.id }})
+                    hideCursor({{ product.id }}, data.index, data.images, e)
                 })
+
                 // slider button changing to right
                 document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
-                    arrow.addEventListener('click', ()=>{
-                        changeNextImage({{ product.id }})
+                    arrow.addEventListener('click', (e)=>{
+                        changeNextImage({{ product.id }}, e)
                     })
                 })
 
                 // slider button changing to previous
                 document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
-                    arrow.addEventListener('click', ()=>{
-                        changePreviousImage({{ product.id }})
+                    arrow.addEventListener('click', (e)=>{
+                        changePreviousImage({{ product.id }}, e)
                     })
                 })
             {% endfor %}

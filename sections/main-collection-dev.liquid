@@ -1,7 +1,7 @@
 <section id="wrapper-{{ section.id }}">
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
-            {% paginate collection.products by 4 %}
+            {% paginate collection.products by { section.settings.products-per-page } %}
                 <div class="product-collection-{{ section.id }}">
                     {% for product in collection.products %}
                         <div class="product-container-{{ product.id }}">
@@ -53,6 +53,24 @@
     
 </section>
 
+{% schema %}
+    {
+        "name": "Collection All",
+        "settings": [
+            {
+                "type": "range",
+                "id": "products-per-page",
+                "unit": "num",
+                "min": 3,
+                "max": 18,
+                "default": 12,
+                "step": 3,
+                "label": "Products Per Page"
+            }
+        ]
+    }
+{% endschema %}
+
 <style>
     #wrapper-{{ section.id }} {
         display: flex;
@@ -81,11 +99,14 @@
         {% if collection.all_products_count > 0 %}
             {% for product in collection.products %}
                 .product-container-{{ product.id }} {
+                    width: 33%;
                     margin-bottom: 100px;
                 }
                 .product-container-{{ product.id }} img {
+                    width: 100%
+                    {% comment %} width: 100%;
                     max-width: 465px;
-                    max-height: 610px;
+                    max-height: 610px; {% endcomment %}
                 }
                 .product-info-{{ product.id }} {
                     display: flex;

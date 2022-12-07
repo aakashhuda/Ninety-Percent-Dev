@@ -4,7 +4,7 @@
             {% paginate collection.products by { section.settings.products-per-page } %}
                 <div class="product-collection-{{ section.id }}">
                     {% for product in collection.products %}
-                        <div class="product-container-{{ product.id }}">
+                        <a href="{{ product.url }}"" class="product-container-{{ product.id }}">
                             <div class="image-container-{{ product.id }}">
                                 {% if product.images.size > 0 %}
                                     <ul class="image-list-{{ product.id }}">
@@ -35,7 +35,7 @@
                                     {{ product.price | money }}
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     {% endfor %}
                 </div>
                 <div class="pagination-{{ section.id }}">
@@ -136,6 +136,7 @@
                     padding: 12px;
                     transition: ease-in-out;
                     cursor: pointer;
+                    z-index: 100000;
                 }
                 .left-{{ product.id }} {
                     position: absolute;

@@ -3,10 +3,18 @@
         {% for collection in collections %}
             {% if collection.all_products_count > 0 %}
                 {% for product in collection.products %}
-                    <a href="{{ product.url }}" class="product-container-{{ product.id }}">
+                    <div class="product-container-{{ product.id }}">
                         <div class="image-container-{{ product.id }}">
                             {% if product.images.size > 0 %}
-                                <img src="{{ product.images[0] | img_url: 'master' }}">
+                                <ul class="image-list-{{ product.id }}">
+                                    {% for image in product.images %}
+                                        {% if forloop.index == 1 %}
+                                            <li class="image-item-{{ product.id }} active"><img src="{{ image | img_url: 'master' }}"></li>
+                                        {% else %}    
+                                            <li class="image-item-{{ product.id }}"><img src="{{ image | img_url: 'master' }}"></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
                                 <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
                                 <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
                             {% else %}
@@ -26,7 +34,7 @@
                                 {{ product.price | money }}
                             </div>
                         </div>
-                    </a>
+                    </div>
                 {% endfor %}
             {% endif %}
         {% endfor %}
@@ -63,12 +71,28 @@
                 .image-container-{{ product.id }} {
                     position: relative;
                 }
+                .image-list-{{ product.id }} {
+                    list-style: none;
+                    position: relative;
+                    overflow: hidden;
+                    margin: 0;
+                }
+                .image-item-{{ product.id }} {
+                    position: absolute;
+                    left: 50000px;
+                }
+                .image-item-{{ product.id }}.active {
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                }
                 .arrow-{{ product.id }} {
                     border: solid black;
                     border-width: 0 1px 1px 0;
                     display: none;
                     padding: 12px;
                     transition: ease-in-out;
+                    cursor: pointer;
                 }
                 .left-{{ product.id }} {
                     position: absolute;
@@ -91,10 +115,44 @@
 </style>
 
 <script>
+    // function for changing class
+    function changeNextImage(productId) {
+        var id = productId
+        var images = document.querySelectorAll(`.image-item-${id}`)
+        console.log(images.length)
+        var index;
+        for (var i=0; i < images.length; i++){
+            if( images[i].classList.contains("active")){
+                index = i
+                break
+            }
+        }
+        if (images[index + 1] !== undefined){
+            images[index].classList.remove("active")
+            images[index+1].classList.add("active")
+        }
+    }
+    function changePreviousImage(productId) {
+        var id = productId
+        var images = document.querySelectorAll(`.image-item-${id}`)
+        console.log(images.length)
+        var index;
+        for (var i=0; i < images.length; i++){
+            if( images[i].classList.contains("active")){
+                index = i
+                break
+            }
+        }
+        if (images[index - 1] !== undefined){
+            images[index].classList.remove("active")
+            images[index-1].classList.add("active")
+        }
+    }
     // event for showing icons
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
             {% for product in collection.products %}
+                // hover effect for mouseover
                 document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", ()=>{
                     var arrowLeft = document.querySelector(".left-{{ product.id }}")
                     var arrowRight = document.querySelector(".right-{{ product.id }}")
@@ -102,12 +160,26 @@
                     arrowLeft.classList.add("show-arrow-{{ product.id }}")
                     arrowRight.classList.add("show-arrow-{{ product.id }}")
                 })
+                // hover effect for mouseleave
                 document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", ()=>{
                     var arrowLeft = document.querySelector(".left-{{ product.id }}")
                     var arrowRight = document.querySelector(".right-{{ product.id }}")
 
                     arrowLeft.classList.remove("show-arrow-{{ product.id }}")
                     arrowRight.classList.remove("show-arrow-{{ product.id }}")
+                })
+                // slider button changing to right
+                document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
+                    arrow.addEventListener('click', ()=>{
+                        changeNextImage({{ product.id }})
+                    })
+                })
+
+                // slider button changing to previous
+                document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
+                    arrow.addEventListener('click', ()=>{
+                        changePreviousImage({{ product.id }})
+                    })
                 })
             {% endfor %}
         {% endif %}

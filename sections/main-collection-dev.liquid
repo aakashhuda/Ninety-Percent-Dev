@@ -337,46 +337,48 @@
     // event for showing icons
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
-            {% for product in collection.products %}
-                // hover effect for mouseover
-                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", (e)=>{
-                    var arrowLeft = document.querySelector(".left-{{ product.id }}")
-                    var arrowRight = document.querySelector(".right-{{ product.id }}")
+            {% paginate collection.products by section.settings.products-per-page %}
+                {% for product in collection.products %}
+                    // hover effect for mouseover
+                    document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", (e)=>{
+                        var arrowLeft = document.querySelector(".left-{{ product.id }}")
+                        var arrowRight = document.querySelector(".right-{{ product.id }}")
 
-                    arrowLeft.classList.add("show-arrow-{{ product.id }}")
-                    arrowRight.classList.add("show-arrow-{{ product.id }}")
+                        arrowLeft.classList.add("show-arrow-{{ product.id }}")
+                        arrowRight.classList.add("show-arrow-{{ product.id }}")
 
-                    var data = findActvieIndex({{ product.id }})
-                    hideCursor({{ product.id }}, data.index, data.images, e)
-                })
-                // hover effect for mouseleave
-                document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", (e)=>{
-                    var arrowLeft = document.querySelector(".left-{{ product.id }}")
-                    var arrowRight = document.querySelector(".right-{{ product.id }}")
-
-                    arrowLeft.classList.remove("show-arrow-{{ product.id }}")
-                    arrowRight.classList.remove("show-arrow-{{ product.id }}")
-
-                    var data = findActvieIndex({{ product.id }})
-                    hideCursor({{ product.id }}, data.index, data.images, e)
-                })
-
-                // slider button changing to right
-                document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
-                    arrow.addEventListener('click', (e)=>{
-                        changeNextImage({{ product.id }}, e)
-                        e.preventDefault()
+                        var data = findActvieIndex({{ product.id }})
+                        hideCursor({{ product.id }}, data.index, data.images, e)
                     })
-                })
+                    // hover effect for mouseleave
+                    document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", (e)=>{
+                        var arrowLeft = document.querySelector(".left-{{ product.id }}")
+                        var arrowRight = document.querySelector(".right-{{ product.id }}")
 
-                // slider button changing to previous
-                document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
-                    arrow.addEventListener('click', (e)=>{
-                        changePreviousImage({{ product.id }}, e)
-                        e.preventDefault()
+                        arrowLeft.classList.remove("show-arrow-{{ product.id }}")
+                        arrowRight.classList.remove("show-arrow-{{ product.id }}")
+
+                        var data = findActvieIndex({{ product.id }})
+                        hideCursor({{ product.id }}, data.index, data.images, e)
                     })
-                })
-            {% endfor %}
+
+                    // slider button changing to right
+                    document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
+                        arrow.addEventListener('click', (e)=>{
+                            changeNextImage({{ product.id }}, e)
+                            e.preventDefault()
+                        })
+                    })
+
+                    // slider button changing to previous
+                    document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
+                        arrow.addEventListener('click', (e)=>{
+                            changePreviousImage({{ product.id }}, e)
+                            e.preventDefault()
+                        })
+                    })
+                {% endfor %}
+            {% endpaginate %}
         {% endif %}
     {% endfor %}
 </script>

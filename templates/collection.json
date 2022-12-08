@@ -3,7 +3,7 @@
     "main-collection": {
       "type": "main-collection-dev",
       "settings": {
-        "products-per-page": 3
+        "products-per-page": 6
       }
     }
   },

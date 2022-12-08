@@ -1,7 +1,10 @@
 {
   "sections": {
     "main-collection": {
-      "type": "main-collection-dev"
+      "type": "main-collection-dev",
+      "settings": {
+        "products-per-page": 3
+      }
     }
   },
   "order": [

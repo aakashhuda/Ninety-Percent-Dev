@@ -1,7 +1,7 @@
 <section id="wrapper-{{ section.id }}">
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
-            {% paginate collection.products by { section.settings.products-per-page } %}
+            {% paginate collection.products by  section.settings.products-per-page %}
                 <div class="product-collection-{{ section.id }}">
                     {% for product in collection.products %}
                         <a href="{{ product.url }}" class="product-container-{{ product.id }}">
@@ -41,11 +41,27 @@
                 <div class="pagination-{{ section.id }}">
                     {% for part in paginate.parts %}
                         {% if part.is_link %}
-                            {{ part.title | link_to: part.url }}
+                            <span class="page-number-{{ section.id }}">{{ part.title | link_to: part.url }}</span>
                         {% else %}
-                            <span class="current-page-{{ section.id }}">{{ part.title }}</span>
+                            <span class="current-page-{{ section.id }} page-number-{{ section.id }}">{{ part.title }}</span>
                         {% endif %}
                     {% endfor %}
+                </div>
+                <div class="pagination-mobile-{{ section.id }}">
+                    {% if paginate.current_page > 1 %}
+                        <a href="{{ paginate.previous.url }}" class="paginate-previous-{{ section.id }}">
+                            <i class="arrow-{{ section.id }} left-{{ section.id }}"></i>
+                            <span class="pagination-text-previous-{{ section.id }}">Previous</span>
+                        </a>
+                    {% else %}
+                        <div></div>
+                    {% endif %}
+
+                    {% if paginate.current_page != paginate.pages %}
+                        <a href="{{ paginate.next.url }}" class="paginate-next-{{ section.id }}">
+                            <span class="pagination-text-next-{{ section.id }}">Next</span> <i class="arrow-{{ section.id }} right-{{ section.id }}"></i>
+                        </a>
+                    {% endif %}
                 </div>
             {% endpaginate %}
         {% endif %}
@@ -61,10 +77,10 @@
                 "type": "range",
                 "id": "products-per-page",
                 "unit": "num",
-                "min": 3,
-                "max": 18,
-                "default": 12,
-                "step": 3,
+                "min": 6,
+                "max": 50,
+                "default": 18,
+                "step": 1,
                 "label": "Products Per Page"
             }
         ]
@@ -82,6 +98,12 @@
         position: absolute;
         bottom: 0;
     }
+    .pagination-mobile-{{ section.id }} {
+        position: absolute;
+        bottom: -50px;
+        display: none;
+        margin-top: 15px;
+    }
     .product-collection-{{ section.id }} {
         display: flex;
         justify-content: flex-start;
@@ -95,6 +117,37 @@
         border: 1px solid black;
         padding: 5px 9px;
         border-radius: 100%;
+    }
+    .paginate-previous-{{ section.id }}, .paginate-next-{{ section.id }} {
+        position: relative;
+        text-transform: uppercase;
+        font-size: 20px;
+        padding: 20px;
+    }
+    .page-number-{{ section.id }} {
+        margin: 0 5px;
+    }
+    .arrow-{{ section.id }} {
+        border: solid black;
+        border-width: 0 1px 1px 0;
+        padding: 8px;
+        cursor: pointer;
+        position: absolute;
+    }
+    .left-{{ section.id }} {
+        transform: rotate(135deg);
+        top: 25px;
+    }
+    .right-{{ section.id }} {
+        transform: rotate(-45deg);
+        top: 25px;
+        right: 20px;
+    }
+    .pagination-text-previous-{{ section.id }} {
+        padding-left: 30px;
+    }
+    .pagination-text-next-{{ section.id }} {
+        padding-right: 30px;
     }
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
@@ -167,6 +220,9 @@
                     }
                 }
                 @media (max-width: 769px){
+                    #wrapper-{{ section.id }} {
+                        margin: 0;
+                    }
                     .product-container-{{ product.id }} {
                         margin-bottom: 40px;
                     }
@@ -179,6 +235,28 @@
                     }
                     .pagination-{{ section.id }} {
                         display: none;
+                    }
+                    .pagination-mobile-{{ section.id }} {
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                }
+                @media (max-width: 499px) {
+                    .product-collection-{{ section.id }} {
+                        gap: 2px;
+                    }
+                    .product-container-{{ product.id }} {
+                        width: 49.70%;
+                    }
+                    .product-info-{{ product.id }} {
+                        font-size: 12px;
+                    }
+                    .paginate-previous-{{ section.id }}, .paginate-next-{{ section.id }} {
+                        font-size: 16px;
+                    }
+                    .left-{{ section.id }}, .right-{{ section.id }} {
+                        top: 22px;
                     }
                 }
             {% endfor %}

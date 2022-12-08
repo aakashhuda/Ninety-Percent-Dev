@@ -71,7 +71,7 @@
 
 {% schema %}
     {
-        "name": "Collection All",
+        "name": "Product Grid",
         "settings": [
             {
                 "type": "range",
@@ -82,6 +82,11 @@
                 "default": 18,
                 "step": 1,
                 "label": "Products Per Page"
+            }
+        ],
+        "presets": [
+            {
+                "name": "Product Grid"
             }
         ]
     }
@@ -279,7 +284,6 @@
     }
     // function for hiding cursor when images are not available
     function hideCursor(productId, index, imageList, event){
-        var increaseBy = 1
         var leftIcon = document.querySelector(`.left-${productId}`)
         var rightIcon = document.querySelector(`.right-${productId}`)
 
@@ -312,7 +316,7 @@
         }
     }
     // function for changing class
-    function changeNextImage(productId, e) {
+    function changeNextImage(productId, event) {
         var data = findActvieIndex(productId)
         var index = data.index
         var images = data.images
@@ -321,9 +325,9 @@
             images[index].classList.remove("active")
             images[index+1].classList.add("active")
         }
-        hideCursor(productId, index, images, e)
+        hideCursor(productId, index, images, event)
     }
-    function changePreviousImage(productId, e) {
+    function changePreviousImage(productId, event) {
         var data = findActvieIndex(productId)
         var index = data.index
         var images = data.images
@@ -332,7 +336,7 @@
             images[index].classList.remove("active")
             images[index-1].classList.add("active")
         }
-        hideCursor(productId, index, images, e)
+        hideCursor(productId, index, images, event)
     }
     // event for showing icons
     {% for collection in collections %}

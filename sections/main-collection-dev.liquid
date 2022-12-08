@@ -1,7 +1,7 @@
 <section id="wrapper-{{ section.id }}">
     {% for collection in collections %}
         {% if collection.all_products_count > 0 %}
-            {% paginate collection.products by  section.settings.products-per-page %}
+            {% paginate collection.products by section.settings.products-per-page %}
                 <div class="product-collection-{{ section.id }}">
                     {% for product in collection.products %}
                         <a href="{{ product.url }}" class="product-container-{{ product.id }}">

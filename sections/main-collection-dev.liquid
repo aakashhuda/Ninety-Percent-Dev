@@ -365,6 +365,7 @@
                 document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
                     arrow.addEventListener('click', (e)=>{
                         changeNextImage({{ product.id }}, e)
+                        e.preventDefault()
                     })
                 })
 
@@ -372,6 +373,7 @@
                 document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
                     arrow.addEventListener('click', (e)=>{
                         changePreviousImage({{ product.id }}, e)
+                        e.preventDefault()
                     })
                 })
             {% endfor %}

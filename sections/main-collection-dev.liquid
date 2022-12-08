@@ -4,7 +4,7 @@
             {% paginate collection.products by { section.settings.products-per-page } %}
                 <div class="product-collection-{{ section.id }}">
                     {% for product in collection.products %}
-                        <a href="{{ product.url }}"" class="product-container-{{ product.id }}">
+                        <a href="{{ product.url }}" class="product-container-{{ product.id }}">
                             <div class="image-container-{{ product.id }}">
                                 {% if product.images.size > 0 %}
                                     <ul class="image-list-{{ product.id }}">
@@ -111,6 +111,9 @@
                     justify-content: space-between;
                     padding: 10px 10px;
                 }
+                .title-{{ product.id }} {
+                    text-transform: uppercase;
+                }
                 .image-container-{{ product.id }} {
                     position: relative;
                 }
@@ -157,10 +160,25 @@
                 .show-arrow-{{ product.id }} {
                     display: inline-block;
                 }
-                @media (max-width: 1020px) {
+                @media (max-width: 1024px) {
                     .product-container-{{ product.id }} {
                         width: 49.5%;
                         margin-bottom: 70px;
+                    }
+                }
+                @media (max-width: 769px){
+                    .product-container-{{ product.id }} {
+                        margin-bottom: 40px;
+                    }
+                    .vendor-{{ product.id }} {
+                        display: none;
+                    }
+                    .product-info-{{ product.id }} {
+                        flex-direction: column;
+                        padding: 0 10px;
+                    }
+                    .pagination-{{ section.id }} {
+                        display: none;
                     }
                 }
             {% endfor %}

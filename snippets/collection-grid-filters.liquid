@@ -15,6 +15,10 @@
     <div class="collection-sidebar small--hide">
         {%- render 'collection-grid-filters-form', location: 'CollectionSidebar', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
     </div>
+    {%- elsif filter_style == 'topbar' -%}
+    <div class="collection-topbar">
+      {%- render 'collection-topbar-filters', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
+    <div>
     {%- endif -%}  
 
     <div id="FilterDrawer" class="drawer drawer--left">

@@ -78,7 +78,7 @@ Arguments
       assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.'
     -%}
 
-    {% comment %} <a href="{{ product.url | within: collection }}" class="grid-product__link">
+    <a href="{{ product.url | within: collection }}" class="grid-product__link grid-product__link-{{ product.id }}">
       <div class="grid-product__image-mask">
         {%- if quick_shop_enable -%}
           <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-{{ product.id }} small--hide">
@@ -128,6 +128,24 @@ Arguments
           </div>
         {%- endif -%}
 
+        {% if settings.product_hover_multi_image %}
+          <ul class="image-list-{{ product.id }}">
+            {% for image in product.images %}
+                {% if forloop.index == 1 %}
+                    <li class="image-item-{{ product.id }} active">
+                      <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'master' }}">
+                    </li>
+                {% else %}    
+                    <li class="image-item-{{ product.id }}">
+                      <img class="grid-product__image lazyload" src="{{ image | img_url: 'master' }}">
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
+        <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
+        {% endif %}
+
         {%- if settings.enable_swatches -%}
           {%- assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase -%}
           {%- for option in product.options_with_values -%}
@@ -164,9 +182,6 @@ Arguments
 
       <div class="grid-product__meta">
         <div class="grid-product__title grid-product__title--{{ settings.type_product_style }}">{{ product.title }}</div>
-        {%- if settings.vendor_enable -%}
-          <div class="grid-product__vendor">{{ product.vendor }}</div>
-        {%- endif -%}
         <div class="grid-product__price">
           {%- if on_sale -%}
             <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
@@ -208,40 +223,11 @@ Arguments
             </div>
           {%- endif -%}
         </div>
+        {%- if settings.vendor_enable -%}
+          <div class="grid-product__vendor">{{ product.vendor }}</div>
+        {%- endif -%}
       </div>
-    </a> {% endcomment %}
-    <a href="{{ product.url }}" class="product-container-{{ product.id }}">
-      <div class="image-container-{{ product.id }}">
-          {% if product.images.size > 0 %}
-              <ul class="image-list-{{ product.id }}">
-                  {% for image in product.images %}
-                      {% if forloop.index == 1 %}
-                          <li class="image-item-{{ product.id }} active"><img src="{{ image | img_url: 'master' }}"></li>
-                      {% else %}    
-                          <li class="image-item-{{ product.id }}"><img src="{{ image | img_url: 'master' }}"></li>
-                      {% endif %}
-                  {% endfor %}
-              </ul>
-              <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
-              <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
-          {% else %}
-              {{ 'product-1' | placeholder_svg_tag }}
-          {% endif %}
-      </div>
-      <div class="product-info-{{ product.id }}">
-          <div class="title-vendor-{{ product.id }}">
-              <div class="title-{{ product.id }}">
-                  {{ product.title }}
-              </div>
-              <div class="vendor-{{ product.id }}">
-                  {{ product.vendor }}
-              </div>
-          </div>
-          <div class="price-{{ product.id }}">
-              {{ product.price | money }}
-          </div>
-      </div>
-  </a>
+    </a>
   </div>
   {%- if settings.enable_swatches -%}
     {%- liquid
@@ -312,24 +298,6 @@ Arguments
 
 
 <style>
-  .product-container-{{ product.id }} {
-    width: 33%;
-    margin-bottom: 100px;
-}
-  .product-container-{{ product.id }} img {
-      width: 100%
-  }
-  .product-info-{{ product.id }} {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 10px;
-  }
-  .title-{{ product.id }} {
-      text-transform: uppercase;
-  }
-  .image-container-{{ product.id }} {
-      position: relative;
-  }
   .image-list-{{ product.id }} {
       list-style: none;
       position: relative;
@@ -368,11 +336,35 @@ Arguments
   }
   .left-{{ product.id }}.disabled, .right-{{ product.id }}.disabled {
       border-color: #dddddd;
-      cursor: none;
+      cursor: not-allowed;
   }
   .show-arrow-{{ product.id }} {
       display: inline-block;
   }
+
+  [data-center-text=true] .grid-product__meta {
+    text-align: left;
+    padding: 10px 10px;
+  }
+  [data-type_product_capitalize=true] .grid-product__title {
+    letter-spacing: 0;
+  }
+  .grid-product__price {
+    display: inline-block;
+    float: right;
+    margin-top: 1.5px;
+  }
+  [data-center-text=true] .grid-product__colors {
+    justify-content: flex-start
+  }
+  .grid__item {
+    padding-left: 5px;
+  }
+  {% if settings.product_hover_multi_image == true %}
+    .image-wrap {
+      display: none;
+    }
+  {% endif %}
 </style>
 
 <script>
@@ -388,76 +380,47 @@ Arguments
     }
     return {index: index, images: images}
 }
-// function for hiding cursor when images are not available
-function hideCursor(productId, index, imageList, event){
-    var leftIcon = document.querySelector(`.left-${productId}`)
-    var rightIcon = document.querySelector(`.right-${productId}`)
-    // checking if the event is not a click event
-    if (event.type != "click"){
-        if (index+1 == imageList.length){
-            rightIcon.classList.add("disabled")
-            leftIcon.classList.remove("disabled")
-        }
-        if (index == 0){
-            leftIcon.classList.add("disabled")
-            rightIcon.classList.remove("disabled")
-        }
-    }
-    // checking if the event is an click event
-    else if(event.type == "click"){
-        if (event.target.classList.contains(`right-${productId}`)){
-            var diff = imageList.length - index
-            if (diff <= 2){
-                rightIcon.classList.add("disabled")
-            }
-            leftIcon.classList.remove("disabled")
-        }
-        else if (event.target.classList.contains(`left-${productId}`)){
-            if (index <= 1){
-                leftIcon.classList.add("disabled")
-            }
-            rightIcon.classList.remove("disabled")
-        }
-    }
-}
 // function for changing class
 function changeNextImage(productId, event) {
     var data = findActvieIndex(productId)
     var index = data.index
     var images = data.images
+    images[index].classList.remove("active")
     if (images[index + 1] !== undefined){
-        images[index].classList.remove("active")
-        images[index+1].classList.add("active")
+      images[index+1].classList.add("active")
     }
-    hideCursor(productId, index, images, event)
+    if (images[index + 1] === undefined) {
+      images[0].classList.add("active")
+    }
 }
 function changePreviousImage(productId, event) {
     var data = findActvieIndex(productId)
     var index = data.index
     var images = data.images
     if (images[index - 1] !== undefined){
-        images[index].classList.remove("active")
         images[index-1].classList.add("active")
+        images[index].classList.remove("active")
     }
-    hideCursor(productId, index, images, event)
+    if(images[index-1] === undefined){
+      images[images.length -1].classList.add("active")
+      images[index].classList.remove("active")
+    }
 }
-
-document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseover", (e)=>{
+// hover effect for mouseover
+document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseover", (e)=>{
   var arrowLeft = document.querySelector(".left-{{ product.id }}")
   var arrowRight = document.querySelector(".right-{{ product.id }}")
   arrowLeft.classList.add("show-arrow-{{ product.id }}")
   arrowRight.classList.add("show-arrow-{{ product.id }}")
   var data = findActvieIndex({{ product.id }})
-  hideCursor({{ product.id }}, data.index, data.images, e)
 })
 // hover effect for mouseleave
-document.querySelector(".image-container-{{ product.id }}").addEventListener("mouseleave", (e)=>{
+document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseleave", (e)=>{
   var arrowLeft = document.querySelector(".left-{{ product.id }}")
   var arrowRight = document.querySelector(".right-{{ product.id }}")
   arrowLeft.classList.remove("show-arrow-{{ product.id }}")
   arrowRight.classList.remove("show-arrow-{{ product.id }}")
   var data = findActvieIndex({{ product.id }})
-  hideCursor({{ product.id }}, data.index, data.images, e)
 })
 // slider button changing to right
 document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{

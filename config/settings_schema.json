@@ -637,6 +637,12 @@
         "default": false
       },
       {
+        "type": "checkbox",
+        "id": "product_hover_multi_image",
+        "label": "t:settings_schema.product_tiles.settings.product_hover_multi_image.label",
+        "default": true
+      },
+      {
         "type": "header",
         "content": "t:settings_schema.product_tiles.settings.header_color_swatches"
       },

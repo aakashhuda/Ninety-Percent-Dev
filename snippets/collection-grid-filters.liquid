@@ -15,11 +15,13 @@
     <div class="collection-sidebar small--hide">
         {%- render 'collection-grid-filters-form', location: 'CollectionSidebar', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
     </div>
-    {%- elsif filter_style == 'topbar' -%}
-    <div class="collection-topbar">
+    {%- endif -%}
+
+    {%- if filter_style == 'topbar' -%}
+    <div>
       {%- render 'collection-topbar-filters', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
     <div>
-    {%- endif -%}  
+    {% endif %}
 
     <div id="FilterDrawer" class="drawer drawer--left">
       <div class="drawer__contents">
@@ -45,3 +47,11 @@
     </div>
 </div>
 {%- endif -%}
+
+<style>
+  {% if filter_style == "topbar" %}
+    .medium-up--one-fifth {
+      width: 100%;
+    }
+  {% endif %}
+</style>

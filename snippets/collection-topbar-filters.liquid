@@ -1,7 +1,127 @@
-<div>
-  <ul>
+<div class="topbar-filter-section">
+  <div>{{ collection.title }} {{ collection.products_count }}</div>
+  <ul class="filter-list">
     {% for filter in filters %}
-      <li>{{ filter.label }}</li>
+      <div class="filter-container-{{ filter.label }}">
+        <li class="filter-label filter-{{ filter.label }}">{{ filter.label }}</li>
+        <ul class="filter-options-list filter-{{ filter.label }}-options">
+          {% for value in filter.values %}
+            <li class="filter-value-item">{{ value.label }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     {% endfor %}
   </ul>
+  <div class="sorting-section">
+    SORT BY
+    <ul class="sort-list">
+      {% for option in collection.sort_options %}
+        <li class="sort-list-item">{{ option.name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
+
+<style>
+  .topbar-filter-section {
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+  }
+  .filter-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  .filter-label {
+    margin: 0 20px;
+  }
+  {% for filter in filters %}
+    .filter-container-{{ filter.label }} {
+      position: relative;
+      cursor: pointer;
+    }
+    .filter-{{ filter.label }}-options {
+      display: none;
+      position: absolute;
+      z-index: 10000;
+      background-color: #ffffff;
+      border: none;
+      box-shadow: 0 1px 1px 0px #dddddd;
+      padding-top: 19px;
+      padding-bottom: 29px;
+      padding-left: 67px;
+      padding-right: 124px;
+      left: -67px;
+    }
+    .filter-{{ filter.label }}-options li {
+      list-style: none;
+      margin: 5px 0;
+      padding: 0;
+      font-size: 14px;
+    }
+    .sorting-section {
+      position: relative;
+    }
+    .sort-list {
+      position: absolute;
+      z-index: 1000;
+      left: -150px;
+      margin: 0;
+      display: none;
+      padding-top: 19px;
+      padding-bottom: 29px;
+      padding-left: 67px;
+      padding-right: 124px;
+      font-size: 14px;
+      background-color: #ffffff;
+      border: none;
+      box-shadow: 0 1px 1px 0px #dddddd;
+    }
+    .sort-list li {
+      list-style: none;
+      margin: 5px 0;
+      padding: 0;
+    }
+    .show-sort-list {
+      display: block;
+    }
+  {% endfor %}
+  .show-filter {
+    display: block;
+  }
+</style>
+
+<script>
+function applyClickEventForFilter() {
+  document.querySelectorAll(".filter-label").forEach(label=>{
+    label.addEventListener('click', (event)=> {
+      var className = `${event.target.classList[1]}-options`
+      var target = document.querySelector(`.${className}`)
+      if (target.classList.contains("show-filter")){
+        target.classList.remove("show-filter")
+      }
+      document.querySelectorAll(".filter-options-list").forEach(item => {
+        item.classList.remove("show-filter")
+      })
+      target.classList.add("show-filter")
+    })
+  })
+}
+
+function applyClickEventForSorting() {
+  var target = document.querySelector(".sorting-section")
+  target.addEventListener('click', ()=>{
+    if (document.querySelector(".sort-list").classList.contains('show-sort-list')){
+      document.querySelector(".sort-list").classList.add('show-short-list')
+    }
+    else {
+      document.querySelector(".sort-list").classList.remove('show-short-list')
+    }
+  })
+}
+
+
+applyClickEventForFilter()
+applyClickEventForSorting()
+</script>

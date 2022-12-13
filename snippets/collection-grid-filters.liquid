@@ -50,8 +50,21 @@
 
 <style>
   {% if filter_style == "topbar" %}
-    .medium-up--one-fifth {
+    #CollectionAjaxContent .medium-up--one-fifth {
       width: 100%;
+    }
+    #CollectionAjaxContent .grid__item--sidebar {
+      max-height: none;
+    }
+    #CollectionSidebar .medium-up--four-fifths {
+      width: 100%;
+    }
+    #CollectionSidebar .collection-filter {
+      display: none;
+    }
+  {% elsif filter_style == "sidebar" %}
+    #CollectionAjaxContent .grid {
+      margin: 0 0 0 0;
     }
   {% endif %}
 </style>

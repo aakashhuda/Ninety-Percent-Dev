@@ -298,22 +298,22 @@ Arguments
 
 
 <style>
-  .image-list-{{ product.id }} {
+  #CollectionAjaxContent .image-list-{{ product.id }} {
       list-style: none;
       position: relative;
       overflow: hidden;
       margin: 0;
   }
-  .image-item-{{ product.id }} {
+  #CollectionAjaxContent .image-item-{{ product.id }} {
       position: absolute;
       left: 50000px;
   }
-  .image-item-{{ product.id }}.active {
+  #CollectionAjaxContent .image-item-{{ product.id }}.active {
       position: relative;
       top: 0;
       left: 0;
   }
-  .arrow-{{ product.id }} {
+  #CollectionAjaxContent .arrow-{{ product.id }} {
       border: solid black;
       border-width: 0 1px 1px 0;
       display: none;
@@ -322,52 +322,52 @@ Arguments
       cursor: pointer;
       z-index: 100000;
   }
-  .left-{{ product.id }} {
+  #CollectionAjaxContent .left-{{ product.id }} {
       position: absolute;
       transform: rotate(135deg);
       top: 45%;
       left: 15px;
   }
-  .right-{{ product.id }} {
+  #CollectionAjaxContent .right-{{ product.id }} {
       position: absolute;
       transform: rotate(-45deg);
       top: 45%;
       right: 15px;
   }
-  .left-{{ product.id }}.disabled, .right-{{ product.id }}.disabled {
+  #CollectionAjaxContent .left-{{ product.id }}.disabled, .right-{{ product.id }}.disabled {
       border-color: #dddddd;
       cursor: not-allowed;
   }
-  .show-arrow-{{ product.id }} {
+  #CollectionAjaxContent .show-arrow-{{ product.id }} {
       display: inline-block;
   }
 
-  [data-center-text=true] .grid-product__meta {
+  #CollectionAjaxContent [data-center-text=true] .grid-product__meta {
     text-align: left;
     padding: 10px 10px;
   }
-  [data-type_product_capitalize=true] .grid-product__title {
+  #CollectionAjaxContent [data-type_product_capitalize=true] .grid-product__title {
     letter-spacing: 0;
     font-size: 14px;
   }
-  .grid-product__price {
+  #CollectionAjaxContent .grid-product__price {
     display: inline-block;
     float: right;
     margin-top: 1.5px;
     font-size: 14px;
   }
-  .grid-product__vendor {
+  #CollectionAjaxContent .grid-product__vendor {
     font-size: 14px;
     letter-spacing: 0px;
   }
-  [data-center-text=true] .grid-product__colors {
+  #CollectionAjaxContent [data-center-text=true] .grid-product__colors {
     justify-content: flex-start
   }
-  .grid__item {
+  #CollectionAjaxContent .grid__item {
     padding-left: 5px;
   }
   {% if settings.product_hover_multi_image == true %}
-    .image-wrap {
+    #CollectionAjaxContent .image-wrap {
       display: none;
     }
   {% endif %}
@@ -413,33 +413,35 @@ function changePreviousImage(productId, event) {
     }
 }
 // hover effect for mouseover
-document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseover", (e)=>{
-  var arrowLeft = document.querySelector(".left-{{ product.id }}")
-  var arrowRight = document.querySelector(".right-{{ product.id }}")
-  arrowLeft.classList.add("show-arrow-{{ product.id }}")
-  arrowRight.classList.add("show-arrow-{{ product.id }}")
-  var data = findActvieIndex({{ product.id }})
-})
-// hover effect for mouseleave
-document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseleave", (e)=>{
-  var arrowLeft = document.querySelector(".left-{{ product.id }}")
-  var arrowRight = document.querySelector(".right-{{ product.id }}")
-  arrowLeft.classList.remove("show-arrow-{{ product.id }}")
-  arrowRight.classList.remove("show-arrow-{{ product.id }}")
-  var data = findActvieIndex({{ product.id }})
-})
-// slider button changing to right
-document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
-  arrow.addEventListener('click', (e)=>{
-      changeNextImage({{ product.id }}, e)
-      e.preventDefault()
+{% if settings.product_hover_multi_image == true %}
+  document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseover", (e)=>{
+    var arrowLeft = document.querySelector(".left-{{ product.id }}")
+    var arrowRight = document.querySelector(".right-{{ product.id }}")
+    arrowLeft.classList.add("show-arrow-{{ product.id }}")
+    arrowRight.classList.add("show-arrow-{{ product.id }}")
+    var data = findActvieIndex({{ product.id }})
   })
-})
-// slider button changing to previous
-document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
-  arrow.addEventListener('click', (e)=>{
-      changePreviousImage({{ product.id }}, e)
-      e.preventDefault()
+  // hover effect for mouseleave
+  document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseleave", (e)=>{
+    var arrowLeft = document.querySelector(".left-{{ product.id }}")
+    var arrowRight = document.querySelector(".right-{{ product.id }}")
+    arrowLeft.classList.remove("show-arrow-{{ product.id }}")
+    arrowRight.classList.remove("show-arrow-{{ product.id }}")
+    var data = findActvieIndex({{ product.id }})
   })
-})
+  // slider button changing to right
+  document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
+    arrow.addEventListener('click', (e)=>{
+        changeNextImage({{ product.id }}, e)
+        e.preventDefault()
+    })
+  })
+  // slider button changing to previous
+  document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
+    arrow.addEventListener('click', (e)=>{
+        changePreviousImage({{ product.id }}, e)
+        e.preventDefault()
+    })
+  })
+{% endif %}
 </script>

@@ -27,9 +27,9 @@
     <ul class="sort-list">
       {% for option in sort_options %}
         {% if sort_by == option.value %}
-          <li class="sort-list-item active"><a href="?sort_by={{ option.value }}">{{ option.name }}</a></li>
+          <li class="sort-list-item active" data-name="{{ option.value }}">{{ option.name }}</li>
         {% else %}
-          <li class="sort-list-item"><a href="?sort_by={{ option.value }}">{{ option.name }}</a></li>
+          <li class="sort-list-item" data-name="{{ option.value }}">{{ option.name }}</li>
         {% endif %}
       {% endfor %}
     </ul>
@@ -97,6 +97,7 @@
       margin: 5px 0;
       padding: 0;
       font-size: 12px;
+      cursor: pointer;
     }
     .show-sort-list {
       display: block;
@@ -114,6 +115,29 @@
 </style>
 
 <script>
+function sortingFunction(){
+  var sortItems = document.querySelectorAll(".sort-list-item")
+  sortItems.forEach(item=>{
+    item.addEventListener('click', (e)=>{
+      let url = "http://";
+      if (window.location.search.indexOf("filter") === -1){
+        url += window.location.host + window.location.pathname + `/?sort_by=${e.target.dataset.name}`
+      }
+      else {
+        if (window.location.search.indexOf("sort_by") === -1) {
+          url += window.location.host + window.location.pathname + window.location.search + `&sort_by=${e.target.dataset.name}`
+        }
+        else {
+          var initIndex = window.location.search.indexOf("sort_by")
+          var toBeReplaced = window.location.search.slice(initIndex)
+          url += window.location.host + window.location.pathname + window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
+        }
+      }
+      window.location.replace(url)
+    })
+  })
+}
+
 function applyClickEventForFilter() {
   document.querySelectorAll(".filter-label").forEach(label=>{
     label.addEventListener('click', (event)=> {
@@ -162,4 +186,5 @@ applyClickEventForFilter()
 applyClickEventForSorting()
 applyMouseLeaveEventForFilter()
 applyMouseLeaveEventForSorting()
+sortingFunction()
 </script>

@@ -1,3 +1,9 @@
+{% liquid
+  assign sort_by = collection.sort_by
+  assign default_sort_by = collection.default_sort_by
+  assign sort_options = collection.sort_options
+%}
+
 <div class="topbar-filter-section">
   <div>{{ collection.title }} {{ collection.products_count }}</div>
   <ul class="filter-list">
@@ -19,8 +25,12 @@
   <div class="sorting-section">
     <span class="sort-btn">SORT BY</span>
     <ul class="sort-list">
-      {% for option in collection.sort_options %}
-        <li class="sort-list-item">{{ option.name }}</li>
+      {% for option in sort_options %}
+        {% if sort_by == option.value %}
+          <li class="sort-list-item active"><a href="?sort_by={{ option.value }}">{{ option.name }}</a></li>
+        {% else %}
+          <li class="sort-list-item"><a href="?sort_by={{ option.value }}">{{ option.name }}</a></li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>
@@ -98,7 +108,7 @@
   .sort-btn {
     cursor: pointer;
   }
-  .filter-value-item.active {
+  .filter-value-item.active, .sort-list-item.active {
     text-decoration: underline;
   }
 </style>

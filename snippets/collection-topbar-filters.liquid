@@ -8,9 +8,15 @@
   <div>SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
   <ul class="filter-list">
     {% for filter in filters %}
-      <div class="filter-container-{{ filter.label }}">
-        <li class="filter-label filter-{{ filter.label }}">{{ filter.label }}</li>
-        <ul class="filter-options-list filter-{{ filter.label }}-options">
+      <div class="filter-container-{{ filter.label | replace: " ", "-" }}">
+        <li class="filter-label filter-{{ filter.label | replace: " ", "-" }}">
+          {% if filter.label == "Product type" %}
+            Category
+          {% else %}
+            {{ filter.label }}
+          {% endif %}
+        </li>
+        <ul class="filter-options-list filter-{{ filter.label | replace: " ", "-" }}-options">
           {% for value in filter.values %}
             {% if value.active %}
               <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
@@ -18,9 +24,13 @@
               <li class="filter-value-item"><a href="{{ value.url_to_add }}">{{ value.label }}</a></li>
             {% endif %}
           {% endfor %}
+          
         </ul>
       </div>
     {% endfor %}
+    <div class="filter-container-Reset">
+      <li class="filter-label-reset filter-reset">Reset</li>
+    </div>
   </ul>
   <div class="sorting-section">
     <span class="sort-btn">SORT BY</span>
@@ -48,15 +58,15 @@
     display: flex;
     justify-content: center;
   }
-  .filter-label {
+  .filter-label, .filter-label-reset {
     margin: 0 20px;
   }
   {% for filter in filters %}
-    .filter-container-{{ filter.label }} {
+    .filter-container-{{ filter.label | replace: " ", "-" }}, .filter-container-Reset {
       position: relative;
       cursor: pointer;
     }
-    .filter-{{ filter.label }}-options {
+    .filter-{{ filter.label | replace: " ", "-" }}-options {
       display: none;
       position: absolute;
       z-index: 10000;
@@ -69,7 +79,7 @@
       padding-right: 124px;
       left: -67px;
     }
-    .filter-{{ filter.label }}-options li {
+    .filter-{{ filter.label | replace: " ", "-" }}-options li {
       list-style: none;
       margin: 5px 0;
       padding: 0;
@@ -116,6 +126,13 @@
 </style>
 
 <script>
+function resetFilter(){
+  var target = document.querySelector(".filter-reset")
+  target.addEventListener('click', (e=>{
+    e.preventDefault()
+    window.location.search = ""
+  }))
+}
 function sortingFunction(){
   var sortItems = document.querySelectorAll(".sort-list-item")
   sortItems.forEach(item=>{
@@ -176,7 +193,6 @@ function applyMouseLeaveEventForFilter(){
 }
 
 function applyMouseLeaveEventForSorting(){
-  console.log(document.querySelector("sort-list"))
   document.querySelector(".sort-list").addEventListener("mouseleave", (e)=>{
     e.target.classList.remove("show-sort-list")
   })
@@ -188,4 +204,5 @@ applyClickEventForSorting()
 applyMouseLeaveEventForFilter()
 applyMouseLeaveEventForSorting()
 sortingFunction()
+resetFilter()
 </script>

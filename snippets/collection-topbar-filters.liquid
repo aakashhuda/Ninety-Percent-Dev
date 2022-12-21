@@ -8,15 +8,16 @@
   <div>SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
   <ul class="filter-list">
     {% for filter in filters %}
-      <div class="filter-container-{{ filter.label | replace: " ", "-" }}">
-        <li class="filter-label filter-{{ filter.label | replace: " ", "-" }}">
-          {% if filter.label == "Product type" %}
+      {% assign filter_label = filter.label | replace: ' ', '-' %}
+      <div class="filter-container-{{ filter_label }}">
+        <li class="filter-label filter-{{ filter_label }}">
+          {% if filter_label == "Product-type" %}
             Category
           {% else %}
-            {{ filter.label }}
+            {{ filter_label }}
           {% endif %}
         </li>
-        <ul class="filter-options-list filter-{{ filter.label | replace: " ", "-" }}-options">
+        <ul class="filter-options-list filter-{{ filter_label }}-options">
           {% for value in filter.values %}
             {% if value.active %}
               <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
@@ -62,11 +63,12 @@
     margin: 0 20px;
   }
   {% for filter in filters %}
-    .filter-container-{{ filter.label | replace: " ", "-" }}, .filter-container-Reset {
+    {% assign filter_label_css = filter.label | replace: ' ', '-' %}
+    .filter-container-{{ filter_label_css }}, .filter-container-Reset {
       position: relative;
       cursor: pointer;
     }
-    .filter-{{ filter.label | replace: " ", "-" }}-options {
+    .filter-{{ filter_label_css }}-options {
       display: none;
       position: absolute;
       z-index: 10000;
@@ -79,7 +81,7 @@
       padding-right: 124px;
       left: -67px;
     }
-    .filter-{{ filter.label | replace: " ", "-" }}-options li {
+    .filter-{{ filter_label_css }}-options li {
       list-style: none;
       margin: 5px 0;
       padding: 0;
@@ -128,30 +130,29 @@
 <script>
 function resetFilter(){
   var target = document.querySelector(".filter-reset")
-  target.addEventListener('click', (e=>{
-    e.preventDefault()
+  target.addEventListener('click', ()=>{
     window.location.search = ""
-  }))
+  })
 }
 function sortingFunction(){
   var sortItems = document.querySelectorAll(".sort-list-item")
   sortItems.forEach(item=>{
     item.addEventListener('click', (e)=>{
-      let url = "http://";
+      let url = "";
       if (window.location.search.indexOf("filter") === -1){
-        url += window.location.host + window.location.pathname + `/?sort_by=${e.target.dataset.name}`
+        url += `?sort_by=${e.target.dataset.name}`
       }
       else {
         if (window.location.search.indexOf("sort_by") === -1) {
-          url += window.location.host + window.location.pathname + window.location.search + `&sort_by=${e.target.dataset.name}`
+          url += window.location.search + `&sort_by=${e.target.dataset.name}`
         }
         else {
           var initIndex = window.location.search.indexOf("sort_by")
           var toBeReplaced = window.location.search.slice(initIndex)
-          url += window.location.host + window.location.pathname + window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
+          url += window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
         }
       }
-      window.location.replace(url)
+      window.location.search = url
     })
   })
 }
@@ -168,6 +169,11 @@ function applyClickEventForFilter() {
         item.classList.remove("show-filter")
       })
       target.classList.add("show-filter")
+      setTimeout(() => {
+        document.querySelectorAll(".filter-options-list").forEach(item => {
+          item.classList.remove("show-filter")
+        })
+      }, "5000")
     })
   })
 }
@@ -198,6 +204,14 @@ function applyMouseLeaveEventForSorting(){
   })
 }
 
+function removeFilterOptionList(){
+  var mainContent = document.querySelector(".main-content")
+  mainContent.addEventListener('click', (e)=>{
+    if (e.target !== mainContent) return false
+    console.log('hello')
+  })
+}
+
 
 applyClickEventForFilter()
 applyClickEventForSorting()
@@ -205,4 +219,5 @@ applyMouseLeaveEventForFilter()
 applyMouseLeaveEventForSorting()
 sortingFunction()
 resetFilter()
+{% comment %} removeFilterOptionList() {% endcomment %}
 </script>

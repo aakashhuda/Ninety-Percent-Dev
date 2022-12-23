@@ -50,11 +50,15 @@
 
 <style>
   {% if filter_style == "topbar" %}
+    #CollectionAjaxContent .grid {
+      margin-left: -8px;
+    }
     #CollectionAjaxContent .medium-up--one-fifth {
       width: 100%;
     }
     #CollectionAjaxContent .grid__item--sidebar {
       max-height: none;
+      overflow-y: visible;
     }
     #CollectionSidebar .medium-up--four-fifths {
       width: 100%;

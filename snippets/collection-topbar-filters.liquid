@@ -134,7 +134,7 @@ function resetFilter(){
     window.location.search = ""
   })
 }
-function sortingFunction(){
+function sortingFunctionWithoutMultipleOptions(){
   var sortItems = document.querySelectorAll(".sort-list-item")
   sortItems.forEach(item=>{
     item.addEventListener('click', (e)=>{
@@ -143,14 +143,34 @@ function sortingFunction(){
         url += `?sort_by=${e.target.dataset.name}`
       }
       else {
-        if (window.location.search.indexOf("sort_by") === -1) {
-          url += window.location.search + `&sort_by=${e.target.dataset.name}`
+        var index = window.location.search.indexOf("sort_by")
+        switch (index) {
+          case -1: url += window.location.search + `&sort_by=${e.target.dataset.name}`; break;
+          default:
+            var initIndex = window.location.search.indexOf("sort_by")
+            var toBeReplaced = window.location.search.slice(initIndex)
+            url += window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
         }
-        else {
-          var initIndex = window.location.search.indexOf("sort_by")
-          var toBeReplaced = window.location.search.slice(initIndex)
-          url += window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
+      }
+      window.location.search = url
+    })
+  })
+}
+
+function sortingFunctionWithMultipleOptions(){
+  var sortItems = document.querySelectorAll(".sort-list-item")
+  sortItems.forEach(item=>{
+    item.addEventListener('click', (e)=>{
+      let url = "";
+      if (window.location.search.indexOf("filter") === -1){
+        var index = window.location.search.indexOf("sort_by")
+        switch (index) {
+          case -1: url += `?sort_by=${e.target.dataset.name}`; break;
+          default: url += `&sort_by=${e.target.dataset.name}`;
         }
+      }
+      else {
+        url += window.location.search + `&sort_by=${e.target.dataset.name}`
       }
       window.location.search = url
     })
@@ -205,19 +225,20 @@ function applyMouseLeaveEventForSorting(){
 }
 
 function removeFilterOptionList(){
-  var mainContent = document.querySelector(".main-content")
-  mainContent.addEventListener('click', (e)=>{
-    if (e.target !== mainContent) return false
-    console.log('hello')
+  var topBarFilterSection = document.querySelector(".topbar-filter-section")
+  topBarFilterSection.addEventListener('click', (e)=>{
+    if (e.target !== topBarFilterSection) return false
+    document.querySelectorAll(".filter-options-list").forEach(item => {
+      item.classList.remove("show-filter")
+    })
   })
 }
-
 
 applyClickEventForFilter()
 applyClickEventForSorting()
 applyMouseLeaveEventForFilter()
 applyMouseLeaveEventForSorting()
-sortingFunction()
+sortingFunctionWithMultipleOptions()
 resetFilter()
-{% comment %} removeFilterOptionList() {% endcomment %}
+removeFilterOptionList()
 </script>

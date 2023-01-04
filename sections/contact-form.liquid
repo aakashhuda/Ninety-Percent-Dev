@@ -228,7 +228,6 @@ text-align: left;
   display: flex;
   flex-direction: column;
   padding-top: 42px;
-  padding-left: 335px;
 }
 
 .echo-text {
@@ -294,8 +293,6 @@ text-align: left;
               case false: element.classList.add("hide")
             } 
           }
-          {% comment %} element.classList.contains("hide") == false ? element.classList.add("hide"): null {% endcomment %}
-        
       })
     }
     else {
@@ -313,7 +310,6 @@ text-align: left;
     selectElement.addEventListener('change', (e=>{
       e.preventDefault()
       const value = e.target.value
-      console.log(value)
       switch(value) {
         case 'Affiliate' : hideElement('website'); break;
         case 'Wholesale': hideElement('company'); break;

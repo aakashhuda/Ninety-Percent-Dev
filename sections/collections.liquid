@@ -1,0 +1,138 @@
+<section id="collections-section">
+  <div class="collections-img">
+    <a href="{{ linklists[section.settings.menu].links[0].url }}"><img src="{{ section.settings.image | img_url: 'master' }}" width="auto" height="auto" alt="{{ section.settings.image.alt | escape }}"><span class="not-link-mobile">{{ linklists[section.settings.menu].links[0].title }}</span></a>
+  </div>
+  <div class="collections-texts">
+    <ul>
+      {% for link in linklists[section.settings.menu].links %}
+      		<li class="{% if forloop.index0 == 0 %}not-link-desktop{% endif %}"><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  #collections-section ul {
+    list-style: none;    
+    margin: 0;
+  }
+  #collections-section li {
+  	margin-bottom: 0;
+  }
+  #collections-section a {
+    text-decoration: none;
+    color: #333333;
+    display: block; 
+  }
+  #collections-section a:hover, #collections-section a:active {
+    color: #8c8c8c;
+  }
+  #collections-section img {
+    max-width: 100%;
+  }
+
+  #collections-section .collections-texts {
+    font-weight: 600;
+    padding-left: 10px;
+  }
+
+  @media (max-width: 620px) {
+    #collections-section .collections-texts {
+      font-size: 21px;
+      line-height: 25px;
+      margin-top: -47px;
+    }
+    #collections-section .collections-texts li {
+      margin-top: 10px;
+    }
+    #collections-section .collections-texts li:first-child a, #collections-section .collections-texts li:first-child a:hover, #collections-section .collections-texts li:first-child a:active, #collections-section .collections-texts li:first-child a:visited {
+      color: #fff;
+    }
+    #collections-section .not-link-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 621px) {
+    #shopify-section-collections {
+      padding-left: 10%;
+    }
+
+    #collections-section {
+      position: relative;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    #collections-section::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    #collections-section .collections-img span {
+      color: #fff;
+      font-size: 20px;
+      font-weight: 600;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 10px;
+    }
+
+    #collections-section .collections-img, #collections-section .collections-texts {
+      float: left;
+    }
+
+
+    #collections-section .collections-img {
+      width: 61%;
+    }
+
+    #collections-section .collections-texts {
+      width: 29%;
+      margin-right: -100px;
+    }
+
+    #collections-section .collections-texts {
+      font-size: 20px;
+      line-height: 23px;
+      position: absolute;
+      bottom: 10px;
+      left: 63%;
+    }
+
+    #collections-section .not-link-desktop {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Page collections section",
+    "settings": [	
+		{
+          "type": "image_picker",
+          "id": "image",
+          "label": "Collection Image"
+        }, 
+		{
+		  "type": "link_list",
+          "id": "menu",
+          "label": "Collection Menu"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

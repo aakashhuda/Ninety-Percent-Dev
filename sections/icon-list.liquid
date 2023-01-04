@@ -1,0 +1,136 @@
+{% style %}
+.logo-bar--{{ section.id }} {
+  opacity: {{ section.settings.logo_opacity | divided_by: 100.0 }};
+}
+{% endstyle %}
+
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+<div class="page-width" data-aos="logo__animation">
+  {% if section.settings.title != blank %}
+    <div class="section-header">
+      <h2 class="section-header__title">{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size > 0 %}
+    <div class="logo-bar logo-bar--{{ section.id }}">
+      {% for block in section.blocks %}
+        <div class="logo-bar__item_icons" {{ block.shopify_attributes }}>
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="logo-bar__link">
+          {% endif %}
+          {% if block.settings.image != blank %}
+            {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img class="logo-bar__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720]"
+                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ block.settings.image.alt }}">
+          <p>{{ block.settings.title }}</p>
+          {% else %}
+            {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+          {% if block.settings.link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+<style>
+  .logo-bar__item_icons {
+    -ms-flex: 0 1 130px;
+    flex: 0 1 130px;
+    vertical-align: middle;
+    margin: 0 5px 10px;
+}
+  .logo-bar__item_icons p {
+  	font-size: 14px;
+  }
+ @media only screen and (min-width: 769px) {   
+  .logo-bar__item_icons {
+  		-ms-flex: 0 1 200px;
+		flex: 0 1 215px;
+		margin: 0 15px 30px;
+  }
+   .logo-bar__item_icons p {
+  	font-size: 16px;
+  }
+   
+ }
+  .logo-bar__item_icons img[data-sizes="auto"]{
+  	width: 80%;
+  }
+  
+  </style>
+{% schema %}
+  {
+    "name": "Icon Block Home",
+    "class": "index-section",
+    "max_blocks": 10,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "range",
+        "id": "logo_opacity",
+        "label": "Icons opacity",
+        "default": 76,
+        "min": 0,
+        "max": 100,
+        "step": 2,
+        "unit": "%"
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "logo_image",
+        "name": "Icons",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "info": "Optional"
+          },
+		  {
+            "type": "url",
+            "id": "link",
+            "label": "Link",
+            "info": "Optional"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Icon list",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "logo_image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

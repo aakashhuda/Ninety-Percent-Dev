@@ -1,0 +1,303 @@
+ <div class="page-width">
+   <section class="tSection-intro">
+     <div class="tSection-row">
+       <div class="vot-intro">
+         {% if section.settings.vote_title_enable %}
+         	<h1>{{ section.settings.vote_title_enable }}</h1>
+          {% endif %}
+         {% if section.settings.vote_title_text %}
+         <p>{{ section.settings.vote_title_text }}</p>
+         {% endif %}
+       </div>
+       <div class="vote-process">
+         <div class="tSection-row">
+         {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'icon_box_column' %}
+           <div class="vot-icon-box">
+             <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt | escape }}">
+             <p>{{ block.settings.title }}</p>
+           </div>
+         	{% endcase %}
+		{% endfor %}
+           
+         </div>
+       </div>
+     </div>
+   </section>
+  {% if section.settings.instruction_image %}
+   <section class="tSection-button section-margin">
+     <div class="tSection-row instruct-row">
+       <button id="fadePopup" class="btn btn-dark instruct-button">{{ section.settings.instruction_text  }}</button>
+     </div>
+     <div class="popup-wrapper" id="myModal">
+       <div class="popup-overlay"></div>
+       <div class="popup-container">
+         <div class="popup-header"><span class="close-popup"><img src="https://cdn.shopify.com/s/files/1/0283/1338/7053/files/close.png?v=1586946172" alt="close"></span>
+         </div>
+         <div class="popup-content">
+           <div class="image">
+              
+             <img src="{{ section.settings.instruction_image | img_url: 'master' }}" class="attachment-large size-large" alt="Product Image">
+            
+           </div>
+         </div>
+       </div>
+     </div>
+   </section>
+    {% endif %}
+</div>
+
+<style>
+.np-vote {
+	margin-bottom: 80px;
+  	margin-top: 10px;
+}
+.section-margin {
+	margin-bottom: 60px;
+}
+
+.tSection-intro {
+    padding: 30px;
+    width: 100%;
+    border: 2px dashed #eaeaea;
+}
+.tSection-intro p {
+	font-size: 18px;
+}
+.tSection-row{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: center!important;
+    align-items: center!important;
+}
+.vot-intro {
+   width: 40%;
+    padding-right: 35px;
+}
+.vot-intro h1 {
+    font-size: 30px;
+	font-weight: 600;
+    text-transform: none;
+}
+
+.vote-process {
+    width: 60%;
+}
+
+.vot-icon-box {
+    padding: 0 25px 0 25px;
+    text-align: center;
+}
+.vot-icon-box:last-child {
+
+    padding-right: 0px;
+}
+.vote-process .vot-icon-box p{
+	text-transform: uppercase;
+}
+.instruct-row {
+    margin-top: -20px;
+}
+.instruct-button {
+    text-transform: capitalize;
+}
+
+/*   Modal popup   */
+  
+body, html {
+    height: 100%
+}
+
+body.overlay {
+    overflow: hidden
+}
+
+body.overlay .popup-wrapper {
+    display: grid
+}
+
+.tSection-button .popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100001;
+    display: none;
+    place-items: center
+}
+
+#myModal .popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6)
+}
+
+#myModal .popup-container {
+    width: 98%;
+    max-width: 600px;
+    background: #fff;
+    position: absolute;
+    z-index: 1;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .5);
+    max-height: 80vh;
+	overflow: auto;
+  	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+}
+
+
+#myModal .close-popup {
+    color: #777;
+    font-size: 1.2rem;
+    right: 10px;
+    position: absolute;
+    top: 10px;
+  	cursor: pointer;
+
+}
+
+#myModal .close-popup:active, #myModal .close-popup:focus, #myModal .close-popup:hover {
+    color: #000;
+    text-decoration: none
+}
+
+
+#myModal .popup-content {
+    text-align: center;
+    padding: 0 2.5rem 2.5rem;
+/*   	max-height: 100vh;
+	overflow-y: auto; */
+}
+
+
+#myModal .popup-header {
+	
+	min-height: 40px;
+}
+/* End of modal popup */
+
+
+@media (max-width: 768px) {
+    .vote-process {
+        width: 100%;
+    }
+    .vot-intro {
+        width: 100%;
+    }
+    .vot-icon-box {
+        padding: 0 15px 0 15px;
+        text-align: center;
+    }
+    .vot-icon-box:last-child {
+         padding-right: 15px;
+    }
+}
+</style>
+{% schema %}
+  {
+    "name": "Vote Intro Section",
+    "class": "np-vote",
+    "max_blocks": 4,
+    "settings": [
+			{
+              "type": "text",
+              "id": "vote_title_enable",
+              "label": "Vote Title Text",
+ 			  "default": "You choose, We share"
+            },
+            {
+              "type": "richtext",
+              "id": "vote_title_text",
+              "label": "Vote Title Text",
+ 			  "default": "<p>90% of our distributable profits are shared between causes we support and the people who make our collection happen. We want to get involved by choosing the cause you wish to support. Simply enter the unique code found in your garments's care label to cast your vote and leave the rest to us.</p>"
+            },
+			{
+              "type": "image_picker",
+              "id": "instruction_image",
+              "label": "Instruction Image"
+            },
+			{
+              "type": "text",
+              "id": "instruction_text",
+              "label": "Instruction Text"
+            }
+		],
+	"blocks": [
+          {
+          "type": "icon_box_column",
+          "name": "Vote Intro Icons",
+          "settings": [
+          {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image"
+          },
+          {
+              "type": "text",
+              "id": "title",
+              "label": "Heading",
+              "default": "Order Arrives"
+          }
+		 ]
+          }
+	],
+    "presets": [
+          {
+            "name": "Vote Intro",
+            "category": "Text"
+          }
+        ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+
+(function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($("#myModal").length > 0) {
+            try {
+                var voteModal = $("#myModal");
+                var voteModalClose = $("#myModal .close-popup");
+                var voteModalOverlay = $(".popup-overlay");
+
+                $( "#fadePopup" ).on( "click", function() {
+                    voteModal.css("display", "grid");
+					$('body').addClass('np-instructionModal-open');
+					
+                });
+                voteModalClose.on("click", function() {
+					$('body').removeClass('np-instructionModal-open');
+                    voteModal.css("display", "none");
+                });
+                $(window).on("click", function(event) {		
+					
+                    if (event.target == voteModal) {
+						console.log(event.target);
+                        voteModal.css("display", "none");
+                    }
+                });
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+        } else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();
+
+{% endjavascript %}

@@ -1,0 +1,178 @@
+<div class="page-width">
+	<section class="presslist">
+       {% if section.settings.page-title != blank %}
+		<h2>{{ section.settings.page-title }}</h2>
+      {% endif %}
+			<div class="np-row">
+               {% for block in section.blocks %}
+                {% case block.type %}
+                      {% when 'press_box_column' %}
+						 <div class="column" >
+                            <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}">
+                             <div> 
+                             <a href="{{ block.settings.cta-link }}" target="_blank">{{ block.settings.press-title }}</a>
+                             </div>
+                           </div>
+                {% endcase %}
+              {% endfor %}
+			 
+			</div>
+	</section>
+	<section class="np-container">
+            <div class="np-row">
+                <div class="np-column np-col-4">
+                    <img style="display: block; width: auto; max-width: 100%; margin: 0 auto;" alt="{{ section.settings.testimonial-image.alt }}" src="{{ section.settings.testimonial-image | img_url: 'master' }}">
+                </div>
+            </div>
+        </section>
+	<section class="wholesale">
+		
+      {% for block in section.blocks %}
+                {% case block.type %}
+       {% when 'contact-form' %}
+      		{% include 'page-press-contact-form' %}
+        {% endcase %}
+      {% endfor %}
+	</section>
+</div>
+{% schema %}
+  {
+    "name": "Press",
+    "class": "np-press",
+    "max_blocks": 20,
+    "settings": [
+			{
+              "type": "text",
+              "id": "page-title",
+              "label": "Page Title",
+ 			  "default": "Stockists"
+            },
+			{
+              "type": "image_picker",
+              "id": "testimonial-image",
+              "label": "Testimonial GIF"
+          }
+		],
+	"blocks": [
+          {
+          "type": "press_box_column",
+          "name": "Press lists",
+          "settings": [
+          {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Banner Image"
+          },
+          {
+              "type": "text",
+              "id": "press-title",
+              "label": "Magazine Title",
+			  "default": "Porter Magazine, 2020"
+          },
+		  {
+              "type": "url",
+              "id": "cta-link",
+              "label": "CTA link"
+          }
+			
+		 ]
+          },
+		{
+        "type": "contact-form",
+        "name": "Contact form",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+		  {
+            "type": "richtext",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "<p>Need to chat? Drop us a message below and we’ll get back to you asap. If it’s about an order, add in the relevant details to speed things up.</p>"
+          },
+          
+          {
+            "type": "checkbox",
+            "id": "show_phone",
+            "label": "Show phone number"
+          },
+		  {
+            "type": "checkbox",
+            "id": "show_order",
+            "label": "Show Order number"
+          },
+          {
+            "type": "checkbox",
+            "id": "narrow_column",
+            "label": "Narrow column",
+            "default": true
+          }
+        ]
+      }
+	],
+    "presets": [
+          {
+            "name": "Vote Intro",
+            "category": "Text"
+          }
+        ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+  <style type="text/css">
+* {
+  box-sizing: border-box;
+}
+  
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 15px;
+}
+  
+.column img {
+	width: 100%;
+    height: auto;
+    margin: 15px 0;
+}
+.column div {
+	text-align: center;
+  	display: block;
+}
+.column div a {
+    display: inline-block;
+    }    
+/* Clear floats after the columns */
+.np-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.section-margin {
+	margin-bottom: 60px;
+}    
+.column address p {
+    margin: 0;
+    }   
+    
+section h2 {
+	border-bottom: 1.5px solid #eaeaea;
+    display: inline-block;
+  	text-transform: capitalize;
+}
+@media (max-width: 768px) {
+	.column {
+  		float: left;
+  		width: 100%;
+	}
+}
+  
+</style>

@@ -1,0 +1,247 @@
+<div class="page-width faq-page-width">
+ 
+  <div id="az-faq">
+      <section id="faq-banner">
+          <div class="faq-banner--img-container">
+              <div>
+                {% if section.settings.faq_heading %}
+                <h1>{{ section.settings.faq_heading }}</h1>
+                {% endif %}
+
+                {% if section.settings.faq_sub_heading %}
+
+                {{ section.settings.faq_sub_heading }}
+                {% endif %}
+              </div>
+             {% if section.settings.faq_banner %}
+              <img src="{{ section.settings.faq_banner | img_url: 'master' }}" alt="FAQ">
+            {% endif %}
+          </div>
+        
+{% unless section.settings.faq_banner %}
+        <style>
+          .faq-banner--img-container {
+          	height: 50px !important;
+          }
+          .faq-banner--img-container div {
+          	text-align: left !important;
+          	padding-left: 0px !important;
+          }
+          .faq-banner--img-container div h1 {
+          	color: #000 !important;
+            border-bottom: 1px solid #eaeaea !important;
+			display: inline-block !important;
+          }
+        </style>
+{% endunless %}
+
+
+      </section>
+
+      <div class="faq-content">
+        <section>
+          <div id="faq-nav">
+            <nav>
+              {% if section.settings.faq_menu_title %}
+              <a href="#faq-first" class="active"> {{ section.settings.faq_menu_title }}</a>
+              {% endif %}
+            </nav>
+          </div>
+          <div id="faq-contact">
+            <p>{{ section.settings.faq-contact-title }}</p>
+            <img src="{{ section.settings.faq-contact-icon | img_url: 'master' }}" class="custom-contact-icon" alt="{{ section.settings.faq-contact-icon.alt | escape }}">
+            <h3>{{ section.settings.faq-contact-number }}</h3>
+            <span class="faq-contact-email"> <a href="{{ section.settings.faq-contact-email-cta }}">{{ section.settings.faq-contact-email }}</a></span>
+            <img src="{{ section.settings.faq-contact-logo | img_url: 'master' }}" class="custom-contact-logo" alt="{{ section.settings.faq-contact-logo.alt | escape }}">
+          </div>
+        </section>
+        
+        <section id="faq-first">
+          {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'question' %}
+          <div class="faq-card">
+            <a href="#">{{ block.settings.title }}<i class="custom-tab-icon tab-open"></i></a>
+            <div class="content">
+              {{ block.settings.text }}
+            </div>
+          </div>
+          {% endcase %}
+          {% endfor %}
+        </section>
+      </div>
+  </div>
+</div>
+	<style>
+		.custom-tab-icon {
+          position: absolute;
+          height: 13px;
+          width: 13px;
+          top: 50%;
+          right: 10px;
+          transform: translate(-50%, -50%);
+          background-position: center;
+    	  background-repeat: no-repeat;
+        }
+        {% if section.settings.tab-open-icon != blank %}
+          .custom-tab-icon.tab-open{
+            background-image: url("{{ section.settings.tab-open-icon | img_url: 'master' }}");
+          }
+        {% endif %}
+        {% if section.settings.tab-close-icon != blank %}
+          .custom-tab-icon.tab-close{
+            background-image: url("{{ section.settings.tab-close-icon | img_url: 'master' }}");
+          }
+        {% endif %}
+      	#faq-contact {
+          border: 1px solid #E4E4E4;
+          margin-top: 30px;
+          text-align: center;
+          padding: 30px 10px;
+        }
+      	#faq-contact > :first-child {
+          font-size: 15px;
+          text-transform: uppercase;
+          margin-bottom: 34px;
+        }
+      	#faq-contact > img.custom-contact-icon {
+          padding-bottom: 20px;
+        }
+      	#faq-contact > h3 {
+          margin-bottom: 8px;
+          font-size: 23px;
+          font-weight: 600;
+        }
+      	#faq-contact > .faq-contact-email {
+          font-size: 16px;
+          font-weight: 600;
+          position: relative;
+        }
+        #faq-contact > .faq-contact-email:after {
+          content: '';
+          height: 1px;
+          width: 100%;
+          position: absolute;
+          background: #C3C3C3;
+          bottom: 1px;
+          left: 0;
+        }
+      	#faq-contact > img.custom-contact-logo {
+          padding-top: 34px;
+        }
+      	
+      	@media screen and (min-width: 1024px) {
+        	#faq-contact {
+              width: 275px;
+	        }
+        }
+      	@media only screen and (min-width: 769px) and (max-width: 1023px) {
+        	#faq-contact > h3 {
+  	       		font-size: 20px;
+            }
+        }
+	</style>
+{% schema %}
+  {
+    "name": "Order Information",
+	"class": "faq-first",
+    "settings": [
+			{
+              "type": "image_picker",
+              "id": "tab-open-icon",
+              "label": "Tab Open Icon"
+            },
+            {
+              "type": "image_picker",
+              "id": "tab-close-icon",
+              "label": "Tab Close Icon"
+            },
+            {
+              "type": "text",
+              "id": "faq_heading",
+              "label": "FAQ Heading",
+ 			  "default": "Frequently Asked Questions"
+            },
+            {
+              "type": "richtext",
+              "id": "faq_sub_heading",
+              "label": "FAQ Sub Heading",
+ 			  "default": "<p>Need further help? Please Contact us or email our Customer Care team hello@ninetypercent.com </p>"
+            },
+			{
+              "type": "image_picker",
+              "id": "faq_banner",
+              "label": "FAQ Banner"
+            }, 
+			{
+              "type": "text",
+              "id": "faq_menu_title",
+              "label": "First FAQ Menu",
+              "default": "Shopping FAQs"
+            },
+			{
+              "type": "text",
+              "id": "faq-contact-title",
+              "label": "FAQ Contact Title",
+              "default": "Contact us for more information"
+            },
+			{
+              "type": "image_picker",
+              "id": "faq-contact-icon",
+              "label": "FAQ Contact Icon"
+            },
+            {
+              "type": "text",
+              "id": "faq-contact-number",
+              "label": "FAQ Contact Number",
+              "default": "+44 (0) 3300 010628"
+            },
+			{
+              "type": "text",
+              "id": "faq-contact-email",
+              "label": "FAQ Contact Email",
+              "default": "Email Us"
+            },
+			{
+              "type": "url",
+              "id": "faq-contact-email-cta",
+              "label": "FAQ Contact Email"
+            },
+			{
+              "type": "image_picker",
+              "id": "faq-contact-logo",
+              "label": "FAQ Contact Company Logo"
+            }
+            
+		],
+	"blocks": [
+		{
+		"type": "question",
+        "name": "Question",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Question",
+            "default": "Frequently asked question"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>"
+          }
+        ]
+		}
+		]
+     
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+
+{% endjavascript %}

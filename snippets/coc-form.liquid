@@ -1,0 +1,82 @@
+
+    <div class="grid">
+      <div class="grid__item medium-up--three-quarters medium-up--push-one-eighth">
+        
+          <div class="section-header">
+           
+          </div>
+      
+
+        <div class="form-vertical">
+          {% form 'contact' %}
+
+            {% if form.posted_successfully? %}
+              <p class="note note--success">
+                {{ 'contact.form.post_success' | t }}
+              </p>
+            {% endif %}
+
+            {{ form.errors | default_errors }}
+			<input type="hidden" name="contact[form]" value="COC form - {{ shop.url }}/pages/{{ 'champions-of-change' | page_url }}">
+            <div class="grid grid--small">
+              <div class="grid__item medium-up--one-full">
+                <label for="ContactFormCOCName">What is your {{ 'contact.form.name' | t }}?<span>*</span></label>
+                <input type="text" id="ContactFormCOCName" class="input-full" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.first_name }}{% endif %}" required >
+              </div>
+              
+              <div class="grid__item medium-up--one-half">
+                <label for="ContactFormAge">{{ 'contact.form.age' | t }}</label>
+                <input type="text" id="ContactFormAge" class="input-full" name="contact[age]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% endif %}">
+              </div>
+              
+              <div class="grid__item medium-up--one-half">
+                <label for="ContactFormLocation">{{ 'contact.form.location' | t }}</label>
+                <input type="text" id="ContactFormLocation" class="input-full" name="contact[location]" autocapitalize="words" value="{% if form.location %}{{ form.location }}{% endif %}">
+              </div>
+              
+              <div class="grid__item medium-up--one-half">
+                <label for="ContactFormInstagram">{{ 'contact.form.instagramHandle' | t }}</label>
+                <input type="text" id="ContactFormInstagram" class="input-full" name="contact[instagramHandle]" autocapitalize="words" value="{% if form.instagramHandle %}{{ form.instagramHandle }}{% endif %}">
+              </div>
+              
+              <div class="grid__item medium-up--one-half">
+                <label for="ContactFormEmail">What is your {{ 'contact.form.email' | t }} address?<span>*</span></label>
+                <input type="email" id="ContactFormEmail" class="input-full" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+              </div>
+              
+              
+              
+            </div>
+            <label for="ContactFormDiscover">{{ 'contact.form.discover' | t }}</label>
+            <textarea rows="2" id="ContactFormDiscover" class="input-full" name="contact[discover]">{% if form.discover %}{{ form.discover }}{% endif %}</textarea>
+			
+          <label for="ContactFormImpact">{{ 'contact.form.impact' | t }}</label>
+            <textarea rows="2" id="ContactFormDiscover" class="input-full" name="contact[impact]">{% if form.impact %}{{ form.impact }}{% endif %}</textarea>
+			
+          <label for="ContactFormChanges">{{ 'contact.form.changes' | t }}</label>
+            <textarea rows="2" id="ContactFormDiscover" class="input-full" name="contact[changes]">{% if form.changes %}{{ form.changes }}{% endif %}</textarea>
+            
+          <button type="submit" class="btn">
+              {{ 'contact.form.send' | t }}
+            </button>
+          <p>T&C: To participate in the shoot, you need to be available in London on 2nd and 3rd October 2021. If your application has been successful, you will be contacted by the end of August via email by a member of our team. To thank you for taking part in our campaign, you will receive a £500 voucher to spend online on ninetypercent.com<br>The deadline to sign up is Friday, 20th August.</p>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+
+
+<style>
+  #contact_form label span{
+  	color:#fd0000;
+    font-size: 16px;
+    position: absolute;
+  }
+  #contact_form label {
+  	letter-spacing: .2em;
+  }
+  #contact_form p {
+  	font-size: 14px;
+    margin: 10px 0;
+  }
+</style>

@@ -1,0 +1,689 @@
+<footer class="site-footer">
+  <div class="page-width">
+    <div class="grid">
+      {%- assign row_width = 0 -%}
+      {% for block in section.blocks %}
+        {%- assign row_width = row_width | plus: block.settings.container_width -%}
+        {% if row_width > 100 %}
+          <div class="footer__clear small--hide"></div>
+          {%- assign row_width = row_width | minus: 100 -%}
+        {% endif %}
+
+        <div {{ block.shopify_attributes }} class="grid__item footer__item--{{ block.id }}" data-type="{{ block.type }}">
+          {% style %}
+            @media only screen and (min-width: 769px) and (max-width: 959px) {
+              .footer__item--{{ block.id }} {
+                width: 50%;
+                padding-top: 40px;
+              }
+              .footer__item--{{ block.id }}:nth-child(2n + 1) {
+                clear: left;
+              }
+            }
+            @media only screen and (min-width: 960px) {
+              .footer__item--{{ block.id }} {
+                width: {{ block.settings.container_width }}%;
+              }
+
+            }
+          {% endstyle %}
+
+          {% case block.type %}
+          {% when 'logo_social' %}
+            {% include 'footer-logo', block: block %}
+          {% when 'custom' %}
+            {% include 'footer-custom-text', block: block %}
+          {% when 'newsletter' %}
+            {% include 'footer-newsletter-custom', block: block %}
+          {% when 'menu' %}
+            {% include 'footer-menu-custom', block: block %}
+          {% endcase %}
+        </div>
+      {% endfor %}
+      {% for block in section.blocks %}
+        {% if block.type == 'logo' %}
+          <div class="grid__item medium-up--hide">
+            {% include 'footer-logo', block: block %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_payment_icons %}
+      {% unless shop.enabled_payment_types == empty %}
+        <ul class="inline-list payment-icons">
+          {% assign enabled_payment_types = 'visa,master,american_express,maestro,paypal,google_pay,apple_pay,shopify_pay,klarna,clearpay' | split: ',' %}
+			{% for type in enabled_payment_types %}
+            <li class="icon--payment">
+              {{ type | payment_type_svg_tag: class:'icon icon--full-color' }}
+            </li>
+          {% endfor %}
+        </ul>
+    
+ <p style="text-align: center; margin-top: 10px; font-size: 15px;">Buy Now and Pay in installments with <span class="clearpay-icon"><img alt="clearpay Logo" src="https://static.afterpay.com/integration/product-page/logo-clearpay-black.png" style="vertical-align: middle; border: 0px; margin-top: 0px;height: 15px !important;width: auto !important;" width="110" height="21"> & <span class="klarna-icon"><img alt="Klarn Logo" src="https://cdn.shopify.com/s/files/1/0283/1338/7053/files/Klarna_Logo_Primary_Black.png?v=1613134127" style="vertical-align: middle; height: 12px !important;width: auto !important; border: 0px; margin-top: -2px;" width="110" height="21"></span></p>
+      {% endunless %}
+    {% endif %}
+
+    {% if section.settings.show_copyright %}
+      <br><p class="footer__small-text">
+    {% if section.settings.copyright_text != blank %}
+          {{ section.settings.copyright_text }}
+        {% endif %}
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}
+        </p>
+    	<p class="footer__small-text">
+          {% comment %}
+<!--           	Footer edited -->
+          {% endcomment %}
+    	{% for link in linklists[section.settings.copyright-menu].links %}
+            {%- if link.url contains 'modal_' -%}
+                {%- assign page_handle = link.url | split: 'modal_' -%}
+              		<a class="popupModal" data-id="{{ page_handle.last }}"><span>{{ link.title }}</span></a>
+                {%- else if -%}
+                    <a href="{{ link.url }}">{{ link.title }}</a>
+          	{%- endif -%}
+    		{% if forloop.last == false %}
+                |
+            {% endif %}
+          {% endfor %}
+      </p>
+    {% endif %}
+  </div>
+{% include 'footer-popup' %}
+
+</footer>
+
+<style>
+
+@media (min-width: 769px){
+    .footer__title {
+      letter-spacing: normal;
+      font-size: 15px;
+      font-weight: inherit;
+      position: relative;
+    }
+}
+@media (max-width: 769px){
+    .payment-icons .icon--payment {
+      margin: 0 2px;
+    }
+    .payment-icons .icon--payment svg{
+      width: 25px;
+    }
+}
+  
+p.h4.footer__title {
+    position: relative;
+}
+  p.h4.footer__title:after {
+    content: "";
+    width: 15px;
+    height: 2px;
+    background: #0000005c;
+    position: absolute;
+    left: 9px;
+    bottom: -12px;
+    transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 768px){
+  .footer__title {
+    padding: 24px 0px;
+  }
+  .site-footer .grid__item:after {
+      border-bottom: none;
+  }
+  p.h4.footer__title:after {
+    content: "";
+    width: 15px;
+    height: 2px;
+    background: #0000005c;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+}
+  #shopify-section-footer .popupModal span, #shopify-section-footer .site-footer__linklist a, .footer__small-text {
+  	font-size: 15px;
+  }
+@media screen and (-webkit-min-device-pixel-ratio:0) {    
+ 
+    li.icon--payment:last-child {
+    display: none;
+	}
+}
+  .clearpay-icon .icon {
+  	width: 38px;
+	height: 24px;
+  }  
+</style>
+
+{% schema %}
+  {
+    "name": "Footer",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_payment_icons",
+        "label": "Show payment icons",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_copyright",
+        "label": "Show copyright"
+      },
+      {
+        "type": "text",
+        "id": "copyright_text",
+        "label": "Additional copyright texts"
+      },
+	  { 
+		"type": "link_list", 
+        "id": "copyright-menu", 
+        "label": "Choose copyright menu", 
+        "info": "This menu will show after copyright text" 
+      },
+      {
+		"type": "link_list", 
+        "id": "modal-menu", 
+        "label": "Choose Modal Menu", 
+        "info": "This menu will in the modal window"
+      }
+    ],
+    "blocks": [
+     
+      {
+        "type": "logo_social",
+        "name": "Logo",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "Logo image"
+          },
+          {
+            "type": "url",
+            "id": "instagrame_url",
+            "label": "Instagrame URL"
+          },
+          {
+            "type": "url",
+            "id": "facebook_url",
+            "label": "Facebook URL"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "Navigation",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Choose a menu",
+            "default": "footer",
+            "info": "This menu won't show dropdown items"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      },
+      {
+        "type": "newsletter",
+        "name": "Newsletter and social",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading",
+            "default": true
+          },
+          {
+            "type": "paragraph",
+            "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers)."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Sign up and save"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "info": "Optional",
+            "default": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          },
+		  {
+            "type": "text",
+            "id": "email-title",
+            "label": "Email Title",
+            "default": "Email US"
+          },
+		  {
+            "type": "url",
+            "id": "email-link",
+            "label": "Email link"
+          },
+		  {
+            "type": "text",
+            "id": "email-replay",
+            "label": "Email Replay hour",
+            "default": "We'll reply within 48 hours"
+          },
+		  {
+            "type": "text",
+            "id": "phone-title",
+            "label": "Call Title",
+            "default": "Call US"
+          },
+		  {
+            "type": "text",
+            "id": "phone-number",
+            "label": "Phone Number",
+            "default": "+44 33 0001 0628 "
+          },
+			{
+            "type": "text",
+            "id": "phone-replay",
+            "label": "Phone Replay hour",
+            "default": "Mon-Fri. 9 am - 6 pm (GMT Time)"
+          }
+		  
+        ]
+      },
+      {
+        "type": "custom",
+        "name": "Custom text",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_footer_title",
+            "label": "Show heading",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Custom text"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Add your own custom text here.</p>"
+          },
+          {
+            "type": "range",
+            "id": "container_width",
+            "label": "Column width",
+            "default": 25,
+            "min": 15,
+            "max": 95,
+            "unit": "%"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "settings": {},
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {}
+        },
+        {
+          "type": "logo_social",
+          "settings": {}
+        }
+      ]
+    }
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+<script>
+
+(function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($("#menuModal").length > 0) {
+            try {
+                var menuModal = $("#menuModal");
+                var menuModalClose = $("#menuModal .close-popup");
+                var menuModalOverlay = $("#menuModal .popup-overlay");
+                $(document).on("click", ".popupModal", function(event) {
+                    menuModal.css("display", "grid");
+					$('#menuModal #vertical_tab_nav > ul > li a[rel="'+$(this).attr('data-id')+'"]').click();
+					$('body').addClass('np-menuModal-open'); 
+                    
+                });
+                menuModalClose.on("click", function() {
+					$('body').removeClass('np-menuModal-open');
+                    menuModal.css("display", "none");
+					
+                });
+                $(window).on("click", function(event) {
+                    if (event.target == menuModalOverlay) {
+                        menuModal.css("display", "none");
+						$('body').removeClass('np-menuModal-open');
+                    }
+                });
+              	$('.clearpay-link-duplicate').on("click", function(e) {
+                	e.preventDefault();
+                    $('a.clearpay-link u.clearpay-link-inner').click();
+                    
+                });
+				
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+
+        } else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();
+</script>
+<style>
+      @media screen and (max-width: 768px){
+        ul.inline-list.payment-icons {
+          padding-top: 40px;
+          margin: 0px;
+}
+	    .np-collection-filter-sticky .np-collection-filter{
+	        position: fixed;
+	        width: 100vw;
+	        top: 0px;
+	        left: 0;
+	        z-index: 999;
+	        background: #fff;
+	        border-bottom: 1px solid #f9f9f9;
+	        padding-top: 15px;
+	    }
+	    .np-collection-filter-sticky .collection-filter{
+	        max-width: 1500px;
+	        margin: 0 auto;
+	        padding: 0 17px;
+	    }
+	    .np-collection-filter-sticky .np-collection-filter-container{
+	          height: 59px;
+	    }
+        .drawer--left.drawer--is-open { 
+    		z-index: 100005;
+		}
+        .collection-filter {
+        	margin-top: 15px;
+        }
+    }
+  
+  @media screen and (min-width: 769px){
+   
+    
+    /* sticky header and filter */
+    
+     .np-header-wrapper-sticky .header-wrapper{
+        position: fixed;
+        width: 100vw;
+        top: -1px;
+        left: 0;
+        z-index: 99999;
+/*        transition: top 0.5s linear; */
+
+    }
+     .np-header-wrapper-sticky .header-wrapper .site-header {
+
+		padding: 10px 0;
+    }
+/*     .np-header-wrapper-sticky .header-sticky-wrapper {
+      height: 150px;
+    } */
+
+.np-collection-filter-sticky .np-collection-filter {
+        position: fixed;
+        width: 100vw;
+        top: 0px;
+        left: 0;
+        z-index: 999;
+        background: #fff;
+        border-bottom: 1px solid #f9f9f9;
+        border-top: 1px solid #f9f9f9;
+    }
+    .np-collection-filter-sticky .collection-filter{
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+
+     .np-collection-filter-sticky #filter-buttons {  
+        bottom: -60px;   
+     }
+     .np-collection-filter-sticky .np-collection-filter-container{
+          height: 59px;
+     }
+    .np-collection-filter-sticky .np-filter-bar {
+        position: fixed;
+        top:0;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+    }
+    .np-header-wrapper-sticky.np-collection-filter-sticky .np-collection-filter {
+        top: 62px;
+/*         transition: all 0.5s linear; */
+    }
+
+    .np-header-wrapper-sticky.np-collection-filter-sticky #filter-buttons {
+        top: 62px;
+      	height: 65px;
+    }
+
+    .np-collection-filter-sticky .collection-filter__item {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .np-header-wrapper-sticky  .header-sticky-wrapper .site-header .page-width .header-item--logo{
+        display: none;
+    }
+    .np-header-wrapper-sticky  .header-sticky-wrapper .site-header .page-width .text-center{
+        margin-top: -40px;
+    }	
+    .tag-list--checkboxes a {
+    	line-height: 22px;
+    }
+}
+  
+@media screen  and (min-width: 769px)  and (max-width: 910px){ 
+  #filter-buttons {  
+      width: calc(32% - 25px);   
+  }  
+}
+@media screen  and (min-width: 911px)  and (max-width: 1200px){ 
+  #filter-buttons {  
+      width: calc(26% - 25px);   
+  }  
+}
+@media screen  and (min-width: 1201px) { 
+  #filter-buttons {
+    width: calc(22% - 35px);
+}
+}
+    
+  
+  
+</style>
+
+
+<script>
+(function pollForHeader() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        // sticky header
+        if ($(".header-sticky-wrapper").length > 0) {
+            try {
+                var headerClientRect = document.querySelector('.header-sticky-wrapper').getBoundingClientRect();
+                if (headerClientRect.bottom > 25) {
+                    $('body').removeClass('np-header-wrapper-sticky');
+                } else {
+                    $('body').addClass('np-header-wrapper-sticky');
+                }
+                $(window).scroll(function() {
+                  event.preventDefault(); 
+                	headerClientRect = document.querySelector('.header-sticky-wrapper').getBoundingClientRect();
+                     
+                  if (headerClientRect.bottom > 25) {
+                        $('body').removeClass('np-header-wrapper-sticky');
+                    } else {
+                        $('body').addClass('np-header-wrapper-sticky');
+                    }
+                });
+                
+              
+            } catch (err) {
+                console.log('Header sticky TRY ERROR: ' + err);
+            }
+        } else {
+            setTimeout(pollForHeader, 25);
+        }
+    } else {
+        setTimeout(pollForHeader, 25);
+    }
+})();
+(function pollForFilter() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        // sticky filter 
+        if ($(".np-collection-filter-container").length > 0) {
+            var filterClientRect = document.querySelector('.np-collection-filter-container').getBoundingClientRect();
+            try {
+                if (filterClientRect.top > 15) {
+                    $('body').removeClass('np-collection-filter-sticky');
+                } else {
+                    $('body').addClass('np-collection-filter-sticky');
+                }
+                $(window).scroll(function() {
+                	filterClientRect = document.querySelector('.np-collection-filter-container').getBoundingClientRect();
+                    if (filterClientRect.top > 15) {
+                        $('body').removeClass('np-collection-filter-sticky');
+                    } else {
+                        $('body').addClass('np-collection-filter-sticky');
+                    }
+                });
+            } catch (err) {
+                console.log('Filter Sticky TRY ERROR: ' + err);
+            }
+        } else {
+            setTimeout(pollForFilter, 25);
+        }
+    } else {
+        setTimeout(pollForFilter, 25);
+    }
+})();
+  
+
+(function pollForFilter2() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+      $( document ).ready(function() {               
+       var url =  window.location.href;
+                  var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+                  var obj = {};
+                  if (queryString) {
+                    queryString = queryString.split('#')[0];
+                    var arr = queryString.split('&');
+                    for (var i = 0; i < arr.length; i++) {
+                        var a = arr[i].split('=');
+                        var paramName = a[0];
+                        var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
+                        if (paramName.match(/\[(\d+)?\]$/)) {
+                          var key = paramName.replace(/\[(\d+)?\]/, '');
+                          if (!obj[key]) obj[key] = [];
+                          if (paramName.match(/\[\d+\]$/)) {
+                            var index = /\[(\d+)\]/.exec(paramName)[1];
+                            obj[key][index] = paramValue;
+                          } else {
+                            obj[key].push(paramValue);
+                          }
+                        } else {
+                          if (!obj[paramName]) {
+                            obj[paramName] = paramValue;
+                          } else if (obj[paramName] && typeof obj[paramName] === 'string'){
+                            obj[paramName] = [obj[paramName]];
+                            obj[paramName].push(paramValue);
+                          } else {
+                            obj[paramName].push(paramValue);
+                          }
+                        }
+                    }
+                  if (obj['popupModal']) {
+                      var page = obj['popupModal'];
+                      if (page !='') {
+                        $.each($('li.popupModal'), function() {      
+                            if ($(this).attr('data-id').trim() == page) {
+                                $(this).click();
+                                return false;
+                            }
+                        });
+                      }
+                  }
+                    
+                  }
+        
+      }); 
+     
+      
+    } else {
+        setTimeout(pollForFilter2, 25);
+    }
+})();  
+  
+</script>
+

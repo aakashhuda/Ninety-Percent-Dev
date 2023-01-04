@@ -1,0 +1,31 @@
+{% capture previous_label %}
+	<img src="{{ section.settings.np-paginate-prev | img_url: 'master' }}" alt="previous arrow icon">
+	<span class="icon__fallback-text">{{ 'general.pagination.previous' | t }}</span>
+{% endcapture %}
+
+{% capture next_label %}
+  	<img src="{{ section.settings.np-paginate-next | img_url: 'master' }}" alt="next arrow icon">
+	<span class="icon__fallback-text">{{ 'general.pagination.next' | t }}</span>
+{% endcapture %}
+
+<div class="pagination">
+  {% if paginate.current_page == 1 %}
+    <span class="prev np-disabled">
+      <a href="#" title="">
+        <img src="{{ section.settings.np-paginate-prev | img_url: 'master' }}" alt="previous arrow icon">
+        <span class="icon__fallback-text">{{ 'general.pagination.previous' | t }}</span>
+      </a>
+    </span>
+  {% endif %}
+  {{ paginate | default_pagination: previous: previous_label, next: next_label | replace: 'view=ajax', '' }} 
+  {% if paginate.current_page == paginate.pages %}
+    <span class="next np-disabled">
+      <a href="#" title="">
+        <img src="{{ section.settings.np-paginate-next | img_url: 'master' }}" alt="next arrow icon">
+        <span class="icon__fallback-text">{{ 'general.pagination.next' | t }}</span>
+      </a>
+    </span>
+  {% endif %}
+  
+  <span class="np-pagination-word">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+</div>

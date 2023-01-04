@@ -1,0 +1,30 @@
+{% if section.settings.page_breadcrumb_enable %}
+	<div class="page-width">
+	{%- include 'breadcrumbs' -%}
+	</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Breadcrumb section",
+    "settings": [
+	  {
+        "type": "checkbox",
+        "id": "page_breadcrumb_enable",
+        "label": "Show page breadcrumb"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+/* Breadcrumb */
+.custom-breadcrumb {
+	padding: 10px 0;
+}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

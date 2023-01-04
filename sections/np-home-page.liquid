@@ -1,0 +1,1448 @@
+
+{% for block in section.blocks %}
+  {% case block.type %}
+
+	{% when 'spring_hero_section' %}
+		<section id="np-hero-spring"class="hero-spring-banner">
+          <div class="np-col-first np-col-special-first">
+          	<img alt="{{ block.settings.image.alt }}" class="np-spring-img" src="{{ block.settings.image | img_url: 'master' }}">
+            <div>
+                   <h1><span class="np-mobile-only">A sense <br>of adventure</span></h1>
+            </div>
+          </div>
+          <div class="np-col-second">
+              <div class="np-col-second-box">
+                  <div class="np-col-second-title">
+                      <h2>{{ block.settings.title1 }}</h2>
+                  </div>
+                  <div class="np-col-second-desc">
+                      <p>{{ block.settings.text }}</p>
+                  </div>
+                  <div class="np-col-second-link">
+                      <a class="link" href="{{ block.settings.link }}">{{ block.settings.cta-label }}</a>
+                  </div>
+              </div>
+          </div>	
+		</section>
+	{% when 'sale_section' %}
+		<section class="np-sale-fullwidth">
+          <a href="{{ block.settings.sale-link }}">
+            <div class="home-sale-banner ">
+              <div class="home-sale-banner-col-1">
+                {{ block.settings.sale }}
+              </div>
+              <div class="home-sale-banner-col-2">
+                <h3>{{ block.settings.sale_sub_heading }}</h3>
+				<div class="sale-mobile"> 
+                  <h2 style="display: block;">Shop sale season Responsibilty.</h2>
+                  <h2>Get our sustainable pieces with up to 70% off.</h2>
+                </div>
+              </div>
+            </div>
+          </a>
+        </section>
+    {% when 'hero_section' %}
+    	<section id="np-hero-section" class="np-container">
+            <div class="np-row">
+                <div class="np-column np-col-special-first">
+                    <img alt="{{ block.settings.image.alt }}" src="{{ block.settings.image | img_url: 'master' }}" />
+                    <div>
+                        <h1><span>{{ block.settings.title1 }} </span><span class="np-mobile-only">{{ block.settings.title2 }}</span></h1>
+                    </div>
+                </div>
+                <div class="np-column np-col-special-second np-content-block">
+                    <div>
+                        <h1 class="np-desktop-only">{{ block.settings.title2 }}</h1>
+                        <p>{{ block.settings.text }}</p>
+                        <a href="{{ block.settings.cta-link }}">{{ block.settings.cta-label }}</a>
+                      {% style %}
+                          @media (min-width: 769px){
+                              #np-hero-section .np-column.np-col-special-second > div h1 {
+                                  color:{{ block.settings.title2_color }};
+                                  font-size: 58px;
+                                  line-height: 64px;
+								}
+                          }  
+					{% endstyle %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% when 'fake_banner_section' %}
+		{% if block.settings.image != blank %}
+			<style>
+              @media only screen and (min-width: 769px) {
+                #np-fake-banner {
+                  background-image: url("{{ block.settings.image | img_url: 'master' }}");
+                }
+              }
+            </style>
+		{% endif %}
+		{% if block.settings.image-mobile != blank %}
+			<style>
+              @media only screen and (max-width: 768px) {
+                #np-fake-banner {
+                  background-image: url("{{ block.settings.image-mobile | img_url: 'master' }}");
+                }
+              }
+            </style>
+		{% endif %}
+  		<section id="np-fake-banner" class="np-container np-container-fullwidth">
+            <div class="np-row np-content-block">
+                <div class="np-column">
+                    <h2>{{ block.settings.title }} </h2>
+                </div>
+                <div class="np-column">
+                    <p>{{ block.settings.text }}</p>
+                </div>
+                <div class="np-column">
+                    <a href="{{ block.settings.link }}" class="link">{{ block.settings.cta-label }}</a>
+                </div>
+            </div>
+        </section>
+	{% when 'double_image_section' %}
+<!-- 		<section class="np-spring-collection np-container">
+            <div class="np-spring-sun-bleached np-spring-collection-column">
+                <div class="np-sun-bleached-col-1">
+                    <img alt="{{ block.settings.image.alt }}" class="" src="{{ block.settings.image | img_url: 'master' }}">
+                </div>
+                <div class="np-sun-bleached-col-2">
+                    <div class="np-sun-bleached-col-2-header">
+                        <h2>{{ block.settings.title }}</h2>
+                    </div>
+                    <div class="np-sun-bleached-col-2-description np-content-block">
+                        <p class="desktop-content">{{ block.settings.text }}</p>
+                    </div>
+                    <a class="link-white" href="{{ block.settings.link }}">{{ block.settings.cta-label }}</a>
+                </div>
+            </div>
+            <div class="np-spring-sunset np-spring-collection-column">
+                <div class="np-spring-sunset-col-1">
+                    <img alt="{{ block.settings.image2.alt }}" class="" src="{{ block.settings.image2 | img_url: 'master' }}">
+                </div>
+                <div class="np-spring-sunset-col-2">
+                    <div class="np-spring-sunset-col-2-header">
+                        <h2>{{ block.settings.title2 }}</h2>
+                    </div>
+                    <div class="np-spring-sunset-col-2-description np-content-block">
+                        <p  class="desktop-content">{{ block.settings.text2 }}</p>
+                    </div>
+                    <a class="link" href="{{ block.settings.link2 }}">{{ block.settings.cta-label2 }}</a>
+                </div>
+            </div>
+        </section>  -->
+		<section class="np-home-version-1">
+            <div class="np-spring-sun-bleached np-spring-collection-column">
+                <div class="np-home-version-1-col-1">
+                    <img alt="{{ block.settings.image.alt }}" class="" src="{{ block.settings.image | img_url: 'master' }}">
+                    <div class="white">
+                        <h2> {{ block.settings.title }}</h2>
+                        <a href="{{ block.settings.cta-link }}" class="btn btn--secondary">{{ block.settings.cta-label }}</a>
+                    </div>  
+               </div>
+            </div>
+            <div class="np-spring-sunset np-spring-collection-column">
+                <div class="np-home-version-1-col-1">
+                    <img alt="{{ block.settings.image2.alt }}" class="" src="{{ block.settings.image2 | img_url: 'master' }}">
+                	<div class="white">
+                        <h2>{{ block.settings.title2 }}</h2>
+                        <a href="{{ block.settings.cta-link2 }}" class="btn btn--secondary">{{ block.settings.cta-label2 }}</a>
+                    </div> 
+              	</div>
+                
+            </div>
+        </section> 
+  	{% when 'double_column_section' %}
+		{% capture image_layout %}
+			<div class="np-column np-col-2">
+            	<img alt="sweats" src="{{ block.settings.image | img_url: 'master' }}">
+            </div>
+		{% endcapture %}
+  		<section class="np-container np-spring"><!-- np-vertical-content -->
+            <div class="np-row">
+              	{% if block.settings.layout == 'left' %}
+              		{{ image_layout }}
+            	{% endif %}
+                <div class="np-column np-col-2 np-content-block">
+                    <div>
+                        <h2>{{ block.settings.title }}</h2>
+                        <p class="desktop-content">{{ block.settings.text }}</p>
+                        <a href="{{ block.settings.cta-link }}" class="link">{{ block.settings.cta-label }}</a>
+                    </div>
+                </div>
+                {% if block.settings.layout == 'right' %}
+                	{{ image_layout }}
+                {% endif %}
+            </div>
+        </section>
+  	{% when 'grid_section' %}
+  		<section id="np-grid-section" class="np-container">
+            <div class="np-row np-grid-header">
+                <div class="np-column np-col-4">
+                    <h2>{{ block.settings.title }}</h2>
+                    <h3>{{ block.settings.subtitle }}</h3>
+                </div>
+            </div>
+            <div class="np-row">
+                <div class="np-column np-col-2">
+                    <a href="{{ block.settings.featured-cta-link }}">
+                        <img alt="{{ block.settings.featured-image.alt }}" src="{{ block.settings.featured-image | img_url: 'master' }}">
+                        <span class="np-black">{{ block.settings.featured-cta-label }}</span>
+                    </a>
+                </div>
+                <div class="np-column np-col-1">
+                    <a href="{{ block.settings.cta-link-1 }}">
+                        <img alt="{{ block.settings.image-1.alt }}" src="{{ block.settings.image-1 | img_url: 'master' }}">
+                        <span class="np-black">{{ block.settings.cta-label-1 }}</span>
+                    </a>
+                </div>
+                <div class="np-column np-col-1">
+                    <a href="{{ block.settings.cta-link-2 }}">
+                        <img alt="{{ block.settings.image-2.alt }}" src="{{ block.settings.image-2 | img_url: 'master' }}">
+                        <span>{{ block.settings.cta-label-2 }}</span>
+                    </a>
+                </div>
+            </div>
+            <div class="np-row">
+                <div class="np-column np-col-1">
+                    <a href="{{ block.settings.cta-link-1-s }}">
+                        <img alt="{{ block.settings.image-1-s.alt }}" src="{{ block.settings.image-1-s | img_url: 'master'  }}">
+                        <span>{{ block.settings.cta-label-1-s }}</span>
+                    </a>
+                </div>
+                <div class="np-column np-col-1">
+                    <a href="{{ block.settings.cta-link-2-s }}">
+                        <img alt="{{ block.settings.image-2-s.alt }}" src="{{ block.settings.image-2-s | img_url: 'master' }}">
+                        <span class="np-black">{{ block.settings.cta-label-2-s }}</span>
+                    </a>
+                </div>
+                <div class="np-column np-col-2">
+                    <a href="{{ block.settings.featured-cta-link-s }}">
+                        <img alt="{{ block.settings.featured-image-s.alt}}" src="{{ block.settings.featured-image-s | img_url: 'master' }}">
+                        <span class="np-black">{{ block.settings.featured-cta-label-s }}</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+  	{% when 'reviews_section' %}
+  		<section class="np-container">
+            <div class="np-row">
+                <div class="np-column np-col-4" style="display: flex;flex-wrap: wrap;justify-content: center !important;">
+                  <a href="{{ block.settings.review-link }}">  <img style="display: block; width: auto; max-width: 100%; margin: 0 auto;" alt="{{ block.settings.image.alt }}" src="{{ block.settings.image | img_url: 'master' }}"></a>
+                </div>
+            </div>
+        </section>
+  {% endcase %}
+{% endfor %}
+
+<style>
+  
+body {
+	width: 100%;
+	overflow-x: hidden;
+}
+.np-page h1, .np-page h2, .np-page h3 {
+	text-transform: none !important;
+	font-weight: 700;
+}
+
+.np-page a {
+    text-decoration: none;
+}
+/* Sale banner */
+
+ 
+.np-page .home-sale-banner {
+
+    display: flex;
+    background: #000;
+    color: #fff;
+    width: 100%;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    line-height: 0.68;
+    cursor: pointer;
+  	margin-bottom: 10px;
+
+}
+ 
+.np-page .home-sale-banner-col-1{
+	font-size: 10.806vw;
+    font-weight: 700;
+  	display: flex;
+	display: -webkit-flex;
+  	width: 27%;
+  	margin-bottom: -11px;
+}
+
+.np-page .home-sale-banner-col-2 {
+	display: -webkit-flex;
+    display: flex;
+  	width: 70%;
+
+}
+.np-page .home-sale-banner-col-2 h3 {
+
+	display: -webkit-flex;
+    display: flex;
+    font-size: 1.5706vw;
+    text-align: center;
+    width: 100%;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  	margin-bottom: 0px;
+  	font-weight: 500;
+
+}
+@media (min-width: 1200px){
+.home-sale-banner {
+    margin-bottom: 40px;
+}
+}
+@media (min-width: 769px){
+.np-sale-fullwidth {
+  
+  margin: 0 -6%;
+  
+  }
+  .np-page .sale-mobile {
+  	display:none;
+  }
+  }
+  @media (max-width: 768px) { 
+    .np-page .home-sale-banner {
+      	display: flex;
+    	flex-direction: column;
+      	margin-bottom: 20px;
+		padding: 25px 15px;
+    }
+    .np-page .home-sale-banner-col-1 {
+    	width: 100%;
+		margin-bottom: 10px;
+      	font-size: 17.333vw;
+    }
+    .np-page .home-sale-banner-col-2 {
+    	width: 100%;
+      	
+    }
+    .np-page .home-sale-banner-col-2 h3 {
+    	font-size: 2vw;
+      	justify-content: left;
+      	text-align: left;
+      	display: none;
+    }
+    
+    .np-page .sale-mobile {
+    	display: block;
+		position: relative;
+    }
+    .np-page .sale-mobile h2 {
+    	font-size: 4vw;
+    }
+  
+  }
+/* End of Sale Banner */
+#np-hero-section .np-column>img,
+.np-vertical-content .np-column>img,
+#np-grid-section .np-column img {
+    width: 100%;
+}
+
+#np-hero-section .np-col-special-first>div h1 {
+    color: #FFF;
+}
+
+#np-fake-banner {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	background-color: #000;
+}
+
+.np-container-fullwidth .np-row {}
+
+#np-fake-banner .np-content-block {
+    color: #FFF;
+}
+
+#np-fake-banner .np-content-block a {
+    color: #FFF;
+}
+
+.np-content-block a {
+    display: inline-block;
+}
+
+#np-fake-banner .np-row .np-column:nth-child(1) {
+    text-align: left;
+}
+
+#np-grid-section .np-column {
+    position: relative;
+}
+
+#np-grid-section a>span {
+    font-size: 25px;
+    line-height: 1;
+    font-weight: 700;
+    position: absolute;
+    left: 10px;
+    z-index: 9;
+}
+
+#np-grid-section a>span:not(.np-black) {
+    color: #FFFF;
+}
+
+@media only screen and (min-width: 1700px) {
+    .np-vertical-content .np-content-block>div {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 1201px) and (max-width: 1699px) {
+    .np-vertical-content .np-content-block>div {
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+  
+  #np-hero-section .np-row,
+  .np-vertical-content .np-row,
+  #np-grid-section .np-row:not(.np-grid-header) .np-column {
+    height: 610px;
+  }
+
+  .np-content-block h2 {
+    font-size: 34px;
+    line-height: 42px;
+  }
+
+  .np-content-block a {
+    font-size: 18px;
+    line-height: ;
+  }
+
+  .np-grid-header h2 {
+    font-size: 36px;
+    line-height: 45px;
+    font-weight: 700;
+  }
+
+  .np-grid-header h3 {
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: 500;
+    margin-bottom: 60px;
+  }
+
+  #np-hero-section .np-col-special-second>div p {
+    margin: 5px 0 35px;
+  }
+}
+
+  @media only screen and (min-width: 769px) and (max-width: 1199px) {
+
+    #np-hero-section .np-row,
+    .np-vertical-content .np-row,
+    #np-grid-section .np-row:not(.np-grid-header) .np-column {
+      height: 350px;
+    }
+
+    .np-vertical-content .np-content-block>div {
+      width: 80%;
+    }
+
+    .np-content-block h2 {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .np-content-block a {
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .np-grid-header h2 {
+      font-size: 26px;
+      line-height: 32px;
+      font-weight: 700;
+    }
+
+    .np-grid-header h3 {
+      font-size: 15px;
+      line-height: 28px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    #np-hero-section .np-col-special-second>div p {
+      margin: 5px 0 15px;
+    }
+  }
+
+  @media only screen and (min-width: 769px) {
+    .np-mobile-only {
+      display: none;
+    }
+
+    .np-page {
+/*       width: 90%; */
+      margin: 0 auto;
+    }
+
+    .np-container-fullwidth {
+      margin: 0 -6%;
+      padding: 0 6%;
+    }
+
+    .np-container-fullwidth .np-row {
+      min-height: 165px;
+      align-items: center;
+    }
+
+    .np-container:not(#np-hero-section) {
+      margin-top: 60px;
+    }
+
+    .np-container:not(#np-hero-section) .np-row {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-justify-content: space-between;
+      justify-content: space-between;
+    }
+
+    .np-col-1 {
+      width: 23.75%;
+    }
+
+    .np-col-2 {
+      width: 49.25%;
+    }
+
+    .np-col-4 {
+      width: 100%;
+    }
+
+    .np-vertical-content .np-column {
+      height: 100%;
+    }
+
+    .np-vertical-content .np-content-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #np-hero-section .np-row::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+    #np-hero-section .np-column {
+      float: left;
+      position: relative;
+      height: 100%;
+    }
+
+    #np-hero-section .np-col-special-first {
+      width: 31%;
+      margin-left: 16%;
+    }
+
+    #np-hero-section .np-col-special-second {
+      width: 50%;
+      padding-left: 10px;
+    }
+
+    #np-hero-section .np-column>div {
+      position: absolute;
+      top: 48%;
+    }
+
+    #np-hero-section .np-col-special-first>div {
+      width: 100%;
+      text-align: right;
+      padding: 0 10px;
+    }
+
+    #np-hero-section .np-col-special-second>div {
+      width: 65%;
+    }
+
+    #np-hero-section .np-column>div h1 {
+      font-size: 40px;
+      line-height: 44px;
+      font-weight: 700;
+    }
+
+    #np-hero-section .np-col-special-first>div h1 {
+      text-align: right;
+    }
+
+    #np-fake-banner .np-row .np-column:nth-child(1),
+    #np-fake-banner .np-row .np-column:nth-child(3) {
+      width: 30%;
+    }
+
+    #np-fake-banner .np-row .np-column:nth-child(3) {
+      text-align: right;
+    }
+
+    #np-fake-banner .np-row .np-column:nth-child(2) {
+      width: 40%;
+      text-align: center;
+    }
+
+    #np-fake-banner .np-content-block a {
+      border-bottom: 1px solid #FFF;
+    }
+
+    #np-grid-section .np-column a {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #np-hero-section .np-column>img,
+    .np-vertical-content .np-column>img,
+    #np-grid-section .np-column img {
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .np-container:not(#np-hero-section) .np-content-block {
+      text-align: center;
+    }
+
+    .np-content-block {
+      color: #000;
+    }
+
+    .np-content-block h2 {
+      margin-bottom: 15px;
+    }
+
+    .np-content-block p {
+      margin-bottom: 20px;
+    }
+
+    .np-content-block a {
+      font-weight: 700;
+      color: #333;
+      border-bottom: 1px solid #e6e6e6;
+    }
+
+    .np-content-block a:hover,
+    .np-content-block a:active,
+    .np-content-block a:visited {
+      color: rgba(0, 0, 0, 0.45);
+      transition: color 0.2s;
+    }
+
+    #np-grid-section .np-row {
+      margin-bottom: 1.4%;
+    }
+
+    .np-grid-header {
+      text-align: center;
+    }
+
+    #np-grid-section a>span {
+      color: #FFF;
+      bottom: 10px;
+      text-transform: uppercase;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .np-desktop-only {
+      display: none;
+    }
+
+    .np-container:not(#np-hero-section),
+    #np-grid-section .np-column {
+      margin-top: 30px;
+    }
+
+    .np-vertical-content .np-row {
+      position: relative;
+    }
+
+    .np-vertical-content .np-row .np-content-block {
+      position: absolute;
+      padding: 15px;
+      bottom: 30px;
+      left: 0;
+    }
+
+    .np-container:not(#np-hero-section) .np-content-block {
+      color: #FFF;
+    }
+
+    .np-content-block h2 {
+      font-size: 30px;
+    }
+
+    .np-container:not(#np-hero-section):not(#np-fake-banner) .np-content-block p {
+      display: none;
+    }
+
+    #np-fake-banner .np-content-block p {
+      display: block;
+      margin: 15px 0 30px;
+    }
+
+    #np-hero-section .np-content-block a {
+      color: #000;
+      text-decoration-color: #808080;
+      font-weight: 700;
+    }
+
+    #np-hero-section .np-col-special-first {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    #np-hero-section .np-col-special-first>div {
+      position: absolute;
+      width: 100%;
+      padding: 0 15px;
+      bottom: 3%;
+    }
+
+    #np-hero-section .np-col-special-first>div h1 {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
+    #np-hero-section .np-col-special-first>div h1>span {
+      display: block;
+    }
+
+    #np-hero-section .np-col-special-second {
+      padding: 0 15px;
+    }
+
+    .np-container:not(#np-hero-section) .np-content-block a {
+      color: #FFF;
+      text-decoration-color: #FFF;
+    }
+
+    .np-content-block a {
+      font-size: 17px;
+      line-height: 22px;
+      padding-top: 5px;
+      font-weight: 400;
+      text-decoration-line: underline;
+    }
+
+    #np-fake-banner {
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+    }
+
+    #np-fake-banner .np-row {
+      padding: 0 15px;
+    }
+
+    #np-fake-banner .np-row .np-column:nth-child(2),
+    #np-fake-banner .np-row .np-column:nth-child(3) {
+      text-align: left;
+    }
+
+    #np-fake-banner .np-content-block a {
+      font-weight: 700;
+      text-decoration-color: #808080;
+    }
+
+    .np-grid-header {
+      text-align: left;
+      padding: 0 15px;
+    }
+
+    .np-grid-header h2 {
+      font-size: 36px;
+      line-height: 36px;
+      font-weight: 500;
+    }
+
+    .np-grid-header h3 {
+      font-size: 18px;
+      line-height: 22px;
+      font-weight: 400;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    #np-grid-section a>span {
+      top: 50%;
+      -webkit-transform: translate(0%, -50%);
+      transform: translate(0%, -50%);
+      text-transform: capitalize;
+    }
+
+    #np-grid-section a>span:not(.np-black) {
+      border-bottom: 1px solid #FFF;
+    }
+
+    #np-grid-section a>span.np-black {
+      color: #000;
+      border-bottom: 1px solid #000;
+    }
+}
+
+/* NP Spring Home page changes */
+/* 
+ .shopify-section:not(:first-child) {
+    margin: 40px 0;
+} */
+  .np-home-version-1-col-1 {
+  		position:relative;
+  }
+.np-home-version-1 .np-home-version-1-col-1 > div {
+    position: absolute;
+    width: 100%;
+    padding: 0 15px;
+    top: 50%;
+	transform: translate(0,-50%);
+} 
+  .np-home-version-1 .np-home-version-1-col-1 > div.white {
+  	color: #ffffff;
+  }  
+.np-home-version-1 .np-home-version-1-col-1 > div.white a{
+    background: #fff;
+    color: #000; 
+  }  
+   .np-home-version-1 .np-home-version-1-col-1 > div.black {
+  	color: #000000;
+  }
+
+@media only screen and (max-width: 768px) {  
+  .promo-grid .mb-tie {
+  	display:block;
+    line-height: 18px;
+  }
+}  
+  
+.hero-spring-banner { 
+}
+.np-mobile-only {
+
+  display: none;
+}
+.link {
+    color: #000;
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 1px solid #000;
+/*     margin-top: 30px; */
+}
+
+@media (max-width: 769px) { 
+  #np-hero-spring .np-col-special-first > div h1 > span {
+    display: block;
+}
+    #np-hero-spring .np-col-special-first > div h1 {
+    font-size: 40px;
+    line-height: 40px;
+    color: #fff;
+    font-weight: 700;
+}
+#np-hero-spring .np-col-special-first > div {
+
+    position: absolute;
+    width: 100%;
+    padding: 0 15px;
+    bottom: 3%;
+
+}
+#np-hero-spring .np-col-special-first {
+
+    margin-bottom: 30px;
+    position: relative;
+
+}
+#np-hero-spring .np-col-second-title {
+    display: none;
+}
+#np-hero-spring .np-col-second {
+    margin: 30px 0;
+    padding: 0 15px;
+}
+.desktop-content {
+
+}
+
+.np-spring-collection-column { 
+  position: relative;
+  margin-bottom: 25px;
+}
+.np-spring-sunset-col-2, .np-sun-bleached-col-2, .np-spring .np-column div {
+  position: absolute;
+    /* bottom: 61px; */
+    padding-left: 10px;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    text-align: left;
+    line-height: 1;
+    top: auto;
+    left: 0;
+    /* right: 0; */
+    bottom: 22px
+}
+.np-spring-sunset-col-2-header h2 {
+  color: #000;
+}
+.np-spring-collection-column h2 {
+   font-size: 30px;
+}
+.np-spring .np-column {
+  position: relative;
+  }  
+.link-white {
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    border-bottom: 1px solid #fff;
+}  
+}
+
+
+@media (min-width: 769px) { 
+
+  .hero-spring-banner {
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    }
+    .hero-spring-banner .np-col-first{
+  display: block;
+  width: 40%;
+}
+
+.hero-spring-banner .np-col-second{ 
+    display: -webkit-flex;
+    display: flex;
+    width: 60%;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background: #fff;
+}
+  .np-col-second-box {
+    margin-left: 4vw;
+  }
+  .np-col-second-title h2 {
+    font-family: "ProximaNova", Arial, sans-serif;
+    font-size: 2.5vw;
+    font-weight: 700;
+    line-height: 1;
+    background-image: linear-gradient(to right, #e14f1e 10%, #feae59 45%);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .np-col-second-desc p {
+    font-size: 17px;
+  }
+
+.np-spring-collection, .np-home-version-1 {
+  display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+.np-spring-collection-column {
+      display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+
+.np-spring-collection-column{
+  webkit-flex-direction: column;
+    flex-direction: column;
+    width: 50%;
+}
+.np-spring-collection .link-white {
+    color: #000;
+  	font-weight: 700;
+	font-size: 18px;
+	border-bottom: 1px solid #000;
+	margin-top: 30px;
+}
+  .np-sun-bleached-col-2, .np-spring-sunset-col-2 {
+  	margin-top: 35px;
+  }   
+.np-spring-collection .np-sun-bleached-col-2-description, .np-spring-collection .np-spring-sunset-col-2-description {
+  	text-align: left !important;
+  }  
+.np-spring-collection-bottom-border {
+	border-bottom: 2px solid #000;
+	width: 100%;
+	margin: 0 auto;
+    margin-bottom: 0px;
+	padding-top: 60px;
+	margin-bottom: 60px;  
+  }  
+  .np-spring .np-content-block{
+  	display: flex;
+	flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }  
+  .np-spring .np-content-block p {
+  font-style: italic;
+  }
+  .np-spring .np-column div {
+  width:450px;
+  }  
+}
+@media (min-width: 1200px) {
+    .np-col-second-desc {
+      
+      width: 460px;
+    }
+
+}
+  
+  
+</style>
+{% schema %}
+{
+    "name": "NP Home Sections",
+    "class": "np-page",
+    "max_blocks": 12,
+    "settings": [],
+    "blocks": [
+    {
+        "type": "hero_section",
+        "name": "Hero Section",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title1",
+            "label": "Heading 1",
+            "default": "Your party dress"
+        },
+        {
+            "type": "text",
+            "id": "title2",
+            "label": "Heading 2",
+            "default": "has arrived"
+        },
+		{
+            "type": "color",
+            "id": "title2_color",
+            "label": "Heading 2 color",
+            "default": "#39b5ad"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Endless festive events to attend? Do going-out the Ninety Percent way in versatile, effortless dresses made for dancing.</p>"
+        },
+        {
+            "type": "text",
+            "id": "cta-label",
+            "label": "CTA label",
+            "default": "Find your dress"
+        },
+        {
+            "type": "url",
+            "id": "cta-link",
+            "label": "CTA link"
+        }]
+    },
+	{
+        "type": "spring_hero_section",
+        "name": "Spring Hero Section",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title1",
+            "label": "Heading 1",
+            "default": "A sense of adventure"
+        },
+		{
+            "type": "color",
+            "id": "title2_color",
+            "label": "Heading 2 color",
+            "default": "#39b5ad"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>The Spring collection is here. Take on the role of the modern explorer in utility-inspired pieces and colour palettes that celebrate the planet’s natural elements.</p>"
+        },
+        {
+            "type": "text",
+            "id": "cta-label",
+            "label": "CTA label",
+            "default": "Shop the Spring collection"
+        },
+        {
+            "type": "url",
+            "id": "cta-link",
+            "label": "CTA link"
+        }]
+    },
+	{
+        "type": "sale_section",
+        "name": "Sale promotion",
+        "settings": [
+        {
+            "type": "text",
+            "id": "sale",
+            "label": "Heading Sale",
+            "default": "Sale"
+        },
+        {
+            "type": "text",
+            "id": "sale_sub_heading",
+            "label": "Sale Promotion Text",
+            "default": "Shop sale season responsibly. Get our sustainable pieces with up to 70% off."
+        },
+        {
+            "type": "url",
+            "id": "sale-link",
+            "label": "CTA link"
+        }]
+    },
+    {
+        "type": "double_column_section",
+        "name": "Double Column Section",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Not big on going out?"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Do lounging the luxury way in sustainable velour and organic Merino.</p>"
+        },
+        {
+            "type": "text",
+            "id": "cta-label",
+            "label": "CTA label",
+            "default": "Shop loungewear"
+        },
+        {
+            "type": "url",
+            "id": "cta-link",
+            "label": "CTA link"
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "default": "left",
+            "options": [
+            {
+                "value": "left",
+                "label": "Image on left"
+            },
+            {
+                "value": "right",
+                "label": "Image on right"
+            }]
+        }]
+    },
+	{
+        "type": "double_image_section",
+        "name": "Double Image Section",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Left Image"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Left Heading",
+            "default": "Sun-bleached sweats"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Left Text",
+            "default": "<p>Introducing our garment-dyed pieces — brand new, with an individual love-worn finish.</p>"
+        },
+        {
+            "type": "text",
+            "id": "cta-label",
+            "label": "Left CTA label",
+            "default": "Shop sweats"
+        },
+        {
+            "type": "url",
+            "id": "cta-link",
+            "label": "Left CTA link"
+        },
+		{
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Right Image"
+        },
+        {
+            "type": "text",
+            "id": "title2",
+            "label": "Right Heading",
+            "default": "Sunset stripes"
+        },
+        {
+            "type": "richtext",
+            "id": "text2",
+            "label": "Right Text",
+            "default": "<p>Extra fine organic Merino wool separates to inspire (and provide) higher temperatures.</p>"
+        },
+        {
+            "type": "text",
+            "id": "cta-label2",
+            "label": "Right CTA label",
+            "default": "Shop Knits"
+        },
+        {
+            "type": "url",
+            "id": "cta-link2",
+            "label": "Right CTA link"
+        }
+        ]
+    },
+    {
+        "type": "fake_banner_section",
+        "name": "Fake Banner Section",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+		{
+            "type": "image_picker",
+            "id": "image-mobile",
+            "label": "Image (Mobile)"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Sharing is a good look"
+        },
+        {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>We share 90% of our distributed profits between five charitable causes. Get to know them and discover more about how you can help to start something meaningful.</p>"
+        },
+        {
+            "type": "text",
+            "id": "cta-label",
+            "label": "CTA label",
+            "default": "Learn more about our mission"
+        },
+        {
+            "type": "url",
+            "id": "cta-link",
+            "label": "CTA link"
+        },
+        {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "default": "left",
+            "options": [
+            {
+                "value": "left",
+                "label": "Image on left"
+            },
+            {
+                "value": "right",
+                "label": "Image on right"
+            }]
+        }]
+    },
+    {
+        "type": "reviews_section",
+        "name": "Reviews Section",
+        "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+		{
+            "type": "url",
+            "id": "review-link",
+            "label": "Review link"
+        }]
+    },
+    {
+        "type": "grid_section",
+        "name": "Grid Section",
+        "settings": [
+        {
+            "type": "header",
+            "content": "Grid Row 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured-image",
+            "label": "Featured Image"
+        },
+        {
+            "type": "text",
+            "id": "featured-cta-label",
+            "label": "Featured CTA label",
+            "default": "Sweats"
+        },
+        {
+            "type": "url",
+            "id": "featured-cta-link",
+            "label": "Featured CTA link"
+        },
+        {
+            "type": "image_picker",
+            "id": "image-1",
+            "label": "Image 1"
+        },
+        {
+            "type": "text",
+            "id": "cta-label-1",
+            "label": "CTA label 1",
+            "default": "Jumpsuits"
+        },
+        {
+            "type": "url",
+            "id": "cta-link-1",
+            "label": "CTA link 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "image-2",
+            "label": "Image 2"
+        },
+        {
+            "type": "text",
+            "id": "cta-label-2",
+            "label": "CTA label 2",
+            "default": "Bodies"
+        },
+        {
+            "type": "url",
+            "id": "cta-link-2",
+            "label": "CTA link 2"
+        },
+        {
+            "type": "header",
+            "content": "Grid Row 2"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured-image-s",
+            "label": "Featured Image"
+        },
+        {
+            "type": "text",
+            "id": "featured-cta-label-s",
+            "label": "Featured CTA label",
+            "default": "Tops"
+        },
+        {
+            "type": "url",
+            "id": "featured-cta-link-s",
+            "label": "Featured CTA link"
+        },
+        {
+            "type": "image_picker",
+            "id": "image-1-s",
+            "label": "Image 1"
+        },
+        {
+            "type": "text",
+            "id": "cta-label-1-s",
+            "label": "CTA label 1",
+            "default": "Dresses"
+        },
+        {
+            "type": "url",
+            "id": "cta-link-1-s",
+            "label": "CTA link 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "image-2-s",
+            "label": "Image 2"
+        },
+        {
+            "type": "text",
+            "id": "cta-label-2-s",
+            "label": "CTA label 2",
+            "default": "Bottoms"
+        },
+        {
+            "type": "url",
+            "id": "cta-link-2-s",
+            "label": "CTA link 2"
+        },
+		{
+            "type": "header",
+            "content": "Grid Content Row"
+        },
+		{
+            "type": "text",
+            "id": "title",
+            "label": "Section Heading",
+            "default": "Beautiful basics, mindfully made"
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Section Subheading",
+            "default": "Shop our everyday essentials"
+        }]
+    }],
+    "presets": [
+    {
+        "name": "NP Home Sections",
+        "category": "Advanced layout"
+    }]
+}
+{% endschema %}
+
+
+{% stylesheet %}
+
+{% endstylesheet %}

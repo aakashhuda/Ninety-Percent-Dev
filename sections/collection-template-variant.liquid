@@ -1,0 +1,438 @@
+{%- assign per_row = section.settings.per_row -%}
+{%- assign paginate_by = per_row | times: section.settings.rows_per_page -%}
+
+{% paginate collection.products by paginate_by %}
+
+{% assign prod_count = 0 %}
+      {%- for product in collection.products -%}
+        {% for option in product.options %}
+               {% if option == 'Color' %}
+               {% assign index = forloop.index0 %}
+               {% assign colorlist = '' %}
+               {% assign color = '' %}
+               {% for variant in product.variants %}
+               {% capture color %}
+               {{ variant.options[index] }}
+               {% endcapture %}
+                 {% unless colorlist contains color %}
+                    <!-- INSERT PRODUCT LOOP -->
+                    {% assign prod_count = prod_count | plus: 1 %}
+                    
+                    {% capture tempList %}
+                  {{colorlist | append: color | append: " " }}
+                  {% endcapture %}
+                  {% assign colorlist = tempList %}
+                  {% endunless %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+        {% endfor %}
+<div
+  id="CollectionSection"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-template">
+
+  {%- if section.settings.description_position == 'top' -%}
+    {% if collection.description != blank %}
+      <div class="rte">
+        {{ collection.description }}
+      </div>
+      <hr class="hr--clear hr--small">
+    {% endif %}
+  {%- endif -%}
+
+  {%- if section.settings.subcollection_style == 'above' -%}
+    {%- include 'subcollections', per_row: section.settings.subcollections_per_row -%}
+  {%- endif -%}
+  <div class="np-collection-filter-container"> 
+ <div class="np-collection-filter">
+  <div class="collection-filter">
+       
+    {%- assign current_filter_size = current_tags | size -%}
+    <div class="collection-filter__item collection-filter__item--drawer">
+      <button
+        type="button"
+        class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
+        aria-controls="FilterDrawer">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5zM7 42h31M16 22H6M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5zM57 22H26"/></svg>
+        {{ 'collections.filters.title_tags' | t }}
+        {%- if current_filter_size > 0 -%}
+          ({{ current_filter_size }})
+        {%- endif -%}
+      </button>
+    </div>
+
+    <div class="collection-filter__item collection-filter__item--count small--hide" style="text-align: right;padding-right: 15px;">
+      {%- if section.settings.enable_collection_count -%}
+        {% comment %}{{ 'collections.general.items_with_count' | t: count: collection.products_count }} {% endcomment%} 
+      {{ prod_count }} products
+      {%- endif -%}
+    </div>
+
+    <div class="collection-filter__item collection-filter__item--sort">
+      <div class="collection-filter__sort-container">
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        {%- assign default_sorted = false -%}
+        {%- if sort_by == collection.default_sort_by -%}
+          {%- assign default_sorted = true -%}
+        {%- endif -%}
+        <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
+        <select name="SortBy" id="SortBy">
+          <option value="title-ascending"{% if sort_by == collection.default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
+          {% for option in collection.sort_options %}
+            <option value="{{ option.value }}" {% unless default_sorted %}{% if option.value == sort_by %}selected="selected"{% endif %}{% endunless %}>{{ option.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+ </div>
+</div>
+
+  {%- if section.settings.enable_collection_count -%}
+    <p class="medium-up--hide text-center">{{ 'collections.general.items_with_count' | t: count: collection.products_count }}</p>
+  {%- endif -%}
+
+  <div
+    class="grid grid--uniform grid--collection{% if section.settings.mobile_flush_grid %} small--grid--flush{% endif %}"
+    data-scroll-to>
+    {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+
+    {% case per_row %}
+    {% when 2 %}
+      {%- assign grid_item_width = 'medium-up--one-half' -%}
+    {% when 3 %}
+      {%- assign grid_item_width = 'medium-up--one-third' -%}
+    {% when 4 %}
+      {%- assign grid_item_width = 'medium-up--one-quarter' -%}
+    {% when 5 %}
+      {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+    {% endcase %}
+
+    {%- if collection.handle == "sale" -%}
+    	{%- assign np_variants = "" -%}
+        {% for product in collections['sale'].products %}
+          {%- for variant in product.variants -%}
+            {%- if variant.compare_at_price > variant.price -%}
+              	{%- assign np_variants = np_variants | append: "," | append: variant.id -%}
+            {%- endif -%}
+          {% endfor %}
+        {% endfor %}
+        {%- assign np_variants = np_variants | slice: 1, np_variants.size -%}
+        {%- assign np_variants = np_variants | split: "," | uniq -%}
+        {%- assign np_variants = np_variants | join: "," -%}
+    	
+    	{%- for product in collection.products -%}
+          {% for option in product.options %}
+               {% if option == 'Color' %}
+               {% assign index = forloop.index0 %}
+               {% assign colorlist = '' %}
+               {% assign color = '' %}
+               {% for variant in product.variants %}
+    			{% if variant.compare_at_price %}
+                 {% capture color %}
+                  {{ variant.options[index] }}
+                 {% endcapture %}
+                   {% unless colorlist contains color %}
+                      <!-- INSERT PRODUCT LOOP -->
+                      {% assign prod_count = prod_variant_count | plus: 1 %}
+                        {% include 'product-grid-item-sale-variant', variantColor:color %}
+                      {% capture tempList %}
+                    	{{colorlist | append: color | append: " " }}
+                      {% endcapture %}
+                    {% assign colorlist = tempList %}
+                   {% endunless %}
+    			{% endif %}
+                {% endfor %}
+            	{% endif %}
+              {% endfor %}
+        {%- else -%}
+          <div class="grid__item">
+            <p>{{ 'collections.general.no_matches' | t }}</p>
+          </div>
+        {%- endfor -%}
+    {% else if %}
+
+    	{%- for product in collection.products -%}
+    		{% for option in product.options %}
+               {% if option == 'Color' or option == 'color' %}
+               {% assign index = forloop.index0 %}
+               {% assign colorlist = '' %}
+               {% assign color = '' %}
+                 {% for variant in product.variants %}
+                     {% capture color %}
+                     {{ variant.options[index] }}
+                     {% endcapture %}
+                     {% unless colorlist contains color %}
+                          {% include 'product-grid-item-variant', variantColor:color %}
+                        {% capture tempList %}
+                      {{colorlist | append: color | append: " " }}
+                      {% endcapture %}
+                      {% assign colorlist = tempList %}
+                      {% endunless %}
+                   {% endfor %}
+                {% endif %}
+    			{% if option == 'gift card amount' %}
+    			 	{% include 'product-grid-item' %}
+    			{% endif %}
+              {% endfor %}
+          
+        {%- else -%}
+          <div class="grid__item">
+            <div class="np-not-found">
+            	<img alt="{{ section.settings.np-not-found-image.alt }}" src="{{ section.settings.np-not-found-image | img_url: 'master' }}" />
+              	<h5>{{ section.settings.np-not-found-text }}</h5>
+               <p>{{ 'collections.general.no_matches' | t }}</p>
+              <a href="#" class="btn btn--small" >{{ section.settings.goBack-cta-label }}</a>
+            </div>
+           
+          </div>
+        {%- endfor -%}
+    {%- endif -%}
+
+  </div>
+
+  {%- if section.settings.subcollection_style == 'below' -%}
+    {%- include 'subcollections', per_row: section.settings.subcollections_per_row -%}
+  {%- endif -%}
+
+  {%- if paginate.pages > 1 -%}
+    {%- include 'pagination' -%}
+  {%- endif -%}
+
+  {%- if section.settings.description_position == 'bottom' -%}
+    {% if collection.description != blank %}
+      <hr class="hr--clear hr--small">
+      <div class="rte">
+        {{ collection.description }}
+      </div>
+      <hr class="hr--clear hr--small">
+    {% endif %}
+  {%- endif -%}
+
+  {%- if settings.quick_shop_enable -%}
+    {%- for product in collection.products -%}
+      {%- if product.available -%}
+        {%- include 'quick-shop-modal' -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+</div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Collection pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "description_position",
+        "label": "Collection description position",
+        "default": "top",
+        "options": [
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Subcollections"
+      },
+      {
+        "type": "paragraph",
+        "content": "Links to collections from your menu will appear here. [Learn more](https://archetypethemes.co/blogs/impulse/how-do-i-create-subcollections)"
+      },
+      {
+        "type": "select",
+        "id": "subcollection_style",
+        "label": "Subcollection style",
+        "default": "above",
+        "options": [
+          {
+            "value": "above",
+            "label": "Above products"
+          },
+          {
+            "value": "below",
+            "label": "Below products"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "subcollections_per_row",
+        "label": "Subcollections per row",
+        "default": 5,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "header",
+        "content": "Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_collection_count",
+        "label": "Enable collection count",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "per_row",
+        "label": "Products per row",
+        "default": 4,
+        "min": 2,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "rows_per_page",
+        "label": "Rows per page",
+        "default": 7,
+        "min": 3,
+        "max": 101,
+        "step": 1
+      },
+      {
+        "type": "checkbox",
+        "id": "mobile_flush_grid",
+        "label": "Flush grid on mobile",
+        "default": false
+      },
+      { 
+        "type": "image_picker",
+        "id": "np-paginate-prev",
+        "label": "Pagination Previous Icon"
+      },
+	  { 
+        "type": "image_picker",
+        "id": "np-paginate-next",
+        "label": "Pagination Next Icon"
+      },
+	  { 
+        "type": "image_picker",
+        "id": "np-not-found-image",
+        "label": "Not Found Image"
+      },
+	  { 
+        "type": "text",
+        "id": "np-not-found-text",
+        "label": "Not Found Text",
+ 		"default": "Not Found"
+      },
+	  {
+        "type": "text",
+        "id": "goBack-cta-label",
+        "label": "Go back label",
+        "default": "Go Back"
+      },
+      {
+        "type": "url",
+        "id": "goBack-cta-link",
+        "label": "Go Back link"
+      }
+	  
+    ]
+  }
+{% endschema %}
+<style>
+   .grid-product__price--original {
+    opacity: 0.4;
+} 
+ .grid-product__tag--sale {
+
+	background-color:#fd024d ;
+
+} 
+.grid-product__tag.grid-product__coming-soon {
+    left: 0;
+    right: auto;
+  background-color: #808080;
+}
+
+ .np-not-found {
+	text-align: center;
+	margin: 40px auto;
+
+  
+  }  
+
+  :not(.custom-item-grid) .grid__item .np-not-found { 
+  	   padding-right: 25%;
+  
+  }
+  @media only screen and (max-width: 768px) {
+  .np-not-found { 
+  	   padding-right: 0px !important;
+  
+  }
+  
+  }
+  .ProductItem__Card_Overlay {
+    position: absolute;
+    top: -32px;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+  }
+  a.grid-product__link:hover + .grid-product__meta .ProductItem__Card_Overlay {
+  	opacity: 1;
+  }
+  .ProductItem__Card_Overlay_Inner {
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    transition: background-color .25s ease;
+  }
+  .ProductItem__Card_Options {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    line-height: 1;
+    transition: opacity .25s ease;
+    margin: 0 auto;
+  }
+  .ProductItem__Card_Options .not-available {
+  		color: #9f9f9f;
+	}
+  .ProductItem__Card_Option {
+    line-height: 1;
+    transition: opacity .25s ease;
+    display: inline-block;
+    width: auto;
+    font-size: 12px;
+    list-style-type: none;
+  }
+  .ProductItem__Card_size_name {
+    padding: 0 10px;
+    text-transform: uppercase;
+    line-height: 29px;
+    justify-content: center;
+  }
+  @media only screen and (min-width: 769px) and (max-width: 1040px) {
+  	.ProductItem__Card_size_name {
+    	padding: 0 5px;
+    }
+    .ProductItem__Card_Option { 
+    	font-size: 10px;
+    }
+  }
+</style>

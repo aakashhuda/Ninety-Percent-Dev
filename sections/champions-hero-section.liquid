@@ -1,0 +1,51 @@
+<style>
+	.hero-img{
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("{{ section.settings.hero_image | img_url: 'master' }}");
+      background-size: cover;
+      height: 650px;
+      position: relative;
+      width: 100%;  
+    }
+    .hero-article{
+        margin: 30px 180px 40px 180px;
+        text-align: center;      
+    }
+  @media (max-width: 768px){
+    .hero-img{
+    	height: 200px;
+    }
+    .hero-article{
+    	margin: 20px 25px 30px 25px;
+    }
+    
+  }
+</style>
+
+<section class="hero-img">
+</section>
+
+<article class="hero-article">
+  <p>{{ section.settings.hero_article }}</p>
+  
+  {% include 'coc-form' %}
+</article>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_article",
+      "label": "Hero Article"
+    }
+  ]
+} 
+{% endschema %}

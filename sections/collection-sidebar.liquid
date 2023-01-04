@@ -1,0 +1,574 @@
+{%- if section.settings.enable_sidebar -%}
+  <div
+    id="CollectionSidebar"
+    data-section-id="{{ section.id }}"
+    data-section-type="collection-sidebar"
+    data-combine-tags="{{ section.settings.tags_combine }}"
+    data-style="{{ section.settings.filter_style }}">
+
+    {% include 'sidebar-drawer' %}
+
+    {%- if section.settings.filter_style == 'sidebar' -%}
+      <div class="collection-sidebar small--hide">
+        {% include 'collection-sidebar-filters', location: 'CollectionSidebar' %}
+      </div>
+    {%- endif -%}
+  </div>
+
+<style>
+  .btn.btn--small.js-no-transition {
+    display: block;
+	}
+  .has-np-active .is-np-active {
+    z-index: -1;
+  }
+  .grid-product__color-image.is-np-active {
+      animation: fade-in-small 0.5s cubic-bezier(0.26, 0.54, 0.32, 1) 0s forwards;
+  }
+  #CollectionAjaxContent .grid .grid__item.grid__item--sidebar {
+  	overflow: hidden;
+    
+  }
+  #CollectionAjaxContent .grid .grid__item.grid__item--sidebar > :first-child {
+    width: calc(100% + 8px);
+  }
+   
+  body.np-collection-filter-sticky #CollectionAjaxContent .grid .grid__item.grid__item--sidebar > :first-child {
+    overflow-y: scroll;
+    width: calc(100% + 25px); 
+    padding-right: 25px;
+  }
+  
+  #CollectionSidebar .np-size-group ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  #CollectionSidebar .np-size-group li {
+    width: 50%;
+  }
+  #CollectionSidebar .collection-sidebar__group {
+  	border-top: none;
+  }
+  
+  #CollectionSidebar .collapsible-trigger.collapsible-trigger-btn::after {
+  	content: '';
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    background: #E4E4E4;
+    bottom: 10px;
+    left: 0;
+  }
+  #CollectionSidebar .collection-sidebar .collection-sidebar__group svg {
+    display: none;
+  }
+  /*   #CollectionSidebar .tag-list--checkboxes .tag--active a:before {
+  	background-clip: content-box;
+  } */
+  /*   #CollectionSidebar .tag-list--checkboxes a:before {
+    border: 1px solid #070707;
+    height: 10px;
+    width: 10px;
+    padding: 1px;
+  } */
+  #CollectionSidebar .tag-list--checkboxes a:before {
+    border: 1px solid #070707;
+    height: 10px;
+    width: 10px;
+  }
+  .tag-list--checkboxes .tag--active a:after {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 8px;
+    width: 8px;
+    border: 1px solid #fff;
+    background: #000;
+  }
+  #CollectionSidebar .collection-sidebar .tag-list__header {
+    pointer-events: none;
+  }
+  #CollectionSidebar .collapsible-trigger-btn {
+  	text-transform: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: normal;
+  }
+  
+  #PageContainer .custom-banner-filter-list {
+  	display: flex;
+    list-style: none;
+    margin: 0;
+    max-width: 70%;
+	justify-content: center;
+	flex-wrap: wrap;
+  } 
+  
+  #PageContainer .custom-banner-filter-list > li {
+  	padding: 0 15px;
+    cursor: pointer;
+  }
+  
+  #PageContainer .custom-banner-filter-list > li.np-active {
+  	font-weight: bold;
+    text-decoration: underline;
+    text-decoration-color: #C4C4C4;
+  }
+  #PageContainer .custom-banner-filter-list > li:hover {
+  	text-decoration: underline;
+    text-decoration-color: #C4C4C4;
+  }
+  #CollectionSidebar .np-price-group .collapsible-content {
+  	display: none;
+  }
+  #CollectionSidebar .collapsible-content {
+    transition: none;
+  }
+  
+  #CollectionSidebar .color-swatch--filter {
+  	width: 30px;
+    height: 30px;
+  }
+  #CollectionSidebar select.custom-sidebar-price-list {
+  	width: 100%;
+  }
+  @media only screen and (min-width: 769px) {
+  	#CollectionAjaxContent .grid .grid__item.grid__item--sidebar {
+      height: calc(100vh - 10px);
+      padding-top: 45px;
+    }
+    #CollectionAjaxContent .grid .grid__item.grid__item--sidebar > :first-child {
+    	height: 100%;
+    }
+  }
+  
+  #FilterDrawer .np-price-group .custom-sidebar-price-list:not(.np-expanded) {
+  	display: none;
+  }
+  @media only screen and (max-width: 768px) {
+  	.has-np-active .grid-product__image-mask .image-wrap img {
+    	opacity: 0 !important;
+      	
+    }
+    .grid-product__color-image.small--hide.is-np-active {
+    	display: block !important;
+    }
+    #PageContainer .custom-banner-filter-list { 
+    
+    	max-width: 99%;
+    }   
+    
+  }
+/*   .np-custom-hover-swatch {
+  	opacity: 0;
+  } */
+</style>
+
+<script>
+(function pollForjQuery() {
+  if (window.jQuery !== undefined) {
+    var $ = window.jQuery;
+    $(document).ajaxComplete(function() {
+//       pollForDressStyles();
+      pollForPrices();
+      if ($('.tag-list--swatches .tag--active').length > 0) {	
+          avtivateSwatchImagepreview();
+      } else {
+          $('.is-np-active').removeClass('is-np-active');
+          $('.np-active-swatch').removeClass('np-active-swatch');
+      }
+    });
+    
+    function avtivateSwatchImagepreview() {
+        var npSelectedSwatch = $('.tag-list--swatches .tag--active > a').attr('title').split('Remove ')[1].trim().replace(/ /g, "-").toLowerCase();
+        var npVariant = "";
+        var npImage = "";
+        $.each($('.grid-product'), function() {
+            var $this = $(this);
+            $.each($this.find('.grid-product__colors > a'), function() {
+                var $that = $(this);
+                var $thatClass = $that.attr('class').trim().toLowerCase();
+                if ($that.hasClass('color-swatch--' + npSelectedSwatch) || $thatClass.indexOf(npSelectedSwatch) > -1 || multiColorVariants(npSelectedSwatch, $thatClass)) {
+                    npVariant = $that.attr('data-variant-id').trim();
+                    npImage = $that.attr('data-variant-image').trim();
+                    $that.parent().children('a').not($that).removeClass('np-active-swatch');
+                    if (!$that.hasClass('np-active-swatch')) {
+                        $that.addClass('np-active-swatch');
+                        $that.nextAll('a').addClass('np-after-active-swatch');
+                    }
+                    return false;
+                }
+                // else if ($that.indexOf(npSelectedSwatch.toLowerCase()) >= 0) {
+                //     console.log('contains');
+                // }
+            });
+            $.each($this.find('.grid-product__color-image'), function() {
+                var $that = $(this);
+                if ($that.hasClass('grid-product__color-image--' + npVariant)) {
+                    $that.parent().children('.grid-product__color-image').not($that).removeClass('is-np-active');
+                    if (!$that.hasClass('is-np-active')) {
+                        $that.addClass('is-np-active');
+                    }
+                    $that.css("background-image", "url('" + npImage + "')");
+                    return false;
+                }
+            });
+        });
+        fakeMutationObserve();
+    }
+
+    function multiColorVariants(filterColor, variantClassList) {
+        var colorGroup;
+        switch(filterColor) {
+            case 'black' :
+                colorGroup = ['black', 'magenta and black', 'jade and black', 'black and camel', 'Black and Hot Orange', 'tie dye black', 'Black Marl And Eggnog', 'flower print beige with black', 'black wilderness'];
+                break;
+            case 'blue' :
+                colorGroup = ['navy', 'Aqua', 'Aqua and Navy', 'magenta and navy', 'pin stripe', 'royal blue', 'blue', 'navy and royal blue', 'Ink', 'Mottled Sky Tie Dye', 'Sky', 'Tie Dye Aqua', 'blue multi'];
+                break;
+            case 'pink' :
+                colorGroup = ['blush', 'Coral', 'magenta', 'magenta and black', 'magenta and navy', 'true nude', 'Hot Pink', 'Pale Pink', 'Petal Pink', 'Peach', 'Petal Pink And Taupe', 'fandango pink', 'bonbon', 'bonbon multi', 'pink', 'pink with navy', 'dusty rose'];
+                break;
+            case 'white' :
+                colorGroup = ['white' ,'Optic White' ,'Natural White and Hot Red' ,'off white', 'Cloud', 'Cream', 'Frost', 'Unbleached Cotton', 'Tie Dye Aqua', 'Frost With Buttercup Dip Dye'];
+                break;
+            case 'orange' :
+                colorGroup = ['Hot Orange', 'Black and Hot Orange', 'Hot Pink and Hot Orange', 'Coral and Hot Orange', 'amber', 'Caramel', 'Caramel Cloud Tie Dye', 'Orange Marl & Aubergine', 'Burned Orange', 'Bold Orange', 'ginger', 'sunset'];
+                break;
+            case 'green' :
+                colorGroup = ['Olive', 'Hawaiian Print', 'jade and camel', 'jade', 'jade and black', 'pine', 'Night Forest Tie Dye', 'Pine', 'Tie Dye Olive', 'Olive Buttercup Frost', 'apple green', 'beechnut', 'beechnut mouline', 'grey green', 'lime', 'sea grass', 'summer green', 'breen', 'ecru with green meadow', 'moss green'];
+                break;
+            case 'brown' :
+                colorGroup = ['Khaki', 'java', 'dusky rose', 'camel', 'jade and camel', 'black and camel', 'Taupe', 'Chocolate', 'Truffle', 'Clay', 'Stone', 'Sand', 'Petal Pink And Taupe', 'dark taupe', 'flower print beige with black', 'ripple print beige', 'Brown Khaki', 'brown', 'brown multi', 'sand and dark taupe', 'Bold Orange Coriander', 'Multi Coriander', 'Multi Brush', 'Dark Brown', 'Brush', 'Coriander'];
+                break;
+            case 'purple' :
+                colorGroup = ['amethyst', 'Heather', 'Multi Lilac', 'Lilac'];
+                break;
+            case 'yellow' :
+                colorGroup = ['Straw', 'Golden Straw', 'Buttercup', 'Unbleached Cotton', 'Frost With Buttercup Dip Dye',];
+                break;
+            case 'grey' :
+                colorGroup = ['grey marl', 'dark grey marl', 'grey and black', 'grey', 'charcoal', 'oatmeal'];
+                break;
+            case 'neutral' :
+                colorGroup = ['ecru', 'Warm Sand', 'Unbleached Cotton', 'ecru with dark taupe', 'ecru with green meadow'];
+                break;
+            case 'red' :
+                colorGroup = ['burgundy', 'Maple', 'Natural White and Hot Red', 'Fuchsia And Fire Red', 'Fig', 'Umber', 'Brick', 'Truffle', 'hibiscus'];
+                break;
+            default:
+                break;
+        }
+        return matchColor(variantClassList, colorGroup) ? true : false;
+    }
+
+    function matchColor(variantClassList, colorGroup) {
+        var matched = false;
+        $.each(colorGroup, function(index, item){
+            if (variantClassList.indexOf('color-swatch--' + item.trim().replace(/ /g, "-").toLowerCase()) > -1) {
+                matched = true;
+                return false;
+            }
+        });
+        return matched;
+    }
+    
+    function fakeMutationObserve() {
+      var attrList = $('.image-wrap > img').attr('srcset');
+      if(attrList !== undefined) {
+        $.each($('.grid-product__secondary-image'), function() {
+          var $this = $(this);
+          var hoverUrl = $this.attr('data-bgset').trim().split(",")[1].split(" ")[2];
+          var $that = $this.siblings(".image-wrap").children();
+          $that.removeAttr("src srcset data-srcset");
+          $that.attr("src", hoverUrl);
+        });
+      } else {
+        setTimeout(fakeMutationObserve, 50);
+      }
+    }
+    
+   	$(document).on('mouseenter', '.grid-product__colors > a:not(.np-active-swatch):not(.np-after-active-swatch)', function(evt) {
+        var $el = $(evt.currentTarget);
+        var id = $el.parent().children('.np-active-swatch').attr('data-variant-id');
+        $('.grid-product__color-image--' + id).parent().addClass('has-np-active');
+    });
+    $(document).on('mouseleave', '.grid-product__colors > a:not(.np-active-swatch):not(.np-after-active-swatch)', function(evt) {
+        var $el = $(evt.currentTarget);
+        var id = $el.parent().children('.np-active-swatch').attr('data-variant-id');
+        $('.grid-product__color-image--' + id).parent().removeClass('has-np-active');
+    });
+    $(document).on('click', '#CollectionSidebar #FilterDrawer .np-price-group .collapsible-trigger-btn' ,function() {
+      $('#FilterDrawer .np-price-group .custom-sidebar-price-list').toggleClass('np-expanded');
+    });
+    $(document).ready(function() {
+//       pollForDressStyles();
+      pollForPrices();
+    });
+  } else {
+    setTimeout(pollForjQuery, 25);
+  }
+})();
+
+function pollForDressStyles() {
+  if (document.querySelector('.np-style-group') && document.querySelector('.np-promotion-container')) {
+    $('.custom-banner-filter-list').remove();
+    var bannerDivContent = '<ul class="custom-banner-filter-list">';
+    var count = 0;
+    $('.collection-sidebar .np-style-group ul li').each(function() {
+      bannerDivContent += '<li class="' + ($(this).hasClass('tag--active') ? 'np-active' : '') + '" onclick="bannerTagClick(' + count + ')">' + $(this).text() + '</li>';
+      count++;
+    });
+    bannerDivContent += '</ul>';
+    $('.promotion-container > .items:first-child').append(bannerDivContent);
+  } else {
+    setTimeout(pollForDressStyles, 25);
+  }
+}
+
+function bannerTagClick(count) {
+  $('.collection-sidebar .np-style-group ul li a').eq(count).click();
+}
+
+function pollForPrices() {
+  if (document.querySelector('.np-price-group')) {
+    $('.custom-sidebar-price-list').remove();
+    var count = 0;
+    var sidebarSelectContent = '<select class="custom-sidebar-price-list"><option>Select price range</option>';
+    $('.collection-sidebar .np-price-group ul li').each(function() {
+      sidebarSelectContent += '<option value="' + count + '">' + $(this).text().trim() + '</option>';
+      count++;
+    });
+    sidebarSelectContent += '</select>';
+//     $(".collection-sidebar .np-price-group button").after(sidebarSelectContent);
+    $('#CollectionSidebar .np-price-group button').after(sidebarSelectContent);
+    
+    $('#FilterDrawer .np-price-group .custom-sidebar-price-list').addClass('np-expanded');
+    
+    
+    
+    $(document).on('change', ".custom-sidebar-price-list", function() {
+      var optionId = $(this).children("option:selected").val();
+      $('.collection-sidebar .np-price-group ul li a').eq(optionId).click();
+    });
+  } else {
+    setTimeout(pollForPrices, 25);
+  }
+}
+</script>
+
+{%- endif -%}
+
+{%- if section.settings.enable_sidebar == false or section.settings.filter_style == 'drawer' -%}
+  {% comment %}
+    Override grid styles if sidebar is disabled
+  {% endcomment %}
+  {% style %}
+    .collection-content .grid__item--sidebar { width: 0; }
+    .collection-content .grid__item--content { width: 100%; }
+    .grid__item--sidebar { position: static; overflow: hidden; }
+  {% endstyle %}
+{%- endif -%}
+
+{%- if section.settings.enable_sidebar and section.settings.filter_style != 'drawer' -%}
+  {% comment %}
+    Sidebar enabled but not in drawer mode, only show filter button on mobile
+  {% endcomment %}
+  {% style %}
+    @media screen and (min-width: 769px) {
+      .collection-filter__item--drawer {
+        display: none;
+      }
+      .collection-filter__item--count {
+        text-align: left;
+      }
+    }
+  {% endstyle %}
+{%- endif -%}
+
+{%- unless section.settings.enable_sidebar -%}
+  {% comment %}
+    Disable sidebar & filter features
+  {% endcomment %}
+  {% style %}
+    .collection-filter__item--drawer {
+      display: none;
+    }
+    .collection-filter__item--count {
+      text-align: left;
+    }
+  {% endstyle %}
+{%- endunless -%}
+
+{%- unless section.settings.enable_sort -%}
+  {% style %}
+    .collection-filter__sort-container {
+      display: none;
+    }
+  {% endstyle %}
+{%- endunless -%}
+
+{% schema %}
+  {
+    "name": "Collection filter",
+    "max_blocks": 15,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_sidebar",
+        "label": "Enable filter",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "filter_style",
+        "label": "Filter style",
+        "default": "drawer",
+        "options": [
+          {
+            "value": "sidebar",
+            "label": "Sidebar"
+          },
+          {
+            "value": "drawer",
+            "label": "Drawer"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "tags_combine",
+        "label": "Enable tag combinations"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_sort",
+        "label": "Show sort options",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "tags_group",
+        "name": "Tag group",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Tag Group"
+          },
+          {
+            "type": "textarea",
+            "id": "tag_list",
+            "label": "Tag list (one per line)",
+            "default": "First tag \nSecond tag \nThird tag",
+            "info": "Tags are case sensitive and must match your product tag exactly"
+          },
+          {
+            "type": "checkbox",
+            "id": "collapsed",
+            "label": "Collapsed",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "color_group",
+        "name": "Color swatches",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Color"
+          },
+          {
+            "type": "textarea",
+            "id": "tag_list",
+            "label": "Swatch list (one per line)",
+            "default": "Burgundy \nHeather grey \nGreen",
+            "info": "Products must be tagged with their color in order to appear here. Tags are case sensitive and must match your product tag exactly. Ex: 'Heather grey'. [Learn how to set up swatches](https://archetypethemes.co/blogs/impulse/how-do-i-set-up-color-swatches)."
+          },
+          {
+            "type": "checkbox",
+            "id": "collapsed",
+            "label": "Collapsed",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "tags_all",
+        "name": "All tags",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Tags"
+          },
+          {
+            "type": "checkbox",
+            "id": "collapsed",
+            "label": "Collapsed",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "Menu",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "Choose a menu",
+            "default": "main-menu"
+          },
+          {
+            "type": "checkbox",
+            "id": "collapsed",
+            "label": "Collapsed",
+            "default": false
+          }
+        ]
+      },
+      {
+        "type": "subcollections",
+        "name": "Subcollections",
+        "settings": [
+          {
+            "type": "paragraph",
+            "content": "Links to collections from your menu will appear here. [Learn more](https://archetypethemes.co/blogs/impulse/how-do-i-create-subcollections)"
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_subsubcollections",
+            "label": "Show third-level items",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "enable_count",
+            "label": "Enable count"
+          },
+          {
+            "type": "checkbox",
+            "id": "collapsed",
+            "label": "Collapsed",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

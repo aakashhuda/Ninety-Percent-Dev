@@ -1,0 +1,56 @@
+<div class="page-width faq-page-width">
+  <section id="faq-second" class="faq-menu-contents">
+    <a class="faq-menu" href="#faq-second">{{ section.settings.faq_menu_title }}</a>
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'question' %}
+    <div class="faq-card">
+      <a href="#">{{ block.settings.title }}<i class="custom-tab-icon tab-open"></i></a>
+      <div class="content">
+        {{ block.settings.text }}
+      </div>
+    </div>
+    {% endcase %}
+    {% endfor %}
+  </section>
+</div>
+{% schema %}
+  {
+    "name": "BREXIT Information",
+	"class": "faq-second",
+    "settings": [
+            {
+              "type": "text",
+              "id": "faq_menu_title",
+              "label": "Second FAQ Menu",
+              "default": "Shopping FAQs"
+            }
+		],
+	"blocks": [
+		{
+		"type": "question",
+        "name": "Question",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Question",
+            "default": "Frequently asked question"
+          },
+          {
+            "type": "html",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>"
+          }
+        ]
+		}
+		]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,25 +1,30 @@
-<div class="page-width page-width--tiny page-content">
-  <header class="section-header">
-    <h1 class="section-header__title">{{ 'customer.activate_account.title' | t }}</h1>
-    <br>
-    <p>{{ 'customer.activate_account.subtext' | t }}</p>
-  </header>
+<div class="page-width page-content">
+  <div class="grid">
+    <div class="grid__item medium-up--one-third medium-up--push-one-third">
 
-  <div class="form-vertical">
-    {%- form 'activate_customer_password' -%}
+      <header class="section-header">
+        <h1 class="section-header__title">{{ 'customer.activate_account.title' | t }}</h1>
+        <br>
+        <p>{{ 'customer.activate_account.subtext' | t }}</p>
+      </header>
 
-      {{ form.errors | default_errors }}
+      <div class="form-vertical">
+        {% form 'activate_customer_password' %}
 
-      <label for="CustomerPassword">{{ 'customer.activate_account.password' | t }}</label>
-      <input type="password" value="" name="customer[password]" id="CustomerPassword" class="input-full">
+          {{ form.errors | default_errors }}
 
-      <label for="CustomerPasswordConfirmation">{{ 'customer.activate_account.password_confirm' | t }}</label>
-      <input type="password" value="" name="customer[password_confirmation]" id="CustomerPasswordConfirmation" class="input-full">
+          <label for="CustomerPassword">{{ 'customer.activate_account.password' | t }}</label>
+          <input type="password" value="" name="customer[password]" id="CustomerPassword" class="input-full">
 
-      <label for="active-account-submit" class="hidden-label">{{ 'customer.activate_account.submit' | t }}</label>
-      <button type="submit" id="active-account-submit" class="btn">
-        {{ 'customer.activate_account.submit' | t }}
-      </button>
-    {%- endform -%}
+          <label for="CustomerPasswordConfirmation">{{ 'customer.activate_account.password_confirm' | t }}</label>
+          <input type="password" value="" name="customer[password_confirmation]" id="CustomerPasswordConfirmation" class="input-full">
+
+          <button type="submit" class="btn">
+            {{ 'customer.activate_account.submit' | t }}
+          </button>
+        {% endform %}
+      </div>
+
+    </div>
   </div>
 </div>

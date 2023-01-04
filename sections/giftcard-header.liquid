@@ -3,8 +3,8 @@
   {%- assign header_logo_size = section.settings.desktop_logo_width | append: 'x' -%}
   {%- assign header_logo_size_mobile = section.settings.mobile_logo_width | append: 'x' -%}
 
-  {%- if has_logo -%}
-    {%- style -%}
+  {% if has_logo %}
+    {% style %}
     .site-header__logo a {
       max-width: {{ section.settings.mobile_logo_width }}px;
     }
@@ -13,11 +13,11 @@
         max-width: {{ section.settings.desktop_logo_width }}px;
       }
     }
-    {%- endstyle -%}
-  {%- endif -%}
+    {% endstyle %}
+  {% endif %}
 
   <h1 class="site-header__logo{% unless has_logo %} text-center{% endunless %}" itemscope itemtype="http://schema.org/Organization">
-    {%- if section.settings.logo -%}
+    {% if section.settings.logo %}
       <a
         href="{{ routes.root_url }}"
         itemprop="url"
@@ -34,47 +34,47 @@
           srcset="{{ section.settings.logo | img_url: header_logo_size_mobile }} 1x, {{ section.settings.logo | img_url: header_logo_size_mobile, scale: 2 }} 2x"
           alt="{{ section.settings.logo.alt | default: shop.name }}">
       </a>
-    {%- else -%}
+    {% else %}
       <a href="{{ routes.root_url }}" itemprop="url">{{ shop.name }}</a>
-    {%- endif -%}
+    {% endif %}
   </h1>
 
   <div class="shop-url">{{ shop.url }}</div>
 </header>
 
 {% schema %}
-{
-  "name": "t:sections.giftcard-header.name",
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "t:sections.giftcard-header.settings.logo.label"
-    },
-    {
-      "type": "range",
-      "id": "desktop_logo_width",
-      "label": "t:sections.giftcard-header.settings.desktop_logo_width.label",
-      "default": 200,
-      "min": 100,
-      "max": 400,
-      "step": 10,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "mobile_logo_width",
-      "label": "t:sections.giftcard-header.settings.mobile_logo_width.label",
-      "default": 140,
-      "min": 60,
-      "max": 200,
-      "step": 10,
-      "unit": "px",
-      "info": "t:sections.giftcard-header.settings.mobile_logo_width.info"
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "desktop_logo_width",
+        "label": "Desktop logo width",
+        "default": 200,
+        "min": 100,
+        "max": 400,
+        "step": 10,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "mobile_logo_width",
+        "label": "Mobile logo width",
+        "default": 140,
+        "min": 60,
+        "max": 200,
+        "step": 10,
+        "unit": "px",
+        "info": "Set as a max-width, may appear smaller"
+      }
+    ],
+    "default": {
+      "settings": {}
     }
-  ],
-  "default": {
-    "settings": {}
   }
-}
 {% endschema %}

@@ -1,13 +1,13 @@
-{%- if linklists[block.settings.menu].links.size > 0 -%}
-  {%- if block.settings.show_footer_title -%}
+{% if linklists[block.settings.menu].links.size > 0 %}
+  {% if block.settings.show_footer_title %}
     <p class="h4 footer__title small--hide">
       {{ linklists[block.settings.menu].title }}
     </p>
     <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide" aria-controls="Footer-{{ block.id }}">
       {{ linklists[block.settings.menu].title }}
-      {%- render 'collapsible-icons' -%}
+      {% include 'collapsible-icons' %}
     </button>
-  {%- endif -%}
+  {% endif %}
   <div
     {% if block.settings.show_footer_title %}
       id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--small"
@@ -15,11 +15,18 @@
     <div class="collapsible-content__inner">
       <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
         <ul class="no-bullets site-footer__linklist">
-          {%- for link in linklists[block.settings.menu].links -%}
-            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-          {%- endfor -%}
+          {% for link in linklists[block.settings.menu].links %}
+          	{%- if link.url contains 'modal_' -%}
+          	{%- assign page_handle = link.url | split: 'modal_' -%}
+          <li class="popupModal" data-id="{{ page_handle.last }}"><span>{{ link.title }}</span></li>
+          	{%- else if -%}
+          		<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          	{%- endif -%}
+          	
+          {% endfor %}
         </ul>
       </div>
     </div>
   </div>
-{%- endif -%}
+{% endif %}
+

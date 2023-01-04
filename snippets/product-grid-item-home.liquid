@@ -138,6 +138,7 @@
             {%- assign image_np_url_1080 = product.image | img_url: '1x1' | replace: '_1x1.', '_1080x.' -%}
             
             <img class="grid-product__image lazyload lazyautosizes lazyloaded"
+                
                 data-src="{{ img_url }}"
                 data-widths="[180, 360, 540, 720, 900, 1080]"
                 data-aspectratio="{{ product.featured_image.aspect_ratio }}"
@@ -145,14 +146,13 @@
                 data-photoswipe-width="{{ product.featured_image.width }}"
                 data-photoswipe-height="{{ product.featured_image.height }}"
                 alt="{{ product.featured_image.alt | escape }}"
-                width= "100%"
+                 width= "100%"
                 height= "{{ product.featured_image.aspect_ratio }}*{{ width }}"
               >
             <noscript>
               <img class="grid-product__image lazyloaded"
                 src="{{ product.featured_image | img_url: '400x' }}"
-                alt="{{ product.featured_image.alt | escape }}"
-                >
+                alt="{{ product.featured_image.alt | escape }}">
             </noscript>
           </div>
           {% assign np_collection_tags = product.tags | join: '~~~' | downcase | split: '~~~' %}

@@ -1,0 +1,326 @@
+<div class="page-width">
+  {% for block in section.blocks %}
+        {% case block.type %}
+  		{% when 'sustain_column' %}
+	<section class="sustainability">
+		
+			<div class="np-row">
+			  <div class="column-one column" >
+                <h1>{{ block.settings.page-title }}</h1>
+                <p>{{ block.settings.content }}</p>
+                <br/>
+                <a class="btn-sust" target="_blank" href="https://cdn.shopify.com/s/files/1/0283/1338/7053/files/RBC-NP-27092022.pdf?v=1664280265">
+                  You can read our Responsible Brand Commitment here
+                </a>
+			  	</div>
+			  <div class="column-two column">
+			    <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}">
+			    
+			  </div>
+			  
+			</div>
+
+	</section>
+  {% when 'factories_column' %}
+  	<section class="factorise">
+		<h2>{{ block.settings.section-title }}</h2>
+      	{{ block.settings.sub-title }}
+		<div class="np-made-in np-made-mr">
+			<div class="np-country">
+				<div class="country-icon"><img alt="{{ block.settings.image.alt }}" class="" src="{{ block.settings.image | img_url: 'master' }}"></div>
+				<div class="country-offer">
+                  <p>{{ block.settings.content }}</p>
+				</div>
+			</div>
+			<div class="np-country">
+				<div class="country-icon"><img alt="{{ block.settings.image2.alt }}" class="" src="{{ block.settings.image2 | img_url: 'master' }}"></div>
+				<div class="country-offer">
+				 <p>{{ block.settings.content2 }}</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% when 'material_column' %}	
+	<section class="materials">
+		<h2>{{ block.settings.section-title }}</h2>
+		<div class="np-row">
+			  <div class="column">
+                <p>{{ block.settings.content }}</p>
+			  </div>
+			  
+			</div>
+	</section>  
+   {% endcase %}
+{% endfor %}
+</div>	
+
+
+{% schema %}
+  {
+     "name": "Sustainability",
+    "class": "np-sustain",
+    "max_blocks": 12,
+	"blocks": [
+          {
+          "type": "sustain_column",
+          "name": "Sustainability Content",
+          "settings": [
+          {
+		  	"type": "text",
+              "id": "page-title",
+              "label": "Page Title",
+ 			  "default": "Sustainability"
+ 		  },
+		  {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Right Image"
+          },
+          {
+              "type": "richtext",
+              "id": "content",
+              "label": "Sustainability Content",
+			  "default": "<p></p>"
+          }
+			
+		 ]
+          },
+		 {
+          "type": "factories_column",
+          "name": "Factories Content",
+          "settings": [
+		 {
+		  	"type": "text",
+              "id": "section-title",
+              "label": "Page Title",
+ 			  "default": "Our Factories"
+ 		  },
+		  {
+		  	  "type": "richtext",
+              "id": "sub-title",
+              "label": "Sub Title",
+			  "default": "<p>Our garments are made in two industry-leading factories, in Bangladesh and Turkey. These are: </p>"
+ 		  },
+          {
+              "type": "image_picker",
+              "id": "image",
+              "label": "factory BD logo"
+          },
+          {
+              "type": "richtext",
+              "id": "content",
+              "label": "Factory Bd Content",
+			  "default": "<p></p>"
+          },
+		{
+              "type": "image_picker",
+              "id": "image2",
+              "label": "factory Turkey logo"
+          },
+          {
+              "type": "richtext",
+              "id": "content2",
+              "label": "Factory Turkey Content",
+			  "default": "<p></p>"
+          }
+			
+		 ]
+          },
+		 {
+          "type": "material_column",
+          "name": "Material Content",
+          "settings": [
+          {
+		  	"type": "text",
+              "id": "section-title",
+              "label": "Section Title",
+ 			  "default": "Our Materials"
+ 		  },
+		  {
+              "type": "image_picker",
+              "id": "image",
+              "label": "left Image"
+          },
+          {
+              "type": "richtext",
+              "id": "content",
+              "label": "Materials Content",
+			  "default": "<p></p>"
+          }
+			
+		 ]
+          }
+
+	],
+    "presets": [
+          {
+            "name": "Sustainability",
+            "category": "Text"
+          }
+        ]
+  }
+{% endschema %}
+ <style type="text/css">
+* {
+  box-sizing: border-box;
+}
+img {
+
+    max-width: 100%;
+
+}
+.btn-sust {
+	padding: 9px 10px;
+    letter-spacing: 0.1em;
+    border: 2px solid #000;
+  font-weight: 500;
+   }   
+section {
+   margin: 40px auto;
+   }   
+section a {
+    border-bottom: 1.5px solid #eaeaea;
+}
+   section.material-icon a:hover {
+    border-bottom: 1.5px solid #1a1a1a;
+}
+/* Create three equal columns that floats next to each other */
+.column-one {
+  float: left;
+  width: 70%;
+  padding: 15px 0;
+  padding-top: 0px;
+}
+ .column-two {
+  float: left;
+  width: 30%;
+}
+.column-two img {
+	width: 90%;
+    height: auto;
+}
+.column p {
+	text-align: left;
+}
+/* Clear floats after the columns */
+.np-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.np-made-in {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  	margin-top: 40px;
+}
+.np-country {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+}
+.np-made-in .np-country .country-icon {
+    width: 20%;
+}
+.np-made-in .np-country .country-icon img {
+
+    width: 110px;
+
+}
+.np-material-icon img, .np-material-icon-two img {
+    width: 110px;
+   }  
+.np-material-icon h4, .np-material-icon-two h4 {
+    margin: 20px 0;
+	letter-spacing: 0.13em;
+	text-transform: capitalize;
+	font-size: 18px;
+   }    
+.np-made-in .np-country .country-offer {
+    width: 80%;
+    padding-left: 3%;
+  	padding-right: 7%;
+
+}
+.np-made-in .np-country .country-offer h5 {
+
+    font-weight: 600;
+    margin-bottom: 0px;
+    letter-spacing: 0.18rem;
+    font-size: 14px;
+
+}
+.np-material-icon {
+	display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  	-webkit-box-pack: center !important;
+	-ms-flex-pack: center !important;
+	justify-content: center !important;
+}
+.material-box {
+	flex-grow: 0;
+    width: 33.33%;
+    text-align: center;
+    padding: 0 25px 25px 25px;
+}
+.np-material-icon-two {
+	display: block;
+    flex-wrap: wrap;
+    -webkit-box-pack: center!important;
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+    margin-top: 30px;
+}
+.np-material-icon-two .material-box {
+	flex-grow: 0;
+}
+section h1 {
+    display: inline-block;
+}
+section .column-one h1 {
+    border-bottom: 1.5px solid #eaeaea;
+}   
+.section-margin {
+	margin-bottom: 60px;
+}
+@media (max-width: 768px) {
+	.column {
+  		float: left;
+  		width: 100%;
+	}
+	.np-made-in .np-country {
+
+    width: 100%;
+
+	}
+	.np-made-in .np-country .country-icon {
+
+    width: 20%;
+
+}
+.np-made-in .np-country .country-offer {
+
+    width: 80%;
+
+}
+.material-box {
+	width: 100%;
+}
+.btn-sust{
+  border: none;
+    border-bottom: 1px solid #202020;
+    padding: 0;
+  }
+}
+@media (min-width: 769px) {
+.column-one {
+   	padding-right: 5%;
+ }   
+}  
+</style>
+
+
+{% javascript %}
+{% endjavascript %}

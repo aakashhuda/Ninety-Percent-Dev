@@ -1,0 +1,514 @@
+
+<div class="page-width">
+    <section class="thank-you-title">
+      <div class="thank-you-main-p1 thank-you-pd">
+        <h3>
+          {% if section.settings.success_message %}
+              <img src="{{ section.settings.success_image | img_url: 'master' }}" alt="code succeed">
+              <span>{{ section.settings.success_message }}</span>
+          {% endif %}
+        </h3>
+      </div>
+      <div class="thank-you-main-p2 thank-you-pd">
+        {% if section.settings.thank_you_heading %}
+        	<h1>{{ section.settings.thank_you_heading }}</h1>
+         {% endif %}
+        {% if section.settings.thank_you_sub_heading %}
+        	<h3 class="vote-charity">for </h3>
+        
+        {% endif %}
+        {% if section.settings.textbox %}
+            {{ section.settings.textbox }}
+  		{% endif %}
+  		</div>
+  <div class="thank-you-social thank-you-pd">
+    <a href="//www.facebook.com/sharer.php?u={{ shop.url | append: share_permalink }}" target="_blank" title="{{ 'general.social.alt_text.share_on_facebook' | t }}">{% if section.settings.fb_image %}<img src="{{ section.settings.fb_image | img_url: 'master' }}"
+                                                            alt="fb">{% endif %} </a>
+    <a href="{{ section.settings.is_image_url }}" target="_blank">{% if section.settings.tw_image %}<img src="{{ section.settings.tw_image | img_url: 'master' }}"
+                                                           alt="tw">{% endif %}</a>
+    <p>Sharing is caring</p>
+  </div>
+  </section>
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'icon_box_column' %}
+        <section class="thankyou-order-signup">
+          <img src="{{ block.settings.image | img_url: 'master' }}" alt="main-image">
+          <div class="thank-you-newsletter">
+            <p>{{ block.settings.sub_heading }}</p>
+            <h1>{{ block.settings.heading }}</h1>
+      		<form method="post" action="/contact" id="newsletter-global-newsletter" accept-charset="UTF-8" class="contact-form">
+              <input type="hidden" name="form_type" value="customer">
+              <input type="hidden" name="utf8" value="✓">
+              <input type="email" name="contact[email]" value placeholder="example@mail.com">
+              <input type="submit" value="SUBMIT">
+               {{ block.settings.textbox-privacy }}
+            </form> 
+<!--            {% include 'global-newsletter-form' %} -->
+          </div>
+
+        </section>
+    {% endcase %}
+  {% endfor %}
+</div>
+<script>
+  
+  (function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+      	var thMsg = "voting ";
+        if ($(".vote-charity").length > 0) {
+            try {
+                
+              var queryString = window.location.search;
+              var urlParams = new URLSearchParams(queryString);
+              var charityCode = urlParams.get('charity');
+            
+               switch (charityCode) 
+                  {
+                    case "1":
+                     $("h3.vote-charity").append(thMsg + "<span>“{{ section.settings.thank_you_sub_heading3 }}”</span>");
+                    break;
+                    case "2":
+                     $("h3.vote-charity").append(thMsg + "<span>“{{ section.settings.thank_you_sub_heading4 }}”</span>");
+                    break;
+                    case "3":
+                     $("h3.vote-charity").append(thMsg + "<span>“{{ section.settings.thank_you_sub_heading5 }}”</span>");
+                    break;
+                    case "4":
+                     $("h3.vote-charity").append(thMsg + "<span>“{{ section.settings.thank_you_sub_heading }}”</span>");
+                    break;
+                    case "5":
+                     $("h3.vote-charity").append(thMsg + "<span>“{{ section.settings.thank_you_sub_heading2 }}”</span>");
+                    break;
+                    case "6":
+                     $("h3.vote-charity").append(thMsg + "<span>'“{{ section.settings.thank_you_sub_heading6 }}”</span>");
+                    break;
+                    default:
+                     $("h3.vote-charity").append('trying to vote <span style="color:red;">“using an illegal means ”</span>');
+                    break;
+                  }
+              
+				
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+        } else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Thank You Intro Section",
+    "settings": [
+			{
+              "type": "text",
+              "id": "success_message",
+              "label": "Success Message",
+ 			  "default": "Great, your code matched!"
+            },
+			{
+              "type": "image_picker",
+              "id": "success_image",
+              "label": "Success Image"
+            },
+			{
+              "type": "text",
+              "id": "thank_you_heading",
+              "label": "Heading",
+			  "default": "THANK YOU!"
+            },
+			{
+              "type": "text",
+              "id": "thank_you_sub_heading",
+              "label": "Vote Success Heading 1",
+			  "default": "Reduce deman d for commercial wildlife products"
+            },
+			{
+              "type": "text",
+              "id": "thank_you_sub_heading2",
+              "label": "Vote Success Heading 2",
+              "default": "Reduce deman d for commercial wildlife "
+          },
+          {
+              "type": "text",
+              "id": "thank_you_sub_heading3",
+              "label": "Vote Success Heading 3",
+              "default": "Reduce deman d for commercial wildlife"
+          },
+          {
+              "type": "text",
+              "id": "thank_you_sub_heading4",
+              "label": "Vote Success Heading 4",
+              "default": "Reduce deman d for commercial wildlife"
+          },
+          {
+              "type": "text",
+              "id": "thank_you_sub_heading5",
+              "label": "Vote Success Heading 5",
+              "default": "Reduce deman d for commercial wildlife"
+          },
+          {
+              "type": "text",
+              "id": "thank_you_sub_heading6",
+              "label": "Vote Success Heading 6",
+              "default": "Reduce deman d for commercial wildlife"
+          },
+			{
+              "type": "richtext",
+              "id": "textbox",
+              "label": "Custom Message"
+            },
+			{
+              "type": "image_picker",
+              "id": "fb_image",
+              "label": "Facebook icon"
+            },
+			{
+              "type": "url",
+              "id": "fb_image_url",
+              "label": "Facebook Url"
+            },
+			{
+              "type": "image_picker",
+              "id": "tw_image",
+              "label": "Instagram Icon"
+            },
+			{
+              "type": "url",
+              "id": "is_image_url",
+              "label": "Instagram URL"
+            }
+		],
+	"blocks": [
+          {
+          "type": "icon_box_column",
+          "name": "Thank You Form",
+          "settings": [
+          {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Form Promotion Image"
+          },
+          {
+              "type": "text",
+              "id": "sub_heading",
+              "label": "Sub Heading",
+              "default": "SIGN UP & ENJOY"
+          },
+		  {
+              "type": "text",
+              "id": "heading",
+              "label": "Heading",
+              "default": "15% OFF!"
+          },
+			{
+              "type": "richtext",
+              "id": "textbox-privacy",
+              "label": "Form Message"
+            }
+		 ]
+          }
+	]
+  }
+{% endschema %}
+
+<style>
+  #shopify-section-global-newsletter {
+  
+  	display:none;
+  }
+.thank-you-title {
+	margin-top: 60px;
+}
+.thank-you-title , .thankyou-order-signup {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.thank-you-pd {
+	padding: 25px 0px;
+}
+.thank-you-pd h3, .thank-you-pd p {
+	margin-bottom: 0px;
+}
+.thank-you-title .thank-you-main-p1{
+  font-style: italic;
+}
+.thank-you-title .thank-you-main-p1 span{
+  position: relative;
+  bottom: 15px;
+  padding-left: 25px;
+  text-transform: none!important;
+  font-size: 30px;
+}
+.thank-you-title .thank-you-main-p2 > h1{
+  font-weight: 600;
+	font-size: 2.5rem;
+}
+.thank-you-title .thank-you-main-p2 > h3{
+  text-transform: none!important;
+}
+.thank-you-title .thank-you-main-p2 > h3 > span{
+  font-weight: 600;
+	font-size: 1.57rem;
+}
+.thank-you-title .thank-you-main-p2 > p{
+  padding: 10px 0 25px;
+  font-size: 1.0rem;
+}
+.thank-you-title .thank-you-social > a{
+  padding: 0 10px 10px;
+}
+.thankyou-order-signup{
+  margin: 55px 0px;
+  border: 2px dashed #ebebeb;
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-transform: none !important;
+}
+.thankyou-order-signup {
+	margin-bottom: 80px;
+}
+.thankyou-order-signup h3{
+  text-transform: none !important;
+}
+.thankyou-order-signup div{
+  padding: 20px;
+  width: 65%;
+}
+.thank-you-title .thank-you-main-p2 > p > a{
+  color: #3388e7;
+}
+.thankyou-order-signup .thank-you-newsletter > h1{
+  font-weight: 600;
+	font-size: 2.812rem;
+}
+.thank-you-main-p2 {
+	max-width: 730px;
+	margin: 0 auto;
+}
+
+.thank-you-newsletter form {
+	max-width: 515px;
+	margin: 0 auto;
+
+}
+.thankyou-order-signup > div > form > input[type=email]{
+  border: 1px solid black;
+  padding: 12px 10px;
+  width: 325px;
+font-size: 0.88rem;
+}
+.thankyou-order-signup > div > form > input[type=submit]{
+  padding: 11px 58px;
+  background-color: black;
+  color: white;
+  position: relative;
+  right: 6px;
+  border: 0px solid black;
+  padding-top: 8px;
+  
+}
+
+.thankyou-order-signup > div > p{
+  margin-top: 15px;
+}
+section.thankyou-order-signup > img{
+  max-width: 100%;
+}
+.thankyou-order-signup > div > p > a{
+  text-decoration: underline;
+  font-weight: bold;
+}
+.thankyou-order-signup > div > p{
+ 
+	font-size: 0.88rem;
+  	margin: 5px auto;
+}
+
+.thank-you-newsletter form p {
+
+	font-size: 0.88rem;
+	margin-top: 12px;
+  	font-style: italic;
+}
+  .thank-you-newsletter form a {
+  
+  	position: relative;
+  }  
+.thank-you-newsletter form a::after {
+
+    content: '';
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    background:#C3C3C3;
+    bottom: 2px;
+    left: 0;
+
+}
+@media only screen and (min-width: 850px) and (max-width: 1045px) { 
+
+	
+	.thankyou-order-signup > div > form > input[type="email"] {
+			width: 65%;
+		}
+	.thankyou-order-signup > div > form > input[type="submit"] {
+
+			padding: 12px 30px;
+			border: 1px solid black;
+			width: 30%;
+		}
+}
+
+@media only screen and (min-width: 769px) and (max-width: 851px) { 
+		
+		.thank-you-newsletter form {
+			max-width: 325px;
+		}
+
+		.thankyou-order-signup > div > form > input[type="email"] {
+	
+			width: 170px;
+		}
+		.thankyou-order-signup > div > form > input[type="submit"] {
+			padding: 12px 20px;
+			border: 1px solid black;
+		}
+
+}
+
+@media (min-width: 421px) and (max-width: 768px) {
+  .thankyou-order-signup{
+    display: block;
+    margin: 0;
+  }
+  .thankyou-order-signup div{
+    width: 100%;
+  }
+  section.thankyou-order-signup > img{
+    padding-top: 15px;
+  }
+.thankyou-order-signup div {
+	padding: 0px;
+}
+
+.thankyou-order-signup > div > form > input[type="email"] {
+
+		width: 60%;
+	}
+.thankyou-order-signup > div > form > input[type="submit"] {
+		padding: 12px 5%;
+		width: 30%;
+	border: 1px solid black;
+	}
+  
+}
+
+@media (max-width: 420px) {
+      .thankyou-order-signup{
+        display: block;
+        margin: 0;
+      }
+
+      .thankyou-order-signup {
+        padding: 5px;
+      }
+       .thankyou-order-signup div {
+
+        width:100%;
+         padding: 5px;
+      }
+      .thankyou-order-signup > div > form > input[type="submit"] {
+        width: 36%;
+        border: 1px solid black;
+		padding: 12px 22px;
+      }
+      .thankyou-order-signup > div > form > input[type="email"] {
+
+        width: 60%;
+      }
+}
+
+</style>
+<script>
+  (function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($(".thank-you-newsletter").length > 0) {
+           $(document).on('click', '.thank-you-newsletter a', function() {
+                    var target = '',
+                        $this = $(this);
+                    try {
+                        target = $this.attr('href').trim();
+					console.log('privacy security clicked');
+                    } catch (e) {
+                        console.log('thank you privacy link try error: ' + e);
+                    }
+                    if (target.indexOf('#') > -1) {
+                        target = target.split('#')[1];
+                        var $that;
+                        $.each($('a.popupModal'), function() {
+                            $that = $(this);
+                            if ($that.attr('data-id').trim() == target) {
+                                $that.click();
+                                return false;
+                            }
+                        });
+                    }
+                });
+          /* Build the Shopify Parameters
+//---------------------------------------*/
+          $("#newsletter-global-newsletter").submit(function(e) { 
+          	var contact_email = 'sd@df.com'
+            var action  = '/contact?';
+                action += encodeURIComponent('form_type') +'='+ encodeURIComponent('contact');
+                action += '&'+ encodeURIComponent('utf8') +'='+ encodeURIComponent('✓');
+                action += '&'+ encodeURIComponent('contact[email]') +'='+ encodeURIComponent(contact_email);
+
+            /* Submit the form
+            //---------------------------------------*/
+            $.ajax({
+                type: "POST",
+                async: true,
+                url: action,
+                error: function(jqXHR, textStatus, errorThrown) {
+                    //  Request Failed. 
+                },
+                success: function(response) {
+                    // Assume Success. 'response' is the complete HTML page of the 
+                    // contact success form, so likely won't be helpful
+                    self.submit_thankyou();
+                }
+            });
+          
+          });          
+
+          
+        }
+      
+      
+      else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();
+
+  
+</script>
+{% javascript %}
+
+
+{% endjavascript %}

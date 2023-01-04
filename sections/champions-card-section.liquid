@@ -1,0 +1,103 @@
+<section class="card-section card-layout">
+  <h2 class="tag-line">{{ section.settings.card_header }}</h2>
+  
+  <div class="champions-parent">  
+    {% for block in section.blocks %}
+      <div class="champions-child">
+        <a href="{{ block.settings.card_url }}">  <img src="{{ block.settings.card_image | img_url: 'master' }}"></a>
+        {{ block.settings.card_desc_text }}
+   	   </div>
+    {% endfor %}    
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Card section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "card_header",
+      "label": "Card Heading",
+      "default": "MEET OUR #CHAMPIONSOFCHANGE"
+    }
+  ],
+
+  "blocks": [
+		{
+		 "type": "card_images",
+		  "name": "images",
+			"settings":[
+				{
+					"type": "image_picker",
+					"id": "card_image",
+					"label": "Image"
+				},
+				{
+					"type": "url",
+					"id": "card_url",
+					"label": "URL"
+				},
+				{
+					"type": "richtext",
+					"id":  "card_desc_text",
+					"label": "Image Caption"
+				}
+			]
+		}
+	]
+} 
+{% endschema %}
+<style>	
+  .card-layout{
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding: 20px;
+  }
+  .tag-line{
+  	text-align:center; 
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  .card-section{
+  	max-width: 1800px;
+    margin: 0 auto;
+  }
+  .champions-parent{
+  	display: flex;
+    flex-wrap: row wrap;
+    justify-content: space-around;
+  }
+  .champions-child{
+    flex-basis: 33.33%; /* initial percantage */
+    padding: 35px;
+    position: relative;
+    box-sizing: border-box;
+  }
+  .champions-child p {
+    text-align:center;
+  }
+  .caption{
+  	text-align: center;
+    margin-top: 15px;
+  }
+  @media (max-width: 768px){
+    .tag-line{
+      font-size: 15px;
+      letter-spacing: -0.5px;
+    }
+    .champions-parent{
+      	display: flex;
+    	flex-direction: column;      	
+    }
+    .champions-child{
+      flex-basis: 50%;
+      padding: 15px;
+    }
+    .caption{
+    	margin-top: 5px;
+    }
+  }
+</style>

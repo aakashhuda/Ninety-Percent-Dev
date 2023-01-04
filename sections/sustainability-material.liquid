@@ -1,0 +1,89 @@
+<div class="page-width text-center">
+<section class="material-icon">
+		<div class="np-material-icon">
+          {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'icon_box_column' %}
+          	
+			<div class="material-box material-icon-one">
+				<img alt="{{ block.settings.image.alt }}" class="" src="{{ block.settings.image | img_url: 'master' }}">
+				<h4 class="{{ forloop.index }}">{{ block.settings.title }}</h4>
+				<p>{{ block.settings.content }}</p>
+				<a href="{{ block.settings.cta-link }}">{{ block.settings.cta-label }}</a>
+			</div>
+          		
+          {% endcase %}
+          {% endfor %}
+		</div>
+		
+  		<div class="np-material-icon-two">
+           {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'read_more_column' %}
+          		<p>{{ block.settings.more }} </p>
+        
+          {% endcase %}
+          {% endfor %}
+        </div>
+</section>
+</div>
+{% schema %}
+  {
+    "name": "Material Icon Block",
+	"class": "np-material",
+    "max_blocks" : 13,
+	"blocks": [
+		{
+          "type": "icon_box_column",
+          "name": "Materials Icon",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Icon"
+          },
+          {
+              "type": "text",
+              "id": "title",
+              "label": "Materials Title",
+			  "default": "Organic Cotton"
+          },
+		 {
+              "type": "richtext",
+              "id": "content",
+              "label": "Materials Content",
+			  "default": "<p></p>"
+          },
+		  {
+              "type": "text",
+              "id": "cta-label",
+              "label": "CTA Label"
+          },
+		  {
+              "type": "url",
+              "id": "cta-link",
+              "label": "CTA link"
+          }
+		  ]
+		},
+		{
+			"type": "read_more_column",
+          	"name": "Find Out More",
+          	"settings": [
+            {
+              "type": "richtext",
+              "id": "more",
+              "label": "Read More",
+			  "default": "<p>To find out more, read our Responsible Brand Commitment</p>"
+          }
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

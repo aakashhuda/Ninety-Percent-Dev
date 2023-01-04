@@ -1,13 +1,66 @@
-{%- if block.settings.logo -%}
-  {%- style -%}
-    .footer__logo a {
-      height: {{ block.settings.desktop_logo_height }}px;
+{% if block.settings.logo %}
+  {% style %}
+    .footer__logo a  img{
+      width: 80%;
     }
-  {%- endstyle -%}
+    p.h4.footer__title {
+      font-size: 15px;
+    }
+    
+    .footer__logo {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+    .fb-insta_icon a {
+      height: auto;
+      margin-right: 10px;
+    }
+    .fb-insta_icon {
+      display: flex;
+      justify-content: center;
+  }
+    .fb-insta_icon{
+      padding: 10px 0px;
+    }
+  @media only screen and (min-width: 960px){
+      .footer__logo> a {
+        display: flex;
+        justify-content: center;
+    }
+  }
+  @media only screen and (min-width: 769px) and (max-width: 959px){
+    .footer__logo{
+      align-items: flex-start;
+    }
+    .fb-insta_icon{
+      padding: 10px 40px;
+    }
+  }
+
+  {% endstyle %}
   {%- assign footer_logo_size = block.settings.desktop_logo_height | prepend: 'x' -%}
   <div class="footer__logo">
     <a href="{{ routes.root_url }}">
-      <img src="{{ block.settings.logo | img_url: footer_logo_size, scale: 2 }}" alt="{{ block.settings.logo.alt | default: shop.name }}">
+      <img src="{{ block.settings.logo | img_url: footer_logo_size, scale: 2 }}" alt="{{ block.settings.logo.alt | default: shop.name }}"
+      width="100%"
+      height="{{ block.settings.logo.aspect_ratio }}*{{ width }}"  
+        >
     </a>
+      <div class="fb-insta_icon">
+    <a href="{{ block.settings.instagrame_url }}">
+      <svg width="20" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.2 25.66H6.81C3.54 25.66 0.880005 23 0.880005 19.73V6.35001C0.880005 3.08001 3.54 0.420013 6.81 0.420013H20.2C23.47 0.420013 26.13 3.08001 26.13 6.35001V19.73C26.13 23 23.47 25.66 20.2 25.66ZM6.82001 2.04999C4.45001 2.04999 2.53 3.98001 2.53 6.35001V19.73C2.53 22.1 4.46001 24.02 6.82001 24.02H20.21C22.58 24.02 24.5 22.09 24.5 19.73V6.35001C24.5 3.98001 22.57 2.04999 20.21 2.04999H6.82001Z" fill="#2B2725"/>
+        <path d="M13.51 19.48C9.96001 19.48 7.08002 16.59 7.08002 13.05C7.08002 9.49999 9.97001 6.62 13.51 6.62C17.06 6.62 19.94 9.50999 19.94 13.05C19.95 16.59 17.06 19.48 13.51 19.48ZM13.51 8.23999C10.86 8.23999 8.71002 10.39 8.71002 13.04C8.71002 15.69 10.86 17.84 13.51 17.84C16.16 17.84 18.31 15.69 18.31 13.04C18.31 10.39 16.16 8.23999 13.51 8.23999Z" fill="#2B2725"/>
+        <path d="M20.55 7.16C21.3398 7.16 21.98 6.51978 21.98 5.73001C21.98 4.94024 21.3398 4.29999 20.55 4.29999C19.7602 4.29999 19.12 4.94024 19.12 5.73001C19.12 6.51978 19.7602 7.16 20.55 7.16Z" fill="#2B2725"/>
+      </svg>
+    </a>
+    <a href="{{ block.settings.facebook_url }}">
+      <svg width="10" height="25" viewBox="0 0 14 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.71 4.35999H13.48V0H7.46001C6.25001 0 4.03999 1.42 4.03999 4.94V8.76001H0.220001V13.12H4.03999V24.49H9.34V13.12H13.03L13.48 8.76001H9.35001V5.51999C9.34001 4.81999 9.43001 4.35999 10.71 4.35999Z" fill="#2B2725"/>
+      </svg>
+  </a>
+    </div>
   </div>
-{%- endif -%}
+{% endif %}

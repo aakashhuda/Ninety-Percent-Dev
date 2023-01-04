@@ -1,0 +1,528 @@
+{% for block in section.blocks %}
+	{% case block.type %}
+	    {% when 'banner_section' %}
+          <section class="story-container">
+            <div class="banner-div"><h1 id="banner-heading">{{ block.settings.heading }}</h1></div>
+            <style>
+              .banner-div {
+                background-image: url("{{ block.settings.image | img_url: 'master' }}");
+              }
+            </style>
+          </section>
+		{% when 'center_content_section' %}
+          <section class="story-container center-content">
+            <div class="story-row">
+              <h1 class="heading">{{ block.settings.heading }}</h1>
+              <p class="content-text">{{ block.settings.description }}</p>
+            </div>
+            {% if block.settings.quote-description != '' %}
+              <p class="story-subpara">{{ block.settings.quote-description }}</p>
+            {% endif %}
+          </section>
+		{% when 'two-col-section' %}
+          <section class="story-container">
+            <div class="story-row flex-content">
+              <div class="story-flex-col center-quote-container">
+                <h1 class="heading">{{ block.settings.heading }}</h1>
+                {% if block.settigns.quote-short != '' %}
+                  <div class="quote-div desktop-only">
+                    <h3>{{ block.settings.quote-short }}</h3>
+                    <p>{{ block.settings.quote-short-author }}</p>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="story-flex-col">
+                <p class="content-text">{{ block.settings.description }}</p>
+                {% if block.settings.quote-long != '' %}
+                  <p class="quote quote-text">{{ block.settings.quote-long }}</p>
+                  <p class="quote quote-author">{{ block.settings.quote-long-author }}</p>
+                {% endif %}
+              </div>
+            </div>
+            {% if block.settigns.quote-short != '' %}
+              <div class="story-row quote-div mobile-only">
+                <h3>{{ block.settings.quote-short }}</h3>
+                <p>{{ block.settings.quote-short-author }}</p>
+              </div>
+            {% endif %}
+          </section>
+		{% when 'causes-section' %}
+          <section class="story-container">
+            <div class="story-thumbnail">
+              <div class="thumb-flex"><a href="{{ block.settings.cause-one-url }}"><span class="img-heading">{{ block.settings.cause-one-text }}</span><img src="{{ block.settings.image-one | img_url: 'master' }}"></a></div>
+              <div class="thumb-flex"><a href="{{ block.settings.cause-two-url }}" class="text-white"><span class="img-heading">{{ block.settings.cause-two-text }}</span><img src="{{ block.settings.image-two | img_url: 'master' }}"></a></div>
+              <div class="thumb-flex"><a href="{{ block.settings.cause-three-url }}" class="text-white"><span class="img-heading">{{ block.settings.cause-three-text }}</span><img src="{{ block.settings.image-three | img_url: 'master' }}"></a></div>
+              <div class="thumb-flex"><a href="{{ block.settings.cause-four-url }}"><span class="img-heading">{{ block.settings.cause-four-text }}</span><img src="{{ block.settings.image-four | img_url: 'master' }}"></a></div>
+              <div class="thumb-flex"><a href="{{ block.settings.cause-five-url }}" class="text-white"><span class="img-heading">{{ block.settings.cause-five-text }}</span><img src="{{ block.settings.image-five | img_url: 'master' }}"></a></div>
+            </div>
+            {% if block.settings.button-text != '' %}
+              <div class="story-button-container">
+                <a href="{{ block.settings.button-url }}" class="story-btn">{{ block.settings.button-text }}</a>
+              </div>
+            {% endif %}
+          </section>
+		{% when 'full-image-section' %}
+          <section class="story-container">
+            <div class="story-image-div">
+              <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.image.alt }}">
+            </div>
+          </section>
+	{% endcase %}
+{% endfor %}
+
+<style>
+#shopify-section-about-us h1, h2, h3 {
+	letter-spacing: normal;
+	text-transform: none;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.story-container  {
+    letter-spacing:0.05em;
+    line-height: 1.25;
+}
+.banner-div {
+    background-position: center;
+    background-size: cover;
+    height: 359px; width: 100%;
+}
+.banner-div #banner-heading{
+    color: #fff;
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+.story-container {
+    margin-bottom: 30px;
+}
+.story-flex-col {
+    max-width: 50%;
+    flex: auto;
+}
+.heading {
+    margin: 30px 0px;
+    font-weight: 700;
+}
+.quote{
+    color: #858585;
+    font-style: italic;
+}
+.story-button-container {
+    display: flex;
+  	justify-content: center;
+    margin: 30px;
+}
+.story-button-container a.story-btn {
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+    font-weight: 600;
+    border: 1px solid #000;
+}
+.story-flex-col + .col-two > p:not(:last-child){
+    margin-bottom: 30px;
+}
+.story-image-div img{
+    width: 100%;
+}
+.story-thumbnail {
+    display: flex;
+    flex-wrap: wrap;
+}
+.story-thumbnail .thumb-flex a.text-white {
+    color: #fff;
+} 
+.story-thumbnail .thumb-flex a.text-white:hover {
+    color: #C4C4C4;
+}
+.story-thumbnail .thumb-flex a:hover {
+    color: #676767;
+}
+.story-thumbnail .thumb-flex img {
+    max-width: 100%;
+}
+.story-thumbnail .thumb-flex a {
+    text-decoration: none;
+    color: #000;
+    display: block;
+    text-align: center;
+	text-transform: uppercase;
+    position: relative;
+}
+.story-thumbnail .thumb-flex a .img-heading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    font-weight: 700;
+}
+.story-row.quote-div > h3, .center-quote-container .quote-div > h3{
+	font-weight: 700;
+	margin: 0 auto;
+  	letter-spacing: 0.7px;
+    line-height: 26.25px;
+}
+
+@media screen and (max-width: 1023px){
+	.story-container:not(:first-child) {
+      	padding: 0px 15px;
+     }
+    .banner-div {
+        height: 200px;
+    }
+    .content-text{
+        font-size: 18px;
+    	line-height: 26px;
+    }
+    .heading {
+        font-size: 25px;
+    }
+    .quote-author {
+        font-size: 18px;
+    }
+    .quote-text {
+        font-size: 18px;
+    }
+    .story-button-container {
+        justify-content: left;
+        margin: 30px 0px;
+    }
+    .story-button-container a.story-btn {
+        font-size: 16px;
+        padding: 10px;
+    }
+    .story-flex-col {
+        max-width: unset;
+    }
+    .story-thumbnail {
+        flex-direction: column;
+      	margin: 0 auto
+        max-width: unset;
+    }
+    .story-thumbnail .thumb-flex {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        font-size: 20px;
+    }
+    .story-container .thumb-flex:not(:last-child) {
+        padding-bottom: 20px;
+    }
+    .story-thumbnail .thumb-flex img{
+        width: 100%;
+    }
+    .story-subpara {
+        font-size: 11px;
+    }
+    .story-row.quote-div.mobile-only {
+        margin-top: 30px;
+    }
+    .story-row.quote-div > h3, .center-quote-container .quote-div > h3{
+        font-size: 18px;
+    }
+    .story-row.quote-div > p, .center-quote-container .quote-div > p {
+        font-size: 16px;
+    }
+    .desktop-only {
+        display: none;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .content-text{
+        font-size: 18px;
+    	line-height: 26px;
+    }
+    .center-content{
+        text-align: center;
+    }
+    .story-flex-col > h1 {
+        width: 245px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .heading {
+        font-size: 30px;
+    }
+    .quote-author {
+        font-size: 20px;
+    }
+    .quote-text {
+        font-size: 18px;
+    }
+    .story-button-container {
+        justify-content: center;
+    }
+    .story-button-container a.story-btn {
+        font-size: 18px;
+        padding: 10px 30px;
+    }
+    .story-button-container a:hover, .story-button-container a:focus, .story-button-container a:active {
+        color: rgba(0,0,0,0.45);
+        outline: none;
+        transition: color 0.2s;
+    }
+    .story-row {
+        width: 860px;
+        margin: 0 auto;
+    }
+    .story-thumbnail {
+        max-width: 1024px;
+        justify-content: center;
+      	margin: 0 auto
+    }
+    .story-thumbnail .thumb-flex {
+        width: 194px;
+        padding: 0px 10px;
+        font-size: 16px;
+    }
+    .story-subpara {
+        font-size: 15px;
+    }
+    .story-row.quote-div > h3, .center-quote-container .quote-div > h3 {
+        font-size: 21px;
+    }
+    .story-row.quote-div > p, .center-quote-container .quote-div > p {
+        font-size: 18px;
+    }
+    .mobile-only {
+        display: none;
+    }
+    .story-flex-col.center-quote-container {
+        position: relative;
+    }
+    .story-flex-col.center-quote-container .quote-div.desktop-only {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      	padding-top: 100px;
+      	width: 245px;
+    }
+    .flex-content {
+        display: flex;
+        align-items: stretch;
+    }
+}
+
+@media screen and (min-width: 1170px) {
+    .banner-div, .story-image-div {
+        max-width: 1170px;
+        margin: 0 auto;;            
+    }
+  	.story-thumbnail {
+        max-width: 1170px;
+        margin: 0 auto
+    }
+  	.story-thumbnail .thumb-flex {
+        width: 234px;
+    }
+}
+</style>
+{% schema %}
+  {
+    "name": "About us section",
+	"max_blocks" :10,
+    "settings": [],
+	"blocks": [
+	  {
+		"type": "banner_section",
+		"name": "Banner Section",
+        "settings": [
+          { 
+			"type": "image_picker",
+            "id": "image",
+            "label": "Image"
+		  },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Banner Heading",
+            "default": "Our Story"
+          }
+		]
+	  },
+	  {
+		"type": "center_content_section",
+		"name": "Center Content Section",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Sharing is a good look…"
+          }, 
+		  {
+			"type": "textarea",
+			"id": "description",
+			"label": "Description",
+            "default": "Welcome to Ninety Percent. We’re a sustainable contemporary womenswear label based out of Camden in London, trying to approach the fashion industry a little bit differently…"
+		  },
+		  {
+			"type": "textarea",
+			"id": "quote-description",
+			"label": "Description Quote"
+		  }
+		]
+	  },
+	  {
+		"type": "two-col-section",
+		"name": "Two Column Section",
+        "settings": [
+          {
+            "type": "textarea",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Planet comes first"
+          }, 
+		  {
+			"type": "textarea",
+			"id": "description",
+			"label": "Description",
+            "default": "Way back in 1988, our co-founders Para Hamilton and Shafiq Hassan met and a bond was formed over John Lennon, David Attenborough, world music, disappearing tribes and craftsmen, and the virtues of organic food, amongst other things. Back then, and somewhat ahead of her time, Para said to Shafiq, 'Planet comes first', and it's this ethos that has powered their business partnership and friendship for 30 years in the garment industry - culminating in the creation of an industry-leading garment manufacturing facility in Bangladesh that puts planet and people before profit."
+		  },
+		  {
+			"type": "textarea",
+			"id": "quote-long",
+			"label": "Quote Long"
+		  },
+		  {
+			"type": "text",
+			"id": "quote-long-author",
+			"label": "Quote Long Author"
+		  },
+		  {
+			"type": "textarea",
+			"id": "quote-short",
+			"label": "Quote Short"
+		  },
+		  {
+			"type": "text",
+			"id": "quote-short-author",
+			"label": "Quote Short Author"
+		  }
+		]
+	  },
+	  {
+		"type": "causes-section",
+		"name": "Causes Section",
+        "settings": [
+          {
+            "type": "text",
+            "id": "cause-one-text",
+            "label": "Causes One Text"
+          },
+		  {
+            "type": "url",
+            "id": "cause-one-url",
+            "label": "Causes One Url"
+          },
+		  { 
+			"type": "image_picker",
+            "id": "image-one",
+            "label": "Cause One"
+		  },
+		  {
+            "type": "text",
+            "id": "cause-two-text",
+            "label": "Causes Two Text"
+          },
+		  {
+            "type": "url",
+            "id": "cause-two-url",
+            "label": "Causes Two Url"
+          },
+		  { 
+			"type": "image_picker",
+            "id": "image-two",
+            "label": "Cause Two"
+		  },
+		  {
+            "type": "text",
+            "id": "cause-three-text",
+            "label": "Causes Three Text"
+          },
+		  {
+            "type": "url",
+            "id": "cause-three-url",
+            "label": "Causes Three Url"
+          },
+		  { 
+			"type": "image_picker",
+            "id": "image-three",
+            "label": "Cause Three"
+		  },
+		  {
+            "type": "text",
+            "id": "cause-four-text",
+            "label": "Causes Four Text"
+          },
+		  
+		  {
+            "type": "url",
+            "id": "cause-four-url",
+            "label": "Causes Four Url"
+          },
+		  { 
+			"type": "image_picker",
+            "id": "image-four",
+            "label": "Cause Four"
+		  },
+		  {
+            "type": "text",
+            "id": "cause-five-text",
+            "label": "Causes Five Text"
+          },
+		  {
+            "type": "url",
+            "id": "cause-five-url",
+            "label": "Causes Five Url"
+          },
+		  { 
+			"type": "image_picker",
+            "id": "image-five",
+            "label": "Cause Five"
+		  },
+		  {
+			"type": "url",
+			"id": "button-url",
+			"label": "Button Url"
+		  },
+          {
+			"type": "text",
+			"id": "button-text",
+			"label": "Button Text"
+		  }
+		  
+		]
+	  },
+	  {
+		"type": "full-image-section",
+		"name": "Full Width Image Section",
+        "settings": [
+		  { 
+			"type": "image_picker",
+            "id": "image",
+            "label": "Image"
+		  }
+		]
+	  }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

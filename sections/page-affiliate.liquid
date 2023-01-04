@@ -1,0 +1,138 @@
+<div class="page-width"> 
+{% for block in section.blocks %}
+     {% case block.type %}
+  		{% when 'affiliate_text_column' %}
+	<section class="affiliate text">
+       <h1>{{ section.settings.page-title }}</h1>
+      <div class="np-row">    
+        <div>
+          {{ block.settings.affiliate-text }}
+        </div>
+      </div>
+  </section>  
+  {% when 'affiliate_instagram_feed' %}
+  	<section>
+  		<div class="instgram-feed">
+          <a href="{{ block.settings.instagram-link }}" target="_blank">
+          	<img src="{{ block.settings.instagram_banner | img_url: 'master' }}" alt="{{ block.settings.instagram_banner.alt }}">
+          </a> 
+      </div>
+  	</section>
+  
+  {% when 'contact-form' %}
+  	<section class="wholesale">
+      	{% include 'page-press-contact-form' %}
+	</section>
+  
+  
+  {% endcase %}
+{% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Affiliate",
+    "class": "np-affiliate",
+    "max_blocks": 20,
+    "settings": [
+			{
+              "type": "text",
+              "id": "page-title",
+              "label": "Page Title",
+ 			  "default": "Affiliate Programme"
+            }
+			
+		],
+	"blocks": [
+          {
+          "type": "affiliate_text_column",
+          "name": "Affiliate Text",
+          "settings": [
+          
+          {
+              "type": "richtext",
+              "id": "affiliate-text",
+              "label": "Affiliate Text Block",
+			  "default": "<p></p>"
+          }
+			
+		 ]
+          },
+		{
+		"name": "Instagram feed",
+        "type": "affiliate_instagram_feed",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "instagram_banner",
+            "label": "Instagram Banner Image"
+          },
+		  {
+              "type": "url",
+              "id": "instagram-link",
+              "label": "Instagram link"
+          }
+            ]
+		},
+		{
+        "type": "contact-form",
+        "name": "Contact form",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+		  {
+            "type": "richtext",
+            "id": "subtitle",
+            "label": "Subtitle",
+            "default": "<p>Need to chat? Drop us a message below and we’ll get back to you asap. If it’s about an order, add in the relevant details to speed things up.</p>"
+          },
+          
+          {
+            "type": "checkbox",
+            "id": "show_phone",
+            "label": "Show phone number"
+          },
+		  {
+            "type": "checkbox",
+            "id": "show_order",
+            "label": "Show Order number"
+          },
+          {
+            "type": "checkbox",
+            "id": "narrow_column",
+            "label": "Narrow column",
+            "default": true
+          }
+        ]
+      }
+	],
+    "presets": [
+          {
+            "name": "Vote Intro",
+            "category": "Text"
+          }
+        ]
+  }
+{% endschema %}
+
+<style>
+  .instgram-feed img {
+  	width:100%;
+  
+  }
+  .instgram-feed { 
+ 	margin: 20px auto; 
+  }  
+  section h1 {
+
+    border-bottom: 1.5px solid #eaeaea;
+    display: inline-block;
+    text-transform: capitalize;
+
+}
+</style>
+{% javascript %}
+{% endjavascript %}

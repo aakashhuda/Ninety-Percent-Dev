@@ -49,15 +49,46 @@
           {%- endif -%}
 
           <div class="grid grid--small">
-            <div class="grid__item medium-up--one-whole">
+            {% comment %} <div class="grid__item medium-up--one-whole">
               <label for="ContactFormSubject-{{ section.id }}">{{ 'contact.form.subject' | t }}<sup>*</sup></label>
               <input type="text" placeholder="Subject" id="ContactFormSubject-{{ section.id }}" class="input-full" name="contact[subject]" autocapitalize="words" value="{% if form.subject %}{{ form.subject }}{% elsif customer %}{{ customer.name }}{% endif %}">
-            </div>
+            </div> {% endcomment %}
 
             <div class="grid__item medium-up--one-whole">
+              <label for="ContactFormSubject-{{ section.id }}">{{ 'contact.form.subject' | t }}<span>*</span></label>
+              <select id="ContactFormSubject-{{ section.id }}" class="input-full contact-form-select" name="contact[subject]" required>
+                <option value="">Please Select Subject</option>
+                <option value="Product Query">Product Query</option>
+                <option value="Order Query">Order Query</option>
+                <option value="Returns or Exchange">Returns or Exchange</option>
+                <option value="Press">Press</option>
+                <option value="Wholesale">Wholesale</option>
+                <option value="Affiliate">Affiliate</option>
+                <option value="8">Other</option>
+              </select>
+            </div>
+
+            <div class="grid__item medium-up--one-whole commonHide hide contact-order">
+              <label for="ContactFormOrder-{{ section.id }}">{{ 'contact.form.order_no' | t }}</label>
+              <input type="text" id="ContactFormOrder-{{ section.id }}" class="input-full" name="contact[order]" value="{% if form.order %}{{ form.order }}{% endif %}">
+            </div>
+            <div class="grid__item medium-up--one-whole commonHide hide publisher">
+              <label for="ContactFormPublisher-{{ section.id }}">{{ 'contact.form.publisher' | t }}</label>
+              <input type="text" id="ContactFormPublisher-{{ section.id }}" class="input-full" name="contact[publisher]" value="{% if form.publisher %}{{ form.publisher }} {% endif %}">
+            </div>
+            <div class="grid__item medium-up--one-whole commonHide hide company">
+              <label for="ContactFormCompany-{{ section.id }}">{{ 'contact.form.company' | t }}</label>
+              <input type="text" id="ContactFormCompany-{{ section.id }}" class="input-full" name="contact[company]" value="{% if form.company %}{{ form.company }} {% endif %}">
+            </div>
+            <div class="grid__item medium-up--one-whole commonHide hide website">
+              <label for="ContactFormWebsite-{{ section.id }}">{{ 'contact.form.website' | t }}</label>
+              <input type="text" id="ContactFormWebsite-{{ section.id }}" class="input-full" name="contact[website]" value="{% if form.website %}{{ form.website }} {% endif %}">
+            </div>
+
+            {% comment %} <div class="grid__item medium-up--one-whole">
               <label for="ContactFormOrderNo-{{ section.id }}">{{ 'contact.form.order_no' | t }}</label>
               <input type="text" placeholder="Order no" id="ContactFormOrderNo-{{ section.id }}" class="input-full" name="contact[order_no]" autocapitalize="words" value="{% if form.order_no %}{{ form.order_no }}{% elsif customer %}{{ customer.name }}{% endif %}">
-            </div>
+            </div> {% endcomment %}
           </div>
 
           <label for="ContactFormMessage-{{ section.id }}">{{ 'contact.form.message' | t }}<sup>*</sup></label>
@@ -75,11 +106,11 @@
               {{ 'contact.form.thank_you' | t }}
             </button>
           {%- endif -%}
-          <button type="button" id="contact-form-submit-{{ section.id }}" class="btn echo-btn thank-you">
+          {% comment %} <button type="button" id="contact-form-submit-{{ section.id }}" class="btn echo-btn thank-you">
             {{ 'contact.form.thank_you' | t }}
           </button>
 
-          {{ form.errors | default_errors }}
+          {{ form.errors | default_errors }} {% endcomment %}
 
           {% comment %}
             Remove the following three lines of code to remove the note
@@ -137,11 +168,12 @@
 
 {% style %}
 /* Changes to accomadate recent design changes - Developer Mahbub - 03/01/2023 */
-input{
+input, select{
   border: none;
   border-bottom: 1px solid;
   border-color: {{ settings.color_borders | default: "#1c1d1d" }};
   border-color: var(--colorBorder);
+  width: 581px;
   max-width: 100%;
   padding: 8px 10px;
   padding-left: 0;
@@ -157,12 +189,14 @@ input{
   margin-bottom: 48px;
 }
 
-input, textarea {
+input, textarea, select {
   max-width: 581px;
 }
 
 input:active,
-input:focus {
+input:focus,
+select:active,
+select:focus {
   border: none;
   border-bottom: 1px solid;
   outline: none;
@@ -230,6 +264,10 @@ text-align: left;
   text-decoration: underline;
 }
 
+.form-vertical .commonHide.hide {
+  display: none;
+}
+
 {% endstyle %}
 
 <script>
@@ -242,4 +280,53 @@ text-align: left;
       link.classList.remove("active")
     }
   })
+
+  function hideElement(targetClassName) {
+    if (targetClassName !== '8' ){
+      const inputToShow = document.querySelector(`.${targetClassName}`)
+      inputToShow.classList.remove('hide')
+      const commonHideElements = document.querySelectorAll(".commonHide")
+      commonHideElements.forEach(element=>{
+          if (element != inputToShow){
+            const flag = element.classList.contains("hide")
+            switch (flag) {
+              case true: //do nothing
+              case false: element.classList.add("hide")
+            } 
+          }
+          {% comment %} element.classList.contains("hide") == false ? element.classList.add("hide"): null {% endcomment %}
+        
+      })
+    }
+    else {
+      const commonHideElements = document.querySelectorAll(".commonHide")
+      commonHideElements.forEach(element=>{
+        if (!element.classList.contains("hide")){
+          element.classList.add('hide')
+        }
+      })
+    }
+  }
+
+  function selectValueChange() {
+    var selectElement = document.querySelector("select.contact-form-select")
+    selectElement.addEventListener('change', (e=>{
+      e.preventDefault()
+      const value = e.target.value
+      console.log(value)
+      switch(value) {
+        case 'Affiliate' : hideElement('website'); break;
+        case 'Wholesale': hideElement('company'); break;
+        case 'Press': hideElement('publisher'); break;
+        case 'Returns or Exchange': hideElement('contact-order'); break;
+        case 'Product Query': hideElement('8'); break;
+        case 'Order Query': hideElement('contact-order'); break;
+        case '8': hideElement('8'); break;
+        case '': hideElement('8'); break;
+      }
+      
+    }))
+  }
+  selectValueChange()
+ 
 </script>

@@ -37,7 +37,7 @@
       "type": "contact-form",
       "settings": {
         "title": "Contact us",
-        "text": "",
+        "text": "<p>Any questions? We are here to help. We respond to each email within 24 hours, Monday to Friday, excluding bank holidays.<\/p>",
         "show_phone": true,
         "narrow_column": false
       }

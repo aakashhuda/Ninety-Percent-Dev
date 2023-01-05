@@ -1,15 +1,15 @@
 {%- paginate customer.orders by 20 -%}
 
 <div class="page-width page-content">
-  <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
-    <h1 class="section-header__title">{{ 'customer.account.title' | t }}</h1>
+  {% comment %} <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
+    <h1 class="section-header__title echo-header">{{ 'customer.account.title' | t }}</h1>
     <a href="{{ routes.account_logout_url }}" class="btn btn--secondary btn--small section-header__link">{{ 'layout.customer.log_out'| t }}</a>
-  </header>
+  </header> {% endcomment %}
 
   <div class="grid">
 
-    <div class="grid__item medium-up--two-thirds">
-      <h2>{{ 'customer.orders.title' | t }}</h2>
+    <div class="grid__item medium-up--two-fifths page-links">
+      {% comment %} <h2>{{ 'customer.orders.title' | t }}</h2>
 
       {%- if customer.orders.size != 0 -%}
 
@@ -42,17 +42,40 @@
 
         <p>{{ 'customer.orders.none' | t }}</p>
 
-      {%- endif -%}
+      {%- endif -%} {% endcomment %}
+      <a class="page-link" href="#" data-handle="none">Orders & Return</a>
+      <a class="page-link" href="#" data-handle="none">My Wishlist</a>
+      <a class="page-link" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
+      <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
     </div>
 
-    <div class="grid__item medium-up--one-third">
-      <h3>{{ 'customer.account.details' | t }}</h3>
+    <div class="grid__item medium-up--three-fifths echo-sub-text">
+      <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
+        <h1 class="section-header__title echo-header">{{ 'customer.account.title' | t }}</h1>
+        {% comment %} <a href="{{ routes.account_logout_url }}" class="btn btn--secondary btn--small section-header__link">{{ 'layout.customer.log_out'| t }}</a> {% endcomment %}
+      </header>
+      <h3 class="echo-sub-header">{{ 'customer.account.details' | t }}</h3>
 
-      <p class="h5">{{ customer.name }}</p>
+      <div class="customer-info">
+        <div>{{ customer.name }}</div>
+        <div>{{ customer.default_address.street }}</div>
+        <div>{{ customer.default_address.city }}</div>
+        <div><span>{{ customer.default_address.zip }}</span>, <span>{{ customer.default_address.country }}</span></div>
+      </div>
 
-      {{ customer.default_address | format_address }}
+      <div class="customer-contact-info">
+        <div>Email: {{ customer.email }}</div>
+        <div>Telephone:  {{ customer.default_address.phone }}</div>
+      </div>
 
-      <p><a href="{{ routes.account_addresses_url }}" class="text-link">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+      {% comment %} {{ customer.default_address | format_address }} {% endcomment %}
+
+      <p><a href="{{ routes.account_addresses_url }}" class="text-link update-account-link">Update Account Details</a></p>
+
+      <div class="account-manipulation-links">
+        <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
+        <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
+      </div>
     </div>
 
   </div>
@@ -62,3 +85,122 @@
   {%- endif -%}
 </div>
 {%- endpaginate -%}
+
+{% style %}
+.section-header__title.echo-header {
+  font-size: 100px;
+  text-align: left;
+  margin-bottom: 57px;
+  line-height: 90%;
+  letter-spacing: -0.03em;
+  color: #2B2725;
+}
+
+.echo-sub-text, .echo-sub-text h3 {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
+.echo-sub-text h3 {
+  text-transform: capitalize;
+  /* border-bottom: 1px solid #2B2725;
+  padding-bottom: 18px; */
+}
+.customer-info, .customer-contact-info {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  margin-bottom: 21px;
+}
+
+.customer-info {
+  margin-bottom: 20px;
+}
+
+.update-account-link {
+  border: 0.75px solid #2B2725;
+  background-color: white;
+  color: #2B2725;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  display: block;
+  padding: 0.8em 0.5em;
+  max-width: 347px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.update-account-link:hover {
+  color: #ffffff;
+  background-color: #111111;
+}
+
+.account-manipulation-links {
+  margin-top: 29px;
+}
+
+.account-manipulation-link {
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.05em;
+  color: #000000;
+}
+
+.page-links {
+  display: flex;
+  flex-direction: column;
+  padding-top: 42px;
+  padding-left: 70px;
+}
+
+.page-link {
+  font-size: 12.5px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
+.page-link.active {
+  text-decoration: underline;
+}
+
+.echo-sub-header {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.echo-sub-header::after {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  content: "";
+  width: 581px;
+  height: 1px;
+  background-color: #2B2725;
+}
+
+{% endstyle %}
+
+<script>
+  const pageLinks = document.querySelectorAll(".page-link")
+  pageLinks.forEach(link=>{
+    if (window.location.pathname.indexOf(`${link.dataset.handle}`) !== -1) {
+      link.classList.add("active")
+    }
+    else {
+      link.classList.remove("active")
+    }
+  })
+</script>

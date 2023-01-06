@@ -1348,6 +1348,9 @@
             },
             "drawer": {
               "label": "Drawer"
+            },
+            "topbar": {
+              "label": "Topbar"
             }
           }
         },
@@ -3231,6 +3234,9 @@
         },
         "product_hover_image": {
           "label": "Hover to reveal second image"
+        },
+        "product_hover_multi_image": {
+          "label": "Hover to reveal image changing icon"
         },
         "header_color_swatches": "Color swatches",
         "enable_swatches": {

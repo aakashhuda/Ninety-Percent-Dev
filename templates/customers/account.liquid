@@ -107,9 +107,6 @@
             <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
           {%- endform -%}
         </div>
-    
-        <hr class="hr--medium">
-    
       {%- endfor -%}
     </div>
   </div>
@@ -230,8 +227,8 @@ input, select{
   border-bottom: 1px solid;
   border-color: {{ settings.color_borders | default: "#1c1d1d" }};
   border-color: var(--colorBorder);
-  width: 581px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 581px;
   padding: 8px 10px;
   padding-left: 0;
   border-radius: 0;

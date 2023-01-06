@@ -1,11 +1,11 @@
 <div class="index-section">
   <div class="page-width{% if section.settings.narrow_column %} page-width--narrow{% endif %} echo-container">
-    <div class="page-links medium-up--three-sixths">
+    <div class="page-links medium-up--two-fifths">
       {% for page in pages %}
         <a class="page-link" href="{{ page.url }}" data-handle="{{ page.handle }}">{{ page.title }}</a>
       {% endfor %}
     </div>
-    <div class="medium-up--three-sixths">
+    <div class="medium-up--three-fifths">
       {%- if section.settings.title != blank -%}
         <div class="section-header">
           <h2 class="section-header__title echo-header">
@@ -228,6 +228,7 @@ text-align: left;
   display: flex;
   flex-direction: column;
   padding-top: 42px;
+  padding-left: 70px;
 }
 
 .echo-text {

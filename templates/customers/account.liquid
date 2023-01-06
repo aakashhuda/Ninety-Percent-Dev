@@ -1,60 +1,117 @@
 {%- paginate customer.orders by 20 -%}
 
 <div class="page-width page-content">
-  <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
-    <h1 class="section-header__title">{{ 'customer.account.title' | t }}</h1>
+  {% comment %} <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
+    <h1 class="section-header__title echo-header">{{ 'customer.account.title' | t }}</h1>
     <a href="{{ routes.account_logout_url }}" class="btn btn--secondary btn--small section-header__link">{{ 'layout.customer.log_out'| t }}</a>
-  </header>
+  </header> {% endcomment %}
 
   <div class="grid">
 
-    <div class="grid__item medium-up--two-thirds">
-      <h2>{{ 'customer.orders.title' | t }}</h2>
-
-      {%- if customer.orders.size != 0 -%}
-
-        <table class="table--responsive table--small-text">
-          <thead>
-            <tr>
-              <th>{{ 'customer.orders.order_number' | t }}</th>
-              <th>{{ 'customer.orders.date' | t }}</th>
-              <th>{{ 'customer.orders.payment_status' | t }}</th>
-              <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
-              <th>{{ 'customer.orders.total' | t }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {%- for order in customer.orders -%}
-              <tr class="table__section">
-                <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
-                <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | time_tag: format: 'date' }}</td>
-                <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
-                <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
-                <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
-              </tr>
-            {%- endfor -%}
-          </tbody>
-        </table>
-
-        <hr class="hr--clear">
-
-      {%- else -%}
-
-        <p>{{ 'customer.orders.none' | t }}</p>
-
-      {%- endif -%}
+    <div class="grid__item medium-up--two-fifths page-links">
+      <a class="page-link" href="#" data-handle="none">Orders & Return</a>
+      <a class="page-link" href="#" data-handle="none">My Wishlist</a>
+      <a class="page-link" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
+      <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
     </div>
 
-    <div class="grid__item medium-up--one-third">
-      <h3>{{ 'customer.account.details' | t }}</h3>
+    <div class="grid__item medium-up--three-fifths echo-sub-text">
+      <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
+        <h1 class="section-header__title echo-header">{{ 'customer.account.title' | t }}</h1>
+      </header>
+      <h3 class="echo-sub-header">{{ 'customer.account.details' | t }}</h3>
 
-      <p class="h5">{{ customer.name }}</p>
+      <div id="customer-info" class="">
+        <div class="customer-info">
+          <div>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</div>
+          <div>{{ customer.default_address.street }}</div>
+          <div>{{ customer.default_address.city }}</div>
+          <div><span>{{ customer.default_address.zip }}</span>, <span>{{ customer.default_address.country }}</span></div>
+        </div>
 
-      {{ customer.default_address | format_address }}
+        <div class="customer-contact-info">
+          <div>Email: {{ customer.email }}</div>
+          <div>Telephone:  {{ customer.default_address.phone }}</div>
+        </div>
+        <p><a href="#" class="text-link update-account-link">Update Account Details</a></p>
+        <div class="account-manipulation-links">
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
+        </div>
+      </div>
 
-      <p><a href="{{ routes.account_addresses_url }}" class="text-link">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a></p>
+      {% comment %} {{ customer.default_address | format_address }} {% endcomment %}
+
+      {%- for address in customer.addresses -%}
+        <div id="EditDetails" class="form-vertical js-address-form text-left hide">
+          {%- form 'customer_address', address -%}
+    
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                <label for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>
+                <input type="text" id="AddressFirstName_{{form.id}}" class="input-full" placeholder="First Name here" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+              </div>
+    
+              <div class="grid__item small--one-whole">
+                <label for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}*</label>
+                <input type="text" id="AddressLastName_{{form.id}}" class="input-full" placeholder="Last Name here" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+              </div>
+    
+              <div class="grid__item small--one-whole">
+                <label for="Email">{{ 'customer.addresses.email' | t }}*</label>
+                <input type="email" id="Email" class="input-full" placeholder="Email here" name="address[email]" value="{{customer.email}}" autocapitalize="words">
+              </div>
+    
+              <div class="grid__item small--one-whole">
+                <label for="AddressPhone_{{form.id}}">{{ 'customer.addresses.phone' | t }}</label>
+                <input type="tel" id="AddressPhone_{{form.id}}" placeholder="Phone no here" class="input-full" name="address[phone]" value="{{form.phone}}">
+              </div>
+            </div>
+    
+            <label for="AddressAddress1_{{form.id}}">{{ 'customer.addresses.address' | t }}</label>
+            <input type="text" id="AddressAddress1_{{form.id}}" class="input-full" placeholder="Address Line 1" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+    
+            <input type="text" id="AddressAddress2_{{form.id}}" class="input-full" placeholder="Address Line 2" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                {% comment %} <label for="County_{{form.id}}">{{ 'customer.addresses.county' | t }}</label> {% endcomment %}
+                <input type="text" id="County_{{form.id}}" class="input-full" placeholder="County" name="address[town]" value="" autocapitalize="characters">
+              </div>
+            </div>
+    
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
+                <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+              </div>
+            </div>
+    
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
+                <input type="text" id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full" name="address[country]" value="{{customer.default_address.country}}" autocapitalize="characters">
+              </div>
+            </div>
+    
+            <p>
+              <label for="addresses-update-submit" class="hidden-label">{{ 'customer.addresses.update' | t }}</label>
+              <button type="submit" id="addresses-update-submit" class="btn echo-btn">
+                {{ 'customer.addresses.update_account_details' | t }}
+              </button>
+            </p>
+            <p>
+              <label for="addresses-cancel-submit" class="hidden-label">{{ 'customer.addresses.cancel' | t }}</label>
+              <button type="button" id="addresses-cancel-submit" class="btn echo-btn">{{ 'customer.addresses.cancel' | t }}</button>
+            </p>
+            <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
+          {%- endform -%}
+        </div>
+    
+        <hr class="hr--medium">
+    
+      {%- endfor -%}
     </div>
-
   </div>
 
   {%- if paginate.pages > 1 -%}
@@ -62,3 +119,197 @@
   {%- endif -%}
 </div>
 {%- endpaginate -%}
+
+{% style %}
+.section-header__title.echo-header {
+  font-size: 100px;
+  text-align: left;
+  margin-bottom: 57px;
+  line-height: 90%;
+  letter-spacing: -0.03em;
+  color: #2B2725;
+}
+
+.echo-sub-text, .echo-sub-text h3 {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
+.echo-sub-text h3 {
+  text-transform: capitalize;
+  /* border-bottom: 1px solid #2B2725;
+  padding-bottom: 18px; */
+}
+.customer-info, .customer-contact-info {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  margin-bottom: 21px;
+}
+
+.customer-info {
+  margin-bottom: 20px;
+}
+
+.update-account-link {
+  border: 0.75px solid #2B2725;
+  background-color: white;
+  color: #2B2725;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  display: block;
+  padding: 0.8em 0.5em;
+  max-width: 347px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.update-account-link:hover {
+  color: #ffffff;
+  background-color: #111111;
+}
+
+.account-manipulation-links {
+  margin-top: 29px;
+}
+
+.account-manipulation-link {
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.05em;
+  color: #000000;
+}
+
+.page-links {
+  display: flex;
+  flex-direction: column;
+  padding-top: 42px;
+  padding-left: 70px;
+}
+
+.page-link {
+  font-size: 12.5px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
+.page-link.active {
+  text-decoration: underline;
+}
+
+.echo-sub-header {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.echo-sub-header::after {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  content: "";
+  width: 581px;
+  height: 1px;
+  background-color: #2B2725;
+}
+
+input, select{
+  border: none;
+  border-bottom: 1px solid;
+  border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+  border-color: var(--colorBorder);
+  width: 581px;
+  max-width: 100%;
+  padding: 8px 10px;
+  padding-left: 0;
+  border-radius: 0;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+
+input:active,
+input:focus,
+select:active,
+select:focus {
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+
+.btn.echo-btn {
+  border: 0.75px solid #2B2725;
+  background-color: white;
+  color: #2B2725;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  display: block;
+  /* transition-delay: 0.25s; */
+  transition: color .2s ease 0.25s;
+  width: 350px;
+}
+
+.btn.echo-btn:hover {
+  color: #ffffff;
+}
+
+#addresses-cancel-submit {
+  margin-bottom: 29px;
+}
+
+.label, label:not(.variant__button-label):not(.text-label) {
+  text-transform: capitalize;
+}
+#EditDetails {
+  margin-top: 49px;
+}
+
+{% endstyle %}
+
+<script>
+  const pageLinks = document.querySelectorAll(".page-link")
+  pageLinks.forEach(link=>{
+    if (window.location.pathname.indexOf(`${link.dataset.handle}`) !== -1) {
+      link.classList.add("active")
+    }
+    else {
+      link.classList.remove("active")
+    }
+  })
+
+  function toggoleEditForm() {
+    const toggleBtn = document.querySelector(".update-account-link")
+    toggleBtn.addEventListener('click', (e=>{
+      e.preventDefault()
+      const targetForm = document.querySelector("#EditDetails")
+      const infoDiv = document.querySelector("#customer-info")
+      targetForm.classList.contains("hide")?targetForm.classList.remove("hide"):targetForm.classList.add("hide")
+      infoDiv.classList.contains("hide")?infoDiv.classList.remove("hide"):infoDiv.classList.add("hide")
+    }))
+  }
+  toggoleEditForm()
+
+  function cancelFormEdit(){
+    const canceBtn = document.querySelector("#addresses-cancel-submit")
+    canceBtn.addEventListener("click", (e=>{
+      const targetForm = document.querySelector("#EditDetails")
+      const infoDiv = document.querySelector("#customer-info")
+      targetForm.classList.contains("hide")?targetForm.classList.remove("hide"):targetForm.classList.add("hide")
+      infoDiv.classList.contains("hide")?infoDiv.classList.remove("hide"):infoDiv.classList.add("hide")
+    }))
+  }
+  cancelFormEdit()
+</script>

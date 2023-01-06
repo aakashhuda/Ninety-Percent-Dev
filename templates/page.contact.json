@@ -18,6 +18,8 @@
         "text": {
           "type": "text",
           "settings": {
+            "enlarge_text": true,
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<\/p>"
           }
         }
       },
@@ -26,11 +28,18 @@
         "text"
       ],
       "settings": {
+        "align_text": "center",
+        "narrow_column": true,
+        "divider": false
       }
     },
     "form": {
       "type": "contact-form",
       "settings": {
+        "title": "Contact us",
+        "text": "<p>Any questions? We are here to help. We respond to each email within 24 hours, Monday to Friday, excluding bank holidays.<\/p>",
+        "show_phone": true,
+        "narrow_column": false
       }
     }
   },

@@ -9,40 +9,6 @@
   <div class="grid">
 
     <div class="grid__item medium-up--two-fifths page-links">
-      {% comment %} <h2>{{ 'customer.orders.title' | t }}</h2>
-
-      {%- if customer.orders.size != 0 -%}
-
-        <table class="table--responsive table--small-text">
-          <thead>
-            <tr>
-              <th>{{ 'customer.orders.order_number' | t }}</th>
-              <th>{{ 'customer.orders.date' | t }}</th>
-              <th>{{ 'customer.orders.payment_status' | t }}</th>
-              <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
-              <th>{{ 'customer.orders.total' | t }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {%- for order in customer.orders -%}
-              <tr class="table__section">
-                <td data-label="{{ 'customer.orders.order_number' | t }}">{{ order.name | link_to: order.customer_url }}</td>
-                <td data-label="{{ 'customer.orders.date' | t }}">{{ order.created_at | time_tag: format: 'date' }}</td>
-                <td data-label="{{ 'customer.orders.payment_status' | t }}">{{ order.financial_status_label }}</td>
-                <td data-label="{{ 'customer.orders.fulfillment_status' | t }}">{{ order.fulfillment_status_label }}</td>
-                <td data-label="{{ 'customer.orders.total' | t }}">{{ order.total_price | money }}</td>
-              </tr>
-            {%- endfor -%}
-          </tbody>
-        </table>
-
-        <hr class="hr--clear">
-
-      {%- else -%}
-
-        <p>{{ 'customer.orders.none' | t }}</p>
-
-      {%- endif -%} {% endcomment %}
       <a class="page-link" href="#" data-handle="none">Orders & Return</a>
       <a class="page-link" href="#" data-handle="none">My Wishlist</a>
       <a class="page-link" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
@@ -52,32 +18,101 @@
     <div class="grid__item medium-up--three-fifths echo-sub-text">
       <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
         <h1 class="section-header__title echo-header">{{ 'customer.account.title' | t }}</h1>
-        {% comment %} <a href="{{ routes.account_logout_url }}" class="btn btn--secondary btn--small section-header__link">{{ 'layout.customer.log_out'| t }}</a> {% endcomment %}
       </header>
       <h3 class="echo-sub-header">{{ 'customer.account.details' | t }}</h3>
 
-      <div class="customer-info">
-        <div>{{ customer.name }}</div>
-        <div>{{ customer.default_address.street }}</div>
-        <div>{{ customer.default_address.city }}</div>
-        <div><span>{{ customer.default_address.zip }}</span>, <span>{{ customer.default_address.country }}</span></div>
-      </div>
+      <div id="customer-info" class="">
+        <div class="customer-info">
+          <div>{{ customer.name }}</div>
+          <div>{{ customer.default_address.street }}</div>
+          <div>{{ customer.default_address.city }}</div>
+          <div><span>{{ customer.default_address.zip }}</span>, <span>{{ customer.default_address.country }}</span></div>
+        </div>
 
-      <div class="customer-contact-info">
-        <div>Email: {{ customer.email }}</div>
-        <div>Telephone:  {{ customer.default_address.phone }}</div>
+        <div class="customer-contact-info">
+          <div>Email: {{ customer.email }}</div>
+          <div>Telephone:  {{ customer.default_address.phone }}</div>
+        </div>
+        <p><a href="#" class="text-link update-account-link">Update Account Details</a></p>
+        <div class="account-manipulation-links">
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
+        </div>
       </div>
 
       {% comment %} {{ customer.default_address | format_address }} {% endcomment %}
 
-      <p><a href="{{ routes.account_addresses_url }}" class="text-link update-account-link">Update Account Details</a></p>
+      {%- for address in customer.addresses -%}
+        <div id="EditDetails" class="form-vertical js-address-form text-left hide">
+          {%- form 'customer_address', address -%}
+    
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                <label for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}</label>
+                <input type="text" id="AddressFirstName_{{form.id}}" class="input-full" placeholder="First Name here" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+              </div>
+    
+              <div class="grid__item small--one-whole">
+                <label for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}</label>
+                <input type="text" id="AddressLastName_{{form.id}}" class="input-full" placeholder="Last Name here" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+              </div>
+    
+              <div class="grid__item small--one-whole">
+                <label for="Email">{{ 'customer.addresses.email' | t }}</label>
+                <input type="email" id="Email" class="input-full" placeholder="Email here" name="address[email]" value="{{customer.email}}" autocapitalize="words">
+              </div>
+    
+              <div class="grid__item small--one-whole">
+                <label for="AddressPhone_{{form.id}}">{{ 'customer.addresses.phone' | t }}</label>
+                <input type="tel" id="AddressPhone_{{form.id}}" placeholder="Phone no here" class="input-full" name="address[phone]" value="{{form.phone}}">
+              </div>
+            </div>
+    
+            <label for="AddressAddress1_{{form.id}}">{{ 'customer.addresses.address' | t }}</label>
+            <input type="text" id="AddressAddress1_{{form.id}}" class="input-full" placeholder="Address Line 1" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+    
+            <input type="text" id="AddressAddress2_{{form.id}}" class="input-full" placeholder="Address Line 2" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
 
-      <div class="account-manipulation-links">
-        <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
-        <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
-      </div>
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                {% comment %} <label for="County_{{form.id}}">{{ 'customer.addresses.county' | t }}</label> {% endcomment %}
+                <input type="text" id="County_{{form.id}}" class="input-full" placeholder="County" name="address[town]" value="" autocapitalize="characters">
+              </div>
+            </div>
+    
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
+                <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+              </div>
+            </div>
+    
+            <div class="grid grid--small">
+              <div class="grid__item small--one-whole">
+                {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
+                <input type="text" id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full" name="address[country]" value="{{customer.default_address.country}}" autocapitalize="characters">
+              </div>
+            </div>
+    
+            <p>
+              <label for="addresses-update-submit" class="hidden-label">{{ 'customer.addresses.update' | t }}</label>
+              <button type="submit" id="addresses-update-submit" class="btn echo-btn">
+                {{ 'customer.addresses.update_account_details' | t }}
+              </button>
+            </p>
+            <p>
+              {% comment %} <label for="address-edit-toggle" class="hidden-label">{{ 'customer.addresses.cancel' | t }}</label>
+              <button type="button" id="address-edit-toggle" class="text-link address-edit-toggle" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</button> {% endcomment %}
+              <label for="address-edit-toggle" class="hidden-label">{{ 'customer.addresses.cancel' | t }}</label>
+              <button type="button" id="address-edit-toggle" class="text-link address-edit-toggle" data-form-id="{{ form.id }}">DELETE ACCOUNT</button>
+            </p>
+          {%- endform -%}
+        </div>
+    
+        <hr class="hr--medium">
+    
+      {%- endfor -%}
     </div>
-
   </div>
 
   {%- if paginate.pages > 1 -%}
@@ -191,6 +226,47 @@
   background-color: #2B2725;
 }
 
+input, select{
+  border: none;
+  border-bottom: 1px solid;
+  border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+  border-color: var(--colorBorder);
+  width: 581px;
+  max-width: 100%;
+  padding: 8px 10px;
+  padding-left: 0;
+  border-radius: 0;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+
+input:active,
+input:focus,
+select:active,
+select:focus {
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+
+.btn.echo-btn {
+  border: 0.75px solid #2B2725;
+  background-color: white;
+  color: #2B2725;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  display: block;
+  /* transition-delay: 0.25s; */
+  transition: color .2s ease 0.25s;
+  width: 350px;
+}
+
+.btn.echo-btn:hover {
+  color: #ffffff;
+}
+
 {% endstyle %}
 
 <script>
@@ -203,4 +279,16 @@
       link.classList.remove("active")
     }
   })
+
+  function toggoleEditForm() {
+    const toggleBtn = document.querySelector(".update-account-link")
+    const infoDiv = document.querySelector("#customer-info")
+    toggleBtn.addEventListener('click', (e=>{
+      e.preventDefault()
+      const targetForm = document.querySelector("#EditDetails")
+      targetForm.classList.contains("hide")?targetForm.classList.remove("hide"):targetForm.classList.add("hide")
+      infoDiv.classList.contains("hide")?infoDiv.classList.remove("hide"):infoDiv.classList.add("hide")
+    }))
+  }
+  toggoleEditForm()
 </script>

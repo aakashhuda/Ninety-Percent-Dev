@@ -98,18 +98,23 @@
           <button type="submit" id="contact-form-submit-{{ section.id }}" class="btn echo-btn">
             {{ 'contact.form.send' | t }}
           </button>
+          {{ form.errors | default_errors }}
           {%- if form.posted_successfully? -%}
-            {% comment %} <p class="note note--success">
-              {{ 'contact.form.post_success' | t }}
-            </p> {% endcomment %}
-            <button type="button" id="contact-form-submit-{{ section.id }}" class="btn echo-btn">
-              {{ 'contact.form.thank_you' | t }}
-            </button>
+            <div class="success-container">
+              <button type="button" id="contact-form-submit-{{ section.id }}" class="btn echo-btn">
+                {{ 'contact.form.thank_you' | t }}
+              </button>
+              <div class="echo-success-note">
+                {{ 'contact.form.post_success' | t }}
+              </div>
+            </div>
           {%- endif -%}
           {% comment %} <button type="button" id="contact-form-submit-{{ section.id }}" class="btn echo-btn thank-you">
             {{ 'contact.form.thank_you' | t }}
           </button>
-
+            <p class="note note--success">
+              {{ 'contact.form.post_success' | t }}
+            </p>
           {{ form.errors | default_errors }} {% endcomment %}
 
           {% comment %}
@@ -266,6 +271,30 @@ text-align: left;
 
 .form-vertical .commonHide.hide {
   display: none;
+}
+
+.echo-success-note {
+  padding-top: 10px;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  margin-bottom: 40px;
+}
+
+.btn-inline {
+  display: inline;
+  float: left;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.success-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
 }
 
 {% endstyle %}

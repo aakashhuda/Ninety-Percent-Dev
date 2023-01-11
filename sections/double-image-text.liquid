@@ -1,12 +1,458 @@
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'double-image-with-text' %} 
+            <div id="wrapper-{{ block.id }}">
+                <section class="double-image-container-{{ block.id }}">
+
+                    <div class="potrait-image-container-{{ block.id }}">
+                        <img src="{{ block.settings.image-portrait | img_url: "master" }}" class="image-p-{{ block.id }}">
+                    </div>
+
+                    <div class="image-with-text-container-{{ block.id }}">
+                        <div class="mobile-description-{{ block.id }}">{{ block.settings.mobile-description }}</div>
+                        <div class="hr-parent-{{ block.id }}">
+                            <hr class="hr-{{ block.id }}">
+                        </div>
+                        <div class="landscape-image-container-{{ block.id }}">
+                            <img src="{{ block.settings.image-landscape | img_url: "master" }}" class="image-l-{{ block.id }}">
+                        </div>
+                        <div class="title-{{ block.id }}">{{ block.settings.title }}</div>
+                        <div class="description-{{ block.id }}">{{ block.settings.description }}</div>
+                        <div class="link-{{ block.id }}">
+                            <a href="{{ block.settings.url }}">{{ block.settings.url-text }}</a>
+                        </div>
+                        <div class="hr-parent-{{ block.id }}">
+                            <hr class="hr1-{{ block.id }}">
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+
+<style>
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'double-image-with-text' %}
+            #wrapper-{{ block.id }} {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .double-image-container-{{ block.id }} {
+                display: flex;
+                gap: {{ block.settings.gap }}%;
+                width: {{ block.settings.section-width }}%;
+            }
+            .potrait-image-container-{{ block.id }} {
+                width: 100%;
+                padding-top: {{ block.settings.padding-top }}%; 
+            }
+            .image-with-text-container-{{ block.id }} {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                align-items: flex-start;
+            }
+            .landscape-image-container-{{ block.id }} {
+                width: 100%;
+            }
+            .image-p-{{ block.id }} {
+                width: {{ block.settings.image-p-width }}%;
+                height: auto;
+            }
+            .image-l-{{ block.id }} {
+                width: {{ block.settings.image-l-width }}%;
+            }
+            .link-{{ block.id }} a {
+                text-decoration: none;
+                color: #2b2724;
+                font-size: 14px;
+                text-transform: uppercase;
+                padding-bottom: 7px;
+                border-bottom: 1px solid #2b2724;
+            }
+            .title-{{ block.id }} {
+                font-family: {{ block.settings.title-font }};
+                font-size: {{ block.settings.title-font-size }}px;
+                color: {{ block.settings.title-font-color }};
+            }
+            .description-{{ block.id }} {
+                font-family: {{ block.settings.description-font }};
+                font-size: {{ block.settings.description-font-size }}px;
+                line-height: {{ block.settings.description-line-height }}px;
+                color: {{ block.settings.description-font-color }};
+                text-align: justify;
+                width: {{ block.settings.description-width }}%;
+            }
+            .mobile-description-{{ block.id }} {
+                display: none;
+                font-family: {{ block.settings.mobile-description-font }};
+                font-size: {{ block.settings.mobile-description-font-size }}px;
+                color: {{ block.settings.mobile-description-font-color }};
+                width: {{ block.settings.mobile-description-width }}%;
+            }
+            .hr-parent-{{ block.id }}{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            hr.hr-{{ block.id }}, hr.hr1-{{ block.id }} {
+                display: none;
+                width: 93%;
+                margin: 1rem 0;
+            }
+            hr.hr1-{{ block.id }} {
+                margin-top: 65px;
+            }
+            {% if block.settings.gap > 0 %}
+                .potrait-image-container-{{ block.id }} {
+                    width: calc(100% - ({{ block.settings.gap }}%/2));
+                }
+                .image-with-text-container-{{ block.id }} {
+                    width: calc(100% - ({{ block.settings.gap }}%/2));
+                }
+            {% endif %}
+            {% if block.settings.title-italic == true %}
+                .title-{{ block.id }} {
+                    font-style: italic;
+                }
+            {% endif %}
+            @media (max-width: 768px) {
+                .double-image-container-{{ block.id }} {
+                    flex-wrap: wrap;
+                    width: 100%;
+                }
+                .potrait-image-container-{{ block.id }} {
+                    width: 100%;
+                    padding: 0;
+                }
+                .image-with-text-container-{{ block.id }} {
+                    width: 100%;
+                    display: block;
+                }
+                .image-p-{{ block.id }} {
+                    width: 100%;
+                }
+                .landscape-image-container-{{ block.id }} {
+                    width: 100%;
+                }
+                .image-l-{{ block.id }} {
+                    width: 100%;
+                }
+                .title-{{ block.id }}, .mobile-description-{{ block.id }}, .description-{{ block.id }}, .link-{{ block.id }} {
+                    padding: 0 4%;
+                }
+                .title-{{ block.id }} {
+                    padding-top: 14px;
+                    font-size: {{ block.settings.title-mobile-font-size }}px;
+                }
+                .description-{{ block.id }} {
+                    padding-top: 35px;
+                    padding-bottom: 30px;
+                    font-size: {{ block.settings.description-mobile-font-size }}px;
+                    line-height: {{ block.settings.description-mobile-line-height }}px;
+                }
+                .link-{{ block.id }} {
+                    width: 100%;
+                }
+                .link-{{ block.id }} a {
+                    display: block;
+                    color: #2b2724;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    padding: 0.7em 0;
+                    padding-left: 1.7em;
+                    border: 1px solid #2b2724;
+                    width: 100%;
+                }
+                .mobile-description-{{ block.id }} {
+                    display: block;
+                    padding-top: 16px;
+                    padding-bottom: 40px;
+                    line-height: {{ block.settings.mobile-description-line-height }}px;
+                }
+                hr.hr-{{ block.id }}, hr.hr1-{{ block.id }} {
+                    display: block;
+                }
+            }
+        {% when 'spacer' %}
+            .custom-spacer-{{ block.id }} {
+                height: {{ block.settings.spacer }}px;
+            }    
+
+    {% endcase %}
+{% endfor %}
+</style>
+
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+    "name": "Double Image with Text",
+    "settings": [
+
+    ],
+    "blocks": [
+        {
+            "name": "Double Image with Text",
+            "type": "double-image-with-text",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "section-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Block Width"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image-portrait",
+                    "label": "Choose Portrait Image"
+                },
+                {
+                    "type": "range",
+                    "id": "image-p-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Portrait Image Width"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image-landscape",
+                    "label": "Choose Landscape Image"
+                },
+                {
+                    "type": "range",
+                    "id": "image-l-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Landscape Image Width"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Tangible Strides"
+                },
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "url-text",
+                    "label": "URL Name",
+                    "default": "learn more about our way"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "text",
+                    "id": "mobile-description",
+                    "label": "Mobile Description"
+                },
+                {
+                    "type": "range",
+                    "id": "padding-top",
+                    "label": "Portrait Image Position",
+                    "min": 0,
+                    "max": 20,
+                    "default": 12,
+                    "unit": "%",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "gap",
+                    "label": "Column Gap",
+                    "min": 0,
+                    "max": 20,
+                    "default": 0,
+                    "unit": "%",
+                    "step": 1
+                },
+                {
+                    "type": "font",
+                    "id": "title-font",
+                    "label": "Title Font"
+                },
+                {
+                    "type": "color",
+                    "id": "title-font-color",
+                    "label": "Title Font Color (Mobile)",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "title-font-size",
+                    "min": 14,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Title Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "title-mobile-font-size",
+                    "min": 14,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 30,
+                    "label": "Title Font Size (Mobile)"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "title-italic",
+                    "label": "Title Italic",
+                    "default": true
+                },
+                {
+                    "type": "font",
+                    "id": "description-font",
+                    "label": "Description Font"
+                },
+                {
+                    "type": "color",
+                    "id": "description-font-color",
+                    "label": "Description Font Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "description-font-size",
+                    "min": 14,
+                    "max": 20,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-font-size",
+                    "min": 14,
+                    "max": 20,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "description-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Description Line Height (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "description-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Description Width"
+                },
+                {
+                    "type": "font",
+                    "id": "mobile-description-font",
+                    "label": "Mobile Description Font"
+                },
+                {
+                    "type": "color",
+                    "id": "mobile-description-font-color",
+                    "label": "Mobile Description Font Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-description-font-size",
+                    "min": 14,
+                    "max": 20,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Mobile Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-description-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Mobile Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-description-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Moblie Description Width"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Double Image With Text"
+        }
+    ]
+}
 {% endschema %}
-
-{% stylesheet %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}

@@ -57,7 +57,9 @@
           "type": "double-image-with-text",
           "settings": {
             "section-width": 97,
+            "image-portrait": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_20_172_R2_1.png",
             "image-p-width": 100,
+            "image-landscape": "shopify:\/\/shop_images\/lighter_1.png",
             "image-l-width": 100,
             "title": "Tangible Strides",
             "description": "Each year 90% of our distributable profits are shared between charitablecauses and the people that make our collections happen. The pieces we make are cut in thefinest vegan materials, selected to have the lowest impacton our global environment. We‘re putting care for people and planet at the heart of our endeavors.",

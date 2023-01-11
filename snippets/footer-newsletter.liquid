@@ -6,8 +6,9 @@
       {%- render 'collapsible-icons' -%}
     </button>
   {%- endif -%}
-  <div {% if block.settings.show_footer_title %}
-    id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--small"
+  <div
+    {% if block.settings.show_footer_title %}
+      id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--small"
     {% endif %}>
     <div class="collapsible-content__inner">
       <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
@@ -34,18 +35,13 @@
             <button type="submit" id="newsletter-submit-{{ block.id }}" class="footer__newsletter-btn" name="commit">
               <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-email" viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68"/></svg>
               <span class="footer__newsletter-btn-label">
-                {%- comment -%}
-                  {{ 'general.newsletter_form.submit' | t }}
-                {%- endcomment -%}
-                SIGN UP
+                {{ 'general.newsletter_form.submit' | t }}
               </span>
             </button>
           </div>
         {%- endform -%}
 
-        {%- comment -%}
-          {% render 'social-icons', additional_classes: 'footer__social' %}
-        {%- endcomment -%}
+        {% render 'social-icons', additional_classes: 'footer__social' %}
 
       </div>
     </div>

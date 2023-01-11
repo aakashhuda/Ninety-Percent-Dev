@@ -227,7 +227,7 @@
         },
         "video_url": {
           "label": "Background video link",
-          "info": "Supports YouTube, .MP4 and Vimeo. Not all features supported by Vimeo. [Learn more](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-add-background-videos)"
+          "info": "Supports YouTube, .MP4 and Vimeo. Not all features supported by Vimeo. [Learn more](https://archetypethemes.co/blogs/impulse/how-do-i-add-background-videos)"
         },
         "color_border": {
           "label": "Video color",
@@ -388,7 +388,7 @@
     "contact-form": {
       "name": "Contact form",
       "settings": {
-        "content": "All submissions are sent to the customer email address of your store. [Learn more](https:\/\/help.shopify.com\/en\/manual\/using-themes\/change-the-layout\/add-contact-form#view-contact-form-submissions).",
+        "content": "All submissions are sent to the customer email address of your store. [Learn more](https://help.shopify.com/en/manual/using-themes/change-the-layout/add-contact-form#view-contact-form-submissions).",
         "title": {
           "label": "Title"
         },
@@ -571,7 +571,7 @@
           "label": "Show SKU"
         },
         "header_media": "Media",
-        "content": "Learn more about [media types](https:\/\/help.shopify.com\/en\/manual\/products\/product-media)",
+        "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)",
         "image_position": {
           "label": "Position",
           "options": {
@@ -722,11 +722,11 @@
     "footer": {
       "name": "Footer",
       "settings": {
-        "header_language_selector": "To add a language, go to your [language settings.](\/admin\/settings\/languages)",
+        "header_language_selector": "To add a language, go to your [language settings.](/admin/settings/languages)",
         "show_locale_selector": {
           "label": "Show language selector"
         },
-        "header_currency_selector": "To add a currency, go to your [currency settings.](\/admin\/settings\/payments)",
+        "header_currency_selector": "To add a currency, go to your [currency settings.](/admin/settings/payments)",
         "show_currency_selector": {
           "label": "Show currency selector"
         },
@@ -780,7 +780,7 @@
             "show_footer_title": {
               "label": "Show heading"
             },
-            "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](\/admin\/customers).",
+            "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers).",
             "title": {
               "label": "Heading"
             },
@@ -838,7 +838,7 @@
         },
         "mega_menu_images": {
           "label": "Show mega menu images",
-          "info": "[How to create a mega menu](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-create-a-mega-menu)"
+          "info": "[How to create a mega menu](https://archetypethemes.co/blogs/impulse/how-do-i-create-a-mega-menu)"
         },
         "main_menu_alignment": {
           "label": "Header layout",
@@ -899,11 +899,11 @@
         "toolbar_social": {
           "label": "Show social icons"
         },
-        "header_language_selector": "To add a language, go to your [language settings.](\/admin\/settings\/languages)",
+        "header_language_selector": "To add a language, go to your [language settings.](/admin/settings/languages)",
         "show_locale_selector": {
           "label": "Show language selector"
         },
-        "header_currency_selector": "To add a currency, go to your [currency settings.](\/admin\/settings\/payments)",
+        "header_currency_selector": "To add a currency, go to your [currency settings.](/admin/settings/payments)",
         "show_currency_selector": {
           "label": "Show currency selector"
         },
@@ -994,7 +994,7 @@
         },
         "video_url": {
           "label": "Background video link",
-          "info": "Supports YouTube, .MP4 and Vimeo. Not all features supported by Vimeo. [Learn more](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-add-background-videos)"
+          "info": "Supports YouTube, .MP4 and Vimeo. Not all features supported by Vimeo. [Learn more](https://archetypethemes.co/blogs/impulse/how-do-i-add-background-videos)"
         },
         "overlay_opacity": {
           "label": "Text protection",
@@ -1335,7 +1335,7 @@
         "header_filtering_and_sorting": "Filtering and sorting",
         "enable_sidebar": {
           "label": "Enable filter",
-          "info": "Allow your customers to filter collections and search results by product availability, price, color, and more. [Customize filters](\/admin\/menus)"
+          "info": "Allow your customers to filter collections and search results by product availability, price, color, and more. [Customize filters](/admin/menus)"
         },
         "collapsed": {
           "label": "Collapse filters"
@@ -1353,7 +1353,7 @@
         },
         "enable_color_swatches": {
           "label": "Enable color swatches",
-          "info": "[View setup instructions](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-set-up-color-swatches)"
+          "info": "[View setup instructions](https://archetypethemes.co/blogs/impulse/how-do-i-set-up-color-swatches)"
         },
         "enable_sort": {
           "label": "Show sort options"
@@ -1383,7 +1383,7 @@
         "subcollections": {
           "name": "Subcollections",
           "settings": {
-            "content": "Links to collections from your menu will appear here. [Learn more](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-create-subcollections)",
+            "content": "Links to collections from your menu will appear here. [Learn more](https://archetypethemes.co/blogs/impulse/how-do-i-create-subcollections)",
             "subcollections_per_row": {
               "label": "Subcollections per row"
             }
@@ -1404,7 +1404,7 @@
           "label": "Show SKU"
         },
         "header_media": "Media",
-        "content": "Learn more about [media types](https:\/\/help.shopify.com\/en\/manual\/products\/product-media)",
+        "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)",
         "image_position": {
           "label": "Position",
           "options": {
@@ -1493,7 +1493,7 @@
         "header_filtering_and_sorting": "Filtering and sorting",
         "enable_sidebar": {
           "label": "Enable filter",
-          "info": "Allow your customers to filter collections and search results by product availability, price, color, and more. [Customize filters](\/admin\/menus)"
+          "info": "Allow your customers to filter collections and search results by product availability, price, color, and more. [Customize filters](/admin/menus)"
         },
         "collapsed": {
           "label": "Collapse filters"
@@ -1511,7 +1511,7 @@
         },
         "enable_color_swatches": {
           "label": "Enable color swatches",
-          "info": "[View setup instructions](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-set-up-color-swatches)"
+          "info": "[View setup instructions](https://archetypethemes.co/blogs/impulse/how-do-i-set-up-color-swatches)"
         },
         "per_row": {
           "label": "Products per row"
@@ -1539,7 +1539,7 @@
         },
         "api_key": {
           "label": "Google Maps API key",
-          "info": "You'll need to [register a Google Maps API Key](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/map-section-api-key) to display the map"
+          "info": "You'll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map"
         },
         "show_button": {
           "label": "Show 'Get directions' button"
@@ -1613,7 +1613,7 @@
         },
         "popup_image": {
           "label": "Image",
-          "info": "Does not appear on mobile in order to meet [Google's interstitial guidelines](https:\/\/developers.google.com\/search\/blog\/2016\/08\/helping-users-easily-access-content-on) for improved SEO"
+          "info": "Does not appear on mobile in order to meet [Google's interstitial guidelines](https://developers.google.com/search/blog/2016/08/helping-users-easily-access-content-on) for improved SEO"
         },
         "image_position": {
           "label": "Image position",
@@ -1633,7 +1633,7 @@
           "label": "Close button text"
         },
         "header_newsletter": "Newsletter",
-        "content": "Every sign up will create a Customer on your store. [View customers](\/admin\/customers?query=&accepts_marketing=1).",
+        "content": "Every sign up will create a Customer on your store. [View customers](/admin/customers?query=&accepts_marketing=1).",
         "enable_newsletter": {
           "label": "Enable newsletter"
         },
@@ -1688,7 +1688,7 @@
         }
       },
       "settings": {
-        "content": "Customers who subscribe will have their email address added to the 'accepts marketing' [customer list](\/admin\/customers?query=&accepts_marketing=1).",
+        "content": "Customers who subscribe will have their email address added to the 'accepts marketing' [customer list](/admin/customers?query=&accepts_marketing=1).",
         "color_background": {
           "label": "Background"
         },
@@ -1771,7 +1771,7 @@
         "contact_form": {
           "name": "Contact form",
           "settings": {
-            "content": "All submissions are sent to the customer email address of your store. [Learn more](https:\/\/help.shopify.com\/en\/manual\/using-themes\/change-the-layout\/add-contact-form#view-contact-form-submissions).",
+            "content": "All submissions are sent to the customer email address of your store. [Learn more](https://help.shopify.com/en/manual/using-themes/change-the-layout/add-contact-form#view-contact-form-submissions).",
             "title": {
               "label": "Heading"
             },
@@ -1796,7 +1796,7 @@
       "settings": {
         "show_product_recommendations": {
           "label": "Show dynamic recommendations",
-          "info": "Dynamic recommendations change and improve with time. [Learn more](https:\/\/help.shopify.com\/en\/themes\/development\/recommended-products)"
+          "info": "Dynamic recommendations change and improve with time. [Learn more](https://help.shopify.com/en/themes/development/recommended-products)"
         },
         "product_recommendations_heading": {
           "label": "Heading"
@@ -2371,8 +2371,7 @@
       }
     },
     "store-availability": {
-      "name": {
-      }
+      "name": {}
     },
     "testimonials": {
       "name": "Testimonials",
@@ -3248,7 +3247,7 @@
           }
         },
         "header_product_reviews": "Product reviews",
-        "content": "Add reviews by enabling the setting below and installing the [Shopify Product Reviews app](https:\/\/apps.shopify.com\/product-reviews) and following our [setup guide](https:\/\/archetypethemes.co\/blogs\/support\/installing-shopifys-product-reviews-app)",
+        "content": "Add reviews by enabling the setting below and installing the [Shopify Product Reviews app](https://apps.shopify.com/product-reviews) and following our [setup guide](https://archetypethemes.co/blogs/support/installing-shopifys-product-reviews-app)",
         "enable_product_reviews": {
           "label": "Enable product reviews"
         }
@@ -3390,43 +3389,43 @@
         "header_accounts": "Accounts",
         "social_facebook_link": {
           "label": "Facebook",
-          "info": "https:\/\/www.facebook.com\/shopify"
+          "info": "https://www.facebook.com/shopify"
         },
         "social_twitter_link": {
           "label": "Twitter",
-          "info": "https:\/\/twitter.com\/shopify"
+          "info": "https://twitter.com/shopify"
         },
         "social_pinterest_link": {
           "label": "Pinterest",
-          "info": "https:\/\/www.pinterest.com\/shopify"
+          "info": "https://www.pinterest.com/shopify"
         },
         "social_instagram_link": {
           "label": "Instagram",
-          "info": "https:\/\/instagram.com\/shopify"
+          "info": "https://instagram.com/shopify"
         },
         "social_snapchat_link": {
           "label": "Snapchat",
-          "info": "https:\/\/www.snapchat.com\/add\/shopify"
+          "info": "https://www.snapchat.com/add/shopify"
         },
         "social_tiktok_link": {
           "label": "TikTok",
-          "info": "https:\/\/www.tiktok.com\/@shopify"
+          "info": "https://www.tiktok.com/@shopify"
         },
         "social_tumblr_link": {
           "label": "Tumblr",
-          "info": "http:\/\/shopify.tumblr.com"
+          "info": "http://shopify.tumblr.com"
         },
         "social_linkedin_link": {
           "label": "LinkedIn",
-          "info": "https:\/\/www.linkedin.com\/in\/shopify"
+          "info": "https://www.linkedin.com/in/shopify"
         },
         "social_youtube_link": {
           "label": "YouTube",
-          "info": "https:\/\/www.youtube.com\/user\/shopify"
+          "info": "https://www.youtube.com/user/shopify"
         },
         "social_vimeo_link": {
           "label": "Vimeo",
-          "info": "https:\/\/vimeo.com\/shopify"
+          "info": "https://vimeo.com/shopify"
         },
         "header_sharing_options": "Sharing options",
         "share_facebook": {
@@ -3478,7 +3477,7 @@
         "header_predictive_search": "Predictive search",
         "predictive_search_enabled": {
           "label": "Enable predictive search",
-          "info": "Live search results. Not available in all languages. [Learn more](https:\/\/help.shopify.com\/en\/themes\/development\/search\/predictive-search#general-requirements-and-limitations)"
+          "info": "Live search results. Not available in all languages. [Learn more](https://help.shopify.com/en/themes/development/search/predictive-search#general-requirements-and-limitations)"
         },
         "predictive_search_show_vendor": {
           "label": "Show vendor"
@@ -3532,7 +3531,7 @@
     "general": {
       "404": {
         "title": "404 Page Not Found",
-        "subtext_html": "<p>The page you were looking for does not exist. <\/p><p><a href='{{ url }}'>Continue shopping<\/a><\/p>"
+        "subtext_html": "<p>The page you were looking for does not exist. </p><p><a href='{{ url }}'>Continue shopping</a></p>"
       },
       "accessibility": {
         "skip_to_content": "Skip to content",
@@ -3555,7 +3554,7 @@
         "login_form_submit": "Enter",
         "signup_form_email_label": "Email",
         "signup_form_success": "We will send you an email right before we open!",
-        "admin_link_html": "Store owner? <a href=\"\/admin\" class=\"text-link\">Log in here<\/a>",
+        "admin_link_html": "Store owner? <a href=\"/admin\" class=\"text-link\">Log in here</a>",
         "password_link": "Password",
         "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
       },
@@ -3611,8 +3610,8 @@
         "get_directions": "Get directions",
         "address_error": "Error looking up that address",
         "address_no_results": "No results for that address",
-        "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium Plan<\/a>.",
-        "auth_error_html": "There was a problem authenticating your Google Maps account. Create and enable the <a href=\"https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\">JavaScript API<\/a> and <a href=\"https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\">Geocoding API<\/a> permissions of your app."
+        "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium Plan</a>.",
+        "auth_error_html": "There was a problem authenticating your Google Maps account. Create and enable the <a href=\"https://developers.google.com/maps/documentation/javascript/get-api-key\">JavaScript API</a> and <a href=\"https://developers.google.com/maps/documentation/geocoding/get-api-key\">Geocoding API</a> permissions of your app."
       },
       "slideshow": {
         "play_slideshow": "Play slideshow",
@@ -3652,12 +3651,12 @@
         "update": "Update cart",
         "checkout": "Check out",
         "empty": "Your cart is currently empty.",
-        "continue_browsing_html": "<a href='{{ url }}'>Continue shopping<\/a>",
+        "continue_browsing_html": "<a href='{{ url }}'>Continue shopping</a>",
         "close_cart": "Close cart",
         "reduce_quantity": "Reduce item quantity by one",
         "increase_quantity": "Increase item quantity by one",
         "terms": "I agree with the terms and conditions",
-        "terms_html": "I agree with the <a href='{{ url }}' target='_blank'>terms and conditions<\/a>",
+        "terms_html": "I agree with the <a href='{{ url }}' target='_blank'>terms and conditions</a>",
         "terms_confirm": "You must agree with the terms and conditions of sales to check out"
       },
       "label": {
@@ -3726,7 +3725,7 @@
         "city": "City",
         "country": "Country",
         "province": "Province",
-        "zip": "Postal\/Zip code",
+        "zip": "Postal/Zip code",
         "phone": "Phone",
         "set_default": "Set as default address",
         "add": "Add address",
@@ -3850,7 +3849,7 @@
         "add_to_cart": "Add to cart",
         "preorder": "Pre-order",
         "include_taxes": "Tax included.",
-        "shipping_policy_html": "<a href='{{ link }}'>Shipping<\/a> calculated at checkout.",
+        "shipping_policy_html": "<a href='{{ link }}'>Shipping</a> calculated at checkout.",
         "will_not_ship_until": "Ready to ship {{ date }}",
         "will_be_in_stock_after": "Back in stock {{ date }}",
         "waiting_for_stock": "Inventory on the way",
@@ -3864,8 +3863,8 @@
         "check_other_stores": "Check availability at other stores",
         "pick_up_available": "Pickup available",
         "pick_up_currently_unavailable": "Pickup currently unavailable",
-        "pick_up_available_at_html": "Pickup available at <strong>{{ location_name }}<\/strong>",
-        "pick_up_unavailable_at_html": "Pickup currently unavailable at <strong>{{ location_name }}<\/strong>"
+        "pick_up_available_at_html": "Pickup available at <strong>{{ location_name }}</strong>",
+        "pick_up_unavailable_at_html": "Pickup currently unavailable at <strong>{{ location_name }}</strong>"
       }
     },
     "gift_cards": {
@@ -3919,7 +3918,7 @@
         },
         "color_swatches": {
           "label": "Enable color swatches",
-          "info": "Requires type to be set to 'Buttons'. [Learn how to set up swatches](https:\/\/archetypethemes.co\/blogs\/impulse\/how-do-i-set-up-color-swatches)"
+          "info": "Requires type to be set to 'Buttons'. [Learn how to set up swatches](https://archetypethemes.co/blogs/impulse/how-do-i-set-up-color-swatches)"
         },
         "product_dynamic_variants_enable": {
           "label": "Enable dynamic product options"
@@ -3939,11 +3938,11 @@
       "settings": {
         "show_dynamic_checkout": {
           "label": "Show dynamic checkout button",
-          "info": "Lets customers check out directly using a familiar payment method. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)"
+          "info": "Lets customers check out directly using a familiar payment method. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
         },
         "surface_pickup_enable": {
           "label": "Enable pickup availability feature",
-          "info": "Learn how to setup this feature [here](https:\/\/help.shopify.com\/en\/manual\/shipping\/setting-up-and-managing-your-shipping\/local-methods\/local-pickup)"
+          "info": "Learn how to setup this feature [here](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup)"
         }
       }
     },
@@ -3955,7 +3954,7 @@
         },
         "inventory_transfers_enable": {
           "label": "Show inventory transfer notice",
-          "info": "Learn how to create inventory transfers [here](https:\/\/help.shopify.com\/en\/manual\/products\/inventory\/transfers\/create-transfer)"
+          "info": "Learn how to create inventory transfers [here](https://help.shopify.com/en/manual/products/inventory/transfers/create-transfer)"
         }
       }
     },
@@ -4050,7 +4049,7 @@
     "contact_form": {
       "name": "Contact form",
       "settings": {
-        "content": "All submissions are sent to the customer email address of your store. [Learn more](https:\/\/help.shopify.com\/en\/manual\/using-themes\/change-the-layout\/add-contact-form#view-contact-form-submissions).",
+        "content": "All submissions are sent to the customer email address of your store. [Learn more](https://help.shopify.com/en/manual/using-themes/change-the-layout/add-contact-form#view-contact-form-submissions).",
         "title": {
           "label": "Heading"
         },

@@ -1,0 +1,388 @@
+<div id="wrapper-{{ section.id }}"> 
+    <section class="product-with-info-{{ section.id }}">
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'product-card' %}
+                    <div class="product-card-{{ block.id }}">
+                        <div class="product-image-{{ block.id }}">
+                            <img src="{{ block.settings.product-image | img_url: 'master' }}">
+                        </div>
+                        <div class="product-name-{{ block.id }}">{{ block.settings.product-name }}</div>
+                        <div class="product-origin-{{ block.id }}"><p><span>ORIGIN</span>: <span>{{ block.settings.product-origin }}</span></p></div>
+                        <div class="product-description-{{ block.id }}">
+                            <p>{{ block.settings.product-description }}</p>
+                        </div>
+                        <div class="url-{{ block.id }}">
+                            <a href="{{ block.settings.url }}">{{ block.settings.url-name }}</a>
+                        </div>
+                    </div>
+            {% endcase %}
+        {% endfor %}
+    </section>
+</div>
+
+<style>
+    #wrapper-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .product-with-info-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        width: {{ section.settings.section-width }}%;
+    }
+
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+            {% when 'product-card' %}
+                {% if forloop.length < 3 %}
+                    .product-with-info-{{ section.id }} {
+                        justify-content: flex-start;
+                    }   
+                {% endif %}
+                .url-{{ block.id }} a {
+                    text-decoration: none;
+                    color: #2b2724;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    padding-bottom: 7px;
+                    border-bottom: 1px solid #2b2724;
+                }
+                .product-card-{{ block.id }} {
+                    max-width: 440px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: stretch;
+                    align-items: start;
+                    flex: 1;
+                    padding: 2%;
+                    padding-top: 0;
+                    position: relative;
+                }
+                .product-image-{{ block.id }}, .product-image-{{ block.id }} img {
+                    width: 100%;
+                }
+                .product-name-{{ block.id }} {
+                    font-family: {{ block.settings.product-name-font }};
+                    font-size: {{ block.settings.product-name-font-size }}px;
+                    font-weight: {{ block.settings.product-name-font-weight }};
+                    line-height: {{ block.settings.product-name-line-height }}px;
+                    text-transform: uppercase;
+                }
+                .product-description-{{ block.id }} {
+                    text-align: justify;
+                    height: 100%;
+                    font-family: {{ block.settings.product-description-font }};
+                    font-size: {{ block.settings.product-description-font-size }}px;
+                    font-weight: {{ block.settings.product-description-font-weight }};
+                    line-height: {{ block.settings.product-description-line-height }}px;
+                }
+                .product-origin-{{ block.id }} {
+                    font-family: {{ block.settings.product-origin-font }};
+                    font-size: {{ block.settings.product-origin-font-size }}px;
+                    font-weight: {{ block.settings.product-origin-font-weight }};
+                    line-height: {{ block.settings.product-origin-line-height }}px;
+                    text-transform: uppercase;
+                }
+                .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
+                    padding-left: {{ block.settings.product-text-left-padding }}px;
+                    padding-right: {{ block.settings.product-text-right-padding }}px;
+                }
+                .url {
+                    position: absolute;
+                    bottom: 0;
+                    margin-top: 10px;
+                }
+                {% if block.settings.enable-border == true %}
+                    .product-card-{{ block.id }} {
+                        border-right: 1px solid #c0bfbd;
+                    }
+                {% endif %}
+                @media (max-width: 768px) {
+                    .product-name-{{ block.id }} {
+                        font-size: {{ block.settings.product-name-mobile-font-size }}px;
+                        line-height: {{ block.settings.product-name-mobile-line-height }}px;
+                    }
+                    .product-description-{{ block.id }} {
+                        font-size: {{ block.settings.product-description-mobile-font-size }}px;
+                        line-height: {{ block.settings.product-description-mobile-line-height }}px;
+                    }
+                    .product-origin-{{ block.id }} {
+                        font-size: {{ block.settings.product-origin-mobile-font-size }}px;
+                        line-height: {{ block.settings.product-origin-mobile-line-height }}px;
+                    }
+                }
+                {% if block.settings.show-button == false %}
+                    .url-{{ block.id }} {
+                        display: none;
+                    }
+                {% endif %}
+
+        {% endcase %}
+
+    {% endfor %}
+
+</style>
+
+{% schema %}
+
+{
+    "name": "Ninety Product With Info",
+    "settings": [
+        {
+            "type": "range",
+            "id": "section-width",
+            "min": 30,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "default": 100,
+            "label": "Section Width"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Product",
+            "type": "product-card",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "label": "Image",
+                    "id": "product-image"
+                },
+                {
+                    "type": "richtext",
+                    "id": "product-name",
+                    "label": "Product Name"
+                },
+                {
+                    "type": "font",
+                    "id": "product-name-font",
+                    "label": "Name Font"
+                },
+                {
+                    "type": "range",
+                    "id": "product-name-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Name Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "product-name-mobile-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Name Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "product-name-font-weight",
+                    "label": "Name Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "product-name-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Name Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "product-name-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Name Line Height (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "product-origin",
+                    "label": "Product Origin",
+                    "default": "Country, Country, Country"
+                },
+                {
+                    "type": "font",
+                    "id": "product-origin-font",
+                    "label": "Origin Font"
+                },
+                {
+                    "type": "range",
+                    "id": "product-origin-font-size",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 12,
+                    "label": "Origin Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "product-origin-mobile-font-size",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 12,
+                    "label": "Origin Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "product-origin-font-weight",
+                    "label": "Origin Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "product-origin-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 21,
+                    "label": "Origin Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "product-origin-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 21,
+                    "label": "Origin Line Height (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "product-description",
+                    "label": "Product Description"
+                },
+                {
+                    "type": "font",
+                    "id": "product-description-font",
+                    "label": "Description Font"
+                },
+                {
+                    "type": "range",
+                    "id": "product-description-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "product-description-mobile-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "product-description-font-weight",
+                    "label": "Description Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "product-description-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Product Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "product-description-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Product Description Line Height (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "url-name",
+                    "label": "URL Text",
+                    "default": "Learn More"          
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show-button",
+                    "label": "Show Button",
+                    "default": true
+                },
+                {
+                    "type": "range",
+                    "id": "product-text-left-padding",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 20,
+                    "label": "Product Info Left Padding"
+                },
+                {
+                    "type": "range",
+                    "id": "product-text-right-padding",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 45,
+                    "label": "Product Info Right Padding"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "enable-border",
+                    "label": "Enable Right Line",
+                    "default": false
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Product With Info"
+        }
+    ]
+}
+{% endschema %}

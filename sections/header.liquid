@@ -1,8 +1,11 @@
 {%- liquid
   assign main_menu = linklists[section.settings.main_menu_link_list]
   assign toolbar_menu = linklists[section.settings.toolbar_menu]
-
+  assign drawer_menu = linklists[section.settings.drawer_menu_link_list]
+  assign logo-mobile = section.settings.logo-mobile 
   assign logo_alignment = 'left'
+  assign announce_bar_background = section.settings.announcement-bar-background
+  assign hide_social_on_desktop = section.settings.hide-social-on-desktop
   if section.settings.main_menu_alignment == 'center-left' or section.settings.main_menu_alignment == 'center-split' or section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-drawer'
     assign logo_alignment = 'center'
   endif
@@ -27,9 +30,10 @@
   endif
 -%}
 
-{%- render 'drawer-menu',
+{%- render 'drawer-menu-new',
   section: section,
-  main_menu: main_menu,
+  drawer_menu: drawer_menu,
+  logo-mobile: logo-mobile,
   toolbar_menu: toolbar_menu,
   logo_alignment: logo_alignment
 -%}
@@ -82,7 +86,7 @@
 
 <div data-section-id="{{ section.id }}" data-section-type="header">
   {%- if overlay_header or section.settings.announcement_above_header -%}
-    {%- render 'announcement-bar', section: section -%}
+    {%- render 'announcement-bar', section: section, announce_bar_background: announce_bar_background -%}
   {%- endif -%}
 
   {%- unless overlay_header -%}
@@ -90,7 +94,8 @@
       {%- render 'toolbar',
         section: section,
         toolbar_menu: toolbar_menu,
-        overlay_header: overlay_header
+        overlay_header: overlay_header,
+        hide_social_on_desktop: hide_social_on_desktop
       -%}
     {%- endif -%}
   {%- endunless -%}
@@ -221,7 +226,7 @@
   </div>
 
   {%- unless overlay_header or section.settings.announcement_above_header -%}
-    {%- render 'announcement-bar', section: section -%}
+    {%- render 'announcement-bar', section: section, announce_bar_background: announce_bar_background -%}
   {%- endunless -%}
 </div>
 
@@ -235,6 +240,34 @@
       "label": "t:sections.header.settings.main_menu_link_list.label",
       "default": "main-menu"
     },
+      {
+        "type": "link_list",
+        "id": "drawer_menu_link_list",
+        "label": "Mobile Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "select",
+        "id": "announcement-bar-background",
+        "label": "Announce Bar Background",
+        "default": "black-bg",
+        "options": [
+          {
+            "value": "black-bg",
+            "label": "Black"
+          },
+          {
+            "value": "white-bg",
+            "label": "White"
+          }
+        ]
+      },
+        {
+          "type": "image_picker",
+          "id": "logo-mobile",
+          "label": "Logo Mobile",
+          "info": "Logo for mobile"
+        },
     {
       "type": "checkbox",
       "id": "mega_menu_images",
@@ -360,6 +393,12 @@
     },
     {
       "type": "checkbox",
+      "id": "hide-social-on-desktop",
+      "label": "Hide Social Icons on Desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "show_currency_flags",
       "label": "t:sections.header.settings.show_currency_flags.label",
       "default": true
@@ -435,3 +474,12 @@
   }
 }
 {% endschema %}
+
+<style>
+  .white-bg{
+    background-color: white;
+    color: black;
+    border-bottom: 0.5px solid #000000;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+  }
+</style>

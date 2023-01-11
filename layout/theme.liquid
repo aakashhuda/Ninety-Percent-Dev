@@ -59,6 +59,7 @@
         productFrom: {{ 'products.general.from_text_html' | t: price: '' | json }}
       };
       theme.settings = {
+        dynamicVariantType: {{ settings.variant_type | json }},
         cartType: {{ settings.cart_type | json }},
         isCustomerTemplate:{% if request.page_type contains 'customers/' %}true
         {% else %}

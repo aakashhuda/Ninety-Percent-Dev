@@ -1,14 +1,20 @@
 <div class="footer__item-padding">
   {%- if block.settings.show_footer_title -%}
     <p class="h4 footer__title small--hide">{{ block.settings.title }}</p>
-    <button type="button" class="h4 footer__title collapsible-trigger collapsible-trigger-btn medium-up--hide" aria-controls="Footer-{{ block.id }}">
+    <button
+      type="button"
+      class="h4 footer__title sign-up-newsletter-title collapsible-trigger collapsible-trigger-btn medium-up--hide is-open"
+      aria-controls="Footer-{{ block.id }}">
       {{ block.settings.title }}
-      {%- render 'collapsible-icons' -%}
+      {% comment %} {%- render 'collapsible-icons' -%} {% endcomment %}
     </button>
   {%- endif -%}
-  <div {% if block.settings.show_footer_title %}
-    id="Footer-{{ block.id }}" class="collapsible-content collapsible-content--small"
-    {% endif %}>
+  <div
+    {% if block.settings.show_footer_title %}
+    id="Footer-{{ block.id }}"
+    class="collapsible-content collapsible-content--small is-open"
+    {% endif %}
+    style="height: 59px !important">
     <div class="collapsible-content__inner">
       <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">
         {%- if block.settings.text -%}
@@ -27,15 +33,38 @@
 
           <label for="Email-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
           <label for="newsletter-submit-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.submit' | t }}</label>
-          <input type="hidden" name="contact[tags]" value="prospect,newsletter">
-          <input type="hidden" name="contact[context]" value="footer">
+          <input
+            type="hidden"
+            name="contact[tags]"
+            value="prospect,newsletter">
+          <input
+            type="hidden"
+            name="contact[context]"
+            value="footer">
           <div class="footer__newsletter">
-            <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email-{{ block.id }}" class="footer__newsletter-input" autocorrect="off" autocapitalize="off">
-            <button type="submit" id="newsletter-submit-{{ block.id }}" class="footer__newsletter-btn" name="commit">
-              <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-email" viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68"/></svg>
+            <input
+              type="email"
+              value="{% if customer %}{{ customer.email }}{% endif %}"
+              placeholder="Enter your email address"
+              name="contact[email]"
+              id="Email-{{ block.id }}"
+              class="footer__newsletter-input"
+              autocorrect="off"
+              autocapitalize="off">
+            <button
+              type="submit"
+              id="newsletter-submit-{{ block.id }}"
+              class="footer__newsletter-btn"
+              name="commit">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                role="presentation"
+                class="icon icon-email"
+                viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68" /></svg>
               <span class="footer__newsletter-btn-label">
                 {%- comment -%}
-                  {{ 'general.newsletter_form.submit' | t }}
+                {{ 'general.newsletter_form.submit' | t }}
                 {%- endcomment -%}
                 SIGN UP
               </span>
@@ -44,10 +73,25 @@
         {%- endform -%}
 
         {%- comment -%}
-          {% render 'social-icons', additional_classes: 'footer__social' %}
+        {% render 'social-icons', additional_classes: 'footer__social' %}
         {%- endcomment -%}
 
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .sign-up-newsletter-title {
+    pointer-events: none;
+    text-align: left !important;
+    letter-spacing: 0.1em;
+  }
+  .footer__newsletter-input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .footer__item-padding{
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+</style>

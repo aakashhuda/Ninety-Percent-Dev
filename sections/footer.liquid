@@ -62,24 +62,30 @@
       render 'footer-custom-text', block: block
       when 'newsletter'
       render 'footer-newsletter', block: block
-      when 'menu'
-      render 'footer-menu', block: block
+
       endcase
       -%}
         </div>
       {%- endfor -%}
-      {%- for block in section.blocks -%}
+<!--       {%- for block in section.blocks -%}
         {%- if block.type == 'logo_social' -%}
           <div class="grid__item medium-up--hide">
             {%- render 'footer-logo', block: block -%}
           </div>
         {%- endif -%}
-      {%- endfor -%}
+      {%- endfor -%} -->
+
     </div>
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'logo_social' -%}
+        <div class="new-logo-footer">
+          {%- render 'footer-logo', block: block -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
 
 
-
-    {%- comment -%}
+<!--     
       {%- if show_selectors -%}
       <div class="footer__section">
       {%- render 'multi-selectors'
@@ -89,8 +95,8 @@
       location: 'footer'
       -%}
       </div>
-      {%- endif -%}
-    {%- endcomment -%}
+      {%- endif -%} -->
+    
 
 
 
@@ -119,14 +125,174 @@
       <p class="footer__small-text">{{ powered_by_link }}</p>
     {%- endcomment -%}
 
+      <div class="footer-wrapper">
+        <a class="footer-links">UK/GBP</a>
+        {%- for block in section.blocks -%}
+          {% if block.type == 'menu' %}
+            {% if block.settings.menu == 'footer-menu-new-web-development' %}
+              {%- for link in linklists[block.settings.menu].links -%}
+                <a class="footer-links" href="{{ link.url }}">{{ link.title }}</a>
+                <br/>
+              {%- endfor -%}
+            {% endif %}
+          {% endif %}
+        {%- endfor -%}
+        <div class="social-links">
+          {%- if settings.social_instagram_link != blank -%}
+            <a href="{{ settings.social_instagram_link }}">
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 19 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <rect
+                  x="0.625"
+                  y="0.625"
+                  width="17.75"
+                  height="17.75"
+                  rx="4.375"
+                  stroke="#2B2725"
+                  stroke-width="1.25" />
+                <circle
+                  cx="9.5"
+                  cy="9.5"
+                  r="4.5"
+                  stroke="#2B2725"
+                  stroke-width="1.25" />
+                <circle
+                  cx="15.25"
+                  cy="4.25"
+                  r="1.25"
+                  fill="#2B2725" />
+              </svg>
+            </a>
+          {% endif %}
 
+          {%- if settings.social_facebook_link != blank -%}
+            <a href="{{ settings.social_facebook_link }}">
+              <svg
+                width="9"
+                height="19"
+                viewBox="0 0 9 19"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.62163 6.27727L8.40519 9.12076H5.54481V19H1.92768V9.12076H0V6.27727H1.92768V4.37314C1.92768 3.53215 1.95259 2.23417 2.55052 1.42809C3.18426 0.577585 4.05 0 5.54481 0C7.97543 0 9 0.355437 9 0.355437L8.52042 3.26716C8.01272 3.12403 7.48988 3.04411 6.96332 3.02915C6.21747 3.02915 5.54481 3.30207 5.54481 4.07007V6.29155L8.62163 6.27727Z" fill="#2B2725" />
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      </div>
 
-    <div class="footer-wrapper">
+      <div class="footer-wrapper-mobile">
+        <div class="footer-menu-items-mobile">
+          {%- for block in section.blocks -%}
+            {% if block.type == 'menu' %}
+              {% if block.settings.menu == 'footer-menu-new-web-development' %}
+                {%- for link in linklists[block.settings.menu].links -%}
+                  <a class="footer-links-mobile" href="{{ link.url }}">{{ link.title }}</a>
+                  
+                {%- endfor -%}
+              {% endif %}
+            {% endif %}
+          {%- endfor -%}
+          <a class="footer-links-mobile">UK/GBP</a>
+          <br>
+          <div class="social-links">
+            {%- if settings.social_instagram_link != blank -%}
+              <a href="{{ settings.social_instagram_link }}">
+                <svg
+                  width="29"
+                  height="29"
+                  viewBox="0 0 19 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <rect
+                    x="0.625"
+                    y="0.625"
+                    width="17.75"
+                    height="17.75"
+                    rx="4.375"
+                    stroke="#2B2725"
+                    stroke-width="1.25" />
+                  <circle
+                    cx="9.5"
+                    cy="9.5"
+                    r="4.5"
+                    stroke="#2B2725"
+                    stroke-width="1.25" />
+                  <circle
+                    cx="15.25"
+                    cy="4.25"
+                    r="1.25"
+                    fill="#2B2725" />
+                </svg>
+              </a>
+            {% endif %}
+  
+            {%- if settings.social_facebook_link != blank -%}
+              <a href="{{ settings.social_facebook_link }}">
+                <svg
+                  width="29"
+                  height="29"
+                  viewBox="0 0 9 19"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.62163 6.27727L8.40519 9.12076H5.54481V19H1.92768V9.12076H0V6.27727H1.92768V4.37314C1.92768 3.53215 1.95259 2.23417 2.55052 1.42809C3.18426 0.577585 4.05 0 5.54481 0C7.97543 0 9 0.355437 9 0.355437L8.52042 3.26716C8.01272 3.12403 7.48988 3.04411 6.96332 3.02915C6.21747 3.02915 5.54481 3.30207 5.54481 4.07007V6.29155L8.62163 6.27727Z" fill="#2B2725" />
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="logo-block-mobile">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'logo_social' -%}
+              <div class="new-logo-footer-mobile">
+                {%- render 'footer-logo', block: block -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+<!--     <div class="footer-wrapper">
       <div class="left-menu-list">
-        <a class="footer-links" href="">ABOUT NINETY PERCENT</a>
+{% comment %}         <a class="footer-links" href="">ABOUT NINETY PERCENT</a>
         <a class="footer-links" href="">CONTACT</a>
         <a class="footer-links" href="">SIZE GUIDE</a>
-        <a class="footer-links" href="">GARMENT CARE</a>
+        <a class="footer-links" href="">GARMENT CARE</a> {% endcomment %}
+        {%- for block in section.blocks -%}
+           {% if block.type == 'menu'  %}
+             {% if block.settings.menu == 'new-dev-footer-about' %}
+                {%- for link in linklists[block.settings.menu].links -%}
+                    <a class="footer-links" href="{{ link.url }}">{{ link.title }}</a>
+                {%- endfor -%}
+             {% endif %}
+           {% endif  %}
+        {%- endfor -%} 
+ 
+      </div>
+      <div class="mobile-menu">
+        {%- for block in section.blocks -%}
+           {% if block.type == 'menu'  %}
+             {% if block.settings.menu == 'new-dev-footer-about' %}
+                {%- for link in linklists[block.settings.menu].links -%}
+                    <a class="footer-links" href="{{ link.url }}">{{ link.title }}</a>
+                    <br/>
+                {%- endfor -%}
+             {% endif %}
+           {% endif  %}
+        {%- endfor -%}
+        {%- for block in section.blocks -%}
+           {% if block.type == 'menu'  %}
+             {% if block.settings.menu == 'new-dev-footer-shipping' %}
+                {%- for link in linklists[block.settings.menu].links -%}
+                    <a class="footer-links" href="{{ link.url }}">{{ link.title }}</a>
+                    <br/>
+                {%- endfor -%}
+             {% endif %}
+           {% endif  %}
+        {%- endfor -%}
       </div>
       {%- for block in section.blocks -%}
         {%- if block.type == 'logo_social' -%}
@@ -161,21 +327,31 @@
           {% endif %}
         </div>
         <div class="">
-          <a class="footer-links" href="">UK/GBP</a>
-          <a class="footer-links" href="">SHIPPING</a>
-          <a class="footer-links" href="">RETURNS</a>
-          <a class="footer-links" href="">FAQS</a>
-          <a class="footer-links" href="">STOCKLISTS</a>
+          <a class="footer-links" href="">      
+
+         </a>
+        {%- for block in section.blocks -%}
+           {% if block.type == 'menu'  %}
+             {% if block.settings.menu == 'new-dev-footer-shipping' %}
+                {%- for link in linklists[block.settings.menu].links -%}
+                    <a class="footer-links" href="{{ link.url }}">{{ link.title }}</a>
+                {%- endfor -%}
+             {% endif %}
+           {% endif  %}
+        {%- endfor -%} 
         </div>
 
-      </div>
+      </div> -->
     </div>
 
 
   </div>
 </footer>
 
-{% schema %}
+
+            
+  
+  {% schema %}
   {
     "name": "t:sections.footer.name",
     "max_blocks": 12,
@@ -228,7 +404,7 @@
       {
         "type": "logo_social",
         "name": "t:sections.footer.blocks.logo.name",
-        "limit": 1,
+        "limit": 2,
         "settings": [
           {
             "type": "image_picker",
@@ -276,7 +452,8 @@
             "unit": "%"
           }
         ]
-      }, {
+      },
+      {
         "type": "newsletter",
         "name": "t:sections.footer.blocks.newsletter_and_social.name",
         "limit": 1,
@@ -368,12 +545,21 @@
 
 
 <style>
+  .mobile-menu{
+    display: none;
+  }
   .new-logo-footer{
     width: 6rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 2em;
   }
   .social-links {
     text-align: right;
+    display: contents;
   }
+
   .footer-wrapper {
     display: flex;
     justify-content: space-between;
@@ -381,8 +567,55 @@
   }
   .footer-links {
     padding: 0 35px 0 0;
+    text-transform: uppercase;
   }
   .footer-links:last-child {
     padding-right: 0;
+  }
+  .footer-wrapper-mobile{
+    text-align: left;
+    display: none;
+  }
+  .new-logo-footer-mobile{
+
+  }
+  .footer-links-mobile{
+    display: block;
+    text-transform: uppercase;
+    padding-bottom: 0.5em;
+  }
+  .logo-block-mobile{
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 60px;
+  }
+  .footer-menu-items-mobile{
+    padding-bottom: 10px;
+
+  }
+  @media only screen and (max-width: 514px){
+    .new-logo-footer{
+      display: none;
+    }
+    .footer__logo{
+      
+    }
+    .footer-wrapper{
+      display: none;
+    }
+    .footer-wrapper-mobile{
+      display: flex;
+      justify-content: space-between;
+    }
+      .mobile-menu{
+        display: block;
+        text-align:left;
+       }
+      .left-menu-list{
+        display: none;
+      }
+      .right-menu-list{
+        display: none;
+      }
   }
 </style>

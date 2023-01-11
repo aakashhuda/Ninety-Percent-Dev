@@ -1,0 +1,196 @@
+<section class="section-wrapper-{{ section.id }}">
+    {% for block in section.blocks %}
+      
+          {% case block.type %}
+          {% when 'text-block' %}
+              <div class="text-block-{{ block.id }}">
+            <div class="block-{{ block.id }}-width-{{ block.settings.block-width }}">{{ block.settings.text-content }}</div>
+            </div>
+  
+          {% when 'spacer-block' %}
+          <div class="spacer-{{ block.id }}">
+              
+          </div>
+  
+          {% endcase %}
+      
+    {% endfor %}
+  </section>
+  
+  <style>
+      
+      {% for block in section.blocks %}
+          {% case block.type %} 
+  
+          {% when "text-block" %}
+  
+          .block-{{ block.id }}-width-small{
+             max-width: 576px;
+             margin: 0 auto;
+           }
+           .block-{{ block.id }}-width-medium{
+             max-width: 1148px;
+             margin: 0 auto;
+           }
+          .block-{{ block.id }}-width-full{
+             max-width: 100%;
+           }
+          .block-{{ block.id }}-width-full p{
+             padding: 0 30px;
+           }
+           .block-{{ block.id }}-width-custom{
+             max-width: {{ block.settings.custom-block-width | append: "px" }};
+             margin: 0 auto;
+           }
+          .section-wrapper-{{ section.id }} .text-block-{{ block.id }} p {
+              font-size: {{ block.settings.font-size | append: "px" }};
+              font-family: {{ block.settings.font }};
+              color: {{ block.settings.text-color }};
+              line-height: {{ block.settings.line-height }}px;
+          }
+          .section-wrapper-{{ section.id }} .text-block-{{ block.id }} {
+              text-align: center;
+          }
+          @media only screen and (max-width: 768px) { 
+            .section-wrapper-{{ section.id }} .text-block-{{ block.id }} p {
+              font-size: {{ block.settings.mobile-font-size | append: "px" }};
+              line-height: {{ block.settings.mobile-line-height }}px;
+          }
+          }
+  
+          {% when "spacer-block" %}
+          .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+              height: {{ block.settings.spacer-height }}px;
+          }
+      {% endcase %}
+      {% endfor %}
+  
+  
+  </style>
+  
+  {% schema %}
+  {
+      "name": "np-single-column-text",
+      "blocks": [
+          {
+              "name": "text-block",
+              "type": "text-block",
+              "settings": [
+                  {
+                   "type":"richtext",
+                   "id":"text-content",
+                   "label":"Change Text Block",
+                   "default":"<p>hello world</p>"
+                },
+                {
+                  "type": "range",
+                  "id": "font-size",
+                  "label": "Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 16
+                  },
+                  {
+                  "type": "range",
+                  "id": "mobile-font-size",
+                  "label": "Mobile Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 16
+                  },
+                  {
+                  "type": "range",
+                  "id": "line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Mobile Line Height"
+              },
+              {
+                  "type": "font",
+                  "id": "font",
+                  "label": "Font Family"
+              },
+              {
+                    "type":"color",
+                    "id":"text-color",
+                    "label":"Text Color",
+                    "default": "#000000"
+                },
+                  {
+                  "type": "select",
+                  "id": "block-width",
+                  "label": "Block width",
+                  "options": [
+                  {
+                  "value": "small",
+                  "label": "Small"
+                  },
+                  {
+                  "value": "medium",
+                  "label": "Medium"
+                  },
+                  {
+                  "value": "full",
+                  "label": "Full"
+                  },
+                  {
+                  "value": "custom",
+                  "label": "Custom"
+                  }
+              ],
+              "default": "medium"
+              },
+              {  
+                  "type": "range",
+                  "id": "custom-block-width",
+                  "label": "Custom block width",
+                  "min": 200,
+                  "max": 1900,
+                  "step": 50,
+                  "unit": "px",
+                  "default": 800
+              }
+              ]
+          },
+          {
+             "type": "spacer-block",
+              "name": "Spacer",
+                "settings":[
+                  {
+                      "type": "range",
+                      "id": "spacer-height",
+                      "label": "Spacer Height",
+                      "min": 0,
+                      "max": 200,
+                      "step": 5,
+                      "unit": "px",
+                      "default": 30
+                  }
+                ]
+            }
+      ],
+      "presets": [
+          {
+           "category":"content",
+            "name":"np-single-column-text"
+          }
+      ]
+  }
+  {% endschema %} 

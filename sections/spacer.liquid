@@ -1,0 +1,32 @@
+<section class="custom-spacer">
+
+</section>
+
+<style>
+    .custom-spacer {
+        height: {{ section.settings.spacer }}px;
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Spacer",
+    "settings": [
+        {
+            "type": "range",
+            "id": "spacer",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 10,
+            "label": "Height"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Spacer"
+        }
+    ]
+}
+{% endschema %}

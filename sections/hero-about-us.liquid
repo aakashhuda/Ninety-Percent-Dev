@@ -1,4 +1,4 @@
- {% for block in section.blocks %}
+{% for block in section.blocks %}
     {% case block.type %}
         {% when 'hero-about-us' %} 
             <div id="wrapper-{{ block.id }}"> 
@@ -59,22 +59,22 @@
                 }
                 .title-{{ block.id }} {
                     font-size: {{ block.settings.title-font-size }}px;
-                    font-family: {{ block.settings.title-font }};
-                    color: {{ block.settings.title-font-color }};
+                    font-family: 'Silvana';
+                    color: #2B2725;
                 }
                 .description-{{ block.id }} {
                     font-size: 26px;
-                    color: {{ block.settings.description-font-color }};
+                    color: #000000;
                     font-size: {{ block.settings.description-font-size }}px;
-                    line-height: {{ block.settings.description-line-height }}px;
-                    font-family: {{ block.settings.description-font }};
+                    line-height: 36px;
+                    font-family: 'Silvana';
                     width: {{ block.settings.description-width }}%;
                 }
                 .history-description-{{ block.id }} {
                     font-size: {{ block.settings.history-font-size }}px;
-                    line-height: {{ block.settings.history-line-height }}px;
-                    color: {{ block.settings.history-font-color }};
-                    font-family: {{ block.settings.history-font }};
+                    line-height: 28px;
+                    color: #000000;
+                    font-family: 'Intervogue';
                     width: {{ block.settings.history-width }}%;
                     text-align: justify;
                 }
@@ -108,12 +108,12 @@
                     }
                     .title-{{ block.id }} {
                         font-size: {{ block.settings.title-mobile-font-size }}px;
-                        color: {{ block.settings.title-mobile-font-color }};
+                        color: #2B2725;
                     }
                     .description-{{ block.id }} {
                         font-size: {{ block.settings.description-mobile-font-size }}px;
-                        color: {{ block.settings.description-mobile-font-color }};
-                        line-height: {{ block.settings.description-mobile-line-height }}px;
+                        color: #2B2725;
+                        line-height: 22px;
                         width: {{ block.settings.description-mobile-width }}%;
                         {% comment %} width: {{ block.settings.description-width }}%; {% endcomment %}
                     }
@@ -241,36 +241,6 @@
                     "label": "History Font Size"
                 },
                 {
-                    "type": "range",
-                    "id": "description-line-height",
-                    "min": 20,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 37,
-                    "label": "Description Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "description-mobile-line-height",
-                    "min": 20,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 23,
-                    "label": "Description Line Height (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "history-line-height",
-                    "min": 20,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 28,
-                    "label": "History Line Height"
-                },
-                {
                     "type": "font",
                     "id": "title-font",
                     "label": "Title Font"
@@ -286,28 +256,6 @@
                     "id": "title-mobile-font-color",
                     "label": "Title Font Color (Mobile)",
                     "default": "#2B2725"
-                },
-                {
-                    "type": "font",
-                    "id": "description-font",
-                    "label": "Description Font"
-                },
-                {
-                    "type": "color",
-                    "id": "description-font-color",
-                    "label": "Description Font Color",
-                    "default": "#000000"
-                },
-                {
-                    "type": "color",
-                    "id": "description-mobile-font-color",
-                    "label": "Description Font Color (Mobile)",
-                    "default": "#000000"
-                },
-                {
-                    "type": "font",
-                    "id": "history-font",
-                    "label": "History Font"
                 },
                 {
                     "type": "range",

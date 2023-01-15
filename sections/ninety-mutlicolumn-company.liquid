@@ -1,5 +1,5 @@
 <div id="wrapper-{{ section.id }}"> 
-    <section class="company-with-info-{{ section.id }}">
+    <section class="company-with-info-{{ section.id }} page-width">
         {% for block in section.blocks %}
             {% case block.type %}
                 {% when 'company-card' %}
@@ -28,7 +28,14 @@
     .company-with-info-{{ section.id }} {
         display: flex;
         justify-content: center;
-        width: {{ section.settings.section-width }}%;
+    }
+
+    @media (max-width: 768px) {
+        .company-with-info-{{ section.id }} {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
     }
 
     {% for block in section.blocks %}
@@ -56,7 +63,8 @@
                     font-size: {{ block.settings.company-name-font-size }}px;
                     font-weight: {{ block.settings.company-name-font-weight }};
                     line-height: {{ block.settings.company-name-line-height }}px;
-                    text-transform: uppercase;
+                    padding-bottom: 24px;
+                    letter-spacing: -0.01em;
                 }
                 .company-description-{{ block.id }} {
                     text-align: justify;
@@ -73,13 +81,11 @@
                     font-weight: {{ block.settings.company-origin-font-weight }};
                     line-height: {{ block.settings.company-origin-line-height }}px;
                     text-transform: uppercase;
+                    padding-bottom: 35px;
                 }
                 .company-name-{{ block.id }}, .company-origin-{{ block.id }}, .company-description-{{ block.id }}, .company-speciality-list-{{ block.id }} {
                     padding-left: {{ block.settings.product-text-left-padding }}px;
                     padding-right: {{ block.settings.product-text-right-padding }}px;
-                }
-                .company-speciality-list-{{ block.id }} {
-                    padding: 0 50px;
                 }
                 .list-item-{{ block.id }} {
                     margin: 30px 0;
@@ -95,7 +101,16 @@
                     }
                 {% endif %}
 
+                @media (max-width: 1300px) {
+                    .company-name-{{ block.id }} {
+                        font-size: 20px;
+                    }
+                }
+
                 @media (max-width: 768px) {
+                    .company-card-{{ block.id }} {
+                        max-width: 100%;
+                    }
                     .company-name-{{ block.id }} {
                         font-size: {{ block.settings.company-name-mobile-font-size }}px;
                         line-height: {{ block.settings.company-name-line-height }}px;
@@ -108,10 +123,19 @@
                         font-size: {{ block.settings.company-origin-mobile-font-size }}px;
                         line-height: {{ block.settings.company-origin-mobile-line-height }}px;
                     }
+                    .company-speciality-list-{{ block.id }} {
+                        padding: 0;
+                        margin: 0;
+                    }
                     .list-item-{{ block.id }} {
                         font-size: {{ block.settings.list--mobile-font-size }}px;
                         line-height: {{ block.settings.list-mobile-line-height }}px;
                     }
+                    {% if block.settings.enable-border == true %}
+                        .company-card-{{ block.id }} {
+                            border-right: none;
+                        }
+                    {% endif %}
                 }
 
         {% endcase %}
@@ -124,18 +148,7 @@
 
 {
     "name": "Ninety Company With Info",
-    "settings": [
-        {
-            "type": "range",
-            "id": "section-width",
-            "min": 30,
-            "max": 100,
-            "step": 1,
-            "unit": "%",
-            "default": 100,
-            "label": "Section Width"
-        }
-    ],
+    "settings": [],
     "blocks": [
         {
             "name": "Company",

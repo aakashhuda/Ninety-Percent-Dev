@@ -1,5 +1,5 @@
 <div id="wrapper-{{ section.id }}"> 
-    <section class="product-with-info-{{ section.id }}">
+    <section class="product-with-info-{{ section.id }} page-width">
         {% for block in section.blocks %}
             {% case block.type %}
                 {% when 'product-card' %}
@@ -29,19 +29,21 @@
     }
     .product-with-info-{{ section.id }} {
         display: flex;
-        justify-content: center;
-        width: {{ section.settings.section-width }}%;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .product-with-info-{{ section.id }} {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 
     {% for block in section.blocks %}
 
         {% case block.type %}
             {% when 'product-card' %}
-                {% if forloop.length < 3 %}
-                    .product-with-info-{{ section.id }} {
-                        justify-content: flex-start;
-                    }   
-                {% endif %}
                 .url-{{ block.id }} a {
                     text-decoration: none;
                     color: #2b2724;
@@ -51,7 +53,6 @@
                     border-bottom: 1px solid #2b2724;
                 }
                 .product-card-{{ block.id }} {
-                    max-width: 440px;
                     display: flex;
                     flex-direction: column;
                     justify-content: stretch;
@@ -60,7 +61,13 @@
                     padding: 2%;
                     padding-top: 0;
                     position: relative;
+                    width: calc(100%/ {{ forloop.length }});
                 }
+                {% if forloop.length < 3 %}
+                    .product-card-{{ block.id }} {
+                        max-width: 33.33%;
+                    }  
+                {% endif %}
                 .product-image-{{ block.id }}, .product-image-{{ block.id }} img {
                     width: 100%;
                 }
@@ -70,6 +77,8 @@
                     font-weight: {{ block.settings.product-name-font-weight }};
                     line-height: {{ block.settings.product-name-line-height }}px;
                     text-transform: uppercase;
+                    padding-top: 30px;
+                    padding-bottom: 24px;
                 }
                 .product-description-{{ block.id }} {
                     text-align: justify;
@@ -85,6 +94,7 @@
                     font-weight: {{ block.settings.product-origin-font-weight }};
                     line-height: {{ block.settings.product-origin-line-height }}px;
                     text-transform: uppercase;
+                    padding-bottom: 35px;
                 }
                 .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
                     padding-left: {{ block.settings.product-text-left-padding }}px;
@@ -100,7 +110,23 @@
                         border-right: 1px solid #c0bfbd;
                     }
                 {% endif %}
+
+                {% if block.settings.show-origin == false %}
+                    .product-origin-{{ block.id }} {
+                        display: none;
+                    }
+                {% endif %}
                 @media (max-width: 768px) {
+                    .product-card-{{ block.id }} {
+                        margin: 10px 0;
+                        padding: 0;
+                        width: 100%;
+                    }
+                    {% if forloop.length < 3 %}
+                        .product-card-{{ block.id }} {
+                            max-width: 100%;
+                        }  
+                    {% endif %}
                     .product-name-{{ block.id }} {
                         font-size: {{ block.settings.product-name-mobile-font-size }}px;
                         line-height: {{ block.settings.product-name-mobile-line-height }}px;
@@ -113,6 +139,15 @@
                         font-size: {{ block.settings.product-origin-mobile-font-size }}px;
                         line-height: {{ block.settings.product-origin-mobile-line-height }}px;
                     }
+                    .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                    {% if block.settings.enable-border == true %}
+                        .product-card-{{ block.id }} {
+                            border-right: none;
+                        }
+                    {% endif %}
                 }
                 {% if block.settings.show-button == false %}
                     .url-{{ block.id }} {
@@ -131,16 +166,7 @@
 {
     "name": "Ninety Product With Info",
     "settings": [
-        {
-            "type": "range",
-            "id": "section-width",
-            "min": 30,
-            "max": 100,
-            "step": 1,
-            "unit": "%",
-            "default": 100,
-            "label": "Section Width"
-        }
+        
     ],
     "blocks": [
         {
@@ -375,6 +401,12 @@
                     "id": "enable-border",
                     "label": "Enable Right Line",
                     "default": false
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show-origin",
+                    "label": "Show Origin",
+                    "default": true
                 }
             ]
         }

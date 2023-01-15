@@ -1,7 +1,7 @@
 {% for block in section.blocks %}
     {% case block.type %}
         {% when "image-and-text-tile" %}
-            <section class="block-parent-{{ block.id }}">
+            <section class="block-parent-{{ block.id }} page-width">
                 <div class="image-text-tile-container-{{ block.id }}">
                     {% if block.settings.selected-layout == "image-first" %}
                         <div class="image-text-tile-image-container-{{ block.id }} item-{{ block.id }}">
@@ -143,6 +143,20 @@
 
             {% endif %}
             @media (max-width: 768px) {
+                .image-text-tile-container-{{ block.id }} {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .image-text-tile-text-container-{{ block.id }} {
+                    padding: 0;
+                    order: 1;
+                }
+                .item-{{ block.id }} {
+                    width: 80%;
+                }
+                .image-text-tile-image-container-{{ block.id }} {
+                    order: 0;
+                }
                 .description-{{ block.id }} {
                     font-size: {{ block.settings.text-mobile-font-size }}px;
                     line-height: {{ block.settings.text-mobile-line-height }}px;

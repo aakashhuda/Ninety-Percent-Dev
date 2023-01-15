@@ -80,24 +80,26 @@
                 border-bottom: 1px solid #2b2724;
             }
             .title-{{ block.id }} {
-                font-family: {{ block.settings.title-font }};
+                font-family: 'Silvana';
                 font-size: {{ block.settings.title-font-size }}px;
-                color: {{ block.settings.title-font-color }};
+                color: #2B2725;
             }
             .description-{{ block.id }} {
-                font-family: {{ block.settings.description-font }};
+                font-family: 'Intervogue';
                 font-size: {{ block.settings.description-font-size }}px;
-                line-height: {{ block.settings.description-line-height }}px;
-                color: {{ block.settings.description-font-color }};
+                line-height: 28px;
+                color:  #000000;
                 text-align: justify;
                 width: {{ block.settings.description-width }}%;
             }
             .mobile-description-{{ block.id }} {
                 display: none;
-                font-family: {{ block.settings.mobile-description-font }};
+                font-family: 'Intervogue';
                 font-size: {{ block.settings.mobile-description-font-size }}px;
-                color: {{ block.settings.mobile-description-font-color }};
+                color: #2B2725;
                 width: {{ block.settings.mobile-description-width }}%;
+                line-height: 23px;
+                letter-spacing: 0.02em;
             }
             .hr-parent-{{ block.id }}{
                 display: flex;
@@ -159,7 +161,9 @@
                     padding-top: 35px;
                     padding-bottom: 30px;
                     font-size: {{ block.settings.description-mobile-font-size }}px;
-                    line-height: {{ block.settings.description-mobile-line-height }}px;
+                    line-height: 23px;
+                    color: #2B2725;
+                    letter-spacing: 0.02em
                 }
                 .link-{{ block.id }} {
                     width: 100%;
@@ -178,7 +182,7 @@
                     display: block;
                     padding-top: 16px;
                     padding-bottom: 40px;
-                    line-height: {{ block.settings.mobile-description-line-height }}px;
+                    line-height: 28px;
                 }
                 hr.hr-{{ block.id }}, hr.hr1-{{ block.id }} {
                     display: block;
@@ -356,7 +360,7 @@
                     "max": 20,
                     "step": 1,
                     "unit": "px",
-                    "default": 16,
+                    "default": 14,
                     "label": "Description Font Size (Mobile)"
                 },
                 {
@@ -398,7 +402,7 @@
                     "type": "color",
                     "id": "mobile-description-font-color",
                     "label": "Mobile Description Font Color",
-                    "default": "#000000"
+                    "default": "#2B2725"
                 },
                 {
                     "type": "range",

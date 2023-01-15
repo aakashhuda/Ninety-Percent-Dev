@@ -1,1 +1,141 @@
-{"sections":{"main":{"type":"main-page","settings":{}},"c3c434b6-8bd5-4912-8657-7d55a9b7cdea":{"type":"hero-about-us","blocks":{"4a9ba1ef-15f2-4155-b1d6-eb92c84c5424":{"type":"hero-about-us","settings":{"block-width":85,"header-title":"About Us","description":"Ninety Percent was founded in London in 2018 – born ofthe friendship between Para Hamilton and Shafiq Hassan.Our label is established on their revolutionary spirit of care,and our business culture focused on profit sharing – thus providing the tools of empowerment for everyone involved in thecreation of our collections.","history-description":"Back in 1988, Para and Shafiq met in London and bonded over consciousthoughts on wildlife, anti-poverty, world musicand disappearing tribesmen and crafts. For over30 years, their shared values have powered theirfriendship and business endeavours. Now with Ninety Percent they’re taking tangible strides for the world we want.","image":"shopify:\/\/shop_images\/220818_NinetyPercent_SS22_14_101_1.png","title-font-size":100,"title-mobile-font-size":60,"description-font-size":26,"description-mobile-font-size":16,"history-font-size":16,"description-line-height":37,"description-mobile-line-height":23,"history-line-height":28,"title-font":"Helvetica, Arial, sans-serif","title-font-color":"#2b2725","title-mobile-font-color":"#2b2725","description-font":"Helvetica, Arial, sans-serif","description-font-color":"#000000","description-mobile-font-color":"#000000","history-font":"Helvetica, Arial, sans-serif","description-width":95,"description-mobile-width":95,"history-width":70}},"4978cdba-3659-4147-9254-70f5dcfc9d76":{"type":"spacer","settings":{"spacer":80}}},"block_order":["4a9ba1ef-15f2-4155-b1d6-eb92c84c5424","4978cdba-3659-4147-9254-70f5dcfc9d76"],"settings":{}},"0789a7a1-8bce-4e6d-ba3c-a949debae7e8":{"type":"double-image-text","blocks":{"fdbfc039-e178-457b-8531-45024e985c98":{"type":"double-image-with-text","settings":{"section-width":97,"image-portrait":"shopify:\/\/shop_images\/220818_NinetyPercent_SS22_20_172_R2_1.png","image-p-width":100,"image-landscape":"shopify:\/\/shop_images\/lighter_1.png","image-l-width":100,"title":"Tangible Strides","description":"Each year 90% of our distributable profits are shared between charitablecauses and the people that make our collections happen. The pieces we make are cut in thefinest vegan materials, selected to have the lowest impacton our global environment. We‘re putting care for people and planet at the heart of our endeavors.","url-text":"learn more about our way","url":"","mobile-description":"","padding-top":19,"gap":8,"title-font":"Helvetica, Arial, sans-serif","title-font-color":"#000000","title-font-size":26,"title-mobile-font-size":30,"title-italic":true,"description-font":"Helvetica, Arial, sans-serif","description-font-color":"#000000","description-font-size":16,"description-mobile-font-size":16,"description-line-height":28,"description-mobile-line-height":28,"description-width":100,"mobile-description-font":"Helvetica, Arial, sans-serif","mobile-description-font-color":"#000000","mobile-description-font-size":16,"mobile-description-line-height":28,"mobile-description-width":100}},"2cf7ad67-0fca-47c8-ac34-4e4efe64de3b":{"type":"spacer","settings":{"spacer":80}}},"block_order":["fdbfc039-e178-457b-8531-45024e985c98","2cf7ad67-0fca-47c8-ac34-4e4efe64de3b"],"settings":{}},"d3aaa34b-35c7-4422-bf07-58994acf0c4e":{"type":"text-image","blocks":{"346e0760-eaa0-4256-bdcf-6442013bbd76":{"type":"text-image","settings":{"block-width":97,"description":"In 2022, creative director Elliot Atkinson joined Ninety Percent,elevating our aesthetic language into a sophisticated vision for ourcustomers and connecting the clothes back to nature. Capturingthe sensuality of visiting uncharted destinations and feeling thesea, the earth – thus designing pieces that ultimately fit into theebbs and flow of our current lifestyles.","description-font":"Helvetica, Arial, sans-serif","description-font-size":16,"description-mobile-font-size":14,"line-height":28,"mobile-line-height":23,"image":"shopify:\/\/shop_images\/IMG_5622_1.png","image-width":100,"text-width":58,"url-text":"On Design","url":"","mobile-url-text":"Meet Elliot","mobile-url":"","description-width":100}}},"block_order":["346e0760-eaa0-4256-bdcf-6442013bbd76"],"settings":{}}},"order":["main","c3c434b6-8bd5-4912-8657-7d55a9b7cdea","0789a7a1-8bce-4e6d-ba3c-a949debae7e8","d3aaa34b-35c7-4422-bf07-58994acf0c4e"]}
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "c3c434b6-8bd5-4912-8657-7d55a9b7cdea": {
+      "type": "hero-about-us",
+      "blocks": {
+        "4a9ba1ef-15f2-4155-b1d6-eb92c84c5424": {
+          "type": "hero-about-us",
+          "settings": {
+            "block-width": 85,
+            "header-title": "About Us",
+            "description": "Ninety Percent was founded in London in 2018 – born ofthe friendship between Para Hamilton and Shafiq Hassan.Our label is established on their revolutionary spirit of care,and our business culture focused on profit sharing – thus providing the tools of empowerment for everyone involved in thecreation of our collections.",
+            "history-description": "Back in 1988, Para and Shafiq met in London and bonded over consciousthoughts on wildlife, anti-poverty, world musicand disappearing tribesmen and crafts. For over30 years, their shared values have powered theirfriendship and business endeavours. Now with Ninety Percent they’re taking tangible strides for the world we want.",
+            "image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_14_101_1.png",
+            "title-font-size": 100,
+            "title-mobile-font-size": 60,
+            "description-font-size": 26,
+            "description-mobile-font-size": 16,
+            "history-font-size": 16,
+            "description-line-height": 37,
+            "description-mobile-line-height": 23,
+            "history-line-height": 28,
+            "title-font": "Helvetica, Arial, sans-serif",
+            "title-font-color": "#2b2725",
+            "title-mobile-font-color": "#2b2725",
+            "description-font": "Helvetica, Arial, sans-serif",
+            "description-font-color": "#000000",
+            "description-mobile-font-color": "#000000",
+            "history-font": "Helvetica, Arial, sans-serif",
+            "description-width": 95,
+            "description-mobile-width": 95,
+            "history-width": 70
+          }
+        },
+        "4978cdba-3659-4147-9254-70f5dcfc9d76": {
+          "type": "spacer",
+          "settings": {
+            "spacer": 80
+          }
+        }
+      },
+      "block_order": [
+        "4a9ba1ef-15f2-4155-b1d6-eb92c84c5424",
+        "4978cdba-3659-4147-9254-70f5dcfc9d76"
+      ],
+      "settings": {
+      }
+    },
+    "0789a7a1-8bce-4e6d-ba3c-a949debae7e8": {
+      "type": "double-image-text",
+      "blocks": {
+        "fdbfc039-e178-457b-8531-45024e985c98": {
+          "type": "double-image-with-text",
+          "settings": {
+            "section-width": 97,
+            "image-portrait": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_20_172_R2_1.png",
+            "image-p-width": 100,
+            "image-landscape": "shopify:\/\/shop_images\/lighter_1.png",
+            "image-l-width": 100,
+            "title": "Tangible Strides",
+            "description": "Each year 90% of our distributable profits are shared between charitablecauses and the people that make our collections happen. The pieces we make are cut in thefinest vegan materials, selected to have the lowest impacton our global environment. We‘re putting care for people and planet at the heart of our endeavors.",
+            "url-text": "learn more about our way",
+            "url": "",
+            "mobile-description": "",
+            "padding-top": 19,
+            "gap": 8,
+            "title-font": "Helvetica, Arial, sans-serif",
+            "title-font-color": "#000000",
+            "title-font-size": 26,
+            "title-mobile-font-size": 30,
+            "title-italic": true,
+            "description-font": "Helvetica, Arial, sans-serif",
+            "description-font-color": "#000000",
+            "description-font-size": 16,
+            "description-mobile-font-size": 16,
+            "description-line-height": 28,
+            "description-mobile-line-height": 28,
+            "description-width": 100,
+            "mobile-description-font": "Helvetica, Arial, sans-serif",
+            "mobile-description-font-color": "#000000",
+            "mobile-description-font-size": 16,
+            "mobile-description-line-height": 28,
+            "mobile-description-width": 100
+          }
+        },
+        "2cf7ad67-0fca-47c8-ac34-4e4efe64de3b": {
+          "type": "spacer",
+          "settings": {
+            "spacer": 80
+          }
+        }
+      },
+      "block_order": [
+        "fdbfc039-e178-457b-8531-45024e985c98",
+        "2cf7ad67-0fca-47c8-ac34-4e4efe64de3b"
+      ],
+      "settings": {
+      }
+    },
+    "d3aaa34b-35c7-4422-bf07-58994acf0c4e": {
+      "type": "text-image",
+      "blocks": {
+        "346e0760-eaa0-4256-bdcf-6442013bbd76": {
+          "type": "text-image",
+          "settings": {
+            "block-width": 97,
+            "description": "In 2022, creative director Elliot Atkinson joined Ninety Percent,elevating our aesthetic language into a sophisticated vision for ourcustomers and connecting the clothes back to nature. Capturingthe sensuality of visiting uncharted destinations and feeling thesea, the earth – thus designing pieces that ultimately fit into theebbs and flow of our current lifestyles.",
+            "description-font": "Helvetica, Arial, sans-serif",
+            "description-font-size": 16,
+            "description-mobile-font-size": 14,
+            "line-height": 28,
+            "mobile-line-height": 23,
+            "image": "shopify:\/\/shop_images\/IMG_5622_1.png",
+            "image-width": 100,
+            "text-width": 58,
+            "url-text": "On Design",
+            "url": "",
+            "mobile-url-text": "Meet Elliot",
+            "mobile-url": "",
+            "description-width": 100
+          }
+        }
+      },
+      "block_order": [
+        "346e0760-eaa0-4256-bdcf-6442013bbd76"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "c3c434b6-8bd5-4912-8657-7d55a9b7cdea",
+    "0789a7a1-8bce-4e6d-ba3c-a949debae7e8",
+    "d3aaa34b-35c7-4422-bf07-58994acf0c4e"
+  ]
+}

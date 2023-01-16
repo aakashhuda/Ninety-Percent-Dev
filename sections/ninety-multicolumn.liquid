@@ -1,0 +1,82 @@
+{% style %}
+    .section-{{ section.id }}{
+      margin: 50px auto;
+      padding: 25px 0;
+    }
+    .img-col-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 100px;
+    }
+    {% for block in section.blocks %}
+      .grid-item-{{ block.id }}{
+        flex: 0 0 1;
+        max-width: {{ block.settings.custom-image-width }}px;
+        width: 100%;
+      }
+      .grid-item-{{ block.id }} img{
+        width: 100%;
+      }
+    {% endfor %}
+  {% endstyle %}
+  <section class="section-{{ section.id }} page-width">    <div class="img-col-container">      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'column' %}
+          <div class="a grid-item-{{ block.id }}">            {% if block.settings.image %}
+              <img
+                src=" {{ block.settings.image | img_url: 'master' }} "
+                alt=""
+                height=""
+                width=""
+                loading="lazy">            {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>        {% endcase %}
+      {% endfor %}
+    </div>  </section>  {% schema %}
+    {
+      "name": "Three Column Image 2",
+      "class": "section",
+      "tag": "section",
+      "settings": [],
+      "blocks": [
+        {
+          "type": "column",
+          "name": "Column",
+          "limit": 3,
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Choose Image"
+            }, {
+              "type": "range",
+              "id": "custom-image-width",
+              "label": "Custom image width",
+              "min": 100,
+              "max": 500,
+              "step": 5,
+              "unit": "px",
+              "default": 300
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Three Column Image 2",
+          "blocks": [
+            {
+              "type": "column"
+            }, {
+              "type": "column"
+            }, {
+              "type": "column"
+            }
+          ]
+        }
+      ]
+    }
+  {% endschema %}

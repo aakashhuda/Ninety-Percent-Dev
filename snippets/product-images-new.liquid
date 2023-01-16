@@ -1,0 +1,1322 @@
+{%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
+
+{%- unless product.empty? -%}
+  <div
+    data-product-images
+    data-zoom="{{ settings.product_zoom_enable }}"
+    data-has-slideshow="true" class="np-mobile-only">
+    <div class="product__photos product__photos-{{ section_id }} product__photos--{{ thumbnail_position }}">
+				{%- assign is_gift_card = false -%}
+                {% for tag in product.tags %}
+                           {%- if tag contains 'gift-card' -%}
+                                    {%- assign is_gift_card = true -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+      <div class="product__main-photos" data-aos>
+        {% for product_option in product.options_with_values %}
+           {%- if product_option.name == 'Color' or product_option.name == 'color' -%}
+                {% for value in product_option.values %}
+                  {%- assign color = value | downcase | replace: " ", "-" -%}
+        			{%- assign color2 = value | append: "nps-" | downcase | replace: " ", "-" -%}
+                  <div class="np-{{ color }} np-custom-slider {{ color2 }}">
+                     {% for image in product.images %}
+                          {%- assign imageSrc = image.src | downcase -%}
+                    	{%- if imageSrc contains color -%}
+                             {%- assign is_featured = false -%}
+            {%- if featured_image == image -%}
+              {%- assign is_featured = true -%}
+            {%- endif -%}
+            {%- assign image_alt = image.alt -%}
+            {%- assign has_product_video = false -%}
+            {%- assign video_type = '' -%}
+            {%- if image.alt contains 'youtube.com/watch' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+              {%- assign video_id = image.alt | split: 'v=' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains 'youtu.be/' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+              {%- assign video_id = image.alt | split: '.be/' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains 'vimeo.com' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'vimeo' -%}
+              {%- assign video_id = image.alt | split: '.com/' -%}
+              {%- assign video_id = video_id[1] | split: '/' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains '.mp4' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'mp4' -%}
+            {%- endif -%}
+            {%- if has_product_video -%}
+              {%- assign image_alt = product.title -%}
+            {%- endif -%}
+                  <div class="{% if is_featured %}starting-slide{% else %}secondary-slide{% endif %}" data-index="{{ forloop.index0 }}">
+                    <div class="product-image-main product-image-main--{{ section_id }}">
+                      <div class="image-wrap
+                        {% if has_product_video and video_type == 'youtube' %} hide{% endif %}
+                        {% if has_product_video and video_type == 'vimeo' %} hide{% endif %}
+                        {% if has_product_video and video_type == 'mp4' %} hide{% endif %}" style="height: 0; padding-bottom: {{ 100 | divided_by: image.aspect_ratio }}%;">
+                        {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                        {%- assign zoom_img_url = image | img_url: product_zoom_size -%}
+							
+                        	{%- for tag in product.tags -%}
+                                {%- if tag contains '_coming_soon' -%}
+                                      {%- unless product.available -%}
+                                            <span class="np-coming">Coming Soon</span>
+                                        {%- endunless -%}
+                                  {%- endif -%}
+                        		{%- if tag contains 'EXCLUSIVE' -%}
+                                            <span class="np-coming">EXCLUSIVE</span>
+                                  {%- endif -%}
+                             {%- endfor -%}
+                        
+                        {%- if is_featured -%}
+                          <img class="{% if settings.product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+                            data-photoswipe-src="{{ zoom_img_url }}"
+                            data-photoswipe-width="{{ image.width }}"
+                            data-photoswipe-height="{{ image.height }}"
+                            data-index="{{ forloop.index }}"
+                            data-src="{{ img_url }}"
+                            data-widths="[360, 540, 720, 900, 1080]"
+                            data-aspectratio="{{ image.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ image_alt | escape }}">
+                          <noscript>
+                            <img class="lazyloaded" src="{{ image | img_url: product_image_size }}" alt="{{ image_alt | escape }}">
+                          </noscript>
+                        {%- else -%}
+                          <img class="{% if settings.product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+                            data-photoswipe-src="{{ zoom_img_url }}"
+                            data-photoswipe-width="{{ image.width }}"
+                            data-photoswipe-height="{{ image.height }}"
+                            data-index="{{ forloop.index }}"
+                            data-src="{{ img_url }}"
+                            data-widths="[360, 540, 720, 900, 1080]"
+                            data-aspectratio="{{ image.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ image_alt | escape }}">
+                          <noscript>
+                            <img class="lazyloaded" src="{{ image | img_url: product_image_size }}" alt="{{ image_alt | escape }}">
+                          </noscript>
+                        {%- endif -%}
+
+                        {%- if settings.product_zoom_enable -%}
+                          <button type="button" class="btn btn--body btn--circle product__photo-zoom">
+                            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+                            <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t }}</span>
+                          </button>
+                        {%- endif -%}
+                      </div>
+						{%- if has_product_video -%}
+                  {%- assign aspect_width = settings.product_video_width | divided_by: 100.00 -%}
+                  {%- assign aspect_ratio = settings.product_video_height | divided_by: aspect_width -%}
+                  <div
+                    data-video-type="{{ video_type }}"
+                    class="product__video-wrapper
+                      {% if has_product_video %}
+                        {% if video_type == 'youtube' or video_type == 'vimeo' %}
+                          loading
+                        {% endif %}
+                      {% endif %}"
+                    data-video-style="{{ settings.product_video_style }}"
+                    style="padding-bottom: {{ aspect_ratio }}%;">
+                    {%- if video_type == 'youtube' -%}
+                      <div
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        data-youtube-id="{{ video_id }}"
+                        data-video-width="{{ settings.product_video_width }}"
+                        data-video-height="{{ settings.product_video_height }}">
+                      </div>
+                    {%- endif -%}
+                    {%- if video_type == 'vimeo' -%}
+                      <div
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        data-video-id="{{ video_id }}"
+                        data-video-width="{{ settings.product_video_width }}"
+                        data-video-height="{{ settings.product_video_height }}">
+                      </div>
+                    {%- endif -%}
+                    {%- if video_type == 'mp4' -%}
+                      <video
+                        loop playsinline autoplay
+                        {% if settings.product_video_style == 'muted' %}muted{% endif %}
+                        {% if settings.product_video_style == 'unmuted' %}controls{% endif %}
+                        controlsList="nodownload"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        {% if isModal %}
+                          data-video-src="{{ image.alt }}"
+                        {% endif %}
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video">
+                        {%- unless isModal -%}
+                          <source src="{{ image.alt }}" type="video/mp4">
+                        {%- endunless -%}
+                        Your browser does not support the video tag.
+                      </video>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+                    </div>
+                  </div>
+                            {%- endif -%}
+                        {% endfor %}
+                  </div>
+                {% endfor %}
+            {% endif %}  
+		{% endfor %}
+        
+        <div id="ProductPhotos-{{ section_id }}" class="np-main-slider {% if is_gift_card %}np-gift-card {% endif %}">
+          {%- for image in product.images -%}
+            {%- assign is_featured = false -%}
+            {%- if featured_image == image -%}
+              {%- assign is_featured = true -%}
+            {%- endif -%}
+            {%- assign image_alt = image.alt -%}
+            {%- assign has_product_video = false -%}
+            {%- assign video_type = '' -%}
+            {%- if image.alt contains 'youtube.com/watch' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+              {%- assign video_id = image.alt | split: 'v=' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains 'youtu.be/' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+              {%- assign video_id = image.alt | split: '.be/' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains 'vimeo.com' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'vimeo' -%}
+              {%- assign video_id = image.alt | split: '.com/' -%}
+              {%- assign video_id = video_id[1] | split: '/' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains '.mp4' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'mp4' -%}
+            {%- endif -%}
+            {%- if has_product_video -%}
+              {%- assign image_alt = product.title -%}
+            {%- endif -%}
+            <div class="np-main-slide-mobile {% if is_featured %}starting-slide{% else %}secondary-slide{% endif %}" data-index="{{ forloop.index0 }}">
+              <div class="product-image-main product-image-main--{{ section_id }}">
+                <div class="image-wrap
+                  {% if has_product_video and video_type == 'youtube' %} hide{% endif %}
+                  {% if has_product_video and video_type == 'vimeo' %} hide{% endif %}
+                  {% if has_product_video and video_type == 'mp4' %} hide{% endif %}" style="height: 0; padding-bottom: {{ 100 | divided_by: image.aspect_ratio }}%;">
+                  {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  {%- assign zoom_img_url = image | img_url: product_zoom_size -%}
+
+                  {%- if is_featured -%}
+                    <img class="{% if settings.product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+                      data-photoswipe-src="{{ zoom_img_url }}"
+                      data-photoswipe-width="{{ image.width }}"
+                      data-photoswipe-height="{{ image.height }}"
+                      data-index="{{ forloop.index }}"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ image_alt | escape }}">
+                    <noscript>
+                      <img class="lazyloaded" src="{{ image | img_url: product_image_size }}" alt="{{ image_alt | escape }}">
+                    </noscript>
+                  {%- else -%}
+                    <img class="{% if settings.product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+                      data-photoswipe-src="{{ zoom_img_url }}"
+                      data-photoswipe-width="{{ image.width }}"
+                      data-photoswipe-height="{{ image.height }}"
+                      data-index="{{ forloop.index }}"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ image_alt | escape }}">
+                    <noscript>
+                      <img class="lazyloaded" src="{{ image | img_url: product_image_size }}" alt="{{ image_alt | escape }}">
+                    </noscript>
+                  {%- endif -%}
+
+                  {%- if settings.product_zoom_enable -%}
+                    <button type="button" class="btn btn--body btn--circle js-photoswipe__zoom product__photo-zoom">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+                      <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t }}</span>
+                    </button>
+                  {%- endif -%}
+                </div>
+                {%- if has_product_video -%}
+                  {%- assign aspect_width = settings.product_video_width | divided_by: 100.00 -%}
+                  {%- assign aspect_ratio = settings.product_video_height | divided_by: aspect_width -%}
+                  <div
+                    data-video-type="{{ video_type }}"
+                    class="product__video-wrapper
+                      {% if has_product_video %}
+                        {% if video_type == 'youtube' or video_type == 'vimeo' %}
+                          loading
+                        {% endif %}
+                      {% endif %}"
+                    data-video-style="{{ settings.product_video_style }}"
+                    style="padding-bottom: {{ aspect_ratio }}%;">
+                    {%- if video_type == 'youtube' -%}
+                      <div
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        data-youtube-id="{{ video_id }}"
+                        data-video-width="{{ settings.product_video_width }}"
+                        data-video-height="{{ settings.product_video_height }}">
+                      </div>
+                    {%- endif -%}
+                    {%- if video_type == 'vimeo' -%}
+                      <div
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        data-video-id="{{ video_id }}"
+                        data-video-width="{{ settings.product_video_width }}"
+                        data-video-height="{{ settings.product_video_height }}">
+                      </div>
+                    {%- endif -%}
+                    {%- if video_type == 'mp4' -%}
+                      <video
+                        loop playsinline autoplay
+                        {% if settings.product_video_style == 'muted' %}muted{% endif %}
+                        {% if settings.product_video_style == 'unmuted' %}controls{% endif %}
+                        controlsList="nodownload"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        {% if isModal %}
+                          data-video-src="{{ image.alt }}"
+                        {% endif %}
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video">
+                        {%- unless isModal -%}
+                          <source src="{{ image.alt }}" type="video/mp4">
+                        {%- endunless -%}
+                        Your browser does not support the video tag.
+                      </video>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div
+        id="ProductThumbs-{{ section_id }}"
+        class="product__thumbs product__thumbs--{{ thumbnail_position }} product__thumbs-placement--{{ image_position }} {% if product.images.size == 1 %} medium-up--hide{% endif %} small--hide"
+        data-position="{{ thumbnail_position }}"
+        data-arrows="{{ thumbnail_arrows }}"
+        data-aos>
+
+        {%- if product.images.size > 1 -%}
+          {%- for image in product.images -%}
+            {%- assign image_alt = image.alt -%}
+            {%- assign has_product_video = false -%}
+            {%- assign video_type = '' -%}
+            {%- if image.alt contains 'youtube.com/watch' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+            {%- endif -%}
+            {%- if image.alt contains 'youtu.be/' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+            {%- endif -%}
+            {%- if image.alt contains 'vimeo.com' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'vimeo' -%}
+            {%- endif -%}
+            {%- if image.alt contains '.mp4' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'mp4' -%}
+            {%- endif -%}
+            {%- if has_product_video -%}
+              {%- assign image_alt = product.title -%}
+            {%- endif -%}
+
+            <div class="product__thumb-item"
+              data-index="{{ forloop.index0 }}">
+              <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: image.aspect_ratio }}%;">
+                <div
+                  class="product__thumb product__thumb-{{ section_id }} js-no-transition"
+                  data-id="{{ image.id }}">
+                  {%- if has_product_video -%}
+                    <span class="product__thumb-play">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-play" viewBox="0 0 32 32"><path class="st0" d="M9.3 6.2l17.1 9.7-17.1 9.7"/></svg>
+                    </span>
+                  {%- endif -%}
+
+                  {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="animation-delay-{{ forloop.index | times: 3 }} lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ image_alt | escape }}">
+                  <noscript>
+                    <img class="lazyloaded" src="{{ image | img_url: product_thumb_size }}" alt="{{ image_alt | escape }}">
+                  </noscript>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+
+<div
+    data-product-images
+    data-zoom="{{ settings.product_zoom_enable }}"
+    data-has-slideshow="true" class="np-desktop-only" >
+    <div class="product__photos product__photos-{{ section_id }} product__photos--{{ thumbnail_position }}">
+			{%- assign is_gift_card = false -%}
+      		{% for tag in product.tags %}
+                 {%- if tag contains 'gift-card' -%}
+                          {%- assign is_gift_card = true -%}
+                  {%- endif -%}
+              {%- endfor -%}
+      <div class="product__main-photos {% if is_gift_card %}np-gift-card {% endif %}" data-aos>
+        <div id="ProductPhotos-{{ section_id }}">
+          
+          {%- for image in product.images -%}
+            {%- assign is_featured = false -%}
+            {%- if featured_image == image -%}
+              {%- assign is_featured = true -%}
+            {%- endif -%}
+            {%- assign image_alt = image.alt -%}
+            {%- assign has_product_video = false -%}
+            {%- assign video_type = '' -%}
+            {%- if image.alt contains 'youtube.com/watch' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+              {%- assign video_id = image.alt | split: 'v=' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains 'youtu.be/' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+              {%- assign video_id = image.alt | split: '.be/' -%}
+              {%- assign video_id = video_id[1] | split: '&' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains 'vimeo.com' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'vimeo' -%}
+              {%- assign video_id = image.alt | split: '.com/' -%}
+              {%- assign video_id = video_id[1] | split: '/' | first -%}
+            {%- endif -%}
+            {%- if image.alt contains '.mp4' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'mp4' -%}
+            {%- endif -%}
+            {%- if has_product_video -%}
+              {%- assign image_alt = product.title -%}
+            {%- endif -%}
+            <div class="np-main-slide {% if is_featured %}starting-slide{% else %}np-secondary-slide{% endif %}" data-index="{{ forloop.index0 }}">
+              <div class="product-image-main product-image-main--{{ section_id }}">
+                <div class="image-wrap
+                  {% if has_product_video and video_type == 'youtube' %} hide{% endif %}
+                  {% if has_product_video and video_type == 'vimeo' %} hide{% endif %}
+                  {% if has_product_video and video_type == 'mp4' %} hide{% endif %}" style="height: 0; padding-bottom: {{ 100 | divided_by: image.aspect_ratio }}%;">
+                  {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  {%- assign zoom_img_url = image | img_url: product_zoom_size -%}
+                  
+                   {%- assign image_np_url_360 = image | img_url: '1x1' | replace: '_1x1.', '_360x.' -%}
+                  {%- assign image_np_url_540 = image | img_url: '1x1' | replace: '_1x1.', '_540x.' -%}
+                  {%- assign image_np_url_720 = image | img_url: '1x1' | replace: '_1x1.', '_720x.' -%}
+                  {%- assign image_np_url_900 = image | img_url: '1x1' | replace: '_1x1.', '_900x.' -%}
+                  {%- assign image_np_url_1080 = image | img_url: '1x1' | replace: '_1x1.', '_1080x.' -%}
+					{%- for tag in product.tags -%}
+                                {%- if tag contains '_coming_soon' -%}
+                                      
+                                            <span class="np-coming">Coming Soon</span>
+                  						{%- unless product.available -%}
+                                        {%- endunless -%}
+                                  {%- endif -%}
+                  					{%- if tag contains 'EXCLUSIVE' -%}
+                                            <span class="np-coming">EXCLUSIVE</span>
+                                  {%- endif -%}
+                             {%- endfor -%}
+                  		
+                  {%- if is_featured -%}
+                    <img class="{% if settings.product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+                      data-photoswipe-src="{{ zoom_img_url }}"
+                      data-photoswipe-width="{{ image.width }}"
+                      data-photoswipe-height="{{ image.height }}"
+                      data-index="{{ forloop.index }}"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ image_alt | escape }}">
+                    <noscript>
+                      <img class="lazyloaded" src="{{ image | img_url: product_image_size }}" alt="{{ image_alt | escape }}">
+                    </noscript>
+                  {%- else -%}
+                    <img class="{% if settings.product_zoom_enable %}photoswipe__image{% endif %} lazyload"
+                      data-photoswipe-src="{{ zoom_img_url }}"
+                      data-photoswipe-width="{{ image.width }}"
+                      data-photoswipe-height="{{ image.height }}"
+                      data-index="{{ forloop.index }}"
+                      data-src="{{ img_url }}"
+                      srcset="{{ image_np_url_360 }} 360w, {{ image_np_url_540 }} 540w, {{ image_np_url_720 }} 720w, {{ image_np_url_900 }} 900w, {{ image_np_url_1080 }} 1080w"   
+                      data-widths="[360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ image_alt | escape }}">
+                    <noscript>
+                      <img class="lazyloaded" src="{{ image | img_url: product_image_size }}" alt="{{ image_alt | escape }}">
+                    </noscript>
+                  {%- endif -%}
+
+                  {%- if settings.product_zoom_enable -%}
+                    <button type="button" class="btn btn--body btn--circle js-photoswipe__zoom product__photo-zoom">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+                      <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t }}</span>
+                    </button>
+                  {%- endif -%}
+                </div>
+                {%- if has_product_video -%}
+                  {%- assign aspect_width = settings.product_video_width | divided_by: 100.00 -%}
+                  {%- assign aspect_ratio = settings.product_video_height | divided_by: aspect_width -%}
+                  <div
+                    data-video-type="{{ video_type }}"
+                    class="product__video-wrapper
+                      {% if has_product_video %}
+                        {% if video_type == 'youtube' or video_type == 'vimeo' %}
+                          loading
+                        {% endif %}
+                      {% endif %}"
+                    data-video-style="{{ settings.product_video_style }}"
+                    style="padding-bottom: {{ aspect_ratio }}%;">
+                    {%- if video_type == 'youtube' -%}
+                      <div
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        data-youtube-id="{{ video_id }}"
+                        data-video-width="{{ settings.product_video_width }}"
+                        data-video-height="{{ settings.product_video_height }}">
+                      </div>
+                    {%- endif -%}
+                    {%- if video_type == 'vimeo' -%}
+                      <div
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        data-video-id="{{ video_id }}"
+                        data-video-width="{{ settings.product_video_width }}"
+                        data-video-height="{{ settings.product_video_height }}">
+                      </div>
+                    {%- endif -%}
+                    {%- if video_type == 'mp4' -%}
+                      <video
+                        loop playsinline autoplay
+                        {% if settings.product_video_style == 'muted' %}muted{% endif %}
+                        {% if settings.product_video_style == 'unmuted' %}controls{% endif %}
+                        controlsList="nodownload"
+                        data-image-count="{{product.images | size }}"
+                        data-video-type="{{ video_type }}"
+                        data-video-style="{{ settings.product_video_style }}"
+                        {% if isModal %}
+                          data-video-src="{{ image.alt }}"
+                        {% endif %}
+                        id="ProductVideo-{{ section_id }}-{{ forloop.index }}"
+                        class="product__video">
+                        {%- unless isModal -%}
+                          <source src="{{ image.alt }}" type="video/mp4">
+                        {%- endunless -%}
+                        Your browser does not support the video tag.
+                      </video>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div
+        id="ProductThumbs-{{ section_id }}"
+        class="product__thumbs product__thumbs--{{ thumbnail_position }} product__thumbs-placement--{{ image_position }} {% if product.images.size == 1 %} medium-up--hide{% endif %} small--hide"
+        data-position="{{ thumbnail_position }}"
+        data-arrows="{{ thumbnail_arrows }}"
+        data-aos>
+        <div class="np-product-thumbs {% if is_gift_card %}np-gift-card {% endif %}">
+        {%- if product.images.size > 1 -%}
+          {%- for image in product.images -%}
+            {%- assign image_alt = image.alt -%}
+            {%- assign has_product_video = false -%}
+            {%- assign video_type = '' -%}
+            {%- if image.alt contains 'youtube.com/watch' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+            {%- endif -%}
+            {%- if image.alt contains 'youtu.be/' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'youtube' -%}
+            {%- endif -%}
+            {%- if image.alt contains 'vimeo.com' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'vimeo' -%}
+            {%- endif -%}
+            {%- if image.alt contains '.mp4' -%}
+              {%- assign has_product_video = true -%}
+              {%- assign video_type = 'mp4' -%}
+            {%- endif -%}
+            {%- if has_product_video -%}
+              {%- assign image_alt = product.title -%}
+            {%- endif -%}
+          
+          
+            {%- assign image_id = image.id -%}
+            {%- assign data_options = "" -%}
+            {%- for variant in product.variants -%}
+                {%- if variant.image.id == image_id -%}
+                    {%- if variant.title -%}
+                        {%- assign data_options = data_options | append: "'" | append: variant.title | append: "', " -%}
+                    {%- endif -%}
+                {%- endif -%}
+            {% endfor %}
+            <div class="product__thumb-item"
+              data-index="{{ forloop.index0 }}">
+              <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: image.aspect_ratio }}%;">
+                <div
+                  class="{% if has_product_video %}product_video__thumb{% endif %} product__thumb product__thumb-{{ section_id }} js-no-transition"
+                  data-id="{{ image.id }}"
+                  data-video-id="ProductVideo-{{ section_id }}-{{ forloop.index }}">
+                  {% comment %}
+                  {%- if has_product_video -%}
+                    <span class="product__thumb-play">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-play" viewBox="0 0 32 32"><path class="st0" d="M9.3 6.2l17.1 9.7-17.1 9.7"/></svg>
+                    </span>
+                  {%- endif -%}
+				{% endcomment %}
+                  {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="animation-delay-{{ forloop.index | times: 3 }} lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540, 720, 900, 1080]"
+                      data-variants="{{ data_options }}"
+                      data-aspectratio="{{ image.aspect_ratio }}"
+                      data-sizes="auto"
+                       data-index="{{ forloop.index }}"
+                      alt="{{ image_alt | escape }}">
+                  <noscript>
+                    <img class="lazyloaded" src="{{ image | img_url: product_thumb_size }}" alt="{{ image_alt | escape }}">
+                  </noscript>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      </div> 
+    </div>
+  </div>
+
+
+{%- else -%}
+  <div class="product__photos product__photos-{{ section_id }}">
+    <div class="product__main-photos" style="width: 100%">
+      <div id="ProductPhotos-{{ section_id }}">
+        <div data-index="{{ forloop.index0 }}">
+          <a href="#">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endunless -%}
+
+<style>
+/*   body.np-header-wrapper-sticky .page-content--product {
+    padding-top: 62px;
+  }  */
+  
+  
+  @media (min-width: 769px) {
+    .np-active-thumb {
+        border: 2px solid #000;
+    }
+    .np-mobile-only {
+        display: none;
+    }
+    .np-coming { 
+    	font-size: 30px;
+    }
+    .stickyFixed .grid, .stickyBottom .grid{
+    display: flex;
+      }
+      .stickyFixed .medium-up--one-half, .stickyBottom .medium-up--one-half {
+          position: relative;
+      }
+      .stickyFixed .product-single__meta{
+        position: sticky;
+        position: -webkit-sticky;
+        top: 72px;
+        animation: smoothScroll 0.7s forwards;
+      }
+       .stickyFixed .np-product-thumbs{
+         position: sticky;
+         position: -webkit-sticky;
+         top: 72px;
+         overflow-y: scroll;
+/*       height: 90vh; */
+         max-height:90vh;
+         animation: smoothScroll 0.7s forwards;
+       }
+    @keyframes smoothScroll {
+          0% {
+              transform: translateY(-40px);
+          }
+          100% {
+              transform: translateY(0px);
+          }
+      }
+      .stickyBottom .product-single__meta {
+       position: absolute;
+        bottom: 0;;
+      }
+    
+     .stickyFixed .np-product-thumbs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .stickyFixed .np-product-thumbs {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    .np-main-slide {
+        margin-bottom: 15px;
+    }
+  
+  }
+  
+  @media (max-width: 768px) {
+    .np-desktop-only {
+        display: none;
+    }  
+    .np-coming, .np-product__price-savings { 
+    	font-size: 20px;
+    }
+  }
+  [id*="VariantColorLabel"] {
+    text-transform: capitalize;    
+    
+        }
+  .swym-title h2 {
+        font-size: 1.616em;
+        text-transform: none;
+    }
+    .swym-remind-me #swym-remind-email-auth-button {
+   
+        text-transform: none;
+      font-size: 1.1rem;
+    }  
+  .np-coming {
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #c7c7c7;
+    z-index: 99;
+}
+  .np-product__price-savings {
+    top: 0;
+    left: 0;
+    position: absolute;
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #fd024d;
+    z-index: 99;
+}
+.product_video__thumb:after {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMzIgMHYzMkgwVjB6Ii8+PHBhdGggZD0iTTggMjdsMTguMzA3LTExTDggNXYyMnoiIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0ibm9uemVybyIvPjwvZz48L3N2Zz4=) no-repeat;
+    background-position: 50%;
+}
+.product_video__thumb:after {
+    /*filter: url(data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feComponentTransfer color-interpolation-filters="sRGB"><feFuncR type="table" tableValues="1 0" /><feFuncG type="table" tableValues="1 0" /><feFuncB type="table" tableValues="1 0" /></feComponentTransfer></filter></svg>#filter);*/
+    /*-webkit-filter: invert(100%);*/
+    /*filter: invert(100%);*/
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: block;
+    content: "";
+}
+.product_video__thumb:after {
+    left: 0;
+    right: 0;
+} 
+</style>
+
+
+  <style>
+    .np-product-thumbs:not(.np-gift-card) .product__thumb-item:not(.np-checked) {
+      display: none;
+    }
+    .np-desktop-only .product__main-photos:not(.np-gift-card) .np-main-slide:not(.np-checked) {
+      display: none;
+    }
+   .np-main-slider:not(.np-gift-card) {
+    	display: none;
+    }
+    .np-custom-slider {
+    	display:block;
+    }
+    .np-desktop-only .product__main-photos.np-gift-card .product__photo-zoom {
+    	cursor: default;
+    }
+  </style>
+
+
+<script>
+(function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var scrtop, $stickTop, $stick, offtop, offbtm, serollCurrent, selectedColor, imgsrc;
+        var $ = window.jQuery;
+        if ($(".product-single__meta").length > 0 && $(".np-product-thumbs").length > 0) {
+            try {
+                var target = [],
+                    $stickTop = $('.product-single__meta'),
+                    $stick = $('body');
+                    
+                if ($(window).width() > 768) {
+//                   var crHeight = $('.np-product-thumbs').height();
+//                  $('.stickyFixed .np-product-thumbs').css("height", crHeight)
+                    customImageSlider();
+                    // $.each($(".variant-input > input"), function() {
+                    //     var $that = $(this);
+                    //     if ($that.is(':checked')) {
+                    //         target.push($that.val().trim());
+                    //     }
+                    // });
+                    // if (target.length < 2) {
+                    //     target = " / " + target[0] + "'";
+
+                    // } else {
+                    //     target = "'" + target.join(" / ") + "'";
+                    // }
+                    // $.each($(".np-product-thumbs .product__thumb > img"), function() {
+                    //     var $that2 = $(this);
+                    //     if ($that2.attr('data-variants').trim().indexOf(target) > -1) {
+                    //         $that2.click();
+                    //         return false;
+                    //     }
+                    // });
+                } else {
+                    $('body').removeClass('stickyNatural stickyBottom stickyFixed');
+                }
+
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+
+            function npColorChange($thiscolor) {
+                //remove existing active class 
+                $(".np-product-thumbs .product__thumb-item.np-checked").removeClass("np-checked");
+                $(".np-desktop-only .product__main-photos .np-main-slide.np-checked").removeClass("np-checked");
+                //get selected color
+                if ($thiscolor == undefined) {
+                    selectedColor = $('form .variant-wrapper input[type="radio"][name="Color"]:checked').val().trim().toLowerCase().replace(/ /g, "-");
+                } else {
+                    selectedColor = $($thiscolor).parent().children('input').val().trim().toLowerCase().replace(/ /g, "-");
+                }
+                //main images
+                var imgList = $('.np-desktop-only .product__main-photos img[data-photoswipe-src]');
+                $.each(imgList, function(i, val) {
+                    imgsrc = $(this).attr('data-photoswipe-src');
+                    if (imgsrc === undefined || imgsrc.indexOf('-n-p-') < 0) {
+                        return true;
+                    }
+                    var splitedColor = imgsrc.split("-n-p-")[1].split("_")[0].toLowerCase();
+                    if (selectedColor === splitedColor) {
+                        $(this).closest('.np-main-slide').addClass("np-checked");
+                    }
+                });
+                //thumbnail images
+                var thumblist = $('.np-product-thumbs img');
+                $.each(thumblist, function(i, val) {
+                    imgsrc = $(this).attr('data-srcset');
+                    if (imgsrc === undefined) {
+                        imgsrc = $(this).attr('data-src');
+                    }
+                    if (imgsrc === undefined || imgsrc.indexOf('-n-p-') < 0) {
+                        return true;
+                    }
+                    var splitedColor = imgsrc.split(",")[0].split("-n-p-")[1].split("_")[0].toLowerCase();
+                    if (selectedColor === splitedColor) {
+                        $(this).closest('.product__thumb-item').addClass("np-checked");
+                    }
+                });
+            }
+
+            function customImageSliderColor($this) {
+                if ($(".np-prduct-type-2").length > 0) {
+                    if ($this == undefined) {
+                        npColorChange();
+                    } else {
+                        npColorChange($this);
+                    }
+                }
+                setTimeout(function() {
+                    $stick.addClass('stickyNatural');
+                    var $foot = $('#shopify-section-product-recommendations');
+                    offtop = $stickTop.offset().top;
+                    offbtm = $foot.offset().top - $stickTop.height();
+                    serollCurrent = 0;
+                }, 1000);
+            }
+
+            function customImageSlider($this) {
+                if ($(".np-prduct-type-2").length > 0) {
+                    if ($this == undefined) {
+                        npColorChange();
+                    } else {
+                        npColorChange($this);
+                    }
+                }
+                setTimeout(function() {
+                    $stick.addClass('stickyNatural');
+                    var $foot = $('#shopify-section-product-recommendations');
+                    offtop = $stickTop.offset().top;
+                    offbtm = $foot.offset().top - $stickTop.height();
+                    serollCurrent = 0;
+                }, 10);
+            }
+            var resizeWindowWidth = $(window).width();
+            $(window).resize(function() {
+                var currentWindowWidth = $(window).width();
+                if (currentWindowWidth > 768) {
+                    if (Math.abs(currentWindowWidth - resizeWindowWidth) > 100) {
+                        customImageSliderColor();
+                    }
+
+                } else {
+                    $('body').removeClass('stickyNatural stickyBottom stickyFixed');
+                }
+                resizeWindowWidth = $(window).width();
+            });
+            $(window).scroll(function() {
+                if ($(window).width() > 768) {
+                    scrtop = $(window).scrollTop() + 70;
+
+                    //                   if (Math.abs(serollCurrent - scrtop) <= 20 ) {
+                    //                       return;
+                    //                   }
+                    var bClientRect = document.querySelector(".product-single__meta").getBoundingClientRect();
+                    var productSingleMetaBottom = bClientRect.bottom;
+                    var productSingleMetaTop = bClientRect.top;
+                    var elHeight = $stickTop.height();
+                    var winScrollTop = scrtop - serollCurrent;
+                    var elstOffSet = elHeight + 100 - window.innerHeight;
+                    var elStickiOset = winScrollTop + elstOffSet;
+                    //                   console.log('scrtop',scrtop);
+                    //                   console.log('offtop',offtop);
+//                                        console.log('offbtm',offbtm);
+// 										console.log('elHeight',elHeight);
+                    if ($stick.hasClass('stickyFixed') && productSingleMetaBottom > window.innerHeight && elHeight > window.innerHeight) {
+                        $stickTop.css('top', -elStickiOset);
+                        //$stickTop.css('top', -scrtop);            
+                    }
+
+                    if ($stick.hasClass('stickyBottom') || $stick.hasClass('stickyNatural')) {
+                        $stickTop.removeAttr('style');
+                    }
+                    if (scrtop > offtop && $stick.hasClass('stickyNatural')) {
+                        $stick.removeClass('stickyNatural').addClass('stickyFixed');
+                    }
+                    if (offtop > scrtop && $stick.hasClass('stickyFixed')) {
+                        $stick.removeClass('stickyFixed').addClass('stickyNatural');
+                    }
+                    if (scrtop > offbtm && $stick.hasClass('stickyFixed')) {
+                        $stick.removeClass('stickyFixed').addClass('stickyBottom');
+                    }
+                    if (offbtm > scrtop && $stick.hasClass('stickyBottom')) {
+                        $stick.removeClass('stickyBottom').addClass('stickyFixed');
+                    }
+                    serollCurrent = $(window).scrollTop();
+                }
+            });
+//              $(document).on("click", ".product-single__meta button.collapsible-trigger", function() {
+            
+//                      setTimeout(function() {
+//                               $stick.addClass('stickyNatural');
+//                               var $foot = $('#shopify-section-product-recommendations');
+//                               offtop = $stickTop.offset().top;
+//                               offbtm = $foot.offset().top - $stickTop.height();
+//                               serollCurrent = 0;
+//                           }, 500);
+//             });
+
+            $(document).on("click", ".np-product-thumbs .product__thumb img:not(.np-active-thumb)", function() {
+              
+              $('.np-product-thumbs .image-wrap img').not($(this)).removeClass('np-active-thumb');
+                $(this).addClass('np-active-thumb');
+              
+                var npImgSelf = $(this).attr('data-index');
+                $('html, body').stop(true, false).animate({
+                    scrollTop: $('.np-desktop-only .image-wrap img[data-index="' + npImgSelf + '"]').offset().top - 90
+                }, 1000);
+            });
+			$(document).on("click", ".np-product-thumbs .product_video__thumb", function (e) {
+                e.preventDefault();
+                $('.np-product-thumbs .image-wrap img').not($(this).children('img')).removeClass('np-active-thumb');
+                $(this).children('img').addClass('np-active-thumb');
+                    var videoID = $(this).attr('data-video-id');
+              console.log(videoID);
+                $('html, body').stop(true, false).animate({
+                        scrollTop: $('.np-desktop-only .product__video-wrapper video#'+ videoID).offset().top - 90
+                    }, 1000);
+            });
+            $(document).on("click", '.variant-input > input[type="radio"] + label', function(e) {
+                if ($(window).width() > 768) {
+                    e.stopPropagation();
+                    target = [];
+                    var $this = $(this);
+                    if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "size") {
+                        target.push($this.parent().children('input').val().trim());
+                    }
+                    $.each($(".variant-wrapper fieldset:not([data-index='" + $this.closest("fieldset").attr('data-index').trim() + "']) .variant-input > input"), function() {
+                        var $that = $(this);
+                        if ($that.is(':checked')) {
+                            target.push($that.val().trim());
+                        }
+                    });
+                    if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "color") {
+                        target.push($this.parent().children('input').val().trim());
+                    }
+                 
+                    if (target.length < 2) {
+                      //target = " / " + target[0] + "'";
+                      target = "'" + target[0] + " / "; /* when color is first varian */
+                    } else {
+                        target = "'" + target.join(" / ") + "'";
+                    }
+                  
+                    $.each($(".np-product-thumbs .product__thumb > img"), function() {
+                        var $that2 = $(this);  
+                      
+                        if ($that2.attr('data-variants').trim().indexOf(target) > -1) {
+                            $that2.click();
+                          //console.log(target);
+                            return false;
+                        }
+                    });
+                    if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "color" && $(".np-prduct-type-2").length > 0) {
+                        customImageSliderColor($this);
+                    }
+                }
+            });
+
+            $(document).ready(function() {
+                if ($(window).width() > 768) {
+                    target = [];
+                    var $this = $('.variant-input > input[type="radio"] + label');
+                    if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "size") {
+                        target.push($this.parent().children('input').val().trim());
+                    }
+                    $.each($(".variant-wrapper fieldset:not([data-index='" + $this.closest("fieldset").attr('data-index').trim() + "']) .variant-input > input"), function() {
+                        var $that = $(this);
+                        if ($that.is(':checked')) {
+                            target.push($that.val().trim());
+                        }
+                    });
+                    if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "color") {
+                        target.push($this.parent().children('input').val().trim());
+                    }
+                    if (target.length < 2) {
+                       //target = " / " + target[0] + "'";
+                      target = "'" + target[0] + " / "; /* when color is first varian */
+                    } else {
+                        target = "'" + target.join(" / ") + "'";
+                    }
+                    $.each($(".np-product-thumbs .product__thumb > img"), function() {
+                        var $that2 = $(this);
+                        if ($that2.attr('data-variants').trim().indexOf(target) > -1) {
+                            $that2.click();
+                            return false;
+                        }
+                    });
+
+
+                }
+            });
+
+            $(document).on("click", ".page-content:not(.np-prduct-type-2) .np-product-thumbs .image-wrap img", function() {
+                var $this = $(this);
+                if ($(".np-prduct-type-2").length == 0) {
+                    var thumbScrollHeight = parseInt($this.closest('.product__thumb-item').attr('data-index').trim()) * ($this.height() + 15);
+                    setTimeout(function() {
+                        var atTarget = $this.closest('.np-product-thumbs');
+                        atTarget.stop(true, false).animate({ scrollTop: thumbScrollHeight });
+                    }, 500);
+                }
+                if ($this.attr('data-variants').trim() !== "") {
+                    var target = $this.attr('data-variants').trim().split("', ")[0].trim().split("'")[1];
+                    //var c1 = target.split(' / ')[0]; 
+                    var c2 = target.split(' / ')[1];
+                    $('input[type="radio"][value="' + c2 + '"]').prop("checked", true);
+                    $('#VariantColorLabel-' + $('.product-section').attr('data-section-id') + '-' + $('input[type="radio"][value="' + c2 + '"]').attr('data-color-index')).text(c2);
+                }
+            });
+            $(document).on("click", ".page-content .np-desktop-only .product__photo-zoom", function() {
+                 var $this = $(this).parent().children('img');
+                var dataIndex = parseInt($this.attr('data-index').trim());
+//                 $('.np-mobile-only .product__main-photos .slick-slider').slick('slickGoTo', dataIndex - 1);
+//                 setTimeout(function() {
+//                     $('.np-mobile-only .product__main-photos img[data-index="' + dataIndex + '"]').parent().children('.product__photo-zoom').click();
+//                 }, 50);
+              var items = getImageData();
+              var k;
+              for (k = 0; k < items.length; k++) {
+               if(dataIndex == items[k].i){
+                  customGallery(items, k);
+               }
+              } 
+              function getImageData() { 
+                  var haveImages = false;
+                    var items = [];
+                    var options = {};
+					var imageist = $('.np-checked .photoswipe__image');
+                    $.each(imageist, function(i, val) {
+                      var haveImages = true;
+                      var smallSrc = $(this).prop('currentSrc') || $(this).prop('src');
+                      var item = {
+                        msrc: smallSrc,
+                        src: $(this).attr('data-photoswipe-src'),
+                        w: $(this).attr('data-photoswipe-width'),
+                        h: $(this).attr('data-photoswipe-height'),
+                        i: $(this).attr('data-index'),
+                        el: $(this)[0],
+                        initialZoomLevel: 0.5
+                      };
+
+                      items.push(item);
+                    });
+
+                    return items;
+                  }
+          
+             function customGallery(items, index) {
+                var pswpElementCustom = document.querySelectorAll('.pswp')[0];
+
+                var options = {
+                  allowPanToNext: false,
+                  captionEl: false,
+                  closeOnScroll: false,
+                  counterEl: false,
+                  history: false,
+                  index: index,
+                  pinchToClose: false,
+                  preloaderEl: false,
+                  scaleMode: 'zoom',
+                  shareEl: false,
+                  tapToToggleControls: false,
+                  getThumbBoundsFn: function(index) {
+                    var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+                    var thumbnail = items[index].el;
+                    var rect = thumbnail.getBoundingClientRect();
+                    return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+                  }
+                }
+                this.gallery = new PhotoSwipe(pswpElementCustom, PhotoSwipeUI_Default, items, options);
+
+                this.gallery.init();
+                //this.gallery.listen('afterChange', this.afterChange.bind(this));
+               this.gallery.listen('afterChange', function() { 
+                  var psIndex = gallery.getCurrentIndex();
+                  var psIndexSlick = psIndex;
+                  var mailSlider = $('.np-main-slider').attr('id');
+                  // console.log(psIndexSlick);
+                  $(mailSlider).slick( "slickGoTo", psIndexSlick); 
+                });
+              }
+              
+            });
+          
+          $('.variant-input[data-index="option1"] input').on('change', function() {
+                $.each($('.variant-input-wrap .variant-input[data-index="option2"]'), function() {
+                    $(this).removeClass('crossed-out');
+                  });
+                if($('form .variant-wrapper input[type="radio"][name="Size"]').is(':checked')){
+                    $(".swym-isa-inline-form").removeClass("hide");
+                }
+            setTimeout(function() {
+                   if($('.variant-input-wrap .variant-input[data-index="option2"]').hasClass('crossed-out')){
+//                       console.log('true');
+                      $(".np-notify-me").removeClass("hide");
+                    }
+              else {
+                    $(".np-notify-me").addClass("hide");
+                }
+                }, 1000);
+                
+          });
+          
+          
+        } else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();
+</script>
+
+
+<script>
+  (function atPollForjQuery2() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($(".swym-isa-inline-form").length > 0 ) {
+            $(".swym-isa-inline-form").addClass("hide");
+          $(document).on("click", '.variant-input > input[type="radio"] + label', function(e) {
+            var $this = $(this);
+                    if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "size") {
+                        $(".swym-isa-inline-form").removeClass("hide");
+                    }
+          
+          });
+          $(document).ready(function() {
+            if($('.variant-input-wrap .variant-input[data-index="option2"]').hasClass('crossed-out')){
+            $(".np-notify-me").removeClass("hide");
+          } 
+      });
+        }
+      if ($(".np-custom-slider").length > 0 && $('form .variant-wrapper input[type="radio"][name="Color"]:checked').val() && $.fn.slick !== undefined) {
+          $(".np-custom-slider").addClass("hide");
+          var selectedColor = $('form .variant-wrapper input[type="radio"][name="Color"]:checked').val().trim().toLowerCase().replace(/ /g, "-");
+//           console.log('Selected Color is: '+selectedColor);
+          $(".np-"+selectedColor).removeClass("hide").addClass("activeColor");
+            $('.np-custom-slider').slick({
+            	dots: true,
+              	arrows: false
+            });
+        $(document).on("click", '.variant-input > input[type="radio"] + label', function(e) {
+                if ($(window).width() <= 768) {
+                  var $this = $(this);
+                   if ($this.closest("fieldset").attr('name').trim().toLowerCase() == "color") {
+                     var colorSelected = $this.parent().children('input').val().trim().toLowerCase().replace(/ /g, "-");
+                     $(".np-"+colorSelected).removeClass("hide").addClass("activeColor");
+                     $(".np-"+colorSelected+" ul li:first").click();
+                     $(".np-"+colorSelected).siblings().addClass("hide").removeClass("activeColor");
+                    }
+                }
+            });
+          // Init gallery on active image
+         $(document).on("click", ".page-content .np-mobile-only .product__photo-zoom", function(e) {
+           if ($(window).width() <= 768) {
+           	var $this = $(this).parent().children('img');
+           	var dataIndex = parseInt($this.attr('data-index').trim());
+           	var imgsrc = $this.attr('data-photoswipe-src');
+             if (imgsrc === undefined || imgsrc.indexOf('-n-p-') < 0) {
+               return true;
+             }
+             var splitedColor = imgsrc.split("-n-p-")[1].split("_")[0].toLowerCase();
+             var items = getImageData(splitedColor);
+              var k;
+              for (k = 0; k < items.length; k++) {
+               if(dataIndex == items[k].i){
+                  customGallery(items, k);
+               }
+              } 
+				
+              function getImageData(color) { 
+                  var haveImages = false;
+                    var items = [];
+                    var options = {};
+					var imageist = $('.np-'+color+' .slick-slide:not(.slick-cloned) .photoswipe__image');
+                    $.each(imageist, function(i, val) {
+                      var haveImages = true;
+                      var smallSrc = $(this).prop('currentSrc') || $(this).prop('src');
+                      var item = {
+                        msrc: smallSrc,
+                        src: $(this).attr('data-photoswipe-src'),
+                        w: $(this).attr('data-photoswipe-width'),
+                        h: $(this).attr('data-photoswipe-height'),
+                        i: $(this).attr('data-index'),
+                        el: $(this)[0],
+                        initialZoomLevel: 0.5
+                      };
+
+                      items.push(item);
+                    });
+
+                    return items;
+                  }
+          
+             function customGallery(items, index) {
+                var pswpElementCustom = document.querySelectorAll('.pswp')[0];
+
+                var options = {
+                  allowPanToNext: false,
+                  captionEl: false,
+                  closeOnScroll: false,
+                  counterEl: false,
+                  history: false,
+                  index: index,
+                  pinchToClose: false,
+                  preloaderEl: false,
+                  scaleMode: 'zoom',
+                  shareEl: false,
+                  tapToToggleControls: false,
+                  getThumbBoundsFn: function(index) {
+                    var pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
+                    var thumbnail = items[index].el;
+                    var rect = thumbnail.getBoundingClientRect();
+                    return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+                  }
+                }
+                this.gallery = new PhotoSwipe(pswpElementCustom, PhotoSwipeUI_Default, items, options);
+
+                this.gallery.init();
+                //this.gallery.listen('afterChange', this.afterChange.bind(this));
+               this.gallery.listen('afterChange', function() { 
+                  var psIndex = gallery.getCurrentIndex();
+                  var psIndexSlick = psIndex;
+                  var mailSlider = $('.np-main-slider').attr('id');
+                  // console.log(psIndexSlick);
+                  $(mailSlider).slick( "slickGoTo", psIndexSlick); 
+                });
+              }
+			}
+            });
+        }
+      else {
+            setTimeout(atPollForjQuery2, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery2, 25);
+    }
+})();
+ </script> 

@@ -4,7 +4,7 @@
   {% if section.settings.parallax %}data-parallax="true"{% endif %}>
 
   {%- if section.blocks.size > 0 -%}
-    <div class="slideshow-wrapper">
+    <div class="slideshow-wrapper page-width">
       {%- if section.settings.autoplay and section.settings.style == 'bars' and section.blocks.size > 1 -%}
         {%- style -%}
           [data-bars][data-autoplay="true"] .flickity-page-dots .dot:after {
@@ -231,14 +231,14 @@
                       <div class="hero__text-shadow">
                         {%- unless block.settings.top_subheading == blank -%}
                           <div class="hero__top-subtitle">
-                            <div class="animation-cropper"><div class="animation-contents">
+                            <div class="animation-cropper"><div class="animation-contents {{ block.settings.desktop-text-color }} {{ block.settings.mobile-text-color }}">
                               {{ block.settings.top_subheading | escape }}
                             </div></div>
                           </div>
                         {%- endunless -%}
                         {%- unless block.settings.title == blank -%}
                           <h2 class="h1 hero__title">
-                            <div class="animation-cropper"><div class="animation-contents">
+                            <div class="animation-cropper"><div class="animation-contents {{ block.settings.desktop-text-color }} {{ block.settings.mobile-text-color }}">
                             {{ block.settings.title | newline_to_br }}
                             </div></div>
                           </h2>
@@ -246,7 +246,7 @@
                         {%- if block.settings.subheading or block.settings.link or block.settings.link_2 -%}
                           {%- unless block.settings.subheading == blank -%}
                             <div class="hero__subtitle">
-                              <div class="animation-cropper"><div class="animation-contents">
+                              <div class="animation-cropper"><div class="animation-contents {{ block.settings.desktop-text-color }} {{ block.settings.mobile-text-color }}">
                                 {{ block.settings.subheading | escape }}
                               </div></div>
                             </div>
@@ -461,11 +461,53 @@
           "default": "rgba(0,0,0,0)"
         },
         {
+          "type":"select",
+           "id": "desktop-text-color",
+           "label": "Change Text Color For Desktop",
+           "options":[
+             {
+               "value": "desktop-text-black",
+                "label": "Black"
+             },
+             {
+               "value": "desktop-text-white",
+               "label": "White"
+              }
+           ]
+        },
+        {
+          "type":"select",
+           "id": "mobile-text-color",
+           "label": "Change Text Color For Mobile",
+           "options":[
+             {
+               "value": "mobile-text-black",
+                "label": "Black"
+             },
+             {
+               "value": "mobile-text-white",
+               "label": "White"
+              }
+           ]
+        },
+        {
           "type": "select",
           "id": "text_align",
           "label": "t:sections.slideshow.blocks.slide.settings.text_align.label",
           "default": "vertical-center horizontal-center",
           "options": [
+            {
+              "value": "vertical-top horizontal-left",
+              "label": "Top Left"
+            },
+            {
+              "value": "vertical-top horizontal-center",
+              "label": "Top Center"
+            },
+            {
+              "value": "vertical-top horizontal-right",
+              "label": "Top Right"
+            },
             {
               "value": "vertical-center horizontal-left",
               "label": "t:sections.slideshow.blocks.slide.settings.text_align.options.vertical-center_horizontal-left.label"
@@ -605,3 +647,20 @@
   ]
 }
 {% endschema %}
+
+<style>
+  .desktop-text-black{
+    color: black;
+  }
+  .desktop-text-white{
+    color: white;
+  }
+  @media only screen and (max-width: 514px){
+    .mobile-text-black{
+     color: black;
+    }
+    .mobile-text-white{
+      color: white;
+    }
+  }
+</style>              

@@ -15,10 +15,11 @@
   }
 }
 </style>
-<div class="page-width">
+<div class="page-width the-look">
+  <h5>THE LOOK</h5>
   {% capture image_layout %}
     <div class="feature-row__item">
-      <div style="margin: 0 auto; max-width: {{ section.settings.image_width }}px;">
+      <div class="custom-look-collection" style="margin: 0 auto; max-width: {{ section.settings.image_width }}px;">
         {% if section.settings.image != blank %}
           {% if section.settings.button_label != blank and section.settings.button_link != blank %}
         <a href="{{ section.settings.button_link }}" title="{{ section.settings.button_label }}">{% endif %}
@@ -51,7 +52,7 @@
     {% endif %}
 
     <div class="feature-row__item feature-row__text">
-      <div style="margin: 0 auto; max-width: {{ section.settings.image_width }}px; text-align: center;">
+      <div class="custom-look-collection" style="margin: 0 auto; max-width: {{ section.settings.image_width }}px; text-align: center;">
         
         {% if section.settings.subtitle != blank %}
         <p class="h5">{{ section.settings.subtitle }}</p>
@@ -118,7 +119,7 @@
         "label": "Image width",
         "default": 500,
         "min": 100,
-        "max": 500,
+        "max": 600,
         "step": 10,
         "unit": "px"
       },
@@ -170,3 +171,15 @@
     ]
   }
 {% endschema %}
+
+<style>
+  .custom-look-collection div:nth-child(3){
+    display: none;
+  }
+  .the-look{
+    text-align: center;
+  }
+  .the-look h5{
+    padding-bottom: 20px;
+  }
+</style>

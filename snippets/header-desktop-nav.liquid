@@ -33,8 +33,9 @@
 
         <div class="site-nav__dropdown megamenu text-left">
           <div class="page-width new-custom-dropdown">
-            <div class="grid{% if dropdown_alignment == 'center' or dropdown_alignment == 'left' %} grid--center{% endif %}">
-              <div class="grid__item medium-up--one-fifth appear-animation appear-delay-{{ animation_column }}">
+            <div class="grid{% if dropdown_alignment == 'center' %} grid--center{% endif %}">
+              
+                <div class="grid__item medium-up--one-fifth appear-animation appear-delay-{{ animation_column }}">
                 {%- assign animation_column = animation_column | plus: 1 -%}
 
                 {%- for childlink in link.links -%}
@@ -52,6 +53,8 @@
 
                   {%- if create_new_column -%}
                   </div>
+              
+
                   <div class="grid__item medium-up--one-fifth appear-animation appear-delay-{{ animation_column }}">
                     {%- assign animation_column = animation_column | plus: 1 -%}
                   {%- endif -%}
@@ -62,7 +65,7 @@
                     {%- endif -%}
                   {%- endif -%}
 
-                  <div class="h5">
+                  <div class="h5 megamenu-link-title">
                     <a href="{{ childlink.url }}" class="site-nav__dropdown-link site-nav__dropdown-link--top-level">{{ childlink.title }}</a>
                   </div>
 
@@ -350,3 +353,19 @@ setTimeout(start, 25);
 }
 })();
 </script> -->
+
+
+<style>
+/*   .megamenu-link-title{
+    text-decoration: underline;
+    text-underline-offset: 12px;
+  } */
+  .site-navigation li:nth-child(2) .new-custom-dropdown .megamenu-link-title a{
+        text-decoration: underline;
+    text-underline-offset: 12px;
+  }
+  .site-navigation li:nth-child(2) .new-custom-dropdown div:nth-child(4) .megamenu-link-title a,
+  .site-navigation li:nth-child(2) .new-custom-dropdown div:nth-child(5) .megamenu-link-title a{
+    text-decoration: none;
+  }
+</style>

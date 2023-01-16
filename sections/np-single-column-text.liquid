@@ -1,0 +1,164 @@
+<section class="section-wrapper-{{ section.id }} page-width">
+    {% for block in section.blocks %}
+      
+          {% case block.type %}
+          {% when 'text-block' %}
+              <div class="text-block-{{ block.id }}">
+            <div class="text-block-inner">{{ block.settings.text-content }}</div>
+            </div>
+  
+          {% when 'spacer-block' %}
+          <div class="spacer-{{ block.id }}">
+              
+          </div>
+  
+          {% endcase %}
+      
+    {% endfor %}
+  </section>
+  
+  <style>
+      
+      {% for block in section.blocks %}
+          {% case block.type %} 
+  
+          {% when "text-block" %}
+  
+            .text-block-{{ block.id }} {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .text-block-inner {
+                width: 576px;
+                padding: 5px;
+            }
+
+          .section-wrapper-{{ section.id }} .text-block-{{ block.id }} p {
+              font-size: {{ block.settings.font-size | append: "px" }};
+              font-family: "Intervogue";
+              color: {{ block.settings.text-color }};
+              line-height: {{ block.settings.line-height }}px;
+          }
+          .section-wrapper-{{ section.id }} .text-block-{{ block.id }} {
+              text-align: center;
+          }
+          @media only screen and (max-width: 768px) { 
+            .section-wrapper-{{ section.id }} .text-block-{{ block.id }} p {
+              font-size: {{ block.settings.mobile-font-size | append: "px" }};
+              line-height: {{ block.settings.mobile-line-height }}px;
+          }
+          }
+  
+          {% when "spacer-block" %}
+          .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+              height: {{ block.settings.spacer-height }}px;
+          }
+      {% endcase %}
+      {% endfor %}
+  
+  
+  </style>
+  
+  {% schema %}
+  {
+      "name": "Single Column Text",
+      "blocks": [
+          {
+              "name": "text-block",
+              "type": "text-block",
+              "settings": [
+                  
+              
+                  {
+                   "type":"richtext",
+                   "id":"text-content",
+                   "label":"Change Text Block",
+                   "default":"<p>We're focused on sustainable practices and materials, creating collections with longevity and circularity at their heart. But what sets us apart is our revolutionary profit sharing model, providing the tools of empowerment for everyone involved in the creation of those collections and giving back to the causes close to our heart.</p>"
+                },
+                {
+                  "type": "range",
+                  "id": "font-size",
+                  "label": "Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 16
+                  },
+                  {
+                  "type": "range",
+                  "id": "mobile-font-size",
+                  "label": "Mobile Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 16
+                  },
+                  {
+                  "type": "range",
+                  "id": "line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 28,
+                  "label": "Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Mobile Line Height"
+              },
+              
+              {
+                    "type":"color",
+                    "id":"text-color",
+                    "label":"Text Color",
+                    "default": "#000000"
+                }
+                  
+              ]
+          },
+          {
+             "type": "spacer-block",
+              "name": "Spacer",
+                "settings":[
+                  {
+                      "type": "range",
+                      "id": "spacer-height",
+                      "label": "Spacer Height",
+                      "min": 0,
+                      "max": 200,
+                      "step": 5,
+                      "unit": "px",
+                      "default": 30
+                  }
+                ]
+            }
+      ],
+      "presets": [
+          {
+           "category":"content",
+            "name":"Single Column Text",
+            "blocks": [
+              {
+          "type": "spacer-block"
+        },
+        {
+          "type": "text-block"
+        },
+        {
+          "type": "spacer-block"
+        }
+      ]
+          }
+      ]
+  }
+  {% endschema %} 

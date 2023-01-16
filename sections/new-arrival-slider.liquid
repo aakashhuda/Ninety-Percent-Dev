@@ -20,7 +20,7 @@
       </div>
     {% endif %}
 
-    <div class="new-arrival-container {% if section.settings.mobile_scrollable %}page-width--flush-small{% endif %}">
+    <div class="new-arrival-container {% if section.settings.mobile_scrollable %}page-width--flush-small{% endif %} page-width">
       <div>
         <div class="slider-container">
           {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
@@ -95,7 +95,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="shop-all-btn">
     <button>
       SHOP ALL
     </button>
@@ -173,6 +173,20 @@
 {% endschema %}
 
 <style>
+  .shop-all-btn{
+    text-align: center;
+    padding-top: 17px;
+  }
+  .shop-all-btn button{
+    border-bottom: 0.75px solid #2B2725;
+  }
+  .new-arrival-container .slick-list{
+        margin: 0 -10px;
+  }
+  .new-arrival-container .slick-slide{
+        margin: 0 10px;
+  }
+  
   .custom-slick-padding .slick-track {
     margin-left: -150px;
   }
@@ -194,9 +208,13 @@
     padding-left: 10px;
     font-size: 12px;
     margin-top: 0;
+
   }
   .grid-product__title {
     font-size: 12px;
+    text-align: left;
+    letter-spacing: 0.05em !important;
+    line-height: 15px;
   }
   .grid-product__meta {
     text-align: left;
@@ -211,11 +229,11 @@
   }
   .new-arrival-container .slick-initialized .slick-slide {
     display: block;
-    margin-right: 25px;
+    margin-right: 5px;
   }
-  .new-arrival-container .slick-track {
-    margin-left: 178px;
-  }
+/*   .new-arrival-container .slick-track {
+    margin-left: 105px;
+  } */
   .slick-dots li button:before {
     font-size: 25px !important;
     content: ' \25A0' !important;
@@ -233,6 +251,7 @@
   @media only screen and (max-width: 428px) {
     .grid-product__title {
       margin-left: 12px;
+      font-size: 9px !important;
     }
     .grid-product__price {
       padding-left: 10px;

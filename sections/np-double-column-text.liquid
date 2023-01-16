@@ -1,0 +1,691 @@
+<section class="section-wrapper-{{ section.id }} page-width">
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "double-column-text-block" %}
+
+                <div class="block-{{ block.id }}">
+
+                    <div class="left-text-part">
+                        
+                        <div class="left-text-part-inner">
+
+                           
+                            <span class="left-title"> {{ block.settings.left-title }} </span> 
+                            <span class="left-desc"> {{ block.settings.left-desc }}  </span>
+                            <a href="{{ block.settings.left-btn-url }}" class="left-learn-more-btn"> {{ block.settings.left-btn-text }}  </a>
+                            
+                            
+                           
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="right-text-part">
+
+                        <div class="right-text-part-inner">
+
+                            
+                            <span class="right-title"> {{ block.settings.right-title }} </span> 
+                            <span class="right-desc"> {{ block.settings.right-desc }}  </span>
+                            <a href="{{ block.settings.btn-url }}" class="right-learn-more-btn"> {{ block.settings.right-btn-text }}  </a>
+                            
+                            
+                           
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            
+
+
+            {% when 'spacer-block' %}
+
+                <div class="spacer-{{ block.id }}">
+                        
+                </div>
+
+        {% endcase %}
+    {% endfor %}
+</section>
+
+
+
+<style>
+   
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+
+            {% when "double-column-text-block" %}
+                
+                  .block-{{ block.id }} .left-title , .block-{{ block.id }} .left-learn-more-btn {
+                    display: none;
+                }
+                
+                .block-{{ block.id }} .right-title , .block-{{ block.id }} .right-learn-more-btn {
+                    display: none;
+                }
+                
+               
+
+
+
+             .block-{{ block.id }}  {
+                display: flex;
+                justify-content: center;
+                flex-direction: row;
+                min-height: {{ block.settings.block-height }}px;
+             }
+             
+             .block-{{ block.id }} .left-text-part  {
+                display: flex;
+                
+
+               align-content: center;
+                flex-wrap: wrap; 
+
+                background-color: {{ block.settings.left-text-bg-color }};
+                width: 50%;
+                border-right: 1px solid rgba(43, 39, 37, 0.5);
+             }
+
+             .block-{{ block.id }} .right-text-part  {
+                display: flex;
+                
+
+               align-content: center;
+                flex-wrap: wrap; 
+
+                background-color: {{ block.settings.right-text-bg-color }};
+                width: 50%;
+                
+             }
+             .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                margin: 20px auto; 
+                width: 60%;
+             }
+             .block-{{ block.id }} .right-text-part .right-text-part-inner {
+                margin: 20px auto; 
+                width: 60%;
+             }
+
+
+             .block-{{ block.id }} .left-text-part .left-title {
+    
+                font-size: {{ block.settings.left-title-text-size }}px;
+                color: {{ block.settings.left-title-color }};
+                font-family: "Silvana";
+             }
+
+             .block-{{ block.id }} .right-text-part .right-title {
+    
+                font-size: {{ block.settings.right-title-text-size }}px;
+                color: {{ block.settings.right-title-color }};
+                font-family: "Silvana";
+             }
+
+
+             .block-{{ block.id }} .left-text-part .left-desc {
+                font-size: {{ block.settings.left-desc-text-size }}px;
+                color: {{ block.settings.left-desc-color }};
+                font-family: "Intervogue";
+                line-height: {{ block.settings.left-desc-line-height }}px;
+             }
+
+             .block-{{ block.id }} .right-text-part .right-desc {
+                font-size: {{ block.settings.right-desc-text-size }}px;
+                color: {{ block.settings.right-desc-color }};
+                font-family: "Intervogue";
+                line-height: {{ block.settings.right-desc-line-height }}px;
+             }
+
+
+           
+
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn {
+                
+                font-size: {{ block.settings.left-btn-text-size }}px;
+               
+                font-family: "Intervogue";
+                
+             }
+
+             .block-{{ block.id }} .right-text-part .right-learn-more-btn {
+                
+                font-size: {{ block.settings.right-btn-text-size }}px;
+               
+                font-family: "Intervogue";
+                
+             }
+             
+             .block-{{ block.id }} .left-text-part a {
+                text-decoration: none;
+                color: {{ block.settings.left-btn-color }};
+             }
+             .block-{{ block.id }} .right-text-part a {
+                text-decoration: none;
+                color: {{ block.settings.right-btn-color }};
+             }
+
+
+
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn p, .block-{{ block.id }} .right-text-part .right-learn-more-btn p  {
+                display: inline;              
+                padding-bottom: 7px;
+                border-bottom: 1px solid black;
+             }
+               .block-{{ block.id }} .left-text-part .left-title p,   .block-{{ block.id }} .right-text-part .right-title p {
+                line-height: 1em;
+                margin: 0 auto;
+             }
+             .block-{{ block.id }} .left-text-part .left-desc p, .block-{{ block.id }} .right-text-part .right-desc p  {
+                margin: 0px auto;
+
+             }
+
+          
+             
+
+            
+
+
+             {% if block.settings.show-left-title %}
+                .block-{{ block.id }} .left-title {
+                    display: inline;
+                }
+             {% endif %}
+            
+
+        
+             {% if block.settings.show-left-btn %}
+                .block-{{ block.id }} .left-learn-more-btn {
+                    display: inline;
+                }
+             {% endif %}
+
+           
+
+
+
+
+
+             {% if block.settings.show-right-title %}
+                .block-{{ block.id }} .right-title {
+                    display: inline;
+                }
+             {% endif %}
+            
+
+        
+             {% if block.settings.show-right-btn %}
+                .block-{{ block.id }} .right-learn-more-btn {
+                    display: inline;
+                }
+             {% endif %}
+
+           
+        
+
+             @media only screen and (max-width: 768px) {
+              .block-{{ block.id }}  {
+            
+                align-items: center;
+                flex-direction: column;
+              
+             }
+             .block-{{ block.id }} .left-text-part  {
+
+              border-right: 0px; 
+           
+           
+            width: 100%;
+            
+         }
+
+         .block-{{ block.id }} .right-text-part  {
+         
+            width: 100%;
+            
+         }
+             
+              .block-{{ block.id }} .left-text-part .left-title {
+    
+                font-size: {{ block.settings.mobile-left-title-text-size }}px;
+           
+             }
+
+             .block-{{ block.id }} .right-text-part .right-title {
+    
+                font-size: {{ block.settings.mobile-right-title-text-size }}px;
+             
+             }
+
+
+             .block-{{ block.id }} .left-text-part .left-desc {
+                font-size: {{ block.settings.mobile-left-desc-text-size }}px;
+                
+                line-height: {{ block.settings.mobile-left-desc-line-height }}px;
+             }
+
+             .block-{{ block.id }} .right-text-part .right-desc {
+                font-size: {{ block.settings.mobile-right-desc-text-size }}px;
+                
+                line-height: {{ block.settings.mobile-right-desc-line-height }}px;
+             }
+
+
+           
+
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn {
+                
+                font-size: {{ block.settings.mobile-left-btn-text-size }}px;
+               
+              
+                
+             }
+
+             .block-{{ block.id }} .right-text-part .right-learn-more-btn {
+                
+                font-size: {{ block.settings.mobile-right-btn-text-size }}px;
+               
+               
+                
+             }
+              }
+
+
+
+
+            {% when "spacer-block" %}
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+            
+        {% endcase %}
+        
+    {% endfor %}
+
+
+</style>
+
+
+
+{% schema %}
+{
+    "name": "Double Column Text Style1",
+    "settings": [
+      
+    ],
+    "blocks": [
+        {
+            "name": "double-column-text-block",
+            "type": "double-column-text-block",
+            "settings": [
+      
+     
+    
+      {
+        "type": "checkbox",
+        "id": "show-left-title",
+        "label": "show left title",
+        "default": true
+      }, 
+      {
+        "type": "checkbox",
+        "id": "show-left-btn",
+        "label": "show left button",
+        "default": true
+      },
+   
+
+      
+      {
+        "type": "checkbox",
+        "id": "show-right-title",
+        "label": "show right title",
+        "default": true
+      }, 
+      {
+        "type": "checkbox",
+        "id": "show-right-btn",
+        "label": "show right button",
+        "default": true
+      },
+      {
+                 "type":"range",
+                 "id":"block-height",
+                 "label":"divider height",
+                 "min":150,
+                 "max":600,
+                 "step":5,
+                 "unit":"px",
+                 "default": 600
+              },
+              {
+                    "type":"color",
+                    "id":"left-text-bg-color",
+                    "label":"left text part background color"
+                },
+            
+                {
+                    "type":"richtext",
+                    "id":"left-title",
+                    "label":"left title",
+                    "default": "<p> 90% </p>"
+                },
+                {
+                 "type":"range",
+                 "id":"left-title-text-size",
+                 "label":"left title text size",
+                 "min":8,
+                 "max":100,
+                 "step":1,
+                 "unit":"px",
+                 "default":100
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-left-title-text-size",
+                 "label":"left title text size for mobile devices",
+                 "min":8,
+                 "max":100,
+                 "step":1,
+                 "unit":"px",
+                 "default":100
+              },
+              {
+                    "type":"color",
+                    "id":"left-title-color",
+                    "label":"left title text color"
+                },
+                
+                {
+                    "type":"richtext",
+                    "id":"left-desc",
+                    "label":"left description",
+                    "default": "<p> of our profits are shared. 80% to charitable causes, 10% between all of the people who make our collections. </p>"
+                },
+                {
+                 "type":"range",
+                 "id":"left-desc-text-size",
+                 "label":"left description text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-left-desc-text-size",
+                 "label":"left description text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                    "type":"color",
+                    "id":"left-desc-color",
+                    "label":"left desc text color"
+                },
+               
+              {
+                  "type": "range",
+                  "id": "left-desc-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Left Description Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-left-desc-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Left Description Line Height for Mobile Devices"
+              },
+
+                {
+                    "type":"richtext",
+                    "id":"left-btn-text",
+                    "label":"left-button text",
+                    "default": "<p> LEARN MORE ABOUT PROFIT SHARING </p>"
+                },
+       
+               
+                
+              {
+                 "type":"range",
+                 "id":"left-btn-text-size",
+                 "label":"left button text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-left-btn-text-size",
+                 "label":"left button text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+            
+             
+              
+                {
+                    "type":"color",
+                    "id":"left-btn-color",
+                    "label":"left button text color",
+                    "default": "#000000"
+                },
+            
+           
+              {
+                "type": "url",
+                "id": "left-btn-url",
+                "label" : "left button URL"
+              },
+            
+
+             
+
+
+              {
+                    "type":"color",
+                    "id":"right-text-bg-color",
+                    "label":"right text part background color"
+                },
+           
+                {
+                    "type":"richtext",
+                    "id":"right-title",
+                    "label":"right title",
+                    "default": "<p> 10% </p>"
+                },
+                {
+                 "type":"range",
+                 "id":"right-title-text-size",
+                 "label":"right title text size",
+                 "min":8,
+                 "max":100,
+                 "step":1,
+                 "unit":"px",
+                 "default":100
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-right-title-text-size",
+                 "label":"right title text size for mobile devices",
+                 "min":8,
+                 "max":100,
+                 "step":1,
+                 "unit":"px",
+                 "default":100
+              },
+              {
+                    "type":"color",
+                    "id":"right-title-color",
+                    "label":"right title text color"
+                },
+               
+                {
+                    "type":"richtext",
+                    "id":"right-desc",
+                    "label":"right description",
+                    "default": "<p> of our profits are reinvested into the business to help us grow and explore the newest in sustainable ways of doing. </p>"
+                },
+                {
+                 "type":"range",
+                 "id":"right-desc-text-size",
+                 "label":"right description text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-right-desc-text-size",
+                 "label":"right description text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                    "type":"color",
+                    "id":"right-desc-color",
+                    "label":"right desc text color"
+                },
+              
+              {
+                  "type": "range",
+                  "id": "right-desc-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Right Description Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-right-desc-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Right Description Line Height for Mobile Devices"
+              },
+                {
+                    "type":"richtext",
+                    "id":"right-btn-text",
+                    "label":"right button text",
+                    "default": "<p> EXPLORE SUSTAINABILITY & MATERIALS </p>"
+                },
+           
+                
+               
+              {
+                 "type":"range",
+                 "id":"right-btn-text-size",
+                 "label":"right button text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-right-btn-text-size",
+                 "label":"right button text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+         
+             
+               
+                {
+                    "type":"color",
+                    "id":"right-btn-color",
+                    "label":"right button text color",
+                    "default": "#000000"
+                },
+             
+           
+           
+              {
+                "type": "url",
+                "id": "right-btn-url",
+                "label" : "right button URL"
+              }
+
+              
+
+
+
+
+
+      
+
+            ]
+        },
+        {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"Double Column Text Style1",
+           "blocks": [
+              {
+          "type": "spacer-block"
+        },
+        {
+          "type": "double-column-text-block"
+        },
+        {
+          "type": "spacer-block"
+        }
+      ]
+        }
+    ]
+}
+{% endschema %}

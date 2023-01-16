@@ -15,13 +15,7 @@
     <div class="collection-sidebar small--hide">
         {%- render 'collection-grid-filters-form', location: 'CollectionSidebar', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
     </div>
-    {%- endif -%}
-
-    {%- if filter_style == 'topbar' -%}
-    <div>
-      {%- render 'collection-topbar-filters', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
-    <div>
-    {% endif %}
+    {%- endif -%}  
 
     <div id="FilterDrawer" class="drawer drawer--left">
       <div class="drawer__contents">
@@ -47,28 +41,3 @@
     </div>
 </div>
 {%- endif -%}
-
-<style>
-  {% if filter_style == "topbar" %}
-    #CollectionAjaxContent .grid {
-      margin-left: -8px;
-    }
-    #CollectionAjaxContent .medium-up--one-fifth {
-      width: 100%;
-    }
-    #CollectionAjaxContent .grid__item--sidebar {
-      max-height: none;
-      overflow-y: visible;
-    }
-    #CollectionSidebar .medium-up--four-fifths {
-      width: 100%;
-    }
-    #CollectionSidebar .collection-filter {
-      display: none;
-    }
-  {% elsif filter_style == "sidebar" %}
-    #CollectionAjaxContent .grid {
-      margin: 0 0 0 0;
-    }
-  {% endif %}
-</style>

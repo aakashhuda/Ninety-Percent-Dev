@@ -30,9 +30,8 @@
           </ul>
         </div>
       {%- endif -%}
-
       {%- if section.settings.toolbar_social -%}
-        <div class="toolbar__item">
+        <div class="toolbar__item{% if hide_social_on_desktop%} hide-social-desktop{% endif %}">
           {% render 'social-icons', additional_classes: 'inline-list toolbar__social' %}
         </div>
       {%- endif -%}
@@ -51,3 +50,11 @@
 
   </div>
 </div>
+
+<style>
+  @media only screen and (min-width:768px){
+    .hide-social-desktop{
+      display: none;
+    }
+  }
+</style>

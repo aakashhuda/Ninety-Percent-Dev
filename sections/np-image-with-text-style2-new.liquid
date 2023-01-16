@@ -1,0 +1,580 @@
+<section class="section-{{ section.id }} page-width"> 
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'hero-about-us' %} 
+            <div id="wrapper-{{ block.id }}"> 
+                <section class="about-us-{{ block.id }}">
+                    {% if block.settings.image-first-layout == false %}
+                        <div class="text-container-{{ block.id }}">
+                            <h1 class="title-{{ block.id }}">{{ block.settings.title }}</h1>
+                            <div class="description-container-{{ block.id }}">
+
+                                <div class="bullet-point">
+                                    <span class="point">{{ block.settings.point }}</span> <span class="point-text">{{ block.settings.point-text }}</span>
+                                  </div>
+
+                                <div class="main-description-{{ block.id }}">
+                                    <p>{{ block.settings.description }}</p>
+                                </div>
+                                <div class="sub-description-{{ block.id }}">
+                                    <p>{{ block.settings.sub-description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-container-{{ block.id }}">
+                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "master" }}">
+                        </div>
+
+                    {% else %}
+                        <div class="image-container-{{ block.id }}">
+                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "master" }}">
+                        </div>
+                        <div class="text-container-{{ block.id }}">
+                            <h1 class="title-{{ block.id }}">{{ block.settings.title }}</h1>
+                            <div class="description-container-{{ block.id }}">
+                                <div class="bullet-point">
+                                    <span class="point">{{ block.settings.point }}</span> <span class="point-text">{{ block.settings.point-text }}</span>
+                                  </div>
+                                <div class="main-description-{{ block.id }}">
+                                    <p>{{ block.settings.description }}</p>
+                                </div>
+                                <div class="sub-description-{{ block.id }}">
+                                    <p>{{ block.settings.sub-description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+</section>
+<style>
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'hero-about-us' %}
+                #wrapper-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .about-us-{{ block.id }} {
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: stretch;
+                    gap: 100px;
+                    width: {{ block.settings.block-width }}%;
+                    
+                }
+                .text-container-{{ block.id }} {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+                .text-container-{{ block.id }} h1 {
+                    margin: 0;
+                }
+                .image-container-{{ block.id }} {
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                }
+                .image-{{ block.id }} {
+                    width: 100%;
+                }
+                .title-{{ block.id }} {
+                    font-size: {{ block.settings.title-font-size }}px;
+                    font-family: {{ block.settings.title-font }};
+                    color: {{ block.settings.title-font-color }};
+                }
+                .main-description-{{ block.id }} {
+                    font-size: 26px;
+                    color: {{ block.settings.description-font-color }};
+                    font-size: {{ block.settings.description-font-size }}px;
+                    line-height: {{ block.settings.description-line-height }}px;
+                    font-family: {{ block.settings.description-font }};
+                    width: {{ block.settings.description-width }}%;
+                }
+                .sub-description-{{ block.id }} {
+                    font-size: {{ block.settings.sub-description-font-size }}px;
+                    line-height: {{ block.settings.sub-description-line-height }}px;
+                    color: {{ block.settings.sub-description-font-color }};
+                    font-family: {{ block.settings.sub-description-font }};
+                    width: {{ block.settings.sub-description-width }}%;
+                    text-align: justify;
+                }
+                .sub-description-{{ block.id }} p {
+                    margin-bottom: 0;
+                }
+                .hr-parent-{{ section.id }}{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                } 
+                hr.hr-{{ section.id }} {
+                    display: none;
+                    width: 93%;
+                    margin: 1rem 0;
+                }
+
+                #wrapper-{{ block.id }} .bullet-point  {
+                    
+                    margin-bottom: 40px;
+                }
+                
+                #wrapper-{{ block.id }} .bullet-point .point {
+                    font-family: {{ block.settings.point-font }};
+                    font-size: {{ block.settings.point-font-size }}px;
+                    color: {{ block.settings.point-font-color }};
+                    font-weight: {{ block.settings.point-font-weight }};
+                    margin-bottom: 40px;
+                }
+                #wrapper-{{ block.id }} .bullet-point .point-text {
+                    font-family: {{ block.settings.point-text-font }};
+                    font-size: {{ block.settings.point-text-font-size }}px;
+                    color: {{ block.settings.point-text-font-color }};
+                    text-transform: uppercase;
+                    padding-left: {{ block.settings.point-text-padding }}px;
+                    font-weight: {{ block.settings.point-text-font-weight }};
+                }
+                {% if block.settings.show-title != true %} 
+                .text-container-{{ block.id }} .title-{{ block.id }} {
+                    display: none;
+                }
+                
+              {% endif %}
+              {% if  block.settings.show-main-description != true %} 
+                .text-container-{{ block.id }}  .main-description-{{ block.id }} {
+                    display: none;
+                }
+            {% endif %}
+              {% if  block.settings.show-point != true %} 
+                .text-container-{{ block.id }}  .bullet-point {
+                    display: none;
+                }
+            {% endif %}
+          
+                @media (min-width: 1150px) and (max-width: 1440px) {
+                    .title-{{ block.id }} {
+                        font-size: 70px;
+                    }
+                }
+                @media (min-width: 1040px) and (max-width: 1149px) {
+                    .title-{{ block.id }} {
+                        font-size: 65px;
+                    }
+                }
+                @media (min-width: 769px) and (max-width: 1040px) {
+                    .title-{{ block.id }} {
+                        font-size: 45px;
+                    }
+                }
+                @media (max-width: 768px) {
+                    .about-us-{{ block.id }} {
+                        flex-wrap: wrap;
+                        gap: 15px;
+                    }
+                    .text-container-{{ block.id }}{
+                        flex: none;
+                        order: 1;
+                        width: 90%;
+                    }
+                    .image-container-{{ block.id }} {
+                        flex: none;
+                        order: 0;
+                    }
+                    .main-description-{{ block.id }} p {
+                        margin: 0;
+                    }
+                    .title-{{ block.id }} {
+                        font-size: {{ block.settings.title-mobile-font-size }}px;
+                        color: {{ block.settings.title-mobile-font-color }};
+                    }
+                    .main-description-{{ block.id }} {
+                        font-size: {{ block.settings.description-mobile-font-size }}px;
+                        color: {{ block.settings.description-mobile-font-color }};
+                        line-height: {{ block.settings.description-mobile-line-height }}px;
+                        width: {{ block.settings.description-mobile-width }}%;
+                    }
+
+                    .main-description-{{ block.id }} {
+                        font-size: 16px;
+                        text-align: justify;
+                        letter-spacing: -0.01em;
+                        line-height: 23px;
+                    }
+                    .sub-description-{{ block.id }} {
+                        display: none;
+                    }
+                    .image-container-{{ block.id }} {
+                        width: 100%;
+                    }
+                    .image-container-{{ block.id }} img {
+                        width: 100%;
+                    }
+                    .about-us-{{ block.id }} {
+                        width: 100%;
+                    }
+                    hr.hr-{{ section.id }} {
+                        display: block;
+                    }
+                }
+            {% when 'spacer' %}
+                .custom-spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>
+
+{% schema %}
+{
+    "name": "Garment Care Hero Section",
+    "settings": [
+        
+    ],
+    "blocks": [
+        {
+            "name": "Hero - Text with Image",
+            "type": "hero-about-us",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "block-width",
+                    "min": 30,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 90,
+                    "label": "Section Width"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "image-first-layout",
+                    "default": false,
+                    "label": "Image First Layout"
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Show-Title",
+                    "id": "show-title",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Show Main Description",
+                    "id": "show-main-description",
+                    "default": false
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Show-Point",
+                    "id": "show-point",
+                    "default": false
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "About Us"
+                    
+                },
+                {
+                    "type": "font",
+                    "id": "title-font",
+                    "label": "Title Font"
+                },
+                {
+                    "type": "range",
+                    "id": "title-font-size",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 100,
+                    "label": "Title Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "title-mobile-font-size",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 60,
+                    "label": "Title Font Size (Mobile)"
+                },
+                {
+                    "type": "color",
+                    "id": "title-font-color",
+                    "label": "Title Font Color",
+                    "default": "#2B2725"
+                },
+                {
+                    "type": "color",
+                    "id": "title-mobile-font-color",
+                    "label": "Title Font Color (Mobile)",
+                    "default": "#2B2725"
+                },
+                {
+                    "type": "text",
+                    "id": "point",
+                    "label": "Point",
+                    "default": "Featured"          
+                },
+                {
+                    "type": "text",
+                    "id": "point-text",
+                    "label": "Point Text",
+                    "default": "Collection No.20 Lookbook"
+                },
+                {
+                    "type": "range",
+                    "id": "point-text-padding",
+                    "label": "Point Text Distance",
+                    "default": 5,
+                    "min": 0,
+                    "max": 40,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-font-size",
+                    "label": "Point Font Size",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-mobile-font-size",
+                    "label": "Point Font Size (Mobile)",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-font-weight",
+                    "label": "Point Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "point-text-font-size",
+                    "label": "Point Text Font Size",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-mobile-text-font-size",
+                    "label": "Point Text Font Size (Mobile)",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-text-font-weight",
+                    "label": "Point Text Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "font",
+                    "id": "point-font",
+                    "label": "Point Font"
+                },
+                {
+                    "type": "font",
+                    "id": "point-text-font",
+                    "label": "Point Text Font"
+                },
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Main Description",
+                    "default": "Ninety Percent was founded in London in 2018 born of the friendship between Para Hamilton and Shafiq Hassan. Our label is established on their revolutionary spirit of care, and our business culture focused on profit sharing thus providing the tools of empowerment for everyone involved in the creation of our collections."
+                },
+                {
+                    "type": "font",
+                    "id": "description-font",
+                    "label": "Main Description Font"
+                },
+                {
+                    "type": "range",
+                    "id": "description-font-size",
+                    "min": 18,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Main Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-font-size",
+                    "min": 14,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Main Description Font Size (Mobile)"
+                },
+                {
+                    "type": "color",
+                    "id": "description-font-color",
+                    "label": "Main Description Font Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "color",
+                    "id": "description-mobile-font-color",
+                    "label": "Main Description Font Color (Mobile)",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "description-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Main Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 23,
+                    "label": "Main Description Line Height (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "description-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Main Description Width"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 95,
+                    "label": "Main Description Width (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "sub-description",
+                    "label": "Sub Description",
+                    "default": "Back in 1988, Para and Shafiq met in London and bonded over conscious thoughts on wildlife, anti-poverty, world music and disappearing tribesmen and crafts. For over 30 years, their shared values have powered their friendship and business endeavours. Now with Ninety Percent they’re taking tangible strides for the world we want."
+                },
+                {
+                    "type": "font",
+                    "id": "sub-description-font",
+                    "label": "Sub Description Font"
+                },
+                {
+                    "type": "range",
+                    "id": "sub-description-font-size",
+                    "min": 12,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Sub Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "sub-description-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Sub Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "sub-description-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 80,
+                    "label": "Sub Description Width"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Garment Care Hero Section",
+            "blocks": [
+        {
+          "type": "hero-about-us"
+        },
+        {
+          "type": "spacer"
+        }
+      ]
+        }
+    ]
+}
+{% endschema %}

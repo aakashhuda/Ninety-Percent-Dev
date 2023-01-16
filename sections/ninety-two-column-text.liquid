@@ -1,0 +1,934 @@
+{%- style -%}
+  /* dynamic css - section */  
+  .two-col-section-{{ section.id }} {
+    max-width: {{ section.settings.full-text-section-width }}px;
+    margin: 0 auto;
+    height: auto;
+    padding: 50px 50px;
+
+  }
+  .two-col-section-{{ section.id }} a{
+      text-decoration: none
+}
+
+  .wax-grid-container-2-col-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    column-gap: {{ section.settings.column-gap }}px
+  }
+
+  {% for block in section.blocks %}
+    #wrapper-{{ block.id }} {
+      max-width: {{ block.settings.block-custom-width }}px;
+      width: 100%
+    }
+
+    #wrapper-{{ block.id }} .customized-heading-{{ block.id }} {
+        font-size: {{ block.settings.heading-size }}px;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-family: {{ block.settings.heading-font-family }};
+        font-weight: {{ block.settings.heading-font-weight }};
+        color: {{ block.settings.heading-font-color }};
+        line-height: {{ block.settings.heading-line-height }} 
+
+    }
+    #wrapper-{{ block.id }} .customized-caption-{{ block.id }} {
+        font-size: {{ block.settings.caption-size }}px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-family: {{ block.settings.caption-font-family }};
+        font-weight: {{ block.settings.caption-font-weight }};
+        color: {{ block.settings.caption-font-color }};
+        line-height: {{ block.settings.caption-line-height }};
+
+    }
+    #wrapper-{{ block.id }} .customized-description-{{ block.id }} {
+        font-size: {{ block.settings.description-size }}px;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-family: {{ block.settings.text-font-family }};
+        font-weight: {{ block.settings.text-font-weight }};
+        color: {{ block.settings.text-font-color }};
+        line-height: {{ block.settings.description-line-height }};
+        text-align: justify; 
+
+    }
+    #wrapper-{{ block.id }} .customized-bottom-text-{{ block.id }} {
+        font-size: {{ block.settings.bottom-text-size }}px;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-family: {{ block.settings.bottom-text-font-family }};
+        font-weight: {{ block.settings.bottom-text-font-weight }};
+        color: {{ block.settings.bottom-text-font-color }};
+        line-height: {{ block.settings.bottom-text-line-height }};
+        text-align: justify;
+        text-decoration: underline; 
+        text-underline-offset: 15px
+
+    }
+
+    #wrapper-{{ block.id }}  .heading-space-container-{{ block.id }}{
+        height: {{ block.settings.heading-spacer-height }}px;
+        padding: 0px;
+    }
+    #wrapper-{{ block.id }}  .caption-space-container-{{ block.id }}{
+        height: {{ block.settings.caption-spacer-height }}px;
+        padding: 0px;
+    }
+    #wrapper-{{ block.id }}  .description-space-container-{{ block.id }}{
+        height: {{ block.settings.description-spacer-height }}px;
+        padding: 0px;
+    }
+    #wrapper-{{ block.id }}  .bottom-text-space-container-{{ block.id }}{
+        height: {{ block.settings.bottom-text-spacer-height }}px;
+        padding: 0px;
+    }
+
+  {% endfor %}
+
+    .show-divider-{{ section.id }} {
+        padding: {{ section.settings.divider-height }}px 50px;
+        background: linear-gradient(#2B2725, #2B2725) center/0.5px 100% no-repeat;
+        background-position: 47% 0;
+    }
+  
+  /* mobile screen responsive */
+  @media only screen and (max-width: 768px) {
+    .section-{{ section.id }}{
+      padding: 10px 25px;
+      overflow-x: hidden;
+    }
+    .two-col-section-{{ section.id }} {
+      width: 100%;
+      margin: 0 auto;
+      height: auto;
+      padding: 25px 0;
+
+   }
+    .wax-grid-container-2-col-{{ section.id }}{
+      grid-template-columns: repeat(1, 1fr);
+      overflow-x: hidden;
+      padding: 0 50px;
+    }
+    .show-divider-{{ section.id }} {
+        padding:0;
+        background: #ffffff;
+    }
+
+    {% for block in section.blocks %}
+
+      #wrapper-{{ block.id }}{
+        width: 90%;
+        margin: 0 auto;
+      }
+     /* mobile version */
+     #wrapper-{{ block.id }} .customized-heading-{{ block.id }} {
+        font-size:{{ block.settings.mobile-heading-size }}px;
+        line-height: {{ block.settings.mobile-heading-line-height }} 
+    }
+    #wrapper-{{ block.id }} .customized-caption-{{ block.id }} {
+        font-size:{{ block.settings.mobile-caption-size }}px;
+        line-height: {{ block.settings.mobile-caption-line-height }} 
+
+    } 
+    #wrapper-{{ block.id }} .customized-description-{{ block.id }} {
+        font-size: {{ block.settings.mobile-text-size }}px;
+        line-height: {{ block.settings.mobile-text-line-height }};
+    } 
+
+    {% endfor %}
+
+
+       
+}
+{%- endstyle -%}
+
+<div class="two-col-section-{{ section.id }} {% if section.settings.show-divider %}show-divider-{{ section.id }}{% endif %} ">
+  <div class="wax-grid-container-2-col-{{ section.id }}">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when "left_text" %}
+          <div class="left-text" id="wrapper-{{ block.id }}">
+              {% if block.settings.heading %}
+                <h3 class="customized-heading-{{ block.id }}" >{{ block.settings.heading }}</h3>
+              {% endif %} 
+              <div class="heading-space-container-{{ block.id }}">                           
+              </div>
+              {% if block.settings.caption %} 
+              <h4 class="customized-caption-{{ block.id }}" >{{ block.settings.caption }}</h4>
+            {% endif %}
+            <div class="caption-space-container-{{ block.id }}">                           
+            </div>
+              {% if block.settings.description %}
+                <p class="customized-description-{{ block.id }}">{{ block.settings.description | replace: 'p>', 'span>' }}</p>
+              
+              {% endif %}
+              <div class="description-space-container-{{ block.id }}">                           
+              </div>
+              {% if block.settings.bottom-text %}
+                <p class="customized-bottom-text-{{ block.id }}">{{ block.settings.bottom-text | replace: 'p>', 'span>' }}</p>
+              
+              {% endif %}
+              <div class="bottom-text-space-container-{{ block.id }}">                           
+              </div>
+
+
+          </div>
+        {% when "right_text" %}
+
+          <div class="right-text" id="wrapper-{{ block.id }}">
+            {% if block.settings.heading %}
+              <h3 class="customized-heading-{{ block.id }}" >{{ block.settings.heading }}</h3>
+            {% endif %} 
+            <div class="heading-space-container-{{ block.id }}">                           
+            </div>
+            {% if block.settings.caption %} 
+            <p class="customized-caption-{{ block.id }}" >{{ block.settings.caption }}</p>
+          {% endif %}
+          <div class="caption-space-container-{{ block.id }}">                           
+          </div>
+            {% if block.settings.description %}
+              <p class="customized-description-{{ block.id }}">{{ block.settings.description | replace: 'p>', 'span>' }}</p>
+            
+            {% endif %}
+            <div class="description-space-container-{{ block.id }}">                           
+            </div>
+            {% if block.settings.bottom-text %}
+              <a href="{{ block.settings.bottom-text-url }}"><p class="customized-bottom-text-{{ block.id }}">{{ block.settings.bottom-text | replace: 'p>', 'span>' }}</p></a>            
+            {% endif %}
+            <div class="bottom-text-space-container-{{ block.id }}">                           
+            </div>
+
+
+          </div>
+
+
+
+      {% endcase %}
+
+    {% endfor %}
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Ninety Two Column Text",
+  "settings": [
+    {
+      "type": "range",
+      "id": "full-text-section-width",
+      "min": 300,
+      "max": 1800,
+      "step": 25,
+      "unit": "px",
+      "label": "Section Width",
+      "default": 1400
+
+    }, {
+      "type": "range",
+      "id": "column-gap",
+      "min": 0,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Column Gap",
+      "default": 50
+
+    },
+    {
+        "type":"checkbox",
+        "id": "show-divider",
+        "label": "Show Divider",
+        "default": true
+
+    },
+    {
+      "type": "range",
+      "id": "divider-height",
+      "min": 25,
+      "max": 800,
+      "step": 25,
+      "unit": "px",
+      "label": "Divider Height",
+      "default": 100
+
+    }
+  ],
+  "max_blocks": 2,
+  "blocks": [
+    {
+      "type": "left_text",
+      "name": "Left Text Section",
+      "settings": [
+    {
+      "type": "range",
+      "id": "block-custom-width",
+      "min": 100,
+      "max": 900,
+      "step": 25,
+      "unit": "px",
+      "label": "Left Section Custom Width",
+      "default": 300
+
+    },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Column",
+          "label": "Heading"
+        },
+        {
+        "type": "font",
+        "id": "heading-font-family",
+        "label": "Heading Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "heading-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Heading Font Weight",
+        "default": 700
+
+        },
+
+        {
+        "type": "color",
+        "id": "heading-font-color",
+        "label": "Heading Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "heading-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Heading Font Size",
+        "default": 28
+        },
+        {
+        "type": "range",
+        "id": "heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Heading Line Height",
+        "default": 1.2
+        },
+        {
+        "type": "range",
+        "id": "heading-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Heading Bottom Space",
+        "default": 15
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-heading-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size(Mobile)",
+        "default": 36
+        },
+        {
+        "type": "range",
+        "id": "mobile-heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Heading Line Height(Mobile)",
+        "default": 1.6
+        },
+        
+        {
+          "type": "text",
+          "id": "caption",
+          "default": "Add a Sub Heading",
+          "label": "Sub Heading"
+        },
+        {
+        "type": "font",
+        "id": "caption-font-family",
+        "label": "Sub Heading Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "caption-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Sub Heading Font Weight",
+        "default": 300
+
+        },
+
+        {
+        "type": "color",
+        "id": "caption-font-color",
+        "label": "Sub Heading Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "caption-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Sub Heading Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "caption-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Sub Heading Line Height",
+        "default": 1.2
+        },
+           
+        {
+        "type": "range",
+        "id": "caption-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Sub Heading Bottom Space",
+        "default": 5
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-caption-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Sub heading Size(Mobile)",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "mobile-caption-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Sub heading Line Height(Mobile)",
+        "default": 1.6
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+          "label": "Description"
+        },
+        {
+        "type": "font",
+        "id": "text-font-family",
+        "label": "Text Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "text-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Text Font Weight",
+        "default": 300
+
+        },
+
+        {
+        "type": "color",
+        "id": "text-font-color",
+        "label": "Text Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "description-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Text Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "description-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Description Line Height",
+        "default": 1.2
+        },
+        {
+        "type": "range",
+        "id": "description-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Description Bottom Space",
+        "default": 0
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-text-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Text Size(Mobile)",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "mobile-text-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Text Line Height(Mobile)",
+        "default": 1.6
+        },
+        {
+          "type": "text",
+          "id": "bottom-text",
+          "default": "Add a Bottom Text",
+          "label": "Bottom Text"
+        },
+        {
+        "type": "url",
+        "id": "bottom-text-url",
+        "label" : "Bottom Text URL"
+        },
+        {
+        "type": "font",
+        "id": "bottom-text-font-family",
+        "label": "Bottom Text Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "bottom-text-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Bottom Text Font Weight",
+        "default": 300
+        },
+
+        {
+        "type": "color",
+        "id": "bottom-text-font-color",
+        "label": "Bottom Text Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "bottom-text-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom Text Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "bottom-text-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Bottom Text Line Height",
+        "default": 1.2
+        },
+           
+        {
+        "type": "range",
+        "id": "bottom-text-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Bottom Text Margin Bottom",
+        "default": 5
+
+        }
+
+      ]
+    }, {
+      "type": "right_text",
+      "name": "Right Text Section",
+      "settings": [
+        {
+        "type": "range",
+        "id": "block-custom-width",
+        "min": 100,
+        "max": 900,
+        "step": 25,
+        "unit": "px",
+        "label": "Right Section Custom Width",
+        "default": 300
+
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Column",
+          "label": "Heading"
+        },
+        {
+        "type": "font",
+        "id": "heading-font-family",
+        "label": "Heading Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "heading-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Heading Font Weight",
+        "default": 700
+
+        },
+
+        {
+        "type": "color",
+        "id": "heading-font-color",
+        "label": "Heading Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "heading-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Heading Font Size",
+        "default": 28
+        },
+        {
+        "type": "range",
+        "id": "heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Heading Line Height",
+        "default": 1.2
+        },
+        {
+        "type": "range",
+        "id": "heading-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Heading Bottom Space",
+        "default": 15
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-heading-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size(Mobile)",
+        "default": 36
+        },
+        {
+        "type": "range",
+        "id": "mobile-heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Heading Line Height(Mobile)",
+        "default": 1.6
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "default": "Add a Sub Heading",
+          "label": "Sub Heading"
+        },
+        {
+        "type": "font",
+        "id": "caption-font-family",
+        "label": "Sub Heading Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "caption-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Sub Heading Font Weight",
+        "default": 300
+        },
+
+        {
+        "type": "color",
+        "id": "caption-font-color",
+        "label": "Sub Heading Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "caption-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Sub Heading Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "caption-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Sub Heading Line Height",
+        "default": 1.2
+        },
+           
+        {
+        "type": "range",
+        "id": "caption-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Sub Heading Bottom Space",
+        "default": 5
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-caption-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Sub heading Size(Mobile)",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "mobile-caption-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Sub heading Line Height(Mobile)",
+        "default": 1.6
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+          "label": "Description"
+        },
+        {
+        "type": "font",
+        "id": "text-font-family",
+        "label": "Text Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "text-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Text Font Weight",
+        "default": 300
+
+        },
+
+        {
+        "type": "color",
+        "id": "text-font-color",
+        "label": "Text Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "description-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Text Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "description-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Description Line Height",
+        "default": 1.2
+        },
+        {
+        "type": "range",
+        "id": "description-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Description Bottom Space",
+        "default": 0
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-text-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Text Size(Mobile)",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "mobile-text-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Text Line Height(Mobile)",
+        "default": 1.6
+        },
+        
+        {
+          "type": "text",
+          "id": "bottom-text",
+          "default": "Add a Bottom Text",
+          "label": "Bottom Text"
+        },
+        {
+        "type": "font",
+        "id": "bottom-text-font-family",
+        "label": "Bottom Text Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "bottom-text-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Bottom Text Font Weight",
+        "default": 300
+        },
+
+        {
+        "type": "color",
+        "id": "bottom-text-font-color",
+        "label": "Bottom Text Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "bottom-text-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Bottom Text Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "bottom-text-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Bottom Text Line Height",
+        "default": 1.2
+        },
+           
+        {
+        "type": "range",
+        "id": "bottom-text-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Bottom Text Margin Bottom",
+        "default": 5
+
+        }
+
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "content",
+      "name": "Ninety Two Column Text",
+
+      "blocks": [
+        {
+          "type": "left_text"
+        }, {
+          "type": "right_text"
+        }
+      ]
+    }
+
+  ]
+
+}
+{% endschema %}

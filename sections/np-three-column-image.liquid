@@ -1,0 +1,350 @@
+<section class="section-wrapper-{{ section.id }}">
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "three-image-block" %}
+                <div class="block-{{ block.id }} block-width-{{ block.settings.block-width }}">
+                    
+                    
+
+                        <div class="first-part">
+                            <div class="first-image-part">
+                                <img src="{{ block.settings.first-image | img_url: 'grande' }}" alt="" width="" height="" loading="lazy">
+                            </div>
+                            <div class="first-caption-part">
+                                <div>
+                                    <span> {{ block.settings.first-product-name }} </span>
+                                    <span> {{ block.settings.first-fabric-brand }} </span>
+                                </div>
+                                <div>
+                                    <span> {{ block.settings.first-product-price }} </span>
+                                </div>
+                                
+                            </div>
+                          
+                           
+                        </div>
+
+
+                        <div class="second-part">
+                            <div class="second-image-part">
+                                <img src="{{ block.settings.second-image | img_url: 'grande' }}" alt="" width="" height="" loading="lazy">
+                            </div>
+                            <div class="second-caption-part">
+                                <div>
+                                    <span> {{ block.settings.second-product-name }} </span>
+                                    <span> {{ block.settings.second-fabric-brand }} </span>
+                                </div>
+                                <div>
+                                    <span> {{ block.settings.second-product-price }} </span>
+                                </div>
+                             
+                            </div>
+                           
+                            
+                        </div>
+
+
+                        <div class="third-part">
+                            <div class="third-image-part">
+                                <img src="{{ block.settings.third-image | img_url: 'grande' }}" alt="" width="" height="" loading="lazy">
+                            </div>
+                            <div class="third-caption-part">
+                                <div>
+                                    <span> {{ block.settings.third-product-name }} </span>
+                                    <span> {{ block.settings.third-fabric-brand }} </span>
+                                </div>
+                                <div>
+                                    <span> {{ block.settings.third-product-price }} </span>
+                                </div>
+                            
+                            </div>
+                        
+                         
+                        </div>
+
+
+                  
+        
+                   
+                </div>
+            
+            {% when 'spacer-block' %}
+
+                <div class="spacer-{{ block.id }}">
+                        
+                </div>
+
+        {% endcase %}
+    {% endfor %}
+
+</section>
+
+<style>
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "three-image-block" %}
+                .block-{{ block.id }}.block-width-small {
+                    max-width: 600px !important;
+                    margin: 0 auto;
+                 }
+                 .block-{{ block.id }}.block-width-medium {
+                    max-width: 1050px !important;
+                    margin: 0 auto;
+                 }
+                 .block-{{ block.id }}.block-width-full {
+                    max-width: 100% !important;
+                 }
+           
+                 .block-{{ block.id }}.block-width-custom {
+                    max-width: {{ block.settings.custom-block-width | append: "px" }} !important;
+                    margin: 0 auto;
+                 }
+                 .block-{{ block.id }} {
+                   display: flex;
+                   flex-direction: row;
+                   gap: 6px;
+                 }
+                 .block-{{ block.id }} .first-part, .block-{{ block.id }}  .second-part , .block-{{ block.id }}  .third-part {
+                    flex: 1;
+
+                 }
+                 .block-{{ block.id }}  img {
+                    height: 100%;
+                    width: 100%;
+                 }
+                 .block-{{ block.id }} .first-image-part , .block-{{ block.id }} .second-image-part , .block-{{ block.id }} .third-image-part {
+                    height: 100%;
+                 }
+                 .block-{{ block.id }} span p {
+                    margin: 0px auto;
+                 }
+                 .block-{{ block.id }} span {
+                    display: none;
+                    color: {{ block.settings.caption-color }};
+                    font-size: {{ block.settings.caption-font-size }}px;
+                    font-family: {{ block.settings.caption-font-family }};
+                    line-height: {{ block.settings.caption-line-height }}px;
+                 }
+                 .block-{{ block.id }} .first-caption-part ,  .block-{{ block.id }} .second-caption-part, .block-{{ block.id }} .third-caption-part {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 90%;
+                    margin: 0 auto;
+                 }
+
+                 {% if block.settings.show-caption %}
+                    .block-{{ block.id }} span  {
+                        display: inline;
+                     }
+                 {% endif %}
+                 @media only screen and (max-width: 768px) {
+                    .block-{{ block.id }} span {
+                        
+               
+                        font-size: {{ block.settings.mobile-caption-font-size }}px;
+                 
+                        line-height: {{ block.settings.mobile-caption-line-height }}px;
+                     }
+                     .block-{{ block.id }} {
+                        flex-direction: column;
+                      }
+                  }
+            {% when 'spacer-block' %}
+
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>
+
+{% schema %}
+{
+    "name": "np-three-column-image",
+    "settings": [
+        
+    ],
+    "blocks": [
+        {
+            "type": "three-image-block",
+            "name": "three-image-block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "first-image",
+                    "label": "first Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "second-image",
+                    "label": "second Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "third-image",
+                    "label": "third Image"
+                },
+                
+                {
+                    "type":"richtext",
+                    "id":"first-product-name",
+                    "label":"first product name"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"first-fabric-brand",
+                    "label":"first fabric brand"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"first-product-price",
+                    "label":"first product price"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"second-product-name",
+                    "label":"second product name"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"second-fabric-brand",
+                    "label":"second fabric brand"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"second-product-price",
+                    "label":"second product price"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"third-product-name",
+                    "label":"third product name"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"third-fabric-brand",
+                    "label":"third fabric brand"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"third-product-price",
+                    "label":"third product price"
+                }, 
+                {
+                  "type": "range",
+                  "id": "caption-font-size",
+                  "label": "Caption Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 16
+                  },
+                  {
+                  "type": "range",
+                  "id": "mobile-caption-font-size",
+                  "label": "Caption Font size for mobile devices",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 16
+                  },
+                  {
+                    "type": "font",
+                    "label": "caption font family",
+                    "id": "caption-font-family"
+                  }, 
+                  {
+                    "type" : "color",
+                    "label": "caption color",
+                    "id": "caption-color"
+                  },
+                  {
+                  "type": "range",
+                  "id": "caption-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,                 
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Caption Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-caption-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Caption Line Height for Mobile Devices"
+              },
+                {
+                    "type": "checkbox",
+                    "id": "show-caption",
+                    "label": "Show Caption",
+                    "default": false
+            },
+            {
+                "type": "select",
+                "id": "block-width",
+                "label": "Block width",
+                "options": [
+                {
+                "value": "small",
+                "label": "Small"
+                },
+                {
+                "value": "medium",
+                "label": "Medium"
+                },
+                {
+                "value": "full",
+                "label": "Full"
+                },
+                {
+                "value": "custom",
+                "label": "Custom"
+                }
+            ],
+            "default": "medium"
+            },
+            {  
+                "type": "range",
+                "id": "custom-block-width",
+                "label": "Custom block width",
+                "min": 200,
+                "max": 1900,
+                "step": 50,
+                "unit": "px",
+                "default": 800
+            }
+            ]
+        },
+        {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"np-three-column-image"
+        }
+    ]
+}
+{% endschema %}

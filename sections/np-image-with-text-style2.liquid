@@ -1,0 +1,450 @@
+
+<div id="wrapper-{{ section.id }}"> 
+    <section class="hero-{{ section.id }}">
+        {% if section.settings.image-first-layout == true %}
+            <div class="image-container-{{ section.id }}">
+                <img class="image-{{ section.id }}" src="{{ section.settings.image | img_url: 'master' }}">
+            </div>
+            <div class="text-container-{{ section.id }}">
+                {% for block in section.blocks %}
+                    {% case block.type %}
+                        {% when 'text' %} 
+                            <div class="text-{{ block.id }}">
+                                {{ block.settings.text }}
+                            </div>
+                        {% when 'button-link' %}
+                            <div class="button-link">
+                                <a href="{{ block.settings.button-link | url_encode }}">{{ block.settings.button-link-name }}</a>
+                            </div>
+                        {% when 'bullet-point' %}
+                            <div class="bullet-point">
+                                <span class="point">{{ block.settings.point }}</span>:    <span class="point-text">{{ block.settings.point-text }}</span>
+                            </div>
+                        {% when 'spacer' %}
+                            <section class="custom-spacer-{{ block.id }}">
+                
+                            </section>
+                    {% endcase %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-container-{{ block.id }}">
+                {% for block in section.blocks %}
+                    {% case block.type %}
+                        {% when 'text' %} 
+                            <div class="text-{{ block.id }}">
+                                {{ block.settings.text }}
+                            </div>
+                        {% when 'button-link' %}
+                            <div class="button-link">
+                                <a href="{{ block.settings.button-link | url_encode }}">{{ block.settings.button-link-name }}</a>
+                            </div>
+                        {% when 'bullet-point' %}
+                            <div class="bullet-point">
+                                <span class="point">{{ block.settings.point }}</span>:    <span class="point-text">{{ block.settings.point-text }}</span>
+                            </div>
+                        {% when 'spacer' %}
+                            <section class="custom-spacer-{{ block.id }}">
+                
+                            </section>
+                    {% endcase %}
+                {% endfor %}
+            </div>
+            <div class="image-container-{{ section.id }}">
+                <img class="image-{{ section.id }}" src="{{ section.settings.image | img_url: 'master' }}">
+            </div>
+        {% endif %}
+    </section>
+</div>
+
+<style>
+    #wrapper-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-{{ section.id }} {
+        display: flex;
+        gap: 70px;
+        width: {{ section.settings.section-width }}%;
+    }
+    .image-container-{{ section.id }} {
+        flex: 1;
+        width: calc({{ section.settings.image-width }}% - 35px);
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+    }
+    
+    .text-container-{{ section.id }} {
+        flex: 1;
+        width: calc(100% - 35px);
+    }
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'text' %}
+                .text-{{ block.id }} {
+                    font-size: {{ block.settings.font-size }}px;
+                    line-height: {{ block.settings.line-height }}px;
+                    font-family: {{ block.settings.font }};
+                    width: {{ block.settings.text-width }}%;
+                    font-weight: {{ block.settings.font-weight }};
+                    letter-spacing: {{ block.settings.letter-spacing }}em;
+                }
+                @media (max-width: 768px) {
+                    .text-{{ block.id }} {
+                        font-size: {{ block.settings.font-mobile-size }}px;
+                        line-height: {{ block.settings.line-mobile-height }}px;
+                        width: {{ block.settings.text-mobile-width }}%;
+                        font-weight: {{ block.settings.font-mobile-weight }};
+                        letter-spacing: {{ block.settings.mobile-letter-spacing }}em;
+                    }
+                }
+            {% when 'button-link' %}
+                .button-link a {
+                    text-decoration: none;
+                    color: #2b2724;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    padding: 0.5em 7em;
+                    border: 1px solid #2b2724;
+                    font-weight: {{ block.settings.button-link-font-weight }}
+                }
+            {% when 'bullet-point' %}
+                .bullet-point .point {
+                    font-family: {{ block.settings.point-font }};
+                    font-size: {{ block.settings.point-font-size }}px;
+                    color: {{ block.settings.point-font-color }};
+                    font-weight: {{ block.settings.point-font-weight }}
+                }
+
+                .bullet-point .point-text {
+                    font-family: {{ block.settings.point-text-font }};
+                    font-size: {{ block.settings.point-text-font-size }}px;
+                    color: {{ block.settings.point-text-font-color }};
+                    text-transform: uppercase;
+                    padding-left: {{ block.settings.point-text-padding }}px;
+                    font-weight: {{ block.settings.point-text-font-weight }}
+                }
+
+                @media (max-width: 768px) {
+                    .bullet-point .point {
+                        font-size: {{ block.settings.point-mobile-font-size }}px;
+                    }
+    
+                    .bullet-point .point-text {
+                        font-size: {{ block.settings.point-mobile-text-font-size }}px;
+                    }
+                }
+            {% when 'spacer' %}
+                .custom-spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer }}px;
+                    width: 10%;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>
+
+{% schema %}
+{
+    "name": "Ninety - Hero",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "image-first-layout",
+            "label": "Image First Layout",
+            "default": true
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Select Image"
+        },
+        {
+            "type": "range",
+            "id": "image-width",
+            "min": 30,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "default": 100,
+            "label": "Image Width"
+        },
+        {
+            "type": "range",
+            "id": "section-width",
+            "min": 30,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "default": 100,
+            "label": "Section Width"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Text",
+            "type": "text",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Text"
+                },
+                {
+                    "type": "range",
+                    "id": "font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "font-mobile-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "letter-spacing",
+                    "label": "Letter Spacing",
+                    "min": -2,
+                    "max": 3,
+                    "unit": "em",
+                    "step": 0.10,
+                    "default": -0.10
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-letter-spacing",
+                    "label": "Letter Spacing (Mobile)",
+                    "min": -2,
+                    "max": 3,
+                    "unit": "em",
+                    "step": 0.10,
+                    "default": -0.10
+                },
+                {
+                    "type": "range",
+                    "id": "line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "line-mobile-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Line Height (Mobile)"
+                },
+                {
+                    "type": "font",
+                    "id": "font",
+                    "label": "Font"
+                },
+                {
+                    "type": "range",
+                    "id": "font-weight",
+                    "label": "Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "font-mobile-weight",
+                    "label": "Font Weight (Mobile)",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "text-width",
+                    "min": 20,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Width"
+                },
+                {
+                    "type": "range",
+                    "id": "text-mobile-width",
+                    "min": 20,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Width (Mobile)"
+                }
+            ]
+        },
+        {
+            "name": "Bullet Point",
+            "type": "bullet-point",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "point",
+                    "label": "Point",
+                    "default": "Featured"          
+                },
+                {
+                    "type": "text",
+                    "id": "point-text",
+                    "label": "Point Text",
+                    "default": "Collection No.20 Lookbook"
+                },
+                {
+                    "type": "range",
+                    "id": "point-text-padding",
+                    "label": "Point Text Distance",
+                    "default": 5,
+                    "min": 0,
+                    "max": 40,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-font-size",
+                    "label": "Point Font Size",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-mobile-font-size",
+                    "label": "Point Font Size (Mobile)",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-font-weight",
+                    "label": "Point Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "point-text-font-size",
+                    "label": "Point Text Font Size",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-mobile-text-font-size",
+                    "label": "Point Text Font Size (Mobile)",
+                    "default": 16,
+                    "min": 14,
+                    "max": 32,
+                    "unit": "px",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "point-text-font-weight",
+                    "label": "Point Text Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "font",
+                    "id": "point-font",
+                    "label": "Point Font"
+                },
+                {
+                    "type": "font",
+                    "id": "point-text-font",
+                    "label": "Point Text Font"
+                }
+            ]
+        },
+        {
+            "name": "Button Link",
+            "type": "button-link",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "button-link-name",
+                    "label": "Button Text",
+                    "default": "Read"          
+                },
+                {
+                    "type": "url",
+                    "id": "button-link",
+                    "label": "Button URL"
+                },
+                {
+                    "type": "range",
+                    "id": "button-link-font-weight",
+                    "label": "Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Hero Our Material"
+        }
+    ]
+}
+{% endschema %}

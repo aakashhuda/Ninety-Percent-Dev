@@ -1,0 +1,612 @@
+<section class="section-wrapper-{{ section.id }}  page-width">
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "image-text-block" %}
+
+                <div class="block-{{ block.id }}">
+
+                    <div class="image-part">
+                        <div class="image">
+                            <img src="{{ block.settings.image | img_url: 'grande' }}" alt="" width="" height="" loading="lazy">
+                        </div>
+                        <div  class="caption">
+                            <span> {{ block.settings.caption }} </span>
+                        </div>
+
+                                                    
+                    </div>
+
+                    <div class="text-part">
+                        <div class="text-part-inner">
+
+                            <span class="pre-title"> {{ block.settings.pre-title }} </span>
+                            <span class="title"> {{ block.settings.title }} </span> 
+                            <span class="desc"> {{ block.settings.desc }}  </span>
+                            
+                                <a href="{{ block.settings.btn-url }}" class="learn-more-btn"> {{ block.settings.btn-text }}  </a>
+                            
+                            
+                           
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            
+
+
+            {% when 'spacer-block' %}
+
+                <div class="spacer-{{ block.id }}">
+                        
+                </div>
+
+        {% endcase %}
+    {% endfor %}
+</section>
+
+
+
+<style>
+   
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+
+            {% when "image-text-block" %}
+                .block-{{ block.id }} .caption  {
+                    display: none;
+                }
+                .block-{{ block.id }} .pre-title  {
+                    display: none;
+                }
+                .block-{{ block.id }} .title {
+                    display: none;
+                }
+                .block-{{ block.id }} .learn-more-btn  {
+                    display: none;
+                }
+               
+                .block-{{ block.id }}.block-width-small {
+                max-width: 576px;
+                margin: 0 auto;
+             }
+             .block-{{ block.id }}.block-width-medium {
+                max-width: 1148px;
+                margin: 0 auto;
+             }
+             .block-{{ block.id }}.block-width-full {
+                max-width: 100%;
+             }
+       
+             .block-{{ block.id }}.block-width-custom {
+                max-width: {{ block.settings.custom-block-width | append: "px" }};
+                margin: 0 auto;
+             }
+       
+
+             .block-{{ block.id }}  {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                padding: 0px {{ block.settings.padding }}px;
+              
+             }
+             
+            
+
+             .block-{{ block.id }} .image-part   {
+                width: 50%;
+
+             }
+             .block-{{ block.id }} .image-part   {
+                width: 50%;
+
+             }
+             .block-{{ block.id }} .image-part .image  {
+                height: 100%;
+
+             }
+             .block-{{ block.id }} .image-part .caption {
+                font-size: {{ block.settings.caption-text-size }}px;
+                font-family: {{ block.settings.caption-font-family }};
+                color: {{ block.settings.caption-color }};
+             }
+
+             .block-{{ block.id }} .text-part  {
+                display: flex;
+                
+
+               align-content: center;
+                flex-wrap: wrap; 
+
+                background-color: {{ block.settings.text-bg-color }};
+                width: 50%;
+                
+             }
+             .block-{{ block.id }} .text-part .text-part-inner {
+                margin: 20px auto; 
+                width: 80%;
+             }
+             .block-{{ block.id }} .text-part .title {
+    
+                font-size: {{ block.settings.title-text-size }}px;
+                color: {{ block.settings.title-color }};
+                font-family: {{ block.settings.title-font-family }};
+             }
+             .block-{{ block.id }} .text-part .desc {
+                font-size: {{ block.settings.desc-text-size }}px;
+                color: {{ block.settings.desc-color }};
+                font-family: {{ block.settings.desc-font-family }};
+                line-height: {{ block.settings.desc-line-height }}px;
+             }
+
+             .block-{{ block.id }} .text-part .pre-title {
+                font-size: {{ block.settings.pre-title-text-size }}px;
+                color: {{ block.settings.pre-title-color }};
+                font-family: {{ block.settings.pre-title-font-family }};
+             }
+
+
+             .block-{{ block.id }} .text-part .learn-more-btn {
+                
+                font-size: {{ block.settings.btn-text-size }}px;
+               
+                font-family: {{ block.settings.btn-font-family }};
+                
+             }
+             
+             .block-{{ block.id }} .text-part a {
+                text-decoration: none;
+                color: {{ block.settings.btn-color }};
+             }
+
+
+             .block-{{ block.id }} .text-part .learn-more-btn p {
+                display: inline;              
+                padding-bottom: 7px;
+                border-bottom: 1px solid black;
+             }
+             .block-{{ block.id }} .text-part .pre-title p ,  .block-{{ block.id }} .text-part .title p {
+                margin: 0 auto;
+             }
+             .block-{{ block.id }} .text-part .desc p  {
+                margin: 25px auto;
+             }
+
+             .block-{{ block.id }} img  {
+                height: 100%;
+                width: 100%;
+             }
+             
+
+            
+
+
+             {% if block.settings.show-title %}
+                .block-{{ block.id }} .title {
+                    display: inline;
+                }
+             {% endif %}
+            
+
+             {% if block.settings.show-caption %}
+                .block-{{ block.id }} .caption {
+                    display: inline;
+                }
+             {% endif %}
+
+             {% if block.settings.show-btn %}
+                .block-{{ block.id }} .learn-more-btn {
+                    display: inline;
+                }
+             {% endif %}
+
+             {% if block.settings.show-pre-title %}
+                .block-{{ block.id }} .pre-title {
+                    display: inline;
+                }
+             {% endif %}
+
+        
+
+             {% if block.settings.image-right %}
+                .block-{{ block.id }}  {
+                  
+                    flex-direction: row-reverse;
+                  
+                 }
+                
+             {% endif %}
+
+             @media only screen and (max-width: 768px) {
+               .block-{{ block.id }} .text-part .text-part-inner {
+                  margin: 0; 
+                  width: 100%;
+               }
+               .block-{{ block.id }} .image-part   {
+                width: 100%;
+             }
+               .block-{{ block.id }} .text-part   {
+                width: 100%;
+             }
+                
+             .block-{{ block.id }}  {
+               flex-direction: column;
+               align-items: center;
+              
+             }
+                .block-{{ block.id }} .image-part .caption {
+                    font-size: {{ block.settings.mobile-caption-text-size }}px;
+               
+                 }
+    
+              
+                 .block-{{ block.id }} .text-part .title {
+        
+                    font-size: {{ block.settings.mobile-title-text-size }}px;
+                   
+                 }
+                 .block-{{ block.id }} .text-part .desc {
+                    font-size: {{ block.settings.mobile-desc-text-size }}px;
+           
+                    line-height: {{ block.settings.mobile-desc-line-height }}px;
+                 }
+    
+                 .block-{{ block.id }} .text-part .pre-title {
+                    font-size: {{ block.settings.mobile-pre-title-text-size }}px;
+
+                 }
+    
+    
+                 .block-{{ block.id }} .text-part .learn-more-btn {
+                    
+                    font-size: {{ block.settings.mobile-btn-text-size }}px;
+                   
+                  
+                    
+                 }
+             }
+
+
+            {% when "spacer-block" %}
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+            
+        {% endcase %}
+        
+    {% endfor %}
+
+
+</style>
+
+
+
+{% schema %}
+{
+    "name": "np-image-with-text",
+    "settings": [
+      
+    ],
+    "blocks": [
+        {
+            "name": "image-text-block",
+            "type": "image-text-block",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type":"richtext",
+                    "id":"caption",
+                    "label":"Image Caption"
+                }, 
+                {
+                    "type":"richtext",
+                    "id":"pre-title",
+                    "label":"pre-title"
+                },
+                {
+                    "type":"richtext",
+                    "id":"title",
+                    "label":"title"
+                },
+                {
+                    "type":"richtext",
+                    "id":"desc",
+                    "label":"description"
+                },
+                {
+                    "type":"richtext",
+                    "id":"btn-text",
+                    "label":"button text"
+                },
+                {
+                 "type":"range",
+                 "id":"pre-title-text-size",
+                 "label":"pre-title text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-pre-title-text-size",
+                 "label":"pre-title text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+                {
+                 "type":"range",
+                 "id":"title-text-size",
+                 "label":"title text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-title-text-size",
+                 "label":"title text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+                {
+                 "type":"range",
+                 "id":"desc-text-size",
+                 "label":"description text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-desc-text-size",
+                 "label":"description text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"btn-text-size",
+                 "label":"button text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-btn-text-size",
+                 "label":"button text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"caption-text-size",
+                 "label":"Caption text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-caption-text-size",
+                 "label":"caption text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":10
+              },
+              {
+                    "type":"color",
+                    "id":"pre-title-color",
+                    "label":"pre title text color"
+                },
+              {
+                    "type":"color",
+                    "id":"title-color",
+                    "label":"title text color"
+                },
+                {
+                    "type":"color",
+                    "id":"desc-color",
+                    "label":"desc text color"
+                },
+                {
+                    "type":"color",
+                    "id":"btn-color",
+                    "label":"button text color",
+                    "default": "#000000"
+                },
+                {
+                    "type":"color",
+                    "id":"caption-color",
+                    "label":"caption text color"
+                },
+              {
+                    "type":"color",
+                    "id":"text-bg-color",
+                    "label":"text part background color"
+                },
+                {
+                "type": "font",
+                "id": "pre-title-font-family",
+                "label" : "Pre Title Font Family"
+              },
+              {
+                "type": "font",
+                "id": "title-font-family",
+                "label" : "title Font Family"
+              },
+              {
+                "type": "font",
+                "id": "desc-font-family",
+                "label" : "Description Font Family"
+              },
+              {
+                "type": "font",
+                "id": "btn-font-family",
+                "label" : "button Font Family"
+              },
+              {
+                "type": "font",
+                "id": "caption-font-family",
+                "label" : "caption Font Family"
+              },
+              {
+                "type": "url",
+                "id": "btn-url",
+                "label" : "button URL"
+              },
+
+              {
+                  "type": "range",
+                  "id": "desc-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Description Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-desc-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 37,
+                  "label": "Description Line Height for Mobile Devices"
+              },
+              {
+                    "type": "range",
+                    "id":"padding",
+                    "label":"Left-Right Space",
+                    "min":0,
+                    "max":100,
+                    "step":1,
+                    "unit":"px",
+                    "default":0
+                },
+             
+                {
+                "type": "select",
+                "id": "block-width",
+                "label": "Block width",
+                "options": [
+                {
+                "value": "small",
+                "label": "Small"
+                },
+                {
+                "value": "medium",
+                "label": "Medium"
+                },
+                {
+                "value": "full",
+                "label": "Full"
+                },
+                {
+                "value": "custom",
+                "label": "Custom"
+                }
+            ],
+            "default": "medium"
+            },
+            {  
+                "type": "range",
+                "id": "custom-block-width",
+                "label": "Custom block width",
+                "min": 200,
+                "max": 1900,
+                "step": 50,
+                "unit": "px",
+                "default": 800
+            },
+            {
+        "type": "checkbox",
+        "id": "image-right",
+        "label": "image right",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show-caption",
+        "label": "show caption",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show-pre-title",
+        "label": "show pre title",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show-title",
+        "label": "show title",
+        "default": false
+      }, 
+      {
+        "type": "checkbox",
+        "id": "show-btn",
+        "label": "show button",
+        "default": false
+      }
+            ]
+        },
+        {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"np-image-with-text"
+        }
+    ]
+}
+{% endschema %}

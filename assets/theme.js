@@ -8484,7 +8484,7 @@ lazySizesConfig.expFactor = 4;
         speed: 300,
         centerMode: false,
         // draggable: true,
-        slidesToShow: 5,
+        slidesToShow: 4,
         slidesToScroll: 4,
         // variableWidth: true,
 
@@ -8492,7 +8492,7 @@ lazySizesConfig.expFactor = 4;
           {
             breakpoint: 1024,
             settings: {
-              slidesToShow: 4.3,
+              slidesToShow: 4,
               slidesToScroll: 4,
               infinite: true,
               dots: true
@@ -8517,6 +8517,80 @@ lazySizesConfig.expFactor = 4;
           {
             breakpoint: 480,
             settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ]
+      });
+
+
+      // $('ul.slick-dots li:last').on('click', function(e) {
+      //   console
+      //     .log("Yes, clicked!")
+      //     $(this)
+      //     .parent()
+      //     .parent()
+      //     .find('.draggable')
+      //     .addClass("custom-slick-padding");
+      // });
+    
+      // $('ul.slick-dots li:not(:last)').on('click', function(e) {
+      //   console
+      //     .log("Yes, clicked!")
+      //     $(this)
+      //     .parent()
+      //     .parent()
+      //     .find('.draggable')
+      //     .removeClass("custom-slick-padding");
+      // });
+
+
+      $(".collection-grid__wrapper .image-wrap").slick({
+        dots: false,
+        infinite: true,
+        speed: 300,
+        centerMode: false,
+        // draggable: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        // variableWidth: true,
+
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+              arrows: true
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: false,
+              arrows: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
               slidesToShow: 1,
               slidesToScroll: 1
             },
@@ -8527,24 +8601,41 @@ lazySizesConfig.expFactor = 4;
         ]
       });
 
-
-      $('ul.slick-dots li:last').on('click', function(e) {
-        console
-          .log("Yes, clicked!")
-          $(this)
-          .parent()
-          .parent()
-          .find('.draggable')
-          .addClass("custom-slick-padding");
-      });
-    
-      $('ul.slick-dots li:not(:last)').on('click', function(e) {
-        console
-          .log("Yes, clicked!")
-          $(this)
-          .parent()
-          .parent()
-          .find('.draggable')
-          .removeClass("custom-slick-padding");
+      $('.slick-arrow').on('click', function(e) {
+        e.preventDefault();
       });
 
+      $('.grid-product__content').hover( function () {
+        $(this).find('.slick-arrow').addClass("active");
+      },
+      function () {
+        $(this).find('.slick-arrow').removeClass("active");
+      }
+    );
+
+   //megamenu-space
+   document.querySelectorAll('.site-nav__item').forEach((item)=> {
+    var elem1 = item.childNodes;
+    if(elem1.length > 2){
+        if(elem1[2].childNodes[1].childNodes[1].childNodes.length < 8){
+            var targetVar = elem1[2].childNodes[1].childNodes[1].childNodes;
+            targetVar[1].classList.add("custom-space-megamenu");
+        };
+    };
+});
+
+//collection filter open-close
+$('.custom-filter-wrapper button.collapsible-trigger-btn').on('click',function(){
+    if($(this).hasClass("is-open")){
+      console.log("if condition jquery");
+      $(this).removeClass("is-open");
+      $(this).next().removeClass("is-open");
+    }
+    else{
+      $(this).addClass("is-open");
+      $('.custom-filter-wrapper button.collapsible-trigger-btn').not(this).removeClass("is-open");
+      $(this).next().addClass("is-open");
+      $('.custom-filter-wrapper button.collapsible-trigger-btn').not(this).next().removeClass("is-open");
+    }
+
+});

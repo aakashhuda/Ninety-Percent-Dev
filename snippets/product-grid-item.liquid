@@ -49,7 +49,7 @@ Arguments
   endif
 -%}
 
-<div class="grid__item grid-product {{ grid_item_width }}{% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-aos="row-of-{{ per_row }}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
+<div class="collection-page-product-grid grid__item grid-product {{ grid_item_width }}{% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-aos="row-of-{{ per_row }}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
   <div class="grid-product__content">
     {%- if has_custom_label -%}
       <div class="grid-product__tag grid-product__tag--custom">
@@ -99,7 +99,7 @@ Arguments
           <div class="image-wrap"
             style="height: 0; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;"
             >
-            <img class="grid-product__image lazyload"
+<!--             <img class="grid-product__image lazyload"
                 data-src="{{ img_url }}"
                 data-widths="[360, 540, 720, 900, 1080]"
                 data-aspectratio="{{ preview_image.aspect_ratio }}"
@@ -109,7 +109,11 @@ Arguments
               <img class="grid-product__image lazyloaded"
                 src="{{ preview_image | img_url: '400x' }}"
                 alt="{{ preview_image.alt | escape }}">
-            </noscript>
+            </noscript> -->
+            	
+            {%- for image in product.images -%}
+              <img class="grid-product__image lazyloaded" src="{{ image | img_url: '400x' }}" alt="{{ image.alt | escape }}">
+            {%- endfor -%}
           </div>
         {%- endif -%}
 
@@ -277,3 +281,15 @@ Arguments
     {%- render 'quick-shop-modal', product: product -%}
   {%- endif -%}
 </div>
+
+<style>
+  .grid-product__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    text-align: left !important;
+  }
+  .grid-product__title {
+    padding-right: 8px;
+  }
+</style>

@@ -1,0 +1,216 @@
+{%- style -%}
+  .section-{{ section.id }} {
+    padding: 50px 50px;
+  }
+
+  {% for block in section.blocks %}
+    .single-image-container-{{ block.id }}{
+      width: {{ block.settings.Single_Image_Width }}px;
+      margin: 0 auto;
+    }
+
+    .single-image-container-{{ block.id }} img {
+      width: 100%
+    }
+
+    .auto-{{ block.id }}{
+      height: auto 
+    }
+    .small-{{ block.id }}{
+      height: 500px;
+      overflow: hidden
+    }
+    .medium-{{ block.id }}{
+      height: 900px;
+      overflow: hidden
+    }
+    .large-{{ block.id }}{
+      height: 1200px;
+      overflow: hidden
+    }
+
+    .section-{{ section.id }} .custom-caption-font-size-{{ block.id }} {
+        font-size:{{ block.settings.caption-size }}px;
+        margin-top: 0;
+        text-align:left;
+        margin-bottom: 0;
+        font-family: {{ block.settings.caption-font-family }};
+        font-weight: {{ block.settings.caption-font-weight }};
+        color: {{ block.settings.caption-font-color }};
+        line-height: {{ block.settings.caption-line-height }} 
+    }
+
+  
+  {% endfor %}
+
+  @media only screen and (max-width: 1250px) and (min-width: 768px){
+
+    {% for block in section.blocks %}
+    .single-image-container-{{ block.id }}{
+      width: 100%;
+      margin: 0 auto;
+    }
+    .single-image-container-{{ block.id }} p{
+      text-align:center;
+      font-size: 14px;
+      margin-top: 0px;
+    }
+
+    .single-image-container-{{ block.id }} img {
+      width: 100%
+    }
+  
+  {% endfor %}
+
+  }
+   /* mobile screen responsive */
+   @media only screen and (max-width: 768px) {
+    .section-{{ section.id }}{
+      padding: 10px 25px;
+      overflow-x: hidden;
+    }
+    {% for block in section.blocks %}
+    .single-image-container-{{ block.id }}{
+      width: 90%;
+      margin: 0 auto;
+    }
+    .single-image-container-{{ block.id }} p{
+      text-align:center;
+      font-size: 12px;
+      margin-top: 0px;
+    }
+
+    .single-image-container-{{ block.id }} img {
+      width: 100%
+    }
+  
+  {% endfor %}
+
+}
+{%- endstyle -%}
+
+<section class="section-{{ section.id }}">
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when "image" %}
+      <div class="single-image-container-{{ block.id }}">
+        <div class="{{ block.settings.image_height }}-{{ block.id }}">
+          <img src=" {{ block.settings.image | img_url: "grande" }} " alt="" height="" width="" loading="lazy">
+        </div>
+        {% if block.settings.caption-image %}
+          <p class="custom-caption-font-size-{{ block.id }}"> {{ block.settings.caption-image | replace: 'p>', 'span>' }}</p>
+
+        {% endif %}
+      </div>
+  {% endcase %}  
+{% endfor %}
+</section>
+
+{% schema %}
+  {
+    "name": "Single Image",
+    "tag": "section",
+    "class": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Image",
+        "type": "image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "t:sections.image-banner.settings.image.label"
+          },
+          {
+          "type": "range",
+          "id": "Single_Image_Width",
+          "min": 200,
+          "max": 1600,
+          "step": 50,
+          "unit": "px",
+          "label": "Image Width",
+          "default": 600
+
+          }, 
+          {
+          "type": "richtext",
+          "id": "caption-image",
+          "default": "<p>Add Caption in Image</p>",
+          "label": "Add a caption"
+          },
+        {
+        "type": "font",
+        "id": "caption-font-family",
+        "label": "Caption Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "caption-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Caption Font Weight",
+        "default": 300
+
+        },
+
+        {
+        "type": "color",
+        "id": "caption-font-color",
+        "label": "Caption Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "caption-size",
+        "min": 4,
+        "max": 80,
+        "step": 1,
+        "unit": "px",
+        "label": "Caption Size",
+        "default": 14
+        },
+        {
+        "type": "range",
+        "id": "caption-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Caption Line Height",
+        "default": 1.2
+        }, 
+          {
+          "type": "select",
+          "id": "image_height",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto"
+            }, {
+              "value": "small",
+              "label": "t:sections.image-banner.settings.image_height.options__1.label"
+            }, {
+              "value": "medium",
+              "label": "t:sections.image-banner.settings.image_height.options__2.label"
+            }, {
+              "value": "large",
+              "label": "t:sections.image-banner.settings.image_height.options__3.label"
+            }
+          ],
+          "default": "auto",
+          "label": "Image Height",
+          "info": "t:sections.image-banner.settings.image_height.info"
+          }
+        ]
+      }
+
+    ],
+    "presets": [
+      {
+        "name": "Single Image"
+      }
+    ]
+  }
+{% endschema %}

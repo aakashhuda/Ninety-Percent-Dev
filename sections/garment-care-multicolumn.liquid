@@ -1,0 +1,857 @@
+{%- style -%}
+  /* dynamic css - section */
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  .section-{{ section.id }}.section-width-small {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .section-{{ section.id }}.section-width-medium {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .section-{{ section.id }}.section-width-full {
+        max-width: 100%;
+        margin: 10px auto;
+    }
+    .section-{{ section.id }}.section-width-custom {
+        max-width: {{ section.settings.custom-section-width | append: "px" }};
+        margin: 0 auto;
+    }
+    /* dynamic css - block */
+    {% for block in section.blocks %}
+        .item-{{ block.id }} {
+          position: relative;
+        }
+        .item-{{ block.id }} .caption-flex-space-between{
+          display: flex;
+          justify-content: space-between;
+        }
+        .image-container-el-{{ block.id }}.image-ver-alignment-top{
+        }
+        .image-container-el-{{ block.id }}.image-ver-alignment-center{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          
+        }
+        .image-container-el-{{ block.id }}.image-ver-alignment-bottom{
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          
+        }
+        .item-{{ block.id }} .customized-heading-{{ block.id }} {
+            font-size: {{ block.settings.heading-size }}px;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-family: {{ block.settings.heading-font-family }};
+            font-weight: {{ block.settings.heading-font-weight }};
+            color: {{ block.settings.heading-font-color }};
+            line-height: {{ block.settings.heading-line-height }} 
+
+        }
+        .item-{{ block.id }} .customized-caption-{{ block.id }} {
+            font-size: {{ block.settings.caption-size }}px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: {{ block.settings.caption-font-family }};
+            font-weight: {{ block.settings.caption-font-weight }};
+            color: {{ block.settings.caption-font-color }};
+            line-height: {{ block.settings.caption-line-height }};
+
+        }
+          .item-{{ block.id }} .customized-product-price-{{ block.id }} {
+            font-size: {{ block.settings.product-price-size }}px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: {{ block.settings.product-price-font-family }};
+            font-weight: {{ block.settings.product-price-font-weight }};
+            color: {{ block.settings.product-price-font-color }};
+            line-height: {{ block.settings.product-price-line-height }};
+
+        }
+        .item-{{ block.id }} .customized-sub-heading-{{ block.id }} {
+          display: none;
+            font-size: {{ block.settings.sub-heading-size }}px;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-family: {{ block.settings.sub-heading-font-family }};
+            font-weight: {{ block.settings.sub-heading-font-weight }};
+            color: {{ block.settings.sub-heading-font-color }};
+            line-height: {{ block.settings.sub-heading-line-height }};
+            text-align: justify; 
+
+        }
+        .item-{{ block.id }} .customized-description-{{ block.id }} {
+            font-size: {{ block.settings.description-size }}px;
+            font-family: {{ block.settings.text-font-family }};
+            font-weight: {{ block.settings.text-font-weight }};
+            color: {{ block.settings.text-font-color }};
+            line-height: {{ block.settings.description-line-height }};
+            text-align: justify;
+            padding-bottom: 100px;
+
+        }
+        .heading-space-container-{{ block.id }}{
+            height: {{ block.settings.heading-spacer-height }}px;
+            padding: 0px;
+        }
+        .caption-space-container-{{ block.id }}{
+            height: {{ block.settings.caption-spacer-height }}px;
+            padding: 0px;
+        }
+        .sub-heading-space-container-{{ block.id }}{
+            height: {{ block.settings.sub-heading-spacer-height }}px;
+            padding: 0px;
+        }
+        .description-space-container-{{ block.id }}{
+            height: {{ block.settings.description-spacer-height }}px;
+            padding: 0px;
+        }
+
+        .image-container-el-{{ block.id }} {
+          width: {{ block.settings.custom-image-width }}px;
+          margin: auto;
+        }
+
+        .image-container-wrapper-el-{{ block.id }} {
+
+        }
+
+       .image-container-wrapper-el-{{ block.id }} img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+    }
+    
+    {% if block.settings.show-sub-heading %} 
+    .item-{{ block.id }} .customized-sub-heading-{{ block.id }} {
+      display: inline;
+    }
+
+  {% endif %}
+
+    {% endfor %}
+
+    /* static css */
+    .np-multicolumn-wrapper{
+        padding: 150px 50px;
+        height: 100%;
+    }
+
+    .np-grid-container {
+        display: grid;
+        grid-gap: {{ section.settings.column-gap }}px;
+        margin: 5px;
+    }
+  
+    .np-grid-container.column-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .np-grid-item{
+        height: auto;
+        position: relative;
+    }
+
+    
+
+
+    /* condition dynamic css */
+    
+    {% if section.settings.multicolumn-style == "style1" %}
+        .section-{{ section.id }} .np-multicolumn-wrapper.divider-bg{
+            background: linear-gradient(#2B2725, #2B2725) center/0.25px 100% no-repeat,
+                        linear-gradient(#2B2725, #2B2725) center/0.25px 100% no-repeat;
+            background-position: 33% 0, 67% 0;
+        }
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n+1)::after {
+
+            content: "";
+            position: absolute;
+            top: calc(100% + 5px);
+            border-bottom: .25px solid #b8afab;
+          
+            width: calc(300% + 2 * {{ section.settings.column-gap }}px);
+
+            }
+
+       .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-last-child(3)::after , 
+       .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-last-child(2)::after,
+       .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-last-child(1)::after {
+              display: none;
+        }
+
+
+  
+                
+    {% endif %}
+
+  /* mobile screen responsive */
+  @media only screen and (max-width: 768px) {
+    .section-{{ section.id }}{
+      padding: 10px 25px;
+      overflow-x: hidden;
+
+    }
+    .np-multicolumn-wrapper{
+      padding-top: 220px;
+      padding-bottom: 100px;
+    }
+    .section-{{ section.id }} .np-multicolumn-wrapper.divider-bg{
+            background: linear-gradient(#2B2725, #2B2725) center/0px 100% no-repeat,
+                        linear-gradient(#2B2725, #2B2725) center/0px 100% no-repeat;
+            background-position: 33% 0, 67% 0;
+    }
+    .np-grid-container.column-3 {
+        grid-template-columns: 1fr;
+        align-items: center;
+        justify-content:center;
+        width: 90%;
+    }
+    .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n+1)::after {
+            content: "";
+            position: absolute;
+            border-bottom: 0px;
+
+       }
+
+
+    .np-grid-container.column-3 h3{
+      font-size: 48px;
+      line-height: 1.2
+    }
+    {% for block in section.blocks %}
+      .image-container-el-{{ block.id }} {
+          width: 100%;
+          margin: auto;
+      }
+
+      .image-container-el-{{ block.id }}.image-ver-alignment-top{
+        }
+        .image-container-el-{{ block.id }}.image-ver-alignment-center{
+          position: relative;
+          
+        }
+        .image-container-el-{{ block.id }}.image-ver-alignment-bottom{
+          position: relative;
+          
+        }
+
+    /* mobile version */
+    .item-{{ block.id }} .customized-heading-{{ block.id }} {
+        font-size:{{ block.settings.mobile-heading-size }}px;
+        line-height: {{ block.settings.mobile-heading-line-height }} 
+    }
+    .item-{{ block.id }} .customized-sub-heading-{{ block.id }} {
+        font-size:{{ block.settings.mobile-sub-heading-size }}px;
+        line-height: {{ block.settings.mobile-sub-heading-line-height }} 
+
+    } 
+    .item-{{ block.id }} .customized-description-{{ block.id }} {
+        padding-bottom: 50px;
+        font-size: {{ block.settings.mobile-text-size }}px;
+        line-height: {{ block.settings.mobile-text-line-height }};
+    } 
+
+      
+    {% endfor %}
+
+  }
+
+{%- endstyle -%}
+
+<section class="section-{{ section.id }} section-width-{{ section.settings.section-width }} section-{{ section.id }}-padding page-width">
+    <div class="np-multicolumn-wrapper divider-bg">
+        <div class="np-grid-container column-3">
+            {% for block in section.blocks %}
+                {% case block.type %}
+                    {% when 'column' %}      
+                            <div class="np-grid-item item-{{ block.id }}">
+                                {% if block.settings.image %}
+                                    <div class="image-container-el-{{ block.id }} image-ver-alignment-{{ block.settings.image-vertical-alignment }}">
+                                        <div class="image-container-wrapper-el-{{ block.id }}">
+                                          <img class="img" src=" {{ block.settings.image | img_url: 'master' }} " alt="" height="" width="" loading="lazy">   
+                                        </div>
+                                        <div class="caption-flex-space-between">
+                                          {% if block.settings.caption %} 
+                                          <p class="customized-caption-{{ block.id }}" >{{ block.settings.caption }}</p>
+                                         {% endif %}
+                                         {% if block.settings.product-price %} 
+                                         <p class="customized-product-price-{{ block.id }}" >{{ block.settings.product-price }}</p>
+                                        {% endif %}
+                                         
+                                        </div>
+
+                                        <div class="caption-space-container-{{ block.id }}">                           
+                                        </div> 
+                                    </div>
+                                {% endif %} 
+                                {% if block.settings.heading %}
+                                  <h3 class="customized-heading-{{ block.id }}" >{{ block.settings.heading }}</h3>
+                                {% endif %} 
+                                <div class="heading-space-container-{{ block.id }}">                           
+                                </div>
+                                {% if block.settings.heading %}
+                                  <h4 class="customized-sub-heading-{{ block.id }}" >{{ block.settings.sub-heading }}</h4>
+                                {% endif %} 
+                                <div class="sub-heading-space-container-{{ block.id }}">                           
+                                </div>                              
+                                {% if block.settings.description %}
+                                  <p class="customized-description-{{ block.id }}">{{ block.settings.description | replace: 'p>', 'span>' }}</p>
+                                
+                                {% endif %}
+                                <div class="description-space-container-{{ block.id }}">                           
+                                </div>
+                            </div>   
+                            
+                       
+
+                    
+
+                                                
+                {% endcase %}
+
+
+            {% endfor %}
+
+
+          
+
+
+        </div>
+    </div>
+</section>
+{% schema %}
+{
+  "name": "Multicolumn Image/Text",
+  "class": "section",
+  "tag": "section",
+  "settings": [   
+    {
+    "type": "select",
+    "id": "section-width",
+    "label": "Section width",
+    "options": [
+        {
+        "value": "small",
+        "label": "Small"
+        },
+        {
+        "value": "medium",
+        "label": "Medium"
+        },
+        {
+        "value": "full",
+        "label": "Full"
+        },
+        {
+        "value": "custom",
+        "label": "Custom"
+        }
+    ],
+    "default": "custom",
+    "info":"Choose custom for changing custom width"
+    },
+    {  
+        "type": "range",
+        "id": "custom-section-width",
+        "label": "Custom Section width",
+        "min": 200,
+        "max": 1900,
+        "step": 50,
+        "unit": "px",
+        "default": 1400
+    },
+    {
+        "type": "range",
+        "id": "column-gap",
+        "min": 0,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "Column Gap",
+        "default": 90
+
+      },
+    {
+    "type": "select",
+    "id": "multicolumn-style",
+    "label": "Select Multi Column Style",
+    "options": [
+        {
+        "value": "style1",
+        "label": "Style 1"
+        },
+        {
+        "value": "style2",
+        "label": "Style 2"
+        }
+    ],
+    "default": "style1"
+    
+    }, 
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+        
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Choose Image"
+        },
+        {  
+        "type": "range",
+        "id": "custom-image-width",
+        "label": "Custom image width",
+        "min": 50,
+        "max": 800,
+        "step": 25,
+        "unit": "px",
+        "default": 400
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Image caption",
+          "info": "Blank will remove the caption from image"
+        },
+        {
+        "type": "font",
+        "id": "caption-font-family",
+        "label": "Caption Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "caption-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Caption Font Weight",
+        "default": 100
+
+        },
+
+        {
+        "type": "color",
+        "id": "caption-font-color",
+        "label": "Caption Font Color" 
+        
+        },
+
+        {
+        "type": "range",
+        "id": "caption-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Caption Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "caption-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Caption Line Height",
+        "default": 1.2
+        },
+           
+        {
+        "type": "range",
+        "id": "caption-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Caption Bottom Space",
+        "default": 5
+
+        },
+        {
+          "type": "text",
+          "id": "product-price",
+          "label": "Product Price",
+          "info": "Blank will remove the price"
+        },
+        {
+        "type": "font",
+        "id": "product-price-font-family",
+        "label": "Product Price Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "product-price-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Product Price Font Weight",
+        "default": 100
+
+        },
+
+        {
+        "type": "color",
+        "id": "product-price-font-color",
+        "label": "Product Price Font Color" 
+        
+        },
+
+        {
+        "type": "range",
+        "id": "product-price-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Product Price Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "product-price-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Product Price Line Height",
+        "default": 1.2
+        },
+
+        {
+        "type": "select",
+        "id": "image-vertical-alignment",
+        "label": " Image Vertical Alignment",
+        "options": [
+            {
+            "value": "top",
+            "label": "Top"
+            },
+            {
+            "value": "center",
+            "label": "Center"
+            },
+            {
+            "value": "bottom",
+            "label": "Bottom"
+            }
+        ],
+        "default": "top"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "default": "Cold Wash",
+          "label": "Heading"
+        },
+        {
+          "type": "font",
+          "id": "heading-font-family",
+          "label": "Heading Font Family"
+        },
+        {
+        "type": "range",
+        "id": "heading-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Heading Font Weight",
+        "default": 700
+
+        },
+        {
+        "type": "color",
+        "id": "heading-font-color",
+        "label": "Heading Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "heading-size",
+        "min": 5,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Heading Font Size",
+        "default": 26
+        },
+        {
+        "type": "range",
+        "id": "heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Heading Line Height",
+        "default": 1.2
+        },
+        {
+        "type": "range",
+        "id": "heading-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Heading Bottom Space",
+        "default": 15
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-heading-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Heading Size(Mobile)",
+        "default": 36
+        },
+        {
+        "type": "range",
+        "id": "mobile-heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Heading Line Height(Mobile)",
+        "default": 1.6
+        },
+        {
+          "type": "checkbox",
+          "id": "show-sub-heading",
+          "label": "Show Subheading",
+          "default": false
+
+        },
+        {
+          "type": "text",
+          "id": "sub-heading",
+          "default": "Add a Sub Heading",
+          "label": "Sub Heading"
+        },
+        {
+        "type": "font",
+        "id": "sub-heading-font-family",
+        "label": "Sub Heading Font Family"
+        },
+
+        {
+        "type": "range",
+        "id": "sub-heading-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Sub Heading Font Weight",
+        "default": 300
+
+        },
+
+        {
+        "type": "color",
+        "id": "sub-heading-font-color",
+        "label": "Sub Heading Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "sub-heading-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Sub Heading Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "sub-heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Sub Heading Line Height",
+        "default": 1.2
+        },
+           
+        {
+        "type": "range",
+        "id": "sub-heading-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Sub Heading Bottom Space",
+        "default": 5
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-sub-heading-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Sub Heading Size(Mobile)",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "mobile-sub-heading-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Sub Heading Line Height(Mobile)",
+        "default": 1.6
+        },
+      
+        {
+          "type": "richtext",
+          "id": "description",
+          "default": "<p>Washing in cold water is better for your garments and the planet. Turn your machine to 30° to reduce colour fading and use less energy. Always separate colours and wash similar shades together, turning dark, zipped or embellished clothing inside out.</p>",
+          "label": "Description"
+        },
+        {
+          "type": "font",
+          "id": "text-font-family",
+          "label": "Text Font Family"
+        },
+        {
+        "type": "range",
+        "id": "text-font-weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Text Font Weight",
+        "default": 300
+
+        },
+        {
+        "type": "color",
+        "id": "text-font-color",
+        "label": "Text Font Color" 
+        
+        },
+        {
+        "type": "range",
+        "id": "description-size",
+        "min": 4,
+        "max": 300,
+        "step": 4,
+        "unit": "px",
+        "label": "Text Font Size",
+        "default": 16
+        },
+        {
+        "type": "range",
+        "id": "description-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.2,
+        "label": "Description Line Height",
+        "default": 1.2
+        },
+        {
+        "type": "range",
+        "id": "description-spacer-height",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "label": "Description Bottom Space",
+        "default": 0
+
+        },
+        {
+        "type": "header",
+        "content": "Mobile Font Style"
+        },
+        {
+        "type": "range",
+        "id": "mobile-text-size",
+        "min": 8,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Text Size(Mobile)",
+        "default": 14
+        },
+        {
+        "type": "range",
+        "id": "mobile-text-line-height",
+        "min": 0,
+        "max": 5,
+        "step": 0.1,
+        "label": "Text Line Height(Mobile)",
+        "default": 1.6
+        }
+       
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multicolumn Image/Text",
+      "blocks": [
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        },
+        {
+          "type": "column"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

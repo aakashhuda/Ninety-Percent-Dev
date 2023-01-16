@@ -1,0 +1,230 @@
+{% capture form_id %}AddToCartForm-{{ section_id }}{% endcapture %}
+{% form 'product', product, id: form_id, class: 'product-single__form' %}
+  {% unless product.has_only_default_variant %}
+    {% for option in product.options_with_values %}
+      {% if settings.variant_type == 'button' %}
+        {% include 'variant-button-new', section_id: section_id, option_drop: option %}
+      {% else %}
+        {% include 'variant-dropdown', section_id: section_id %}
+      {% endif %}
+    {% endfor %}
+  {% endunless %}
+
+  <select name="id" id="ProductSelect-{{ section_id }}" class="product-single__variants no-js">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option {% if variant == product.selected_or_first_available_variant %}
+          selected="selected" {% endif %}
+          value="{{ variant.id }}">
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  {% if settings.quantity_enable %}
+    <div class="product__quantity product__quantity--{{ settings.variant_type }}">
+      <label for="Quantity-{{ section_id }}">{{ 'products.product.quantity' | t }}</label>
+      {% include 'quantity-input', id: section_id, qty: 1, min: 1 %}
+    </div>
+  {% endif %}
+
+  {%- assign inventory_visible = false -%}
+  {%- if settings.inventory_enable and current_variant.inventory_management == 'shopify' -%}
+    {%- if current_variant.inventory_quantity <= settings.inventory_threshold and current_variant.inventory_quantity >= 0 -%}
+      {%- assign inventory_visible = true -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- if current_variant.inventory_quantity == 0 -%}
+    {%- assign inventory_visible = false -%}
+  {%- endif -%}
+
+{%- assign custom_message = false -%}
+	{%- if settings.show_custom_message -%}
+			{% for variant in product.variants %}
+				{% if variant.inventory_quantity <= settings.inventory_threshold and variant.inventory_quantity > 0 and variant.option2 == "S" or variant.option2 == "M" %}
+					{%- assign custom_message = true -%}
+				{%- endif -%}
+			{% endfor %}
+		
+    {%- endif -%}
+{%- unless description_style == 'full' -%}
+<!--             <div class="desktop-hide">
+            	<div class="product-single__description rte">
+               		
+             	 </div>
+            </div> -->
+      {%- endunless -%}
+  <div
+    id="ProductInventory-{{ section_id }}"
+    class="product__inventory {% unless inventory_visible %}hide{% endunless %}"
+    style="display:none;"
+    >
+    <span style="margin-right: 12px;">
+      <img src="https://cdn.shopify.com/s/files/1/0407/5998/4284/files/fire_1.svg?v=1606394527" style="vertical-align: middle;width: 28px;border: 0px;margin-top: -8px;" alt="fire icon"></span>
+    {% if custom_message == true %}
+      {{ settings.custom_message }}
+       		
+    {% endif %}
+  </div>
+
+<div id="np-product-inventory" class="{% if custom_message %}npStockBlock{% endif %} {% unless custom_message %}hide{% endunless %}">
+  <div id="np-custom-out-stock" class="np-inventory-notice {% unless custom_message %}hide{% endunless %}">
+   <span>
+      <img src="https://cdn.shopify.com/s/files/1/0407/5998/4284/files/fire_1.svg?v=1606394527" style="vertical-align: middle;width: 15px;border: 0px;margin-top: -5px;" alt="fire icon">
+  </span>
+    <span class="stock-text" id="np-stock-notice">
+      
+  	</span>
+</div>
+</div>
+	{% comment %}
+		 {{ 'products.product.stock_label' | t: count: current_variant.inventory_quantity }}
+	{% endcomment %}
+  {%- if settings.inventory_transfers_enable -%}
+    <div
+      id="ProductIncomingInventory-{{ section_id }}"
+      class="product__inventory{% if inventory_visible %} hide{% endif %}">
+      {%- if current_variant.incoming and inventory_visible == false -%}
+        {%- if current_variant.next_incoming_date -%}
+          {% assign date = current_variant.next_incoming_date | date: format: 'date' %}
+          {%- if current_variant.available -%}
+            {{ 'products.product.will_not_ship_until' | t: date: date }}
+          {%- else -%}
+            {{ 'products.product.will_be_in_stock_after' | t: date: date }}
+          {%- endif -%}
+        {%- else -%}
+          {{ 'products.product.waiting_for_stock' | t }}
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign enable_dynamic_buttons = false -%}
+  {% if settings.enable_payment_button and template != 'product.preorder' %}
+    {%- assign enable_dynamic_buttons = true -%}
+  {% endif %}
+
+  {% if enable_dynamic_buttons %}
+    <div class="payment-buttons">
+  {% endif %}
+	
+    <button
+      {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
+      name="add"
+      id="AddToCart-{{ section_id }}"
+      class="btn btn--full add-to-cart{% if enable_dynamic_buttons %} btn--secondary{% endif %}"
+      {% unless current_variant.available %} disabled="disabled"{% endunless %} {% if is_size == false or is_gift == false %} disabled="disabled" {% endif %}>
+      <span id="AddToCartText-{{ section_id }}">
+        {% if is_size == false %}
+					<span>Please Select Size</span>
+        {% elsif is_gift == false %}
+        		<span>Please Select Amount</span>
+        {% else %}
+        	{% if current_variant.available %}
+              {% if template == 'product.preorder' %}
+                {{ 'products.product.preorder' | t }}
+              {% else %}
+                {{ 'products.product.add_to_cart' | t }}
+
+
+              {% endif %}
+
+            {% else %}
+              {{ 'products.product.sold_out' | t }}
+            {% endif %}
+        	{% endif %}
+      </span>
+    </button>
+
+    {% if enable_dynamic_buttons %}
+      {{ form | payment_button }}
+    {% endif %}
+
+  {% if enable_dynamic_buttons %}
+    </div>
+  {% endif %}
+
+  <div id="VariantsJson-{{ section_id }}" class="hide" aria-hidden="true">
+    {{ product.variants | json }}
+  </div>
+  {% if product.options.size > 1 %}
+    <div id="CurrentVariantJson-{{ section_id }}" class="hide" aria-hidden="true">
+      {{ current_variant | json }}
+    </div>
+  {% endif %}
+{% endform %}
+
+<style>
+  .product__inventory {
+  	text-align: left;
+  }
+  .np-inventory-notice {
+  	color: #000;
+    letter-spacing: 0.2em;
+    font-weight: 200;
+    text-transform: initial;
+    font-size: 0.75em;
+	margin: 7.5px 0 7.5px 5px;
+  }
+ #np-product-inventory.npStockBlock {
+  	position:relative;
+    display:block;
+    height:35px;
+  }
+  </style>
+<script>
+  (function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+  var msg = displayUrgencyMessage();
+    $('.np-inventory-notice span.stock-text').text(msg);
+    $('#np-custom-out-stock').fadeIn();
+      var stockText = document.getElementById('np-custom-out-stock');
+      $(document).on("click", '.variant-input > input[data-index="option2"] + label', function(e) {
+      	
+        if($('#np-custom-out-stock').hasClass('hide')){
+          $('#np-custom-out-stock').fadeOut();
+        setTimeout(function() {
+          var msg = displayUrgencyMessage(); 
+          $('.np-inventory-notice span.stock-text').text(msg);
+          $('#np-custom-out-stock').fadeIn();
+         }, 500);
+        }
+        else{
+        $('#np-custom-out-stock').fadeOut();
+        setTimeout(function() {
+          var msg = displayUrgencyMessage(); 
+          $('.np-inventory-notice span.stock-text').text(msg);
+    	  $('#np-custom-out-stock').fadeIn();
+         }, 500);
+        }
+
+      }); 
+      $('.variant-input[data-index="option1"] input').on('change', function() {
+        	if($('form .variant-wrapper input[type="radio"][name="Size"]').is(':checked')){
+                   $('#np-custom-out-stock').fadeOut();
+                  setTimeout(function() {
+                    var msg = displayUrgencyMessage(); 
+                $('.np-inventory-notice span.stock-text').text(msg);
+                $('#np-custom-out-stock').fadeIn();   
+                   }, 500);
+                }
+      });
+  function displayUrgencyMessage(){
+    var msg = $('.product__inventory').text().trim();
+	return msg;
+  }
+//       window.displayUrgencyMessage = function(){
+//       	var msg = $('.product__inventory').text().trim();
+// 		return msg;
+//       }
+} else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();        
+</script>

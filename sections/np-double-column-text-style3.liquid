@@ -1,0 +1,244 @@
+<section class="double-column-text-{{ section.id }} page-width">
+    {% for block in section.blocks %}
+      
+          {% case block.type %}
+          {% when 'double-column-text-block' %}
+             
+            <div class="text-block-{{ block.id }}">
+
+                <div class="left-text">
+                    {{ block.settings.left-text-content }}
+                </div>
+
+                <div class="right-text">
+                    {{ block.settings.right-text-content }}
+                </div>
+            
+            </div>
+  
+          {% when 'spacer-block' %}
+          <section class="spacer-{{ block.id }}">
+              
+          </section>
+  
+          {% endcase %}
+      
+    {% endfor %}
+  </section>
+  
+  <style>
+
+    
+      
+      {% for block in section.blocks %}
+          {% case block.type %} 
+  
+          {% when "double-column-text-block" %}
+
+            .text-block-{{ block.id }} {
+                display: flex;
+                flex-direction: row;
+                border-top: 0px Solid rgba(43, 39, 37, 0.3);
+                border-bottom: 0px Solid rgba(43, 39, 37, 0.3);
+                padding: 50px 0px;
+                
+            }
+
+            .text-block-{{ block.id }} .left-text , .text-block-{{ block.id }}  .right-text {
+                flex: 1;
+                text-align: justify;
+                padding: 50px;
+            }
+
+            .text-block-{{ block.id }} .left-text {
+              font-size: {{ block.settings.left-font-size | append: "px" }};
+              font-family: "Intervogue";
+              
+            }
+  
+            .text-block-{{ block.id }} .right-text {
+              font-size: {{ block.settings.right-font-size | append: "px" }};
+              font-family: "Silvana";
+              line-height: {{ block.settings.right-line-height | append: "px" }};
+            }
+            
+          {% comment %} .double-column-text-{{ section.id }} .text-block-{{ block.id }} div p {
+              font-size: {{ block.settings.font-size | append: "px" }};
+          } {% endcomment %}
+
+          {% if block.settings.show-top-border %}
+          .text-block-{{ block.id }} {
+                
+                border-top: 1px Solid rgba(43, 39, 37, 0.3);
+               
+                
+                
+            }
+       {% endif %}
+
+       {% if block.settings.show-bottom-border %}
+          .text-block-{{ block.id }} {
+                
+                border-bottom: 1px Solid rgba(43, 39, 37, 0.3);
+               
+                
+                
+            }
+       {% endif %}
+       @media only screen and (max-width: 768px) {
+        .text-block-{{ block.id }} {
+        
+          flex-direction: column;
+        
+          padding: 50px 0px;
+          
+      }
+      .text-block-{{ block.id }} .left-text , .text-block-{{ block.id }}  .right-text {
+                
+                padding: 0px;
+            }
+            .text-block-{{ block.id }} .left-text {
+              font-size: {{ block.settings.mobile-left-font-size | append: "px" }};
+             
+            }
+  
+            .text-block-{{ block.id }} .right-text {
+              font-size: {{ block.settings.mobile-right-font-size | append: "px" }};
+             
+              line-height: {{ block.settings.mobile-right-line-height | append: "px" }};
+            }
+       }
+
+  
+          {% when "spacer-block" %}
+          .double-column-text-{{ section.id }}  .spacer-{{ block.id }} {
+              height: {{ block.settings.spacer-height }}px;
+          }
+      {% endcase %}
+      {% endfor %}
+  
+  
+  </style>
+  
+  {% schema %}
+  {
+      "name": "Double Column Text Style3",
+      "blocks": [
+          {
+              "name": "double-column-text-block",
+              "type": "double-column-text-block",
+              "settings": [
+                {
+        "type": "checkbox",
+        "id": "show-top-border",
+        "label": "show top border",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show-bottom-border",
+        "label": "show bottom border",
+        "default": true
+      },
+                  {
+                   "type":"richtext",
+                   "id":"left-text-content",
+                   "label":"Change left Text Block",
+                   "default":"<p>HOW TO: GARMENT CARE</p>"
+                },
+                {
+                  "type": "range",
+                  "id": "left-font-size",
+                  "label": "Left Text Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 18
+                  },
+                  {
+                  "type": "range",
+                  "id": "mobile-left-font-size",
+                  "label": "Left Text Font size for Mobile devices",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 18
+                  },
+                {
+                   "type":"richtext",
+                   "id":"right-text-content",
+                   "label":"Change right Text Block",
+                   "default":"<p>You needn’t wash an item every time you wear it. Spot clean marks or stains and hang your pieces to air out before putting them away at the end of the day. Pay attention to our care labels to see which temperature to wash at, whether to hand wash, and if ironing is allowed. You can freshen garments between washes with a steamer or by hanging them in the bathroom whilst you shower.</p>"
+                },
+                
+                  {
+                  "type": "range",
+                  "id": "right-font-size",
+                  "label": "Right Text Font size",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 20
+                  },
+                  {
+                  "type": "range",
+                  "id": "mobile-right-font-size",
+                  "label": "Right Text Font size for Mobile devices",
+                  "min": 12,
+                  "max": 50,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 20
+                  },
+                  {
+                  "type": "range",
+                  "id": "right-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 30,
+                  "label": "Right Text Line Height"
+              },
+              {
+                  "type": "range",
+                  "id": "mobile-right-line-height",
+                  "min": 10,
+                  "max": 100,
+                  "step": 1,
+                  "unit": "px",
+                  "default": 30,
+                  "label": "Right Text Line Height For Mobile Devices"
+              }
+
+                 
+              ]
+          },
+          {
+             "type": "spacer-block",
+              "name": "Spacer",
+                "settings":[
+                  {
+                      "type": "range",
+                      "id": "spacer-height",
+                      "label": "Spacer Height",
+                      "min": 0,
+                      "max": 200,
+                      "step": 5,
+                      "unit": "px",
+                      "default": 30
+                  }
+                ]
+            }
+      ],
+      "presets": [
+          {
+           "category":"content",
+            "name":"Double Column Text Style3"
+          }
+      ]
+  }
+  {% endschema %} 

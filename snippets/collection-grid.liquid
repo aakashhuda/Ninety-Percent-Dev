@@ -54,7 +54,7 @@ Snippet Arguments
       {%- endif -%}
     </div>
 
-    <div class="collection-filter__item collection-filter__item--sort">
+<!--     <div class="collection-filter__item collection-filter__item--sort">
         <div class="collection-filter__sort-container">
         {%- assign sort_by = sort_by | default: default_sort_by -%}
         <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
@@ -65,9 +65,37 @@ Snippet Arguments
           {%- endfor -%}
         </select>
         </div>
-    </div>
+    </div> -->
   </div>
 
+   <div class="custom-filter-wrapper">
+     <div>SHOP . {{ collection.title | upcase }}  {%- if enable_collection_count -%}
+        ({{ count_label | t: count: count | remove: "products" | remove: "product" | rstrip }})
+      {%- endif -%}</div>
+     <div> 
+          {%- render 'collection-grid-filter-new',
+            collection: collection,
+            filter_style: section.settings.filter_style,
+            collapsed: section.settings.collapsed,
+            enable_color_swatches: section.settings.enable_color_swatches
+          -%}
+      </div>
+     <div>  
+         <div class="collection-filter__item collection-filter__item--sort">
+          <div class="collection-filter__sort-container">
+          {%- assign sort_by = sort_by | default: default_sort_by -%}
+          <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
+          <select name="SortBy" id="SortBy" data-default-sortby="{{ default_sort_by }}">
+            <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
+            {%- for option in sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+          </div>
+        </div>
+     </div>
+   </div>
+            
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
     {%- for item in items -%}
       {%- if item.object_type == 'product' -%}
@@ -129,3 +157,24 @@ html[dir="rtl"] .collection-filter__item--count {
 }
 {% endstyle %}
 {%- endunless -%}
+<style>
+  .custom-filter-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .custom-filter-wrapper form.filter-form{
+    display: flex;
+  }
+   .custom-filter-wrapper .collapsible-content__inner {
+    position: absolute;
+    z-index: 99;
+    background-color: white;
+  } 
+  .custom-filter-wrapper .collapsible-content--sidebar{
+    height: 0 !important;
+  }
+  .custom-filter-wrapper .collapsible-trigger-btn{
+    letter-spacing: .05em;
+  }
+</style>

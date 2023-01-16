@@ -1,0 +1,957 @@
+{%- unless thumbnail_position -%}
+  {%- assign thumbnail_position = 'beside' -%}
+{%- endunless -%}
+
+{% assign description_parts = product.description | split: 'Model wears' %}
+
+{%- unless description_style -%}
+  {%- assign description_style = 'full' -%}
+{%- endunless -%}
+
+{%- assign discount = false -%}
+{% assign np_custom_message = product.tags | join: '~~~' | downcase | split: '~~~' %}
+{% if np_custom_message contains "selflove" %}
+	
+{%- endif -%}
+
+{%- assign comingSoon = false -%}
+{%- for tag in product.tags -%}
+    {%- if tag contains '_coming_soon' -%}
+		{%- assign comingSoon = true -%}
+    {%- endif -%}
+{%- endfor -%}
+
+
+{%- assign productCat = 'WoMenswear' -%}
+{%- for tag in product.tags -%}
+    {%- if tag contains 'Menswear' -%}
+		{%- assign productCat = 'Menswear' -%}
+    {%- endif -%}
+{%- endfor -%}
+
+{%- assign product_img_structure = product.featured_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+<div id="ProductSection-{{ section_id }}"
+  class="product-section"
+  data-section-id="{{ section_id }}"
+  data-section-type="product-template"
+  data-product-handle="{{ product.handle }}"
+  data-product-url="{{ product.url | within: collection }}"
+  data-aspect-ratio="{{ 100 | divided_by: product.featured_image.aspect_ratio }}"
+  data-img-url="{{ product_img_structure }}"
+  data-product-category="{{ productCat }}"
+  {% if settings.product_zoom_enable %}
+    data-image-zoom="true"
+  {% endif %}
+  {% if settings.inventory_enable %}
+    data-inventory="true"
+  {% endif %}
+  {% if settings.inventory_transfers_enable %}
+    data-incoming-inventory="true"
+  {% endif %}
+  {% unless isModal %}
+    data-enable-history-state="true"
+  {% endunless %}
+  {% if isModal %}
+    data-lazyload-content="true"
+  {% endif %}>
+
+  {%- include 'product-template-variables-new' -%}
+
+  <div class="page-content page-content--product np-prduct-type-2">
+    <div class="page-width">
+
+      <div class="grid{% unless image_position == 'left' %} grid--product-images-right{% endunless %}">
+        {%- if image_position == 'left' -%}
+          <div class="grid__item {{ product_image_width }}">
+            {% include 'product-images-new', section_id: section_id, isModal: isModal, thumbnail_position: thumbnail_position, thumbnail_arrows: thumbnail_arrows %}
+          </div>
+        {%- endif -%}
+
+        <div class="grid__item {{ product_description_width }}">
+
+          <div class="product-single__meta">
+            
+            {%- if settings.vendor_enable -%}
+              <div class="product-single__vendor">
+                {{ product.vendor }}
+              </div>
+            {%- endif -%}
+
+            {%- if isModal -%}
+              <p class="h2 product-single__title">
+                {{ product.title }}
+              </p>
+            {% else %}
+              <h1 class="h2 product-single__title">
+                {{ product.title }}
+                
+              </h1>
+            {%- endif -%}
+
+            {%- if settings.enable_product_reviews and settings.reviews_layout == 'full' -%}
+              {%- if isModal -%}
+                {%- assign review_link = product.url | within: collection | append: '#Reviews-' | append: product.id -%}
+              {% else %}
+                {%- assign review_link = '#Reviews-' | append: product.id -%}
+              {%- endif -%}
+              <a href="{{ review_link }}" class="product-single__review-link">
+                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+              </a>
+            {%- endif -%}
+
+            {%- if settings.sku_enable -%}
+              <p id="Sku-{{ section_id }}" class="product-single__sku" style="display:none">
+                {%- if current_variant.sku -%}
+                  {{ current_variant.sku }}
+                {%- endif -%}
+              </p>
+            <p class="product-single__type" style="display:none">{{ product.type }}</p>
+            <p class="product-single__currency" style="display:none">{{ cart.currency.iso_code }}</p>
+            {%- endif -%}
+
+            {%- assign hide_sale_price = true -%}
+            {%- if product.compare_at_price_max > product.price -%}
+              {%- if current_variant.compare_at_price > current_variant.price -%}
+                {%- assign hide_sale_price = false -%}
+              {%- endif -%}
+              <span
+                id="PriceA11y-{{ section_id }}"
+                class="visually-hidden"
+                aria-hidden="{{ hide_sale_price }}">
+                  {{ 'products.general.regular_price' | t }}
+              </span>
+              <span class="product__price-wrap-{{ section_id }}{% if hide_sale_price %} hide{% endif %}">
+                <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare">
+                  {%- if current_variant.compare_at_price > current_variant.price -%}
+                    {{ current_variant.compare_at_price | money }}
+                  {%- endif -%}
+                </span>
+              </span>
+              <span id="ComparePriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+            {% else %}
+              <span id="PriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+            {%- endif -%}
+			{%- if settings.product_save_amount and product.compare_at_price > product.price -%}
+            	{%- if settings.product_save_type == 'dollar' -%}
+                  {% capture np_saved_amount %}{{ product.compare_at_price | minus: product.price | money }}{% endcapture %}
+                  {%- else -%}
+                  {% capture np_saved_amount %}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{% endcapture %}
+                {%- endif -%}
+              <span id="SavePrice-{{ section_id }}" class="product__price product__price-savings{% if hide_sale_price %} hide{% endif %}">
+                -{{ np_saved_amount}}
+              </span>
+            {%- endif -%}
+            {%- if discount -%}
+            <span class="product__price-wrap-{{ section_id }}">
+                <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare">
+                  
+                    {{ current_variant.price | money }}
+                  
+                </span>
+              </span>
+            <span id="SavePrice-{{ section_id }}" class="product__price product__price-savings">
+                -30%
+              </span>
+            {%- endif -%}
+            <span id="ProductPrice-{{ section_id }}"
+              class="product__price {% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %}">
+              {%- if discount -%}
+              	{%- assign disvalues = product.price | times: 30.0 | divided_by: 100.0 | round %}
+               			{% capture np_saved_amount %}{{ product.price | minus: disvalues | money }}{% endcapture %}
+              			{{ np_saved_amount}}
+              {%- else -%}
+              {{ current_variant.price | money }}
+              {%- endif -%}
+            </span>
+            {% assign np_custom_message = product.tags | join: '~~~' | downcase | split: '~~~' %}
+              {% if np_custom_message contains "selflove" %}
+                <div class="np-custom-text-pdp" style="font-size:12px; font-weight:200; margin:5px auto;">
+                   
+                </div>
+              {% endif %}
+            <p class="clearpayKlarna-paragraph" style="margin-top: 0px; margin-bottom: 0px; font-size: 15px;">
+              <span class="general-text1">Make interest-free payments with </span>
+              <span class="clearpay" style="vertical-align: middle;">
+              <img class="clearpay-logo" style="vertical-align: middle; height: 15px; width: auto; border: 0px none; margin-top: -3px;" src="https://static.afterpay.com/integration/product-page/logo-clearpay-black.png" srcset="https://static.afterpay.com/integration/product-page/logo-clearpay-black.png 1x, https://static.afterpay.com/integration/product-page/logo-clearpay-black@2x.png 2x, https://static.afterpay.com/integration/product-page/logo-clearpay-black@3x.png 3x" alt="Clearpay" width="110" height="20">
+<!--               <a class="clearpay-link-duplicate" href="https://www.clearpay.co.uk/terms" target="_blank">
+                <u class="clearpay-link-inner" style="font-size: 12px; text-decoration: none;">ⓘ</u>
+                </a> -->
+              </span>
+<!-- 	          <span class="klarna" style="vertical-align: middle;">
+	          	<img class="klarna-logo" style="vertical-align: middle; height: 12px; width: auto; border: 0px none; margin-top: -3px;" src="https://cdn.shopify.com/s/files/1/0283/1338/7053/files/Klarna_Logo_Primary_Black.png?v=1613134127" alt="Klarna" width="auto" height="17">
+	          <a class="klarna-link" href="#" onclick="kmerchant.openHostedInterstitial({ url: 'https://eu-assets.klarnaservices.com/learn-more/index.html?showButtons=true&amp;showBackground=false#eyJsYW5ndWFnZSI6IkVOIiwiY291bnRyeSI6IkRFIiwiaXNUaHJlc2hvbGQiOmZhbHNlLCJhZFBheW1lbnRNZXRob2RzIjpbM10sInRyYWNrZXJQYXJhbWV0ZXJzIjp7ImEiOiJkYjYyODUxZC1iMDEwLTA3MDItYTc1YS03YjBhNjMxMWZjZGMiLCJiIjoidTF4bEdPQ0xfZ3dGWklGUFliNDBzIiwiZiI6IjM1IiwiaCI6IkVOIiwiaSI6IkRFIiwiaiI6ImEyMzAwMjk0LTU0MDMtNDRjNi1hYTE1LTNjZmZkYzkyOWYwNiIsImsiOiJmYmFkNWNlNy0zZTRkLTQwZWItODkzOS02NWZjOGJjNDk5MzQiLCJsIjoiMjIwNSIsIm4iOiJuaW5ldHlwZXJjZW50LmNvbSIsInMiOiIxMDB4MCIsImQiOiJ0b3Atc3RyaXAtcHJvbW90aW9uLWF1dG8tc2l6ZSIsImciOiJmYmViZTcyMS1hYWYwLTU2NTgtYmM4NS1lMjBiY2Y0OTUxY2QiLCJlIjoiZW4tREUifSwidGllckhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0=' }, arguments, undefined, this)"><u class="clearpay-link-inner" style="font-size: 12px; text-decoration: none;">ⓘ</u></a></span> -->
+          </p>
+
+            <!-- Placement v2 -->
+              <klarna-placement
+                data-key="top-strip-promotion-auto-size"
+                data-locale="en-DE"
+              ></klarna-placement>
+              <!-- end Placement -->
+			
+
+            <div class="product__unit-price product__unit-price--spacing product__unit-price-wrapper--{{ section_id }}{% unless current_variant.unit_price_measurement %} hide{% endunless %}">
+              {%- capture unit_price_base_unit -%}
+                <span class="product__unit-base--{{ section_id }}">
+                  {%- if current_variant.unit_price_measurement -%}
+                    {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                      {{ current_variant.unit_price_measurement.reference_value }}
+                    {%- endif -%}
+                    {{ current_variant.unit_price_measurement.reference_unit }}
+                  {%- endif -%}
+                </span>
+              {%- endcapture -%}
+
+              <span class="product__unit-price--{{ section_id }}">{{ current_variant.unit_price | money }}</span>/{{ unit_price_base_unit }}
+            </div>
+
+            {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+<!--               <div class="product__policies rte">
+                <small>
+                  {%- if shop.taxes_included -%}
+                    {{ 'products.product.include_taxes' | t }}
+                  {%- endif -%}
+                  {%- if shop.shipping_policy.body != blank -%}
+                    {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                  {%- endif -%}
+                </small>
+              </div> -->
+            {%- endif -%}
+
+            {%- if settings.inventory_enable or settings.inventory_transfers_enable -%}
+              {%- assign variants_with_inventory_tracking = product.variants | where: 'inventory_management', 'shopify' -%}
+
+              <script>
+                // Store inventory quantities in JS because they're no longer
+                // available directly in JS when a variant changes.
+                // Have an object that holds all potential products so it works
+                // with quick view or with multiple featured products.
+                window.inventories = window.inventories || {};
+                window.inventories['{{section_id}}'] = {};
+                 {% for variant in variants_with_inventory_tracking %}
+                  window.inventories['{{section_id}}'][{{variant.id}}] = {
+                    'quantity': {{ variant.inventory_quantity | default: 0 }},
+                    'incoming': {{ variant.incoming | default: false | json }},
+                    'next_incoming_date': {{ variant.next_incoming_date | date: format: 'date' | json }}
+                  };
+                 {% endfor %}
+              </script>
+
+              {% comment %}
+                If loaded in quick view, it might be from a JS-loaded function
+                that loads recommended products. If that's the case, the above
+                JS will not set the variant inventory. Add it to an accessible
+                data div to read later instead.
+              {% endcomment %}
+              {%- if isModal -%}
+                <div
+                  data-section-id="{{ section_id }}"
+                  class="hide js-product-inventory-data"
+                  aria-hidden="true"
+                  >
+                  {%- for variant in variants_with_inventory_tracking -%}
+                    <div
+                      class="js-variant-inventory-data"
+                      data-id="{{ variant.id }}"
+                      data-quantity="{{ variant.inventory_quantity | default: 0 }}"
+                      data-incoming="{{ variant.incoming | default: false | json }}"
+                      data-date="{{ variant.next_incoming_date | date: format: 'date' | json }}"
+                    >
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+
+<!--             <hr class="hr--medium"> -->
+			
+            {%- unless description_style == 'full' -%}
+<!--               <div class="mobile-hide">
+                <div class="product-single__description rte">
+                 
+                </div>
+              </div> -->
+
+            {%- unless isModal -%}
+              {% comment %}
+                Shopify's product form attaches a number of tracking
+                scripts that cause slower load times and false statistics.
+                Quick view modals request these on-demand.
+              {% endcomment %}
+             
+            
+             {% include 'product-form-new', section_id: section_id %}
+             <div class="np-additional-description">
+                <div class="np-additional-content hide">
+                  {% if product.description contains "Model wears" %}
+                  {{ description_parts[1] | prepend: "Model wears" }}
+                     {% if description_parts.size >2 %}
+                      {{ description_parts[2] | prepend: "Model wears" }}
+                      {% endif %}
+                  {% endif %}
+                </div>
+              	<div class="np-icon-list-wrap">
+                  <ul class="np-icon-list">
+
+                  </ul>
+	           </div>
+            </div>
+            <div class="hide gender">
+              {%- assign gender = 'female' -%}
+            {%- for tag in product.tags -%}
+                {%- if tag contains 'Menswear' -%}
+                  {%- assign gender = 'male' -%}
+                {%- endif -%}
+             {%- endfor -%}
+              {{ gender }}
+            </div>
+             {%- for tag in product.tags -%}
+                {%- if tag contains 'notify-me' -%}
+                  <div class="np-notify-me hide">
+                    <h4>NOTIFY ME WHEN BACK IN STOCK</h4>
+                    <p>Select the size you require and we’ll email you when this is available again.</p>
+                  </div>	
+                {%- endif -%}
+          	 {%- endfor -%}
+            {%- else -%}
+              <div id="ProductFormHolder-{{ section_id }}" class="product-form-holder" data-url="{{ product.url }}"></div>
+            {%- endunless -%}
+
+            {%- if settings.trust_image != blank -%}
+              <div class="aos-animate trust-image" style="max-width: {{ settings.trust_image.width }}px;">
+                <div class="image-wrap " style="height: 0; padding-bottom: {{ 100 | divided_by: settings.trust_image.aspect_ratio }}%;">
+                  {%- assign img_url = settings.trust_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540]"
+                      data-aspectratio="{{ settings.trust_image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ settings.trust_image.alt }}">
+                  <noscript>
+                    <img class="lazyloaded" src="{{ settings.trust_image | img_url: '540x' }}" alt="{{ settings.trust_image.alt }}">
+                  </noscript>
+                </div>
+              </div>
+            {%- endif -%}
+				
+              {% include 'product-additional-content', section_id: section_id %}
+            {%- endunless -%}
+
+            {%- if social -%}
+              {% include 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- unless image_position == 'left' -%}
+          <div class="grid__item {{ product_image_width }}">
+            {% include 'product-images-new', section_id: section_id, isModal: isModal, thumbnail_position: thumbnail_position, thumbnail_arrows: thumbnail_arrows %}
+          </div>
+        {%- endunless -%}
+      </div>
+
+      {%- if description_style == 'full' -%}
+        <div class="product-single__description-full rte">
+          {{ product.description }}
+        </div>
+
+        {% include 'product-additional-content', section_id: section_id %}
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="np-global-content">
+   	<div class="page-width">
+    	<div class="free-delivery-section">
+            <div class="free-delivery-section-row">
+            <img alt="Free Delivery &amp; Returns" class="" src="{{ delivery_image | img_url: 'master' }}">
+            {{ delivery_title }}
+            </div>
+            <div class="free-delivery-section-row">
+            <img alt="90% of Profits Support Our 5 Charities" class="" src="{{ profit_image | img_url: 'master' }}">
+            {{ profit_title }}  
+            </div>
+            <div class="free-delivery-section-row">
+            <img alt="Responsibly Sourced" class="" src="{{ sourced_image | img_url: 'master' }}">
+            {{ sourced_title }}  
+            </div>
+        </div>
+      <div class="np-transparency-desc">
+      	 {%- for tag in product.tags -%}
+            {%- if tag contains '_transparency_desc_' -%}
+              {%- assign include_page_handle = tag | split: '_transparency_desc_' -%}
+              {%- assign include_page = pages[include_page_handle.last] -%}
+              
+                    {{ include_page.content }}
+             
+            {%- endif -%}
+          {%- endfor -%}
+      </div>
+      <div class="Np-share-choose np-made-mr">
+        <div class="we-share-head">
+          <h2>{{ share_title }}</h2>
+        </div>
+        <div class="np-made-in np-made-mr">
+				<div class="country-icon"><img alt="Bangladesh made" class="" src="{{ share_image | img_url: 'master' }}"></div>
+				<div class="country-offer">
+				<p>{{ share_text}} </p>
+				</div>
+			
+		</div>
+
+        </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<style>
+  label.variant__label {
+  	color:#000;
+    text-transform: initial;
+    font-size: 0.75em;
+    letter-spacing: 0.1em !important;
+  }
+  label span.pdp-size-guide {
+	text-decoration: underline;   
+	text-decoration-color:#dbdbdb;
+    cursor: pointer;
+    text-transform: initial;
+  }
+  .np-global-content .free-delivery-section {
+      -webkit-flex-direction: row;
+      flex-direction: row;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-around;
+      margin: 40px 0;
+      padding: 10px 0;
+      font-size: 12px;
+      background:#e6e6e6;
+	}
+  .np-global-content h2 {
+  
+  	text-transform: initial;
+	font-size: 2.00rem;
+	margin-bottom: 20px;
+  }
+  .np-global-content p {
+/*   	font-size: 1.0rem;
+	line-height: 20px; */
+    margin-bottom: 0px;
+  }
+  .np-global-content .free-delivery-section-row {
+    	font-size: 13px;
+    	margin: 5px 0 5px 5px;
+	}
+  .np-global-content .free-delivery-section-row > img {
+        width: 30px;
+    	vertical-align: middle;
+    }
+
+
+  .np-global-content .np-made-mr {
+  	margin: 25px 0px;
+  }
+ 
+  .collapsible-trigger {
+  	font-weight: bold;
+  }
+  @media only screen and (max-width: 768px) {
+
+    
+    .np-global-content .free-delivery-section {
+    	flex-direction: column;
+    }
+    .product-single__meta {
+    	text-align:left;    
+    }
+    .np-global-content h2 {    
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* new pdp transparency */
+  img {
+
+    max-width: 100%;
+
+}
+section a {
+    border-bottom: 1.5px solid #eaeaea;
+}
+
+/* Clear floats after the columns */
+.np-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.np-made-in {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.np-made-in .country-icon {
+    width: 14%;
+}
+.np-made-in .country-icon img {
+
+    width: 110px;
+
+}
+.np-made-in .country-offer {
+    width: 86%;
+    padding-left: 3%;
+}
+.np-made-in .country-offer ul {
+	margin-left: 10px;
+}
+section h2 {
+	border-bottom: 1.5px solid #eaeaea;
+    display: inline-block;
+}
+.section-margin {
+	margin-bottom: 60px;
+}
+@media (max-width: 768px) {
+	.column {
+  		float: left;
+  		width: 100%;
+	}
+	.np-made-in .np-country {
+
+    width: 100%;
+
+	}
+.np-made-in .country-icon {
+
+    width: 20%;
+
+}
+.np-made-in .country-offer {
+
+    width: 80%;
+
+}
+  
+  .mobile-hide {
+  		display:none;
+  	}
+    .desktop-hide {
+    	margin: 10px 0;
+    }
+  
+
+}
+  @media only screen and (min-width: 769px) { 
+  .desktop-hide {
+     display:none;
+    }
+ } 
+   /* end new pdp transparency */
+  
+  @media only screen and (min-width: 769px) { 
+  
+      #shopify-section-product-sections-template-echo .product-single__meta {
+           padding-left: 10px;
+    	}
+  }
+  .product__price--compare {
+  
+  	opacity:0.4;
+  }
+  
+  #shopify-section-product-sections-template-echo .page-content--product {
+      padding-top: 5px;
+      padding-bottom: 15px;
+	
+  } 
+
+  #shopify-section-product-sections-template-echo .product-single__title {
+    	text-transform: initial;
+	}
+  #shopify-section-product-sections-template-echo .product-single__description {
+  	margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  #shopify-section-product-sections-template-echo .variant-input-wrap input[type="radio"]:checked + label {
+  	background-color:#000;
+	color:#fff;
+  }
+  #shopify-section-product-sections-template-echo .variant-input-wrap label {
+  	font-size: 14px !important;	
+  }
+  .variant__label-info span {
+    color: #000;
+    opacity: 0.7;
+	}
+  .product__price {
+  	font-weight: 200;
+  }
+  .swym-remind-me-mailing-list-container {
+  	display:none !important;
+  }  
+  .np-notify-me {
+  	padding: 0 10px;
+  }
+  .np-notify-me h4 {
+  	margin-bottom: 5px;
+    letter-spacing: 0.18em;
+  }
+  .np-notify-me p {
+    font-size: 14px;
+    font-weight: 200;
+	}
+/*   .np-clearpay_product__price {
+  	margin-left: 15px;
+  } */
+  .ks-accordion .ks-ac-item > label {
+    margin-bottom: 0px;
+    text-transform: capitalize;
+    letter-spacing: 0.1em;
+}
+  .ks-table-wrapper td {
+  	padding: 5px 6px;
+    min-width: 96px;
+  }
+  .ks-table tr td.ks-table-header-cell:first-child {
+  	min-width: 120px;
+  }
+  .ks-modal-content .ks-accordion {
+  	margin-top: 40px;
+  }
+  .ks-table-content-wrapper .ks-table-footer {
+  	font-weight: 600 !important;
+  }
+  
+   .klarna-logo {
+  	font-family: "Klarna Headline";
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    color: #17120f;
+    font-size:18px;
+    vertical-align: middle;
+  }
+  klarna-placement {
+  	display: none;
+  }
+  .ks-code .SizeIntro h6.title{
+  margin-bottom: 5px;
+  text-transform: initial;
+  letter-spacing: 0.2em;
+  font-size: 16px;
+  font-weight: 700;
+  }
+  .ks-code .SizeIntro ul li p {
+  	display:none;
+  }
+  .swym-button-bar {
+  	display: block !important;
+  }
+  .swym-title h2 {
+    font-size:1em !important;
+  }  
+  .swym-remind-me {
+  	padding: 12px !important;
+  }
+.product-single__form {
+	margin-top: 15px;
+}
+.product-single__title {
+	font-size: 1.4em !important;
+	font-weight:200 !important;
+	letter-spacing:0em !important;
+}
+.country-offer ul li {
+	font-weight: 200 !important;
+}
+.country-offer ul li span {
+	font-weight: 200 !important;
+}
+ul.np-icon-list {
+	list-style: none;
+	padding-left: 0px;
+	margin: 0 0 15px 5px;
+	font-size: 14px;
+	font-weight: 200;
+}
+  ul.np-icon-list li  {
+  	font-weight: 200 !important;
+  }
+  ul.np-icon-list li span {
+  	font-weight: 200 !important;
+  }
+ul.np-icon-list li.model:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/model.svg?v=1621516471");
+}
+ul.np-icon-list li.fabric:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/fabric.svg?v=1621516471");
+}
+ul.np-icon-list li.wash:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/washing-machine.svg?v=1621516471");
+}
+ul.np-icon-list li.cotton:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/organic-cotton.svg?v=1621516471");
+}
+ul.np-icon-list li.tencel:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/tencel.svg?v=1621516471");
+}
+ul.np-icon-list li.seacell:before {
+	content: url("https://cdn.shopify.com/s/files/1/0283/1338/7053/files/SeaCell_icon_b35bd241-df5e-47a9-9116-83983aae9ede_12x.png?v=1638543650");
+}
+ul.np-icon-list li.waste:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/waste-not.svg?v=1621516471");
+
+}
+ul.np-icon-list li.micro:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/micro-modal.svg?v=1621516471");
+}
+ul.np-icon-list li.merino:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/wool.svg?v=1621516471");
+}
+ul.np-icon-list li.cupro:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/linen.svg?v=1621516471");
+}
+ul.np-icon-list li.echovero:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/ecovero.svg?v=1621516471");
+}
+ul.np-icon-list li.np-empty:before {
+	content: url("https://cdn.shopify.com/s/files/1/0283/1338/7053/files/np_favi_15x.jpg?v=1613734875");
+}
+ul.np-icon-list li.np-bd:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/factory.svg?v=1621516471");
+}
+ul.np-icon-list li.np-turkey:before {
+	content: url("https://cdn.shopify.com/s/files/1/0407/5998/4284/files/factory.svg?v=1621516471");
+}
+.collapsible-trigger {
+	font-weight: normal !important;  
+}
+.collapsible-trigger-btn--borders  .collapsible-content .collapsible-content__inner {
+	font-size: 15px !important;
+	font-weight: 200 !important;
+}
+.collapsible-content__inner p {
+	margin-bottom: 0px !important;
+  	font-weight: 200;
+}
+.collapsible-content__inner li {
+    font-weight: 200;
+}
+ul.np-icon-list li.np-icon-list-gen:before {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+	width: 15px;
+	margin-top: 2px;
+}
+li.np-icon-list-gen p {
+    margin: 0;
+}
+a.np-pdp-icon-learn {
+    text-decoration: underline;
+}
+  body.Menswear .sizeChartFooter div{
+  	display: none;
+  }
+body.switched-to-USD .collapsible-content__inner .uk-eu-shipping {
+	display: none;
+}
+body.switched-to-USD .collapsible-content__inner .world-shipping {
+	display: none;
+}  
+.SizeIntro ul li:nth-child(2) {
+	display:none;
+}
+</style>
+<script>
+ 
+
+(function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($(".np-pdp-learn").length > 0) {
+            try {
+             $(".np-pdp-learn").on("click", function() {
+            event.preventDefault();
+               var id = $(this).attr("data-id");
+                $('html, body').stop(true, false).animate({
+                    scrollTop: ($('#'+id).offset().top -65)
+                }, 1000);
+            });
+
+
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+        }
+      	if($(".clearpayKlarna-paragraph").length > 0){
+      	
+        try {
+        	if(document.querySelector('.currency-options__btn.is-active').getAttribute('data-value') != 'GBP'){
+            	$('.clearpay').addClass('hide');
+            }
+          if(document.querySelector('.currency-options__btn.is-active').getAttribute('data-value') === 'HKD' || document.querySelector('.currency-options__btn.is-active').getAttribute('data-value') === 'JPY' || document.querySelector('.currency-options__btn.is-active').getAttribute('data-value') === 'NZW' || document.querySelector('.currency-options__btn.is-active').getAttribute('data-value') === 'SGD' || document.querySelector('.currency-options__btn.is-active').getAttribute('data-value') === 'KRW'){
+          		$('.clearpayKlarna-paragraph').addClass('hide');
+          }
+        }catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+      }
+      if($(".np-additional-content").length > 0) {
+      		var newList = $('.np-additional-content').html().trim();
+			var listItem;
+			 newList = newList.replace("</p>", "");
+			  listItem = newList.split(/<(br)[^>]*>/);
+			  
+			$.each(listItem, function( key, value ) {
+				if(value.includes('wears')){
+					 $('ul.np-icon-list').append('<li class="model np-icon-list-gen">'+value.trim()+'</li>');
+				}
+				if(value.includes('%')|| value.includes('SeaCell')){
+					 $('ul.np-icon-list').append('<li class="fabric np-icon-list-gen">'+value.trim()+'</li>');
+				}
+				if(value.includes('wash') || value.includes('dry')){
+					 $('ul.np-icon-list').append('<li class="wash np-icon-list-gen">'+value.trim()+'</li>');
+				}
+	                 
+	              });
+			for (var i = 0; i < $('.np-made-in .country-icon').length - 1; i++) {
+		           
+		           	var madeUsing = $('.np-made-in .country-icon').parent().parent().find('p')[i].innerText;
+		           	var id = $('.np-made-in .country-icon').parent().parent()[i].id;
+		           	madeUsing = madeUsing.split('made')['1'];
+		        	madeUsing = 'Made'+madeUsing;
+		        	var madeClass;
+		        	if (madeUsing.includes('Cotton') || madeUsing.includes('cotton')) {
+		        		madeClass = 'cotton'
+		        	}
+		        	else if (madeUsing.includes('Tencel') || madeUsing.includes('tencel') || madeUsing.includes('Lyocell')) {
+		        		madeClass = 'tencel';
+		        	}
+		        	else if (madeUsing.includes('Micro') || madeUsing.includes('micro')) {
+		        		madeClass = 'micro';
+		        	}
+		        	else if (madeUsing.includes('Waste') || madeUsing.includes('waste')) {
+		        		madeClass = 'waste';
+		        	}
+		        	else if (madeUsing.includes('EcoVero') || madeUsing.includes('ecoVero')) {
+		        		madeClass = 'echovero';
+		        	}
+		        	else if (madeUsing.includes('Cupro') || madeUsing.includes('cupro')) {
+		        		madeClass = 'cupro';
+		        	}
+              		else if (madeUsing.includes('SeaCell') || madeUsing.includes('seacell')) {
+		        		madeClass = 'seacell';
+		        	}
+		        	else if (madeUsing.includes('Merino') || madeUsing.includes('merino')) {
+		        		madeClass = 'merino';
+		        	}
+		        	else if (madeUsing.includes('Bangladesh') || madeUsing.includes('bangladesh')) {
+		        		madeClass = 'np-bd';
+		        	}
+		        	else if (madeUsing.includes('Turkey') || madeUsing.includes('turkey')) {
+		        		madeClass = 'np-turkey';
+		        	}
+		        	else {
+		        		madeClass = 'np-empty';
+		        	}
+		        	
+		        	$('ul.np-icon-list').append('<li class="np-icon-list-gen '+madeClass+'">'+madeUsing+' <a href="#" class="np-pdp-icon-learn" data-id='+id+'>(learn more)</a></li>');
+	           }
+              $('.np-pdp-icon-learn').on("click", function(e) {
+                event.preventDefault();
+                var id = $(this).attr("data-id");
+                $('html, body').stop(true, false).animate({
+                  scrollTop: ($('#' + id).offset().top - 65)
+                }, 1000);
+              });
+      		}
+      else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();  
+
+(function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($(".swym-remind-me-mailing-list-container").length > 0) {
+            try {
+            $( "#swym-remind-me-add-to-mailing-list-input" ).prop( "checked", true );
+				$("#swym-remind-email-auth-input").keyup( function() {
+                    $( "#swym-remind-me-add-to-mailing-list-input" ).prop( "checked", true );
+//                     console.log('strated typing');
+                });
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+        } 
+      else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();  
+
+(function atPollForjQueryNotify() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+      if ($(".np-notify-me").length > 0) {
+        setTimeout(function() {
+          	if($('.variant-input-wrap .variant-input[data-index="option2"]').hasClass('crossed-out')){
+                     
+                      $(".np-notify-me").removeClass("hide");
+                    }
+              else {
+//                 console.log('false');
+                    $(".np-notify-me").addClass("hide");
+                }
+          }, 1000);
+          }
+      else {
+            setTimeout(atPollForjQueryNotify, 25);
+        }
+    } else {
+        setTimeout(atPollForjQueryNotify, 25);
+    }
+})(); 
+  
+(function atPollForjQueryKiwiSize() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($(".kiwi-sizing-modal").length > 0) {
+            try {
+              var newList = $('.np-additional-content').html().trim();
+              var listItem;
+//               console.log(newList);
+			 //newList = newList.replace("</p>", "");
+			  listItem = newList.split(/<(br)[^>]*>/);
+			//$('.ks-html-content p:last-child').append($(".product-single__description p:nth-child(3)").html());
+              $.each( listItem, function( key, value ) {
+                	if(value.includes('wears') || value.includes('%') || value.includes('wash') || value.includes('dry')){
+                  $('.ks-code .SizeIntro ul').append('<li>'+value+'</li>');
+                    }
+              });
+//               $('.ks-code .SizeIntro ul').html($('.np-icon-list').html().trim());
+              $('.ks-modal-content .sizeChartFooter').prepend('<div style="margin-bottom: 20px;"><img src="https://cdn.shopify.com/s/files/1/0283/1338/7053/files/content_size_360x.jpg?v=1588154061" style="margin: 0 auto;display: block;"></div>');
+             var category = $('.product-section').attr("data-product-category");
+              $('body').addClass(category);
+            } 
+          catch (err) {
+                console.log('Size guide ERROR: ' + err);
+            }
+        } else {
+            setTimeout(atPollForjQueryKiwiSize, 25);
+        }
+    } else {
+        setTimeout(atPollForjQueryKiwiSize, 25);
+    }
+})();   
+</script>

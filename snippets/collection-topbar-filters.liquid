@@ -1,0 +1,286 @@
+{% liquid
+    assign sort_by = collection.sort_by
+    assign default_sort_by = collection.default_sort_by
+    assign sort_options = collection.sort_options
+  %}
+  
+  <div class="topbar-filter-section">
+    <div>SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
+    <ul class="filter-list">
+      {% for filter in filters %}
+        {% assign filter_label = filter.label | replace: ' ', '-' %}
+        <div class="filter-container-{{ filter_label }}">
+          <li class="filter-label filter-{{ filter_label }}">
+            {% if filter_label == "Product-type" %}
+              Category
+            {% else %}
+              {{ filter_label }}
+            {% endif %}
+          </li>
+          <ul class="filter-options-list filter-{{ filter_label }}-options">
+            {% for value in filter.values %}
+              {% if value.active %}
+                <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+              {% else %}
+                <li class="filter-value-item"><a href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+              {% endif %}
+            {% endfor %}
+            
+          </ul>
+        </div>
+      {% endfor %}
+    </ul>
+    <div class="sorting-section">
+      <span class="sort-btn">SORT BY</span>
+      <ul class="sort-list">
+        {% for option in sort_options %}
+          {% if sort_by == option.value %}
+            <li class="sort-list-item active" data-name="{{ option.value }}">{{ option.name }}</li>
+          {% else %}
+            <li class="sort-list-item" data-name="{{ option.value }}">{{ option.name }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="topbar-active-filter-section">
+    {% for filter in filters %}
+        {% for value in filter.values %}
+            {% if value.active %}
+            <a href="{{ value.url_to_remove }}" class="active-filter-item"><span>{{ value.label }}</span><span>X</span></a>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <div class="active-filter-clear-item filter-reset dont-show"><span>CLEAR ALL</span></div>
+  </div>
+  
+  <style>
+    .topbar-active-filter-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+    }
+    .active-filter-item, .active-filter-clear-item {
+        min-width: 100px;
+        border: 0.5px solid rgba(43, 39, 37, 0.25);
+        padding: 0.2em 0.7em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 15px;
+        font-size: 12px;
+    }
+    .active-filter-clear-item {
+        justify-content: center;
+        cursor: pointer;
+    }
+    .topbar-filter-section {
+      display: flex;
+      justify-content: space-between;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .filter-list {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+    .filter-label, .filter-label-reset {
+      margin: 0 20px;
+    }
+    {% for filter in filters %}
+      {% assign filter_label_css = filter.label | replace: ' ', '-' %}
+      .filter-container-{{ filter_label_css }}, .filter-container-Reset {
+        position: relative;
+        cursor: pointer;
+      }
+      .filter-{{ filter_label_css }}-options {
+        display: none;
+        position: absolute;
+        z-index: 10000;
+        background-color: #ffffff;
+        border: none;
+        box-shadow: 0 1px 1px 0px #dddddd;
+        padding-top: 19px;
+        padding-bottom: 29px;
+        padding-left: 67px;
+        padding-right: 124px;
+        left: -67px;
+      }
+      .filter-{{ filter_label_css }}-options li {
+        list-style: none;
+        margin: 5px 0;
+        padding: 0;
+        font-size: 14px;
+      }
+      .sorting-section {
+        position: relative;
+      }
+      .sort-list {
+        position: absolute;
+        z-index: 1000;
+        left: -150px;
+        margin: 0;
+        display: none;
+        padding-top: 19px;
+        padding-bottom: 29px;
+        padding-left: 64px;
+        padding-right: 124px;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: none;
+        box-shadow: 0 1px 1px 0px #dddddd;
+      }
+      .sort-list li {
+        list-style: none;
+        margin: 5px 0;
+        padding: 0;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .show-sort-list {
+        display: block;
+      }
+    {% endfor %}
+    .show-filter {
+      display: block;
+    }
+    .sort-btn {
+      cursor: pointer;
+    }
+    .filter-value-item.active, .sort-list-item.active {
+      text-decoration: underline;
+    }
+    .dont-show {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .topbar-filter-section {
+            flex-direction: column;
+            align-items: center;
+        }
+        ul.filter-list {
+            margin: 0;
+        }
+        .filter-label {
+            margin: 0 10px;
+        }
+    }
+  </style>
+  
+  <script>
+function showClearFilter(){
+    const activeFilters = document.querySelectorAll(".active-filter-item")
+    if (activeFilters.length > 0) document.querySelector(".active-filter-clear-item").classList.remove("dont-show")
+}
+  function resetFilter(){
+    var target = document.querySelector(".filter-reset")
+    target.addEventListener('click', ()=>{
+      window.location.search = ""
+    })
+  }
+  function sortingFunctionWithoutMultipleOptions(){
+    var sortItems = document.querySelectorAll(".sort-list-item")
+    sortItems.forEach(item=>{
+      item.addEventListener('click', (e)=>{
+        let url = "";
+        if (window.location.search.indexOf("filter") === -1){
+          url += `?sort_by=${e.target.dataset.name}`
+        }
+        else {
+          var index = window.location.search.indexOf("sort_by")
+          switch (index) {
+            case -1: url += window.location.search + `&sort_by=${e.target.dataset.name}`; break;
+            default:
+              var initIndex = window.location.search.indexOf("sort_by")
+              var toBeReplaced = window.location.search.slice(initIndex)
+              url += window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
+          }
+        }
+        window.location.search = url
+      })
+    })
+  }
+  function sortingFunctionWithMultipleOptions(){
+    var sortItems = document.querySelectorAll(".sort-list-item")
+    sortItems.forEach(item=>{
+      item.addEventListener('click', (e)=>{
+        let url = "";
+        if (window.location.search.indexOf("filter") === -1){
+          var index = window.location.search.indexOf("sort_by")
+          switch (index) {
+            case -1: url += `?sort_by=${e.target.dataset.name}`; break;
+            default: url += `&sort_by=${e.target.dataset.name}`;
+          }
+        }
+        else {
+          url += window.location.search + `&sort_by=${e.target.dataset.name}`
+        }
+        window.location.search = url
+      })
+    })
+  }
+  function applyClickEventForFilter() {
+    document.querySelectorAll(".filter-label").forEach(label=>{
+      label.addEventListener('click', (event)=> {
+        var className = `${event.target.classList[1]}-options`
+        var target = document.querySelector(`.${className}`)
+        if (target.classList.contains("show-filter")){
+          target.classList.remove("show-filter")
+        }
+        document.querySelectorAll(".filter-options-list").forEach(item => {
+          item.classList.remove("show-filter")
+        })
+        target.classList.add("show-filter")
+        setTimeout(() => {
+          document.querySelectorAll(".filter-options-list").forEach(item => {
+            item.classList.remove("show-filter")
+          })
+        }, "5000")
+      })
+    })
+  }
+  function applyClickEventForSorting() {
+    var target = document.querySelector(".sorting-section")
+    target.addEventListener('click', ()=>{
+      if (document.querySelector(".sort-list").classList.contains('show-sort-list')){
+        document.querySelector(".sort-list").classList.remove('show-sort-list')
+      }
+      else {
+        document.querySelector(".sort-list").classList.add('show-sort-list')
+      }
+    })
+  }
+  function applyMouseLeaveEventForFilter(){
+    document.querySelectorAll(".filter-options-list").forEach(list=>{
+      list.addEventListener("mouseleave", (e)=>{
+        e.target.classList.remove("show-filter")
+      })
+    })
+  }
+  function applyMouseLeaveEventForSorting(){
+    document.querySelector(".sort-list").addEventListener("mouseleave", (e)=>{
+      e.target.classList.remove("show-sort-list")
+    })
+  }
+  function removeFilterOptionList(){
+    var topBarFilterSection = document.querySelector(".topbar-filter-section")
+    topBarFilterSection.addEventListener('click', (e)=>{
+      if (e.target !== topBarFilterSection) return false
+      document.querySelectorAll(".filter-options-list").forEach(item => {
+        item.classList.remove("show-filter")
+      })
+    })
+  }
+  applyClickEventForFilter()
+  applyClickEventForSorting()
+  applyMouseLeaveEventForFilter()
+  applyMouseLeaveEventForSorting()
+  sortingFunctionWithMultipleOptions()
+  resetFilter()
+  removeFilterOptionList()
+  showClearFilter()
+  </script>

@@ -164,7 +164,7 @@
   } 
   .bottom-hr-line{
     position: absolute;
-    bottom: 7%;
+    bottom: 8%;
     width: 85%;
     left: 7%;
     border-bottom: 1px solid;
@@ -173,8 +173,9 @@
 </style>
 
 <script>
+  $('.single-item-menu').not(':first').addClass('option-not-selected');
   $('.single-item-menu').on('click', function() {
-    console.log("clicked on a");
+    //console.log("clicked on a");
     $('.child-link-container').not(this).addClass('hidden');
     $('.parent-link').not(this).addClass('option-not-selected');
     $(this).find('.child-link-container').removeClass('hidden');

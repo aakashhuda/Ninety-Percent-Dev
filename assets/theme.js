@@ -2252,11 +2252,13 @@ lazySizesConfig.expFactor = 4;
         openClass: 'js-drawer-open',
         closingClass: 'js-drawer-closing',
         activeDrawer: 'drawer--is-open',
-        namespace: '.drawer-' + name
+        namespace: '.drawer-' + name,
+        overflowClass: 'overflow--none'
       };
   
       this.nodes = {
-        page: document.querySelector('#MainContent')
+        page: document.querySelector('#MainContent'),
+        body: document.querySelector('body')
       };
   
       this.drawer = document.querySelector('#' + id);
@@ -2307,6 +2309,7 @@ lazySizesConfig.expFactor = 4;
   
         theme.utils.prepareTransition(this.drawer, function() {
           this.drawer.classList.add(this.config.activeDrawer);
+          this.nodes.body.classList.add(this.config.overflowClass)
         }.bind(this));
   
         document.documentElement.classList.add(this.config.openClass);
@@ -2342,6 +2345,8 @@ lazySizesConfig.expFactor = 4;
   
         theme.utils.prepareTransition(this.drawer, function() {
           this.drawer.classList.remove(this.config.activeDrawer);
+          this.nodes.body.classList.remove(this.config.overflowClass)
+          
         }.bind(this));
   
         document.documentElement.classList.remove(this.config.openClass);
@@ -2599,8 +2604,9 @@ lazySizesConfig.expFactor = 4;
   
       // angle has shorthands "top", "left", "bottom" and "right"
       // nullish coalescing. using `||` here would fail for `0`
-      angle = this.directionMap[angle] ?? parseFloat(angle);
-  
+      //angle = this.directionMap[angle] ?? parseFloat(angle);
+      angle = this.directionMap[angle] != '' ? this.directionMap[angle] : parseFloat(angle);
+      
       // fallback if undefined
       // NaN is the only value that doesn't equal itself
       if (angle !== angle) angle = 270; // move to bottom (default parallax effect)
@@ -4169,9 +4175,9 @@ lazySizesConfig.expFactor = 4;
       overlayEnabledClass: 'header-wrapper--sticky',
       stickyEnabled: false,
       stickyActive: false,
-      stickyClass: 'site-header--stuck',
+      // stickyClass: 'site-header--stuck',
       stickyHeaderWrapper: 'StickyHeaderWrap',
-      openTransitionClass: 'site-header--opening',
+      // openTransitionClass: 'site-header--opening',
       lastScroll: 0
     };
   

@@ -40,6 +40,15 @@
         width: {{ block.settings.desktop_logo_width }}px;
       }
     }
+
+      @media only screen and (max-width: 769px) {
+      .site-header__logo a {
+        width: {{ block.settings.mobile_logo_width }}px;
+      }
+      .header-item--logo .site-header__logo img {
+        width: 100%;
+      }
+    }
     {%- endstyle -%}
 
     {%- if template == 'index' -%}

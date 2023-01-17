@@ -1,0 +1,35 @@
+<div class="pdp-drawer-wrapper">
+  <div class="pdp-drawer-header">
+    <h2>DELIVERY AND RETURNS</h2>
+    <div class="pdp-drawer-close">
+      <svg
+        width="17"
+        height="17"
+        viewBox="0 0 17 17"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L16 16M1 16L16 1" stroke="black" />
+      </svg>
+      
+    </div>
+  </div>
+
+  <div>
+    {{ pages[settings.product_delivery_return].content }}
+  </div>
+</div>
+
+<style>
+  .pdp-drawer-header {
+    display: flex;
+    justify-content: space-between;
+
+  }
+</style>
+
+<script>
+  $('.pdp-drawer-close').on('click', function(e) {
+    e.preventDefault();
+    $('.pdp-drawer-wrapper').removeClass("pdp-drawer-open");
+  })
+</script>

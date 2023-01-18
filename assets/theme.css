@@ -4734,7 +4734,7 @@ bottom: 0;
 background-color: #e6e6e6;
 background-color: var(--colorModalBg);
 opacity: 0;
-z-index: 26;
+/* z-index: 26; */
 }
 
 .js-drawer-open .main-content:after {
@@ -13972,6 +13972,23 @@ display: block !important;
     font-style: normal;
     font-display: swap
 }
+
+@font-face {
+    font-family: "Silvana";
+    src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-Regular?23110) format("woff");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Silvana";
+    src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/SilvanaItalic?23110) format("woff");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap
+}
+
 input:active{
   background-color: white;
 }
@@ -13981,18 +13998,23 @@ input:active{
   background-color: #fff;
 }
 .pdp-drawer-wrapper {
-  width: 550px;
+  width: 50%;
   height: auto;
-  position: absolute;
+  position: fixed;
   background-color: #fff;
   top: 0;
   left: -100%;
   height: 100%;
+  overflow-y: scroll;
 
 }
 .pdp-drawer-wrapper.pdp-drawer-open {
-  left: 66%;
+  left: 50%;
   z-index: 99999;
+  padding: 24px 60px;
+}
+body.pdp-drawer-is-open {
+  background: rgba(217, 217, 217, 1);
 }
 @media only screen and (max-width: 768px) {
   .header-item--logo .site-header__logo a {
@@ -14016,4 +14038,72 @@ input:active{
     position: fixed;
     z-index: 9;
     top: 0;
+}
+
+/* New development css scripts */
+.np-h1, .np-h2, .np-h3, .np-h4 {
+  font-family: 'Silvana', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  color: #2B2725
+}
+.np-h1, {
+  font-size: 100px;
+  line-height: 105px;
+  letter-spacing: -3%;
+}
+.np-h2 {
+  font-size: 70px;
+  line-height: 75px;
+  letter-spacing: -3%;
+}
+.np-h3 {
+  font-size: 26px;
+  line-height: 36px;
+  letter-spacing: -1%;
+}
+.np-h3 {
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -1%;
+}
+.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
+  font-style: italic;
+}
+.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
+  font-family: 'Intervouge', Helvetica, sans-serif;
+  font-weight: 400;
+  color: #2B2725;
+}
+.np-h5 {
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 2%;
+}
+.np-h6 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 4%;
+}
+.np-h7 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 2%;
+}
+.np-h8 {
+  font-size: 22px;
+  line-height: 32px;
+  letter-spacing: 4%;
+}
+.np-h9 {
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 5%;
+}
+.np-h10 {
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 5%;
+}
+.np-h6, .np-h8, .np-h9, .np-h10 {
+  text-transform: uppercase;
 }

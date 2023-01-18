@@ -4734,7 +4734,7 @@ bottom: 0;
 background-color: {{ settings.color_modal_overlays | default: "#000" }};
 background-color: var(--colorModalBg);
 opacity: 0;
-z-index: 26;
+/* z-index: 26; */
 }
 
 .js-drawer-open .main-content:after {
@@ -13972,6 +13972,23 @@ display: block !important;
     font-style: normal;
     font-display: swap
 }
+
+@font-face {
+    font-family: "Silvana";
+    src: url({{ "Silvana-Regular" | asset_url }}) format("woff");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "Silvana";
+    src: url({{ "SilvanaItalic" | asset_url }}) format("woff");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap
+}
+
 input:active{
   background-color: white;
 }
@@ -13981,18 +13998,23 @@ input:active{
   background-color: #fff;
 }
 .pdp-drawer-wrapper {
-  width: 550px;
+  width: 50%;
   height: auto;
-  position: absolute;
+  position: fixed;
   background-color: #fff;
   top: 0;
   left: -100%;
   height: 100%;
+  overflow-y: scroll;
 
 }
 .pdp-drawer-wrapper.pdp-drawer-open {
-  left: 66%;
+  left: 50%;
   z-index: 99999;
+  padding: 24px 60px;
+}
+body.pdp-drawer-is-open {
+  background: rgba(217, 217, 217, 1);
 }
 @media only screen and (max-width: 768px) {
   .header-item--logo .site-header__logo a {
@@ -14016,5 +14038,4 @@ input:active{
     position: fixed;
     z-index: 9;
     top: 0;
-}
 }

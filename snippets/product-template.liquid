@@ -732,5 +732,9 @@
   $('.pdp-drawer-item').on('click', function(e) {
     e.preventDefault();
     $('.pdp-drawer-wrapper').addClass("pdp-drawer-open");
+
+    if (!$('body').hasClass('pdp-drawer-is-open')) {
+      $('body').addClass('pdp-drawer-is-open');
+    }
   })
 </script>

@@ -1,4 +1,4 @@
-<section class="section-wrapper-{{ section.id }} page-width">
+<section class="section-wrapper-{{ section.id }} np-page-width">
 
     {% for block in section.blocks %}
         {% case block.type %}
@@ -34,6 +34,15 @@
 
 
 <style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+        .np-page-width {
+            padding: 0 20px;
+        }
+    }
    
     {% for block in section.blocks %}
 
@@ -72,11 +81,6 @@
                 width: 50%;
 
              }
-           
-             .block-{{ block.id }} .image-part .image  {
-                height: 100%;
-
-             }
              .block-{{ block.id }} .image-part .caption {
                 
              }
@@ -106,7 +110,7 @@
 
 
              .block-{{ block.id }} .text-part .learn-more-btn p {
-                display: inline;              
+                display: block;              
                 padding-bottom: 7px;
                 border-bottom: 1px solid black;
              }
@@ -120,14 +124,14 @@
              .block-{{ block.id }} img  {
                 
              }
-             .title p {
-                margin-bottom: 52px;
+             .title {
+                margin-bottom: 56px;
              }
              .block-{{ block.id }} .text-part .desc {
                 
              }
 
-             .main-desc p {
+             .main-desc {
                 margin-bottom: 51px;
              }
              
@@ -137,31 +141,31 @@
 
              {% if block.settings.show-title %}
                 .block-{{ block.id }} .title {
-                    display: inline;
+                    display: block;
                 }
              {% endif %}
             
 
              {% if block.settings.show-caption %}
                 .block-{{ block.id }} .caption {
-                    display: inline;
+                    display: block;
                 }
              {% endif %}
 
              {% if block.settings.show-btn %}
                 .block-{{ block.id }} .learn-more-btn {
-                    display: inline;
+                    display: block;
                 }
              {% endif %}
 
              {% if block.settings.show-main-desc %}
                 .block-{{ block.id }} .main-desc {
-                    display: inline;
+                    display: block;
                 }
              {% endif %}
              {% if block.settings.show-desc %}
                 .block-{{ block.id }} .text-part .desc {
-                    display: inline;
+                    display: block;
                 }
             {% endif %}
 
@@ -225,6 +229,14 @@
                    
                   
                     
+                 }
+                 .block-{{ block.id }} .image-part .image  {
+                    display: flex;
+                    justify-content: center;
+                 }
+                 .block-{{ block.id }} .image-part .image img  {
+                    width: 100%;
+    
                  }
              }
 
@@ -315,7 +327,7 @@
             "type": "text",
             "id": "main-desc",
             "label": "main-desc",
-            "default": "Sharing with"
+            "default": "We’re a community. From our head office to our factories, the creation of our collections is a collaboration, for which everyone receives a share of their efforts through our profit sharing model."
           },
           {
             "type": "text",

@@ -15,8 +15,8 @@
                         <div class="landscape-image-container-{{ block.id }}">
                             <img src="{{ block.settings.image-landscape | img_url: "master" }}" class="image-l-{{ block.id }}">
                         </div>
-                        <div class="title-{{ block.id }}">{{ block.settings.title }}</div>
-                        <div class="description-{{ block.id }}">{{ block.settings.description }}</div>
+                        <div class="title-{{ block.id }} np-h3-italic">{{ block.settings.title }}</div>
+                        <div class="description-{{ block.id }} np-h5">{{ block.settings.description }}</div>
                         <div class="link-{{ block.id }}">
                             <a href="{{ block.settings.url }}">{{ block.settings.url-text }}</a>
                         </div>
@@ -86,17 +86,12 @@
                 text-transform: uppercase;
                 padding-bottom: 7px;
                 border-bottom: 1px solid #2b2724;
+                font-family: "Silvana";
             }
             .title-{{ block.id }} {
-                font-family: {{ block.settings.title-font }};
-                font-size: {{ block.settings.title-font-size }}px;
-                color: {{ block.settings.title-font-color }};
+                
             }
             .description-{{ block.id }} {
-                font-family: {{ block.settings.description-font }};
-                font-size: {{ block.settings.description-font-size }}px;
-                line-height: {{ block.settings.description-line-height }}px;
-                color: {{ block.settings.description-font-color }};
                 text-align: justify;
                 width: {{ block.settings.description-width }}%;
             }
@@ -127,11 +122,6 @@
                 }
                 .image-with-text-container-{{ block.id }} {
                     width: calc(100% - ({{ block.settings.gap }}%/2));
-                }
-            {% endif %}
-            {% if block.settings.title-italic == true %}
-                .title-{{ block.id }} {
-                    font-style: italic;
                 }
             {% endif %}
             @media (max-width: 768px) {

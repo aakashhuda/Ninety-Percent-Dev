@@ -1,5 +1,5 @@
 <div id="wrapper-{{ section.id }}"> 
-    <section class="product-with-info-{{ section.id }} page-width">
+    <section class="product-with-info-{{ section.id }} np-page-width">
         {% for block in section.blocks %}
             {% case block.type %}
                 {% when 'product-card' %}
@@ -7,12 +7,12 @@
                         <div class="product-image-{{ block.id }}">
                             <img src="{{ block.settings.product-image | img_url: 'master' }}">
                         </div>
-                        <div class="product-name-{{ block.id }}">{{ block.settings.product-name }}</div>
-                        <div class="product-origin-{{ block.id }}"><p><span>ORIGIN</span>: <span>{{ block.settings.product-origin }}</span></p></div>
-                        <div class="product-description-{{ block.id }}">
-                            <p>{{ block.settings.product-description }}</p>
+                        <div class="product-name-{{ block.id }} np-h3">{{ block.settings.product-name }}</div>
+                        <div class="product-origin-{{ block.id }} np-h6"><span>ORIGIN</span>: <span>{{ block.settings.product-origin }}</span></div>
+                        <div class="product-description-{{ block.id }} np-h5">
+                            {{ block.settings.product-description }}
                         </div>
-                        <div class="url-{{ block.id }}">
+                        <div class="url-{{ block.id }} np-h6">
                             <a href="{{ block.settings.url }}">{{ block.settings.url-name }}</a>
                         </div>
                     </div>
@@ -31,6 +31,11 @@
         display: flex;
         justify-content: flex-start;
         width: 100%;
+        min-height: 1100px;
+    }
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
     }
 
     @media (max-width: 768px) {
@@ -56,9 +61,9 @@
                     display: flex;
                     flex-direction: column;
                     justify-content: stretch;
-                    align-items: start;
+                    align-items: center;
                     flex: 1;
-                    padding: 2%;
+                    padding: 1%;
                     padding-top: 0;
                     position: relative;
                     width: calc(100%/ {{ forloop.length }});
@@ -68,42 +73,28 @@
                         max-width: 33.33%;
                     }  
                 {% endif %}
-                .product-image-{{ block.id }}, .product-image-{{ block.id }} img {
-                    width: 100%;
+                .product-image-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
                 }
                 .product-name-{{ block.id }} {
-                    font-family: {{ block.settings.product-name-font }};
-                    font-size: {{ block.settings.product-name-font-size }}px;
-                    font-weight: {{ block.settings.product-name-font-weight }};
-                    line-height: {{ block.settings.product-name-line-height }}px;
-                    text-transform: uppercase;
-                    padding-top: 30px;
+                    padding-top: 28px;
                     padding-bottom: 24px;
                 }
                 .product-description-{{ block.id }} {
                     text-align: justify;
-                    height: 100%;
-                    font-family: {{ block.settings.product-description-font }};
-                    font-size: {{ block.settings.product-description-font-size }}px;
-                    font-weight: {{ block.settings.product-description-font-weight }};
-                    line-height: {{ block.settings.product-description-line-height }}px;
                 }
                 .product-origin-{{ block.id }} {
-                    font-family: {{ block.settings.product-origin-font }};
-                    font-size: {{ block.settings.product-origin-font-size }}px;
-                    font-weight: {{ block.settings.product-origin-font-weight }};
-                    line-height: {{ block.settings.product-origin-line-height }}px;
-                    text-transform: uppercase;
                     padding-bottom: 35px;
                 }
                 .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
-                    padding-left: {{ block.settings.product-text-left-padding }}px;
-                    padding-right: {{ block.settings.product-text-right-padding }}px;
+                    padding-left: 35px;
+                    padding-right: 45px;
+                    align-self: start;
                 }
-                .url {
+                .url-{{ block.id }} {
                     position: absolute;
-                    bottom: 0;
-                    margin-top: 10px;
+                    bottom: 100px;
                 }
                 {% if block.settings.enable-border == true %}
                     .product-card-{{ block.id }} {
@@ -117,10 +108,16 @@
                     }
                 {% endif %}
                 @media (max-width: 768px) {
+                    .np-page-width {
+                        padding: 0 20px;
+                    }
                     .product-card-{{ block.id }} {
                         margin: 10px 0;
                         padding: 0;
                         width:100%;
+                    }
+                    .product-with-info-{{ section.id }} {
+                        min-height: none;
                     }
                     {% if forloop.length < 3 %}
                           .product-card-{{ block.id }} {
@@ -142,6 +139,13 @@
                     .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
                         padding-left: 0;
                         padding-right: 0;
+                    }
+                    .product-image-{{ block.id }}, .product-image-{{ block.id }} img {
+                        width: 100%;
+                    }
+                    .url-{{ block.id }} {
+                        position: relative;
+                        bottom: -6px;
                     }
                     {% if block.settings.enable-border == true %}
                         .product-card-{{ block.id }} {
@@ -177,64 +181,9 @@
                     "id": "product-image"
                 },
                 {
-                    "type": "richtext",
+                    "type": "html",
                     "id": "product-name",
                     "label": "Product Name"
-                },
-                {
-                    "type": "font",
-                    "id": "product-name-font",
-                    "label": "Name Font"
-                },
-                {
-                    "type": "range",
-                    "id": "product-name-font-size",
-                    "min": 14,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 26,
-                    "label": "Name Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "product-name-mobile-font-size",
-                    "min": 14,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 26,
-                    "label": "Name Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "product-name-font-weight",
-                    "label": "Name Font Weight",
-                    "min": 100,
-                    "max": 900,
-                    "step": 100,
-                    "default": 400,
-                    "unit": "num"
-                },
-                {
-                    "type": "range",
-                    "id": "product-name-line-height",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 37,
-                    "label": "Name Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "product-name-mobile-line-height",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 37,
-                    "label": "Name Line Height (Mobile)"
                 },
                 {
                     "type": "text",
@@ -243,119 +192,9 @@
                     "default": "Country, Country, Country"
                 },
                 {
-                    "type": "font",
-                    "id": "product-origin-font",
-                    "label": "Origin Font"
-                },
-                {
-                    "type": "range",
-                    "id": "product-origin-font-size",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 12,
-                    "label": "Origin Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "product-origin-mobile-font-size",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 12,
-                    "label": "Origin Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "product-origin-font-weight",
-                    "label": "Origin Font Weight",
-                    "min": 100,
-                    "max": 900,
-                    "step": 100,
-                    "default": 400,
-                    "unit": "num"
-                },
-                {
-                    "type": "range",
-                    "id": "product-origin-line-height",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 21,
-                    "label": "Origin Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "product-origin-mobile-line-height",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 21,
-                    "label": "Origin Line Height (Mobile)"
-                },
-                {
                     "type": "text",
                     "id": "product-description",
                     "label": "Product Description"
-                },
-                {
-                    "type": "font",
-                    "id": "product-description-font",
-                    "label": "Description Font"
-                },
-                {
-                    "type": "range",
-                    "id": "product-description-font-size",
-                    "min": 14,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 16,
-                    "label": "Description Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "product-description-mobile-font-size",
-                    "min": 14,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 16,
-                    "label": "Description Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "product-description-font-weight",
-                    "label": "Description Font Weight",
-                    "min": 100,
-                    "max": 900,
-                    "step": 100,
-                    "default": 400,
-                    "unit": "num"
-                },
-                {
-                    "type": "range",
-                    "id": "product-description-line-height",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 28,
-                    "label": "Product Description Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "product-description-mobile-line-height",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 28,
-                    "label": "Product Description Line Height (Mobile)"
                 },
                 {
                     "type": "text",
@@ -373,26 +212,6 @@
                     "id": "show-button",
                     "label": "Show Button",
                     "default": true
-                },
-                {
-                    "type": "range",
-                    "id": "product-text-left-padding",
-                    "min": 0,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 20,
-                    "label": "Product Info Left Padding"
-                },
-                {
-                    "type": "range",
-                    "id": "product-text-right-padding",
-                    "min": 0,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 45,
-                    "label": "Product Info Right Padding"
                 },
                 {
                     "type": "checkbox",

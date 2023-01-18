@@ -1,15 +1,15 @@
 <div id="wrapper-{{ section.id }}"> 
-    <section class="company-with-info-{{ section.id }} page-width">
+    <section class="company-with-info-{{ section.id }} np-page-width">
         {% for block in section.blocks %}
             {% case block.type %}
                 {% when 'company-card' %}
                     <div class="company-card-{{ block.id }}">
-                        <div class="company-name-{{ block.id }}">{{ block.settings.company-name }}</div>
-                        <div class="company-origin-{{ block.id }}"><p><span>WHERE</span>: <span>{{ block.settings.company-origin }}</span></p></div>
-                        <div class="company-description-{{ block.id }}">
-                            <p>{{ block.settings.company-description }}</p>
+                        <div class="company-name-{{ block.id }} np-h3">{{ block.settings.company-name }}</div>
+                        <div class="company-origin-{{ block.id }} np-h6"><span>WHERE</span>: <span>{{ block.settings.company-origin }}</span></div>
+                        <div class="company-description-{{ block.id }} np-h5">
+                            {{ block.settings.company-description }}
                         </div>
-                        <ul class="company-speciality-list-{{ block.id }}">
+                        <ul class="company-speciality-list-{{ block.id }} np-h5">
                             <li class="list-item-{{ block.id }}">{{ block.settings.list-content-1 }}</li>
                             <li class="list-item-{{ block.id }}">{{ block.settings.list-content-2 }}</li>
                         </ul>
@@ -28,6 +28,12 @@
     .company-with-info-{{ section.id }} {
         display: flex;
         justify-content: center;
+        min-height: 800px;
+    }
+
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
     }
 
     @media (max-width: 768px) {
@@ -35,6 +41,9 @@
             flex-direction: column;
             align-items: flex-start;
             width: 100%;
+        }
+        .np-page-width {
+            padding: 0 20px;
         }
     }
 
@@ -54,33 +63,18 @@
                     justify-content: stretch;
                     align-items: start;
                     flex: 1;
-                    padding: 2%;
+                    padding: 4%;
                     padding-top: 0;
                     position: relative;
                 }
                 .company-name-{{ block.id }} {
-                    font-family: {{ block.settings.company-name-font }};
-                    font-size: {{ block.settings.company-name-font-size }}px;
-                    font-weight: {{ block.settings.company-name-font-weight }};
-                    line-height: {{ block.settings.company-name-line-height }}px;
                     padding-bottom: 24px;
-                    letter-spacing: -0.01em;
                 }
                 .company-description-{{ block.id }} {
                     text-align: justify;
-                    height: 100%;
-                    font-family: {{ block.settings.company-description-font }};
-                    font-size: {{ block.settings.company-description-font-size }}px;
-                    font-weight: {{ block.settings.company-description-font-weight }};
-                    line-height: {{ block.settings.company-description-line-height }}px;
-                    text-align: justify;
+                    height: 200px;
                 }
                 .company-origin-{{ block.id }} {
-                    font-family: {{ block.settings.company-origin-font }};
-                    font-size: {{ block.settings.company-origin-font-size }}px;
-                    font-weight: {{ block.settings.company-origin-font-weight }};
-                    line-height: {{ block.settings.company-origin-line-height }}px;
-                    text-transform: uppercase;
                     padding-bottom: 35px;
                 }
                 .company-name-{{ block.id }}, .company-origin-{{ block.id }}, .company-description-{{ block.id }}, .company-speciality-list-{{ block.id }} {
@@ -90,9 +84,6 @@
                 .list-item-{{ block.id }} {
                     margin: 30px 0;
                     text-align: justify;
-                    font-family: {{ block.settings.list-font }};
-                    font-size: {{ block.settings.list-font-size }}px;
-                    line-height: {{ block.settings.list-line-height }}px;
                 }
 
                 {% if block.settings.enable-border == true %}
@@ -107,9 +98,22 @@
                     }
                 }
 
+                @media (max-width: 1050px) {
+                    .company-description-{{ block.id }} {
+                        height: 250px;
+                    }
+                }
+
+                @media (max-width: 900px) {
+                    .company-description-{{ block.id }} {
+                        height: 300px;
+                    }
+                }
+
                 @media (max-width: 768px) {
                     .company-card-{{ block.id }} {
                         max-width: 100%;
+                        padding: 0;
                     }
                     .company-name-{{ block.id }} {
                         font-size: {{ block.settings.company-name-mobile-font-size }}px;
@@ -124,12 +128,15 @@
                         line-height: {{ block.settings.company-origin-mobile-line-height }}px;
                     }
                     .company-speciality-list-{{ block.id }} {
-                        padding: 0;
+                        padding: 0 20px;
                         margin: 0;
                     }
                     .list-item-{{ block.id }} {
                         font-size: {{ block.settings.list--mobile-font-size }}px;
                         line-height: {{ block.settings.list-mobile-line-height }}px;
+                    }
+                    .company-description-{{ block.id }} {
+                        height: auto;
                     }
                     {% if block.settings.enable-border == true %}
                         .company-card-{{ block.id }} {

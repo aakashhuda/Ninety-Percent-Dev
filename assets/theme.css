@@ -14044,7 +14044,7 @@ body.pdp-drawer-is-open {
 .np-h1, .np-h2, .np-h3, .np-h4 {
   font-family: 'Silvana';
   font-weight: 400;
-  color: #2B2725
+  color: #2B2725;
 }
 .np-h1 {
   font-size: 100px;
@@ -14059,12 +14059,12 @@ body.pdp-drawer-is-open {
 .np-h3 {
   font-size: 26px;
   line-height: 36px;
-  letter-spacing: -0.01em
+  letter-spacing: -0.01em;
 }
 .np-h4 {
   font-size: 20px;
   line-height: 30px;
-  letter-spacing: -1%;
+  letter-spacing: -0.01em;
 }
 .np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
   font-style: italic;
@@ -14082,7 +14082,7 @@ body.pdp-drawer-is-open {
 .np-h6 {
   font-size: 12px;
   line-height: 21px;
-  letter-spacing: 4%;
+  letter-spacing: 0.04em;
 }
 .np-h7 {
   font-size: 12px;

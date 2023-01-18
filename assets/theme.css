@@ -14054,7 +14054,7 @@ body.pdp-drawer-is-open {
 .np-h2 {
   font-size: 70px;
   line-height: 75px;
-  letter-spacing: -3%;
+  letter-spacing: -0.01em;
 }
 .np-h3 {
   font-size: 26px;

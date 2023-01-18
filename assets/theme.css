@@ -14042,14 +14042,14 @@ body.pdp-drawer-is-open {
 
 /* New development css scripts */
 .np-h1, .np-h2, .np-h3, .np-h4 {
-  font-family: 'Silvana', Arial, Helvetica, sans-serif;
+  font-family: 'Silvana';
   font-weight: 400;
   color: #2B2725
 }
-.np-h1, {
+.np-h1 {
   font-size: 100px;
   line-height: 105px;
-  letter-spacing: -3%;
+  letter-spacing: -0.03em;
 }
 .np-h2 {
   font-size: 70px;
@@ -14059,9 +14059,9 @@ body.pdp-drawer-is-open {
 .np-h3 {
   font-size: 26px;
   line-height: 36px;
-  letter-spacing: -1%;
+  letter-spacing: -0.01em
 }
-.np-h3 {
+.np-h4 {
   font-size: 20px;
   line-height: 30px;
   letter-spacing: -1%;
@@ -14070,14 +14070,14 @@ body.pdp-drawer-is-open {
   font-style: italic;
 }
 .np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
-  font-family: 'Intervouge', Helvetica, sans-serif;
+  font-family: 'Intervouge';
   font-weight: 400;
   color: #2B2725;
 }
 .np-h5 {
   font-size: 16px;
   line-height: 28px;
-  letter-spacing: 2%;
+  letter-spacing: 0.02em;
 }
 .np-h6 {
   font-size: 12px;

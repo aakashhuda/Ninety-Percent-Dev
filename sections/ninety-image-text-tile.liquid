@@ -1,26 +1,30 @@
 {% for block in section.blocks %}
     {% case block.type %}
         {% when "image-and-text-tile" %}
-            <section class="block-parent-{{ block.id }} page-width">
+            <section class="block-parent-{{ block.id }} np-page-width">
                 <div class="image-text-tile-container-{{ block.id }}">
                     {% if block.settings.selected-layout == "image-first" %}
                         <div class="image-text-tile-image-container-{{ block.id }} item-{{ block.id }}">
                             <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: 'master' }}">
                         </div>
                         <div class="image-text-tile-text-container-{{ block.id }} item-{{ block.id }}">
-                            <div class="title-{{ block.id }}">{{ block.settings.title }}</div>
-                            <div class="description-{{ block.id }}">{{ block.settings.text }}</div>
-                            <a class="text-tile-btn-{{ block.id }}" href="{{ block.settings.button-url | url_encode }}">
-                                {{ block.settings.button-label }}
-                            </a>
+                            <div class="text-container">
+                                <div class="title-{{ block.id }} np-h3">{{ block.settings.title }}</div>
+                                <div class="description-{{ block.id }} np-h5">{{ block.settings.text }}</div>
+                                <a class="text-tile-btn-{{ block.id }}" href="{{ block.settings.button-url | url_encode }}">
+                                    {{ block.settings.button-label }}
+                                </a>
+                            </div>
                         </div>
                     {% else %}
                         <div class="image-text-tile-text-container-{{ block.id }} item-{{ block.id }}">
-                            <div class="title-{{ block.id }}">{{ block.settings.title }}</div>
-                            <div class="description-{{ block.id }}">{{ block.settings.text }}</div>
-                            <a class="text-tile-btn-{{ block.id }}" href="{{ block.settings.button-url | url_encode }}">
-                                {{ block.settings.button-label }}
-                            </a>
+                            <div class="text-container">
+                                <div class="title-{{ block.id }} np-h3">{{ block.settings.title }}</div>
+                                <div class="description-{{ block.id }} np-h5">{{ block.settings.text }}</div>
+                                <a class="text-tile-btn-{{ block.id }}" href="{{ block.settings.button-url | url_encode }}">
+                                    {{ block.settings.button-label }}
+                                </a>
+                            </div>
                         </div>
                         <div class="image-text-tile-image-container-{{ block.id }} item-{{ block.id }}">
                             <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: 'master' }}">
@@ -36,6 +40,18 @@
 {% endfor %}
 
 <style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    .text-container {
+        max-width: 464px;
+    }
+    @media (max-width: 768px) {
+        .np-page-width { 
+            padding: 0 20px;
+        }
+    }
 {% for block in section.blocks %}
     {% case block.type %}
         {% when "image-and-text-tile" %}
@@ -64,62 +80,40 @@
             {% endif %}
 
             .item-{{ block.id }} {
-                width: 50%;
+                {% comment %} width: 50%; {% endcomment %}
             }
             .image-{{ block.id }}{
-                width: 100%;
-                height: 100%;
+                {% comment %} width: 100%;
+                height: 100%; {% endcomment %}
             }
             
             .image-text-tile-text-container-{{ block.id }} {
-                height: inherit;
-                overflow: hidden;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-items: flex-start;
-                padding: 80px;
+                align-items: center;
                 background-color: {{ block.settings.bg-color }};
+                width: 50%;
+            }
+            .image-text-tile-image-container-{{ block.id }} {
+                width: 50%;
             }
             .description-{{ block.id }} {
-                font-size: {{ block.settings.text-font-size }}px;
-                line-height: {{ block.settings.text-line-height }}px;
-                color: {{ block.settings.text-font-color }};
-                width: {{ block.settings.text-width }}%;
                 text-align: justify;
+                margin-bottom: 61px;
             }
             .title-{{ block.id }} {
-                font-size: {{ block.settings.title-font-size }}px;
-                line-height: {{ block.settings.title-line-height }}px;
-                color: {{ block.settings.title-font-color }};
-                font-weight: {{ block.settings.title-font-weight }};
                 padding-bottom: 55px;
             }
-            {% if block.settings.text-layout-center == false %}
-                .image-text-tile-text-container-{{ block.id }} {
-                    justify-content: start;
-                }
-                .image-text-tile-text-container-{{ block.id }} {
-                    padding-top: 0px;
-                    padding-bottom: 0px;
-                }
-
-                {% if block.settings.selected-layout == "image-first" %}
-                    .image-text-tile-text-container-{{ block.id }} {
-                        padding-right: 0px;
-                    }
-                {% else %}
-                    .image-text-tile-text-container-{{ block.id }} {
-                        padding-left: 0px;
-                    }
-                {% endif %}
-            {% endif %}
             .image-text-tile-text-container-{{ block.id }} p {
                 margin: 0;
             }
             .text-tile-btn-{{ block.id }} {
-                color: {{ block.settings.button-text-color }};
-                font-size:{{ block.settings.text-font-size }}px;
+                color: #2B2725;
+                font-size: 16px;
+                line-height: 28px;
+                letter-spacing: 0.02em;
+                font: 'Intervouge';
                 text-decoration: none;
                 text-transform: uppercase;
                 padding-bottom: 7px;
@@ -142,6 +136,11 @@
                 }
 
             {% endif %}
+            @media (max-width: 1000px) {
+                .image-text-tile-text-container-{{ block.id }} {
+                    padding: 10px;
+                }
+            }
             @media (max-width: 768px) {
                 .image-text-tile-container-{{ block.id }} {
                     flex-direction: column;
@@ -150,6 +149,7 @@
                 .image-text-tile-text-container-{{ block.id }} {
                     padding: 0;
                     order: 1;
+                    align-items : flex-start;
                 }
                 .item-{{ block.id }} {
                     width: 100%;
@@ -158,16 +158,7 @@
                     order: 0;
                 }
                 .description-{{ block.id }} {
-                    font-size: {{ block.settings.text-mobile-font-size }}px;
-                    line-height: {{ block.settings.text-mobile-line-height }}px;
-                    width: {{ block.settings.text-mobile-width }}%;
-                }
-                .title-{{ block.id }} {
-                    font-size: {{ block.settings.title-mobile-font-size }}px;
-                    line-height: {{ block.settings.title-mobile-line-height }}px;
-                }
-                .text-tile-btn-{{ block.id }} {
-                    font-size:{{ block.settings.text-mobile-font-size }}px;
+                    font-size: 12px;
                 }
             }
         {% when 'spacer' %}
@@ -236,71 +227,9 @@
                     "label":  "Make Image Larger"
                 },
                 {
-                    "type": "checkbox",
-                    "id": "text-layout-center",
-                    "default": true,
-                    "label": "Text Centered" 
-                },
-                {
                     "type": "text",
                     "id": "title",
                     "label": "Add Title"
-                },
-                {
-                    "type": "range",
-                    "id": "title-font-size",
-                    "min": 6,
-                    "max": 32,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 26,
-                    "label": "Title Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "title-mobile-font-size",
-                    "min": 6,
-                    "max": 32,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 26,
-                    "label": "Title Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "title-line-height",
-                    "min": 1,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 37,
-                    "label": "Title Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "title-mobile-line-height",
-                    "min": 1,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 37,
-                    "label": "Title Line Height (Mobile)"
-                },
-                {
-                    "type": "color",
-                    "id": "title-font-color",
-                    "label": "Title Font Color",
-                    "default": "#000000"
-                },
-                {
-                    "type": "range",
-                    "id": "title-font-weight",
-                    "label": "Title Font Weight",
-                    "min": 100,
-                    "max": 900,
-                    "step": 100,
-                    "default": 400,
-                    "unit": "num"
                 },
                 {
                     "type": "richtext",
@@ -312,72 +241,6 @@
                     "id": "bg-color",
                     "label": "Choose text background color",
                     "default": "#FFFFFF"
-                },
-                {
-                    "type": "range",
-                    "id": "text-font-size",
-                    "min": 6,
-                    "max": 32,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 16,
-                    "label": "Description Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "text-mobile-font-size",
-                    "min": 6,
-                    "max": 32,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 16,
-                    "label": "Description Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "text-line-height",
-                    "min": 1,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 28,
-                    "label": "Description Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "text-mobile-line-height",
-                    "min": 1,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 28,
-                    "label": "Description Line Height (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "text-width",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "%",
-                    "default": 100,
-                    "label": "Description Width"
-                },
-                {
-                    "type": "range",
-                    "id": "text-mobile-width",
-                    "min": 10,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "%",
-                    "default": 100,
-                    "label": "Description Width (Mobile)"
-                },
-                {
-                    "type": "color",
-                    "id": "text-font-color",
-                    "label": "Description Font Color",
-                    "default": "#000000"
                 },
                 {
                     "type": "checkbox",
@@ -395,12 +258,6 @@
                     "type": "url",
                     "id": "button-url",
                     "label": "Button URL"
-                },
-                {
-                    "type": "color",
-                    "id": "button-text-color",
-                    "label": "Button Text Color",
-                    "default": "#2b2724"
                 }
             ]
         },

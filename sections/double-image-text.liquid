@@ -2,8 +2,7 @@
     {% case block.type %}
         {% when 'double-image-with-text' %} 
             <div id="wrapper-{{ block.id }}">
-                <section class="double-image-container-{{ block.id }}">
-
+                <section class="double-image-container-{{ block.id }} np-page-width">
                     <div class="potrait-image-container-{{ block.id }}">
                         <img src="{{ block.settings.image-portrait | img_url: "master" }}" class="image-p-{{ block.id }}">
                     </div>
@@ -37,6 +36,15 @@
 {% endfor %}
 
 <style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+        .np-page-width {
+            padding: 0 0px;
+        }
+    }
 {% for block in section.blocks %}
     {% case block.type %}
         {% when 'double-image-with-text' %}

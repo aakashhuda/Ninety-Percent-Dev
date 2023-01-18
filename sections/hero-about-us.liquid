@@ -2,13 +2,13 @@
     {% case block.type %}
         {% when 'hero-about-us' %} 
             <div id="wrapper-{{ block.id }}"> 
-                <section class="about-us-{{ block.id }} page-width">
-                    <div class="text-{{ block.id }}">
-                        <h1 class="title-{{ block.id }}">{{ block.settings.header-title }}</h1>
-                        <div class="description-{{ block.id }}">
+                <section class="about-us-{{ block.id }} np-page-width">
+                    <div class="text-{{ block.id }} np-h1">
+                        <div class="title-{{ block.id }}">{{ block.settings.header-title }}</div>
+                        <div class="description-{{ block.id }} np-h3">
                             <p>{{ block.settings.description }}</p>
                         </div>
-                        <div class="history-description-{{ block.id }}">
+                        <div class="history-description-{{ block.id }} np-h5">
                             <p>{{ block.settings.history-description }}</p>
                         </div>
                     </div>
@@ -28,6 +28,15 @@
     <hr class="hr-{{ section.id }}">
 </div>
 <style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+        .np-page-width {
+            padding: 0 0px;
+        }
+    }
     {% for block in section.blocks %}
         {% case block.type %}
             {% when 'hero-about-us' %}
@@ -40,7 +49,8 @@
                     display: flex;
                     justify-content: space-evenly;
                     align-items: stretch;
-                    width: {{ block.settings.block-width }}%;
+                    gap: 120px;
+                    padding: 0 {{ block.settings.padding-both-side }}px;
                 }
                 .text-{{ block.id }} {
                     display: flex;
@@ -55,27 +65,18 @@
                 .image-container-{{ block.id }} {
                     display: flex;
                     justify-content: center;
+                    align-items: stretch;
                     width: 50%;
                 }
                 .title-{{ block.id }} {
-                    font-size: {{ block.settings.title-font-size }}px;
-                    font-family: {{ block.settings.title-font }};
-                    color: {{ block.settings.title-font-color }};
+                    margin-bottom: 91px;
                 }
                 .description-{{ block.id }} {
-                    font-size: 26px;
-                    color: {{ block.settings.description-font-color }};
-                    font-size: {{ block.settings.description-font-size }}px;
-                    line-height: {{ block.settings.description-line-height }}px;
-                    font-family: {{ block.settings.description-font }};
-                    width: {{ block.settings.description-width }}%;
+                    width: 581px;
+                    margin-bottom: 50px;
                 }
                 .history-description-{{ block.id }} {
-                    font-size: {{ block.settings.history-font-size }}px;
-                    line-height: {{ block.settings.history-line-height }}px;
-                    color: {{ block.settings.history-font-color }};
-                    font-family: {{ block.settings.history-font }};
-                    width: {{ block.settings.history-width }}%;
+                    width: 464px;
                     text-align: justify;
                 }
                 .hr-parent-{{ section.id }}{
@@ -89,9 +90,16 @@
                     width: 93%;
                     margin: 1rem 0;
                 }
+                @media (max-width: 1000px) {
+                    .description-{{ block.id }} {
+                        font-size: 20px;
+                        max-width: 450px;
+                    }
+                }
                 @media (max-width: 768px) {
                     .about-us-{{ block.id }} {
                         flex-wrap: wrap;
+                        gap: 0;
                     }
                     .about-us-{{ block.id }}.page-width {
                       padding: 0;
@@ -107,15 +115,13 @@
                         margin: 0;
                     }
                     .title-{{ block.id }} {
-                        font-size: {{ block.settings.title-mobile-font-size }}px;
-                        color: {{ block.settings.title-mobile-font-color }};
+                        font-size: 60px;
                     }
                     .description-{{ block.id }} {
-                        font-size: {{ block.settings.description-mobile-font-size }}px;
-                        color: {{ block.settings.description-mobile-font-color }};
-                        line-height: {{ block.settings.description-mobile-line-height }}px;
-                        width: {{ block.settings.description-mobile-width }}%;
-                        {% comment %} width: {{ block.settings.description-width }}%; {% endcomment %}
+                        font-size: 16px;
+                        color: #000000;
+                        line-height: 23px;
+                        width: 95%;
                     }
 
                     .description-{{ block.id }} {
@@ -161,13 +167,13 @@
             "settings": [
                 {
                     "type": "range",
-                    "id": "block-width",
-                    "min": 30,
+                    "id": "padding-both-side",
+                    "min": 0,
                     "max": 100,
-                    "step": 1,
-                    "unit": "%",
-                    "default": 85,
-                    "label": "Section Width"
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Section Padding Both Side"
                 },
                 {
                     "type": "text",
@@ -189,155 +195,6 @@
                     "type": "image_picker",
                     "id": "image",
                     "label": "Select Image"
-                },
-                {
-                    "type": "range",
-                    "id": "title-font-size",
-                    "min": 50,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 100,
-                    "label": "Title Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "title-mobile-font-size",
-                    "min": 50,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 60,
-                    "label": "Title Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "description-font-size",
-                    "min": 18,
-                    "max": 30,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 26,
-                    "label": "Description Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "description-mobile-font-size",
-                    "min": 14,
-                    "max": 30,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 16,
-                    "label": "Description Font Size (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "history-font-size",
-                    "min": 12,
-                    "max": 30,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 16,
-                    "label": "History Font Size"
-                },
-                {
-                    "type": "range",
-                    "id": "description-line-height",
-                    "min": 20,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 37,
-                    "label": "Description Line Height"
-                },
-                {
-                    "type": "range",
-                    "id": "description-mobile-line-height",
-                    "min": 20,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 23,
-                    "label": "Description Line Height (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "history-line-height",
-                    "min": 20,
-                    "max": 50,
-                    "step": 1,
-                    "unit": "px",
-                    "default": 28,
-                    "label": "History Line Height"
-                },
-                {
-                    "type": "font",
-                    "id": "title-font",
-                    "label": "Title Font"
-                },
-                {
-                    "type": "color",
-                    "id": "title-font-color",
-                    "label": "Title Font Color",
-                    "default": "#2B2725"
-                },
-                {
-                    "type": "color",
-                    "id": "title-mobile-font-color",
-                    "label": "Title Font Color (Mobile)",
-                    "default": "#2B2725"
-                },
-                {
-                    "type": "font",
-                    "id": "description-font",
-                    "label": "Description Font"
-                },
-                {
-                    "type": "color",
-                    "id": "description-font-color",
-                    "label": "Description Font Color",
-                    "default": "#000000"
-                },
-                {
-                    "type": "color",
-                    "id": "description-mobile-font-color",
-                    "label": "Description Font Color (Mobile)",
-                    "default": "#000000"
-                },
-                {
-                    "type": "font",
-                    "id": "history-font",
-                    "label": "History Font"
-                },
-                {
-                    "type": "range",
-                    "id": "description-width",
-                    "min": 50,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "%",
-                    "default": 100,
-                    "label": "Description Width"
-                },
-                {
-                    "type": "range",
-                    "id": "description-mobile-width",
-                    "min": 50,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "%",
-                    "default": 95,
-                    "label": "Description Width (Mobile)"
-                },
-                {
-                    "type": "range",
-                    "id": "history-width",
-                    "min": 50,
-                    "max": 100,
-                    "step": 1,
-                    "unit": "%",
-                    "default": 100,
-                    "label": "History Width"
                 }
             ]
         },

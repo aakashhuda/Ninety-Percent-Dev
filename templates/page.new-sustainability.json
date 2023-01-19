@@ -471,7 +471,7 @@
         "a3ae3d2c-5a47-4ad9-8708-df07b8bc73e7": {
           "type": "spacer-block",
           "settings": {
-            "spacer-height": 200
+            "spacer-height": 80
           }
         },
         "441e1da3-0811-476f-aa7b-69d353f1e07f": {
@@ -486,8 +486,8 @@
             "show-btn": false,
             "caption": "",
             "main-desc": "Sharing with",
-            "title": "<p>Our Processes<\/p>",
-            "desc": "<p>We only use environmental dyes certified by OEKO-TEX® and Bluesign® which set and control standards for a safe and sustainable textile production.<\/p>",
+            "title": "Our Processes",
+            "desc": "We only use environmental dyes certified by OEKO-TEX® and Bluesign® which set and control standards for a safe and sustainable textile production.",
             "btn-text": "",
             "btn-url": ""
           }
@@ -624,6 +624,35 @@
       ],
       "settings": {
       }
+    },
+    "bab3e532-3b6e-44bf-ae5a-d663e555620c": {
+      "type": "Np-Image-Text",
+      "blocks": {
+        "baaf0f26-7844-4dad-9f8d-b4a6070f4ebf": {
+          "type": "image-text-block",
+          "settings": {
+            "padding": 20,
+            "image-right": true,
+            "show-caption": false,
+            "show-main-desc": true,
+            "show-desc": true,
+            "show-title": true,
+            "show-btn": true,
+            "image": "shopify:\/\/shop_images\/Screenshot_2022-10-03_at_21.46_1_2.png",
+            "caption": "caption",
+            "main-desc": "Sharing with",
+            "title": "Our Causes",
+            "desc": "80% of our profits are shared between five charitable causes. Chosen because they speak to our values. Eclectic in their reach, but each cause is connected through their own care for people and planet. Our chosen charities are Big Life and Wild Aid, BRAC, Children's Hope and War Child UK",
+            "btn-text": "LEARN MORE ABOUT THE CAUSES",
+            "btn-url": ""
+          }
+        }
+      },
+      "block_order": [
+        "baaf0f26-7844-4dad-9f8d-b4a6070f4ebf"
+      ],
+      "settings": {
+      }
     }
   },
   "order": [
@@ -646,6 +675,7 @@
     "75040b27-7d72-41df-a497-54d1a9e6755c",
     "b15834fe-c472-4960-8cb6-7a2c1f471e96",
     "deec0a01-ab5a-4920-b77e-b1cd56e039d5",
-    "3c51eddd-4c50-48ae-bca7-2df5c7dbe819"
+    "3c51eddd-4c50-48ae-bca7-2df5c7dbe819",
+    "bab3e532-3b6e-44bf-ae5a-d663e555620c"
   ]
 }

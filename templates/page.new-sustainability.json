@@ -465,22 +465,28 @@
         "padding-both-sides": 0
       }
     },
-    "bab3e532-3b6e-44bf-ae5a-d663e555620c": {
-      "type": "Np-Image-Text",
+    "d91dca5d-21e4-4fa5-9cda-96322e296e6c": {
+      "type": "np-image-with-text",
       "blocks": {
-        "baaf0f26-7844-4dad-9f8d-b4a6070f4ebf": {
+        "f4e4d80b-e1f0-4678-b668-6cd54f68b4a5": {
+          "type": "spacer-block",
+          "settings": {
+            "spacer-height": 75
+          }
+        },
+        "ea07e5a7-bb3e-4463-8073-c1cd3a010372": {
           "type": "image-text-block",
           "settings": {
             "padding": 20,
             "image-right": true,
             "show-caption": false,
             "show-main-desc": true,
-            "show-desc": true,
+            "show-desc": false,
             "show-title": true,
-            "show-btn": true,
+            "show-btn": false,
             "image": "shopify:\/\/shop_images\/Screenshot_2022-10-03_at_21.46_1_2.png",
             "caption": "caption",
-            "main-desc": "Sharing with",
+            "main-desc": "We only use environmental dyes certified by OEKO-TEX® and Bluesign® which set and control standards for a safe and sustainable textile production.",
             "title": "Our Causes",
             "desc": "80% of our profits are shared between five charitable causes. Chosen because they speak to our values. Eclectic in their reach, but each cause is connected through their own care for people and planet. Our chosen charities are Big Life and Wild Aid, BRAC, Children's Hope and War Child UK",
             "btn-text": "LEARN MORE ABOUT THE CAUSES",
@@ -489,7 +495,8 @@
         }
       },
       "block_order": [
-        "baaf0f26-7844-4dad-9f8d-b4a6070f4ebf"
+        "f4e4d80b-e1f0-4678-b668-6cd54f68b4a5",
+        "ea07e5a7-bb3e-4463-8073-c1cd3a010372"
       ],
       "settings": {
       }
@@ -635,7 +642,7 @@
     "99768ac2-09eb-40a4-a014-3e47cad3bd4f",
     "b3635e05-8edf-4d98-83e1-37168ea79bab",
     "64e01452-034f-4a0b-8351-dca5927476f5",
-    "bab3e532-3b6e-44bf-ae5a-d663e555620c",
+    "d91dca5d-21e4-4fa5-9cda-96322e296e6c",
     "129e153f-0358-4af0-a14d-ceea7e5b9d9d",
     "75040b27-7d72-41df-a497-54d1a9e6755c",
     "b15834fe-c472-4960-8cb6-7a2c1f471e96",

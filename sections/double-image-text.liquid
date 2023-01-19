@@ -60,21 +60,23 @@
             }
             .potrait-image-container-{{ block.id }} {
                 width: 100%;
-                padding-top: {{ block.settings.padding-top }}%; 
+                padding-top: {{ block.settings.padding-top }}%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             .image-with-text-container-{{ block.id }} {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-around;
+                justify-content: flex-start;
                 align-items: flex-start;
             }
             .landscape-image-container-{{ block.id }} {
                 width: 100%;
             }
             .image-p-{{ block.id }} {
-                width: {{ block.settings.image-p-width }}%;
-                height: auto;
+                
             }
             .image-l-{{ block.id }} {
                 width: {{ block.settings.image-l-width }}%;
@@ -89,11 +91,13 @@
                 font-family: "Silvana";
             }
             .title-{{ block.id }} {
-                
+                padding-top: 8em;
+                padding-bottom: 4.5em;
             }
             .description-{{ block.id }} {
                 text-align: justify;
                 width: {{ block.settings.description-width }}%;
+                margin-bottom: 68px;
             }
             .mobile-description-{{ block.id }} {
                 display: none;
@@ -124,6 +128,14 @@
                     width: calc(100% - ({{ block.settings.gap }}%/2));
                 }
             {% endif %}
+            @media (max-width: 1000px) {
+                .title-{{ block.id }} {
+                    padding-bottom: 1.5em;
+                }
+                .description-{{ block.id }} {
+                    margin-bottom: 18px;
+                }
+            }
             @media (max-width: 768px) {
                 .double-image-container-{{ block.id }} {
                     flex-wrap: wrap;

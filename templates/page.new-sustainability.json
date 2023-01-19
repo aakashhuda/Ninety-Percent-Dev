@@ -321,6 +321,29 @@
     },
     "b3635e05-8edf-4d98-83e1-37168ea79bab": {
       "type": "np-single-column-descriptions",
+      "blocks": {
+        "0e23aff0-38d1-423c-812e-978059892629": {
+          "type": "text",
+          "settings": {
+            "padding-both-sides": 165,
+            "text-in-left": true,
+            "show-sub-description": true,
+            "title": "Our Factories",
+            "description": "Sustainability is about taking responsibility for every decision we make. It goes beyond simply the materials we use; for us it incorporates respectful working environments, garment longevity, transparency and traceability, animal welfare and water stewardship.",
+            "sub-description": "By focusing on the past, present and future of our clothes and working closely with our suppliers, we make strides towards a more responsible, transparent future."
+          }
+        },
+        "92d82f2e-c4e3-418a-b17d-7a7fa83b4e08": {
+          "type": "spacer",
+          "settings": {
+            "spacer": 190
+          }
+        }
+      },
+      "block_order": [
+        "0e23aff0-38d1-423c-812e-978059892629",
+        "92d82f2e-c4e3-418a-b17d-7a7fa83b4e08"
+      ],
       "settings": {
       }
     },
@@ -337,7 +360,7 @@
             "company-name-font-weight": 400,
             "company-name-line-height": 37,
             "company-name-mobile-line-height": 37,
-            "company-origin": "Dhaka, bANGLADESH",
+            "company-origin": "where: dhaka, bangladesh",
             "company-origin-font": "Helvetica, Arial, sans-serif",
             "company-origin-font-size": 12,
             "company-origin-mobile-font-size": 12,
@@ -400,7 +423,7 @@
         "81a4a5eb-5410-4949-b498-5ddd3f07fdc1": {
           "type": "company-card",
           "settings": {
-            "company-name": "<p>Echotex<\/p>",
+            "company-name": "<p>Echo Tekstil<\/p>",
             "company-name-font": "Helvetica, Arial, sans-serif",
             "company-name-font-size": 26,
             "company-name-mobile-font-size": 26,

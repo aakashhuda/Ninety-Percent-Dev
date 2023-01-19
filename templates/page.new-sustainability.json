@@ -11,10 +11,10 @@
         "3fbc08ab-a093-47a5-acb5-0441f4d0b128": {
           "type": "hero-about-us",
           "settings": {
+            "padding-both-sides": 0,
             "image-first-layout": true,
             "show-title": true,
             "show-main-description": true,
-            "image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_07_167_R2_1_1.png",
             "title": "Sustainability & Materials",
             "description": "At the beginning of our journey, we questioned conventional practices in the fashion industry. Now, with each collection, we continue to examine the impact we have on our planet.",
             "sub-description": "We take responsibility for every material we use and strive to work in mutual collaboration with our suppliers, seeking transparency and traceability across our supply chain."
@@ -39,21 +39,18 @@
         "template--16973643874580__4e5fdee4-d9ae-4c0e-a964-fdd8ca4a5b04-1668776313c06b7504-0": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/362499-800w_4.png",
             "custom-image-width": 485
           }
         },
         "template--16973643874580__4e5fdee4-d9ae-4c0e-a964-fdd8ca4a5b04-1668776313c06b7504-1": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/Screenshot_2022-07-22_at_18.38_1.png",
             "custom-image-width": 290
           }
         },
         "template--16973643874580__4e5fdee4-d9ae-4c0e-a964-fdd8ca4a5b04-1668776313c06b7504-2": {
           "type": "column",
           "settings": {
-            "image": "shopify:\/\/shop_images\/c593cd03ba706677b70b9ff3cd107147--laundry-lines-skor_1.png",
             "custom-image-width": 500
           }
         }
@@ -146,7 +143,6 @@
         "6bf0f87d-74a2-41ca-98e2-2a85f14f4a65": {
           "type": "product-card",
           "settings": {
-            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_18_163_R1_2_1.png",
             "product-name": "<p>Organic Cotton<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "Cotton is a natural crop, both biodegradable and hypoallergenic. It’s comfortable, breathable and durable. We only use Global Organic Textile Standard (GOTS) certified organic cotton fabric, grown without the use of pesticides, so it’s less harmful on your skin and on the planet.",
@@ -160,7 +156,6 @@
         "50bc7d14-1f08-43d7-9f9d-0047255c2dad": {
           "type": "product-card",
           "settings": {
-            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_03_110_6_2.png",
             "product-name": "<p>TENCELTM<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "Linen is typically grown without the use of pesticides and fertiliser as naturally the flax plant requires less than other crops. However this is not always the case, so as we strive for traceability we have sourced European Flax® Linen.",
@@ -174,7 +169,6 @@
         "3a691553-82d6-4752-831d-f997fb113225": {
           "type": "product-card",
           "settings": {
-            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_03_110_6_3.png",
             "product-name": "<p>ENKAR Viscose<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "We choose to use hemp for its environmentally friendly properties as well as its durability and drape. Hemp from the Cannabis sativa plant, is considered to be one of the most environmentally friendly fabrics.",
@@ -192,6 +186,7 @@
         "3a691553-82d6-4752-831d-f997fb113225"
       ],
       "settings": {
+        "padding-both-sides": 0
       }
     },
     "0c1320cd-5c57-4238-8aca-39a48fca37d8": {
@@ -206,7 +201,6 @@
         "942f8a6f-f29a-463d-b4fc-9bcc6b79b148": {
           "type": "product-card",
           "settings": {
-            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_11_085_1_R1_1_e942f03b-cc54-46d6-bbf2-df26964fdb1a.png",
             "product-name": "<p>MicroModal<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "Cotton is a natural crop, both biodegradable and hypoallergenic. It’s comfortable, breathable and durable. We only use Global Organic Textile Standard (GOTS) certified organic cotton fabric, grown without the use of pesticides, so it’s less harmful on your skin and on the planet.",
@@ -220,7 +214,6 @@
         "560baa95-1d52-4c84-a406-c16501827a5a": {
           "type": "product-card",
           "settings": {
-            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_19_155_R1_1_0da85b10-af7f-4a94-b185-815dabdfd7e0.png",
             "product-name": "<p>Linen<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "Linen is typically grown without the use of pesticides and fertiliser as naturally the flax plant requires less than other crops. However this is not always the case, so as we strive for traceability we have sourced European Flax® Linen.",
@@ -237,6 +230,7 @@
         "560baa95-1d52-4c84-a406-c16501827a5a"
       ],
       "settings": {
+        "padding-both-sides": 0
       }
     },
     "af04b12c-ee46-480d-b0a9-6d5837f918ad": {
@@ -332,7 +326,6 @@
         "bf3d8aea-c64c-4a13-b639-7f3e6671830f": {
           "type": "product-card",
           "settings": {
-            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_13_130_R1_1_7bf9986b-e455-4564-9d84-c73fbf33d126.png",
             "product-name": "<p>Mother of Pearl Buttons<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "Our BioResin mother-of-pearl buttons are made in Italy with a resin created from trees, leaves and plant material to replace plastic-based and shell buttons. Replicating true mother of pearl’s iridescence, they are biodegradable and don’t release any toxic emissions.",
@@ -378,6 +371,7 @@
         "c5ff250a-b359-4be1-b2be-c9c689140833"
       ],
       "settings": {
+        "padding-both-sides": 0
       }
     },
     "99768ac2-09eb-40a4-a014-3e47cad3bd4f": {
@@ -396,7 +390,6 @@
             "custom-block-width": 900,
             "show-caption": true,
             "padding": 0,
-            "bg-image": "shopify:\/\/shop_images\/lighter_1_1.png",
             "caption": "<p>(above) factory workers in bangladesh putting the finishing touches to collection 20<\/p>",
             "caption-text-size": 12,
             "mobile-caption-text-size": 10,
@@ -609,6 +602,7 @@
         "81a4a5eb-5410-4949-b498-5ddd3f07fdc1"
       ],
       "settings": {
+        "padding-both-sides": 0
       }
     },
     "37aa0142-ba2d-4235-b380-de03f9dd3564": {
@@ -626,10 +620,12 @@
             "padding": 0,
             "image-right": true,
             "show-caption": false,
+            "show-main-desc": true,
+            "show-desc": true,
             "show-title": true,
             "show-btn": false,
-            "image": "shopify:\/\/shop_images\/Screenshot_2022-10-03_at_21.46_1_6c5df25b-a446-4954-a014-78eeba2d6bc4.png",
             "caption": "",
+            "main-desc": "Sharing with",
             "title": "<p>Our Processes<\/p>",
             "desc": "<p>We only use environmental dyes certified by OEKO-TEX® and Bluesign® which set and control standards for a safe and sustainable textile production.<\/p>",
             "btn-text": "",
@@ -702,6 +698,7 @@
         "376c5606-373d-4657-80ea-9a4fc4f974b9"
       ],
       "settings": {
+        "padding-both-sides": 0
       }
     },
     "b15834fe-c472-4960-8cb6-7a2c1f471e96": {
@@ -716,31 +713,17 @@
         "2c9524f3-c018-46a6-a4c8-f89c5224f375": {
           "type": "image-and-text-tile",
           "settings": {
+            "padding-both-sides": 0,
             "width": "100",
             "selected-layout": "text-first",
             "image": "shopify:\/\/shop_images\/362499-800w_2.png",
             "make-image-larger": false,
-            "text-layout-center": true,
             "title": "Longevity: Caretaking",
-            "title-font-size": 26,
-            "title-mobile-font-size": 26,
-            "title-line-height": 37,
-            "title-mobile-line-height": 37,
-            "title-font-color": "#000000",
-            "title-font-weight": 400,
             "text": "<p>Care and consideration with your clothes is the best way to ensure their longevity. Though our clothes are designed to last, care and consideration will ensure their longevity.<\/p>",
             "bg-color": "#ffffff",
-            "text-font-size": 16,
-            "text-mobile-font-size": 16,
-            "text-line-height": 28,
-            "text-mobile-line-height": 28,
-            "text-width": 86,
-            "text-mobile-width": 100,
-            "text-font-color": "#000000",
             "show-button": true,
             "button-label": "HOW TO : GARMENT CARE",
-            "button-url": "",
-            "button-text-color": "#2b2724"
+            "button-url": ""
           }
         }
       },

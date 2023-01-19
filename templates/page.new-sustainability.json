@@ -507,6 +507,27 @@
         "spacer": 155
       }
     },
+    "bf251d45-e5b6-4608-a16c-0ad37d4aa47d": {
+      "type": "np-single-column-descriptions",
+      "blocks": {
+        "bd59d90d-122b-438a-a821-e3be2e20d201": {
+          "type": "text",
+          "settings": {
+            "padding-both-sides": 0,
+            "text-in-left": true,
+            "show-sub-description": false,
+            "title": "Branding",
+            "description": "",
+            "sub-description": "By focusing on the past, present and future of our clothes and working closely with our suppliers, we make strides towards a more responsible, transparent future."
+          }
+        }
+      },
+      "block_order": [
+        "bd59d90d-122b-438a-a821-e3be2e20d201"
+      ],
+      "settings": {
+      }
+    },
     "75040b27-7d72-41df-a497-54d1a9e6755c": {
       "type": "ninety-product-with-info",
       "blocks": {
@@ -625,34 +646,6 @@
       ],
       "settings": {
       }
-    },
-    "bcf048c9-2735-4bc2-8ce5-d0cec57c306b": {
-      "type": "np-image-with-text",
-      "blocks": {
-        "caa8e8e1-fb46-4cf1-b22e-c71601648aee": {
-          "type": "image-text-block",
-          "settings": {
-            "padding": 20,
-            "image-right": true,
-            "show-caption": false,
-            "show-main-desc": false,
-            "show-desc": false,
-            "show-title": true,
-            "show-btn": false,
-            "caption": "caption",
-            "main-desc": "We’re a community. From our head office to our factories, the creation of our collections is a collaboration, for which everyone receives a share of their efforts through our profit sharing model.",
-            "title": "Branding",
-            "desc": "80% of our profits are shared between five charitable causes. Chosen because they speak to our values. Eclectic in their reach, but each cause is connected through their own care for people and planet. Our chosen charities are Big Life and Wild Aid, BRAC, Children's Hope and War Child UK",
-            "btn-text": "LEARN MORE ABOUT THE CAUSES",
-            "btn-url": ""
-          }
-        }
-      },
-      "block_order": [
-        "caa8e8e1-fb46-4cf1-b22e-c71601648aee"
-      ],
-      "settings": {
-      }
     }
   },
   "order": [
@@ -672,10 +665,10 @@
     "64e01452-034f-4a0b-8351-dca5927476f5",
     "d91dca5d-21e4-4fa5-9cda-96322e296e6c",
     "129e153f-0358-4af0-a14d-ceea7e5b9d9d",
+    "bf251d45-e5b6-4608-a16c-0ad37d4aa47d",
     "75040b27-7d72-41df-a497-54d1a9e6755c",
     "b15834fe-c472-4960-8cb6-7a2c1f471e96",
     "deec0a01-ab5a-4920-b77e-b1cd56e039d5",
-    "3c51eddd-4c50-48ae-bca7-2df5c7dbe819",
-    "bcf048c9-2735-4bc2-8ce5-d0cec57c306b"
+    "3c51eddd-4c50-48ae-bca7-2df5c7dbe819"
   ]
 }

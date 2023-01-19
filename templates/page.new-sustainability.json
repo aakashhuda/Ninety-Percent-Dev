@@ -303,93 +303,24 @@
             "caption": "<p>(above) factory workers in bangladesh putting the finishing touches to collection 20<\/p>",
             "caption-color": ""
           }
-        }
-      },
-      "block_order": [
-        "e4fa9727-450e-47c5-b1d1-04de97b54639",
-        "4ac59d8f-6494-4312-b464-08f84797ce6a"
-      ],
-      "settings": {
-      }
-    },
-    "4262fd66-fc62-43c3-bfdb-65ec4a2b3a6b": {
-      "type": "np-double-column-text-style2",
-      "blocks": {
-        "84fea070-d697-411b-ab22-7d0bfed1fa07": {
+        },
+        "6ef6f82a-3002-48de-94a9-8b85334e6269": {
           "type": "spacer-block",
           "settings": {
             "spacer-height": 150
           }
-        },
-        "9ed5a1f8-1de7-4dac-8b2b-0a6be56d4415": {
-          "type": "double-column-text-block",
-          "settings": {
-            "left-pre-title": "",
-            "left-title": "<p>Our Factories<\/p>",
-            "left-desc": "<p>Sustainability reaches beyond the fabrics and means of production. For us, it incorporates respectful working environments, garment longevity, transparency and traceability, animal welfare and water stewardship. <\/p><p>By focussing on the past, present and future of our clothes and working closely with our suppliers, we make strides towards a more sustainable, transparent, future.<\/p>",
-            "left-btn-text": "",
-            "left-pre-title-text-size": 10,
-            "mobile-left-pre-title-text-size": 10,
-            "left-title-text-size": 40,
-            "mobile-left-title-text-size": 30,
-            "left-desc-text-size": 26,
-            "mobile-left-desc-text-size": 16,
-            "left-btn-text-size": 10,
-            "mobile-left-btn-text-size": 10,
-            "left-pre-title-color": "",
-            "left-title-color": "",
-            "left-desc-color": "",
-            "left-btn-color": "#000000",
-            "left-text-bg-color": "",
-            "left-pre-title-font-family": "Helvetica, Arial, sans-serif",
-            "left-title-font-family": "Helvetica, Arial, sans-serif",
-            "left-desc-font-family": "Helvetica, Arial, sans-serif",
-            "left-btn-font-family": "Helvetica, Arial, sans-serif",
-            "left-btn-url": "",
-            "left-desc-line-height": 37,
-            "mobile-left-desc-line-height": 37,
-            "right-pre-title": "",
-            "right-title": "",
-            "right-desc": "",
-            "right-btn-text": "",
-            "right-pre-title-text-size": 10,
-            "mobile-right-pre-title-text-size": 10,
-            "right-title-text-size": 40,
-            "mobile-right-title-text-size": 10,
-            "right-desc-text-size": 26,
-            "mobile-right-desc-text-size": 10,
-            "right-btn-text-size": 10,
-            "mobile-right-btn-text-size": 10,
-            "right-pre-title-color": "",
-            "right-title-color": "",
-            "right-desc-color": "",
-            "right-btn-color": "#000000",
-            "right-text-bg-color": "",
-            "right-pre-title-font-family": "Helvetica, Arial, sans-serif",
-            "right-title-font-family": "Palatino, 'Palatino Linotype', 'Book Antiqua', serif",
-            "right-desc-font-family": "Palatino, 'Palatino Linotype', 'Book Antiqua', serif",
-            "right-btn-font-family": "Helvetica, Arial, sans-serif",
-            "right-btn-url": "",
-            "right-desc-line-height": 37,
-            "mobile-right-desc-line-height": 37,
-            "block-width": "medium",
-            "custom-block-width": 800,
-            "show-divider": false,
-            "block-height": 250
-          }
-        },
-        "23a9f7ff-522f-4f00-8e82-fd5b321a85da": {
-          "type": "spacer-block",
-          "settings": {
-            "spacer-height": 190
-          }
         }
       },
       "block_order": [
-        "84fea070-d697-411b-ab22-7d0bfed1fa07",
-        "9ed5a1f8-1de7-4dac-8b2b-0a6be56d4415",
-        "23a9f7ff-522f-4f00-8e82-fd5b321a85da"
+        "e4fa9727-450e-47c5-b1d1-04de97b54639",
+        "4ac59d8f-6494-4312-b464-08f84797ce6a",
+        "6ef6f82a-3002-48de-94a9-8b85334e6269"
       ],
+      "settings": {
+      }
+    },
+    "b3635e05-8edf-4d98-83e1-37168ea79bab": {
+      "type": "np-single-column-descriptions",
       "settings": {
       }
     },
@@ -685,7 +616,7 @@
     "b0e7c632-de50-4ff1-ad7c-cbf4f89ae078",
     "5888c222-629c-4403-bec1-d629050270e1",
     "99768ac2-09eb-40a4-a014-3e47cad3bd4f",
-    "4262fd66-fc62-43c3-bfdb-65ec4a2b3a6b",
+    "b3635e05-8edf-4d98-83e1-37168ea79bab",
     "64e01452-034f-4a0b-8351-dca5927476f5",
     "37aa0142-ba2d-4235-b380-de03f9dd3564",
     "129e153f-0358-4af0-a14d-ceea7e5b9d9d",

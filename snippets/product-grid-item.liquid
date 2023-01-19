@@ -142,8 +142,8 @@ Arguments
                 {% endif %}
             {% endfor %}
           </ul>
-          <i class="arrow-{{ product.id }} left-{{ product.id }}"></i>
-          <i class="arrow-{{ product.id }} right-{{ product.id }}"></i>
+          <span class="left-{{ product.id }}"><i class="arrow-{{ product.id }}"></i></span>
+          <span class="right-{{ product.id }}"><i class="arrow-{{ product.id }}"></i></span>
         {% endif %}
 
         {%- if settings.enable_swatches -%}
@@ -325,21 +325,23 @@ Arguments
   #CollectionAjaxContent .left-{{ product.id }} {
       position: absolute;
       transform: rotate(135deg);
-      top: 45%;
+      top: 40%;
       left: 15px;
+      padding: 15px;
   }
   #CollectionAjaxContent .right-{{ product.id }} {
       position: absolute;
       transform: rotate(-45deg);
-      top: 45%;
+      top: 40%;
       right: 15px;
+      padding: 15px;
   }
   #CollectionAjaxContent .left-{{ product.id }}.disabled, .right-{{ product.id }}.disabled {
       border-color: #dddddd;
       cursor: not-allowed;
   }
   #CollectionAjaxContent .show-arrow-{{ product.id }} {
-      display: inline-block;
+      display: block;
   }
   [data-center-text=true] .grid-product__meta {
     text-align: left;
@@ -418,18 +420,26 @@ function changePreviousImage(productId, event) {
 // hover effect for mouseover
 {% if settings.product_hover_multi_image == true %}
   document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseover", (e)=>{
-    var arrowLeft = document.querySelector(".left-{{ product.id }}")
+    {% comment %} var arrowLeft = document.querySelector(".left-{{ product.id }}")
     var arrowRight = document.querySelector(".right-{{ product.id }}")
     arrowLeft.classList.add("show-arrow-{{ product.id }}")
-    arrowRight.classList.add("show-arrow-{{ product.id }}")
+    arrowRight.classList.add("show-arrow-{{ product.id }}") {% endcomment %}
+    var arrow = document.querySelectorAll(".arrow-{{ product.id }}")
+    arrow.forEach(element=>{
+      element.classList.add("show-arrow-{{ product.id }}")
+    })
     var data = findActvieIndex({{ product.id }})
   })
   // hover effect for mouseleave
   document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseleave", (e)=>{
-    var arrowLeft = document.querySelector(".left-{{ product.id }}")
+    {% comment %} var arrowLeft = document.querySelector(".left-{{ product.id }}")
     var arrowRight = document.querySelector(".right-{{ product.id }}")
     arrowLeft.classList.remove("show-arrow-{{ product.id }}")
-    arrowRight.classList.remove("show-arrow-{{ product.id }}")
+    arrowRight.classList.remove("show-arrow-{{ product.id }}") {% endcomment %}
+    var arrow = document.querySelectorAll(".arrow-{{ product.id }}")
+    arrow.forEach(element=>{
+      element.classList.remove("show-arrow-{{ product.id }}")
+    })
     var data = findActvieIndex({{ product.id }})
   })
   // slider button changing to right

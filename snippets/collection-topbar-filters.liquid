@@ -235,11 +235,6 @@ function showClearFilter(){
           item.classList.remove("show-filter")
         })
         target.classList.add("show-filter")
-        setTimeout(() => {
-          document.querySelectorAll(".filter-options-list").forEach(item => {
-            item.classList.remove("show-filter")
-          })
-        }, "5000")
       })
     })
   }
@@ -277,8 +272,8 @@ function showClearFilter(){
   }
   applyClickEventForFilter()
   applyClickEventForSorting()
-  applyMouseLeaveEventForFilter()
-  applyMouseLeaveEventForSorting()
+  {% comment %} applyMouseLeaveEventForFilter()
+  applyMouseLeaveEventForSorting() {% endcomment %}
   sortingFunctionWithMultipleOptions()
   resetFilter()
   removeFilterOptionList()

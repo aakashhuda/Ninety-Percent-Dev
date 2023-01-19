@@ -296,15 +296,12 @@
           "type": "image-block",
           "settings": {
             "block-width": "full",
-            "custom-block-width": 900,
+            "custom-block-width": 1450,
             "show-caption": true,
-            "padding": 0,
+            "padding": 20,
+            "bg-image": "shopify:\/\/shop_images\/lighter_1_1.png",
             "caption": "<p>(above) factory workers in bangladesh putting the finishing touches to collection 20<\/p>",
-            "caption-text-size": 12,
-            "mobile-caption-text-size": 10,
-            "caption-color": "",
-            "caption-line-height": 37,
-            "mobile-caption-line-height": 37
+            "caption-color": ""
           }
         }
       },

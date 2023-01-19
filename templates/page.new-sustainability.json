@@ -83,10 +83,17 @@
             "description": "Sustainability is about taking responsibility for every decision we make. It goes beyond simply the materials we use; for us it incorporates respectful working environments, garment longevity, transparency and traceability, animal welfare and water stewardship.",
             "sub-description": "By focusing on the past, present and future of our clothes and working closely with our suppliers, we make strides towards a more responsible, transparent future."
           }
+        },
+        "f33dbbb8-5dbe-4ef8-bb1a-bfef69c1e8a2": {
+          "type": "spacer",
+          "settings": {
+            "spacer": 160
+          }
         }
       },
       "block_order": [
-        "4792966b-b133-4af7-9988-f6b8f343cf35"
+        "4792966b-b133-4af7-9988-f6b8f343cf35",
+        "f33dbbb8-5dbe-4ef8-bb1a-bfef69c1e8a2"
       ],
       "settings": {
       }

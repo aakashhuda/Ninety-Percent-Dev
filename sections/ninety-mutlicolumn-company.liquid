@@ -29,6 +29,7 @@
         display: flex;
         justify-content: center;
         min-height: 800px;
+        padding: 0 {{ section.settings.padding-both-sides }}px;
     }
 
     .np-page-width {
@@ -155,7 +156,18 @@
 
 {
     "name": "Ninety Company With Info",
-    "settings": [],
+    "settings": [
+        {
+            "type": "range",
+            "id": "padding-both-sides",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "unit": "px",
+            "default": 0,
+            "label": "Padding Both Sides"
+        }
+    ],
     "blocks": [
         {
             "name": "Company",

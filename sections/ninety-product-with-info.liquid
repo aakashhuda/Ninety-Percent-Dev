@@ -32,6 +32,7 @@
         justify-content: flex-start;
         width: 100%;
         min-height: 1100px;
+        padding: 0 {{ section.settings.padding-both-sides }}px;
     }
     .np-page-width {
         max-width: 1440px;
@@ -169,7 +170,18 @@
 
 {
     "name": "Ninety Product With Info",
-    "settings": [],
+    "settings": [
+        {
+            "type": "range",
+            "id": "padding-both-sides",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "unit": "px",
+            "default": 0,
+            "label": "Padding Both Sides"
+        }
+    ],
     "blocks": [
         {
             "name": "Product",

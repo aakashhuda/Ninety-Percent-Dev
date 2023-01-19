@@ -1,4 +1,4 @@
-<section class="section-wrapper-{{ section.id }} page-width">
+<section class="section-wrapper-{{ section.id }}">
 
     {% for block in section.blocks %}
         {% case block.type %}
@@ -8,7 +8,7 @@
                         <div class="image-block-inner block-width-{{ block.settings.block-width }} " >
                             <img src="{{ block.settings.bg-image | img_url: 'grande' }}" alt="">
                          
-                            <span class="image-block-caption"> {{ block.settings.caption }} </span>
+                            <span class="image-block-caption np-h6"> {{ block.settings.caption }} </span>
                         </div>
 
                    
@@ -26,6 +26,10 @@
 </section>
 
 <style>
+    .section-wrapper-{{ section.id }} {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
     {% for block in section.blocks %}
         {% case block.type %}
             {% when "image-block" %}
@@ -61,14 +65,13 @@
                  
                     
                  }
-                
+                  .block-{{ block.id }} .image-block-inner .image-block-caption  {
+                    
+                    margin-top: 12px;
+                    opacity: 40%;
+                    
+                 } 
 
-                 .block-{{ block.id }} .image-block-inner .image-block-caption  {
-                    font-size: {{ block.settings.caption-text-size }}px;
-                    color: {{ block.settings.caption-color }};
-                    font-family: "Intervogue";
-                    line-height: {{ block.settings.caption-line-height }}px;
-                 }
                  .block-{{ block.id }} .image-block-inner .image-block-caption p {
                     margin: 0 auto;
                  }
@@ -83,13 +86,15 @@
 
                  @media only screen and (max-width: 768px) {
                     
+                        .section-wrapper-{{ section.id }} {
+                    padding: 0px 20px;
+                }
+                      
+                    
                       .block-{{ block.id }} {
                          padding: 0px 0px;
                       }
-                     .block-{{ block.id }} .image-block-inner .image-block-caption  {
-                        font-size: {{ block.settings.mobile-caption-text-size }}px;                
-                        line-height: {{ block.settings.mobile-caption-line-height }}px;
-                     }
+                    
                   }
                   
                 
@@ -153,10 +158,10 @@
                     "id":"padding",
                     "label":"Left-Right Space of the block",
                     "min":0,
-                    "max":100,
-                    "step":1,
+                    "max":200,
+                    "step":2,
                     "unit":"px",
-                    "default":0
+                    "default":52
                 },
                 {
                     "type": "image_picker",
@@ -170,53 +175,15 @@
                     "id": "caption"
                 
                 },
-                {
-                    "type": "range",
-                    "id":"caption-text-size",
-                    "label":"Caption text size",
-                    "min":8,
-                    "max":100,
-                    "step":1,
-                    "unit":"px",
-                    "default":12
-                }, 
-                {
-                    "type": "range",
-                    "id":"mobile-caption-text-size",
-                    "label":"Caption text size for mobile devices",
-                    "min":8,
-                    "max":100,
-                    "step":1,
-                    "unit":"px",
-                    "default":10
-                },
+                
                 {
                     "type":"color",
                     "id":"caption-color",
                     "label":"caption text color",
-                    "default": "#000000"
-                },
+                    "default": "#2B2725"
+                }
                 
-              {
-                  "type": "range",
-                  "id": "caption-line-height",
-                  "min": 10,
-                  "max": 100,
-                  "step": 1,
-                  "unit": "px",
-                  "default": 21,
-                  "label": "Caption Line Height"
-              },
-              {
-                  "type": "range",
-                  "id": "mobile-caption-line-height",
-                  "min": 10,
-                  "max": 100,
-                  "step": 1,
-                  "unit": "px",
-                  "default": 21,
-                  "label": "Caption Line Height for Mobile Devices"
-              }
+             
               
        
             ]

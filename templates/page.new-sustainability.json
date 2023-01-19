@@ -770,42 +770,6 @@
       ],
       "settings": {
       }
-    },
-    "31733275-915d-4bc5-94af-9f7a7c4a283a": {
-      "type": "ninety-img-three-col-sus",
-      "blocks": {
-        "template--17629333389634__31733275-915d-4bc5-94af-9f7a7c4a283a-1674106652032d58c6-0": {
-          "type": "column",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/362499-800w_4.png",
-            "custom-image-width": 300,
-            "caption": ""
-          }
-        },
-        "template--17629333389634__31733275-915d-4bc5-94af-9f7a7c4a283a-1674106652032d58c6-1": {
-          "type": "column",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/Screenshot_2022-07-22_at_18.38_1.png",
-            "custom-image-width": 300,
-            "caption": ""
-          }
-        },
-        "template--17629333389634__31733275-915d-4bc5-94af-9f7a7c4a283a-1674106652032d58c6-2": {
-          "type": "column",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/c593cd03ba706677b70b9ff3cd107147--laundry-lines-skor_1.png",
-            "custom-image-width": 300,
-            "caption": ""
-          }
-        }
-      },
-      "block_order": [
-        "template--17629333389634__31733275-915d-4bc5-94af-9f7a7c4a283a-1674106652032d58c6-0",
-        "template--17629333389634__31733275-915d-4bc5-94af-9f7a7c4a283a-1674106652032d58c6-1",
-        "template--17629333389634__31733275-915d-4bc5-94af-9f7a7c4a283a-1674106652032d58c6-2"
-      ],
-      "settings": {
-      }
     }
   },
   "order": [
@@ -828,7 +792,6 @@
     "b15834fe-c472-4960-8cb6-7a2c1f471e96",
     "deec0a01-ab5a-4920-b77e-b1cd56e039d5",
     "3c51eddd-4c50-48ae-bca7-2df5c7dbe819",
-    "9a27a04d-e419-41b3-9d64-c9e2d58a834e",
-    "31733275-915d-4bc5-94af-9f7a7c4a283a"
+    "9a27a04d-e419-41b3-9d64-c9e2d58a834e"
   ]
 }

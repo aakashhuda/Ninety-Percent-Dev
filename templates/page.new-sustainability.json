@@ -153,7 +153,7 @@
     "0c1320cd-5c57-4238-8aca-39a48fca37d8": {
       "type": "spacer",
       "settings": {
-        "spacer": 175
+        "spacer": 25
       }
     },
     "74c1a040-e888-4c50-801a-593c3a2b7edf": {
@@ -197,86 +197,33 @@
     "af04b12c-ee46-480d-b0a9-6d5837f918ad": {
       "type": "spacer",
       "settings": {
-        "spacer": 130
+        "spacer": 150
       }
     },
-    "9bfe33f4-efb1-4d89-93d5-3a1179d78328": {
-      "type": "np-double-column-text-style2",
+    "b0e7c632-de50-4ff1-ad7c-cbf4f89ae078": {
+      "type": "np-single-column-descriptions",
       "blocks": {
-        "45c0fc9f-a411-4079-b13a-be30d8bd59c0": {
-          "type": "spacer-block",
+        "ac907b4a-cfe7-49cd-913d-4509b437a7a9": {
+          "type": "text",
           "settings": {
-            "spacer-height": 120
+            "padding-both-sides": 165,
+            "text-in-left": true,
+            "show-sub-description": false,
+            "title": "Our Finishes",
+            "description": "We place a lot of importance on the finishing touches of our garments, ensuring every detail is of the highest quality with the lowest environmental impact. All our buttons are plant-based and our metals nickel-free.",
+            "sub-description": "By focusing on the past, present and future of our clothes and working closely with our suppliers, we make strides towards a more responsible, transparent future."
           }
         },
-        "0ab9828e-6218-433d-9eaa-dc0a5d98e272": {
-          "type": "double-column-text-block",
+        "3eaedfea-6624-4ed6-bc5d-e6f877c40da3": {
+          "type": "spacer",
           "settings": {
-            "left-pre-title": "",
-            "left-title": "<p>Our Finishes<\/p>",
-            "left-desc": "<p>Blurb needed. We prioritise the use of low-impact, renewable and<br\/>certified organic materials when designing our collections.<br\/>All of our fabrics are vegan, selected to have the lowest impact on our global environment.<\/p>",
-            "left-btn-text": "",
-            "left-pre-title-text-size": 10,
-            "mobile-left-pre-title-text-size": 10,
-            "left-title-text-size": 40,
-            "mobile-left-title-text-size": 30,
-            "left-desc-text-size": 26,
-            "mobile-left-desc-text-size": 16,
-            "left-btn-text-size": 10,
-            "mobile-left-btn-text-size": 10,
-            "left-pre-title-color": "",
-            "left-title-color": "",
-            "left-desc-color": "",
-            "left-btn-color": "#000000",
-            "left-text-bg-color": "",
-            "left-pre-title-font-family": "Helvetica, Arial, sans-serif",
-            "left-title-font-family": "Helvetica, Arial, sans-serif",
-            "left-desc-font-family": "Helvetica, Arial, sans-serif",
-            "left-btn-font-family": "Helvetica, Arial, sans-serif",
-            "left-btn-url": "",
-            "left-desc-line-height": 37,
-            "mobile-left-desc-line-height": 37,
-            "right-pre-title": "",
-            "right-title": "",
-            "right-desc": "",
-            "right-btn-text": "",
-            "right-pre-title-text-size": 10,
-            "mobile-right-pre-title-text-size": 10,
-            "right-title-text-size": 40,
-            "mobile-right-title-text-size": 10,
-            "right-desc-text-size": 26,
-            "mobile-right-desc-text-size": 10,
-            "right-btn-text-size": 10,
-            "mobile-right-btn-text-size": 10,
-            "right-pre-title-color": "",
-            "right-title-color": "",
-            "right-desc-color": "",
-            "right-btn-color": "#000000",
-            "right-text-bg-color": "",
-            "right-pre-title-font-family": "Helvetica, Arial, sans-serif",
-            "right-title-font-family": "Palatino, 'Palatino Linotype', 'Book Antiqua', serif",
-            "right-desc-font-family": "Palatino, 'Palatino Linotype', 'Book Antiqua', serif",
-            "right-btn-font-family": "Helvetica, Arial, sans-serif",
-            "right-btn-url": "",
-            "right-desc-line-height": 37,
-            "mobile-right-desc-line-height": 37,
-            "block-width": "medium",
-            "custom-block-width": 800,
-            "show-divider": false,
-            "block-height": 250
-          }
-        },
-        "1e9ef6ef-e36e-4033-b11d-6cb2fe73b07f": {
-          "type": "spacer-block",
-          "settings": {
-            "spacer-height": 125
+            "spacer": 125
           }
         }
       },
       "block_order": [
-        "45c0fc9f-a411-4079-b13a-be30d8bd59c0",
-        "0ab9828e-6218-433d-9eaa-dc0a5d98e272",
-        "1e9ef6ef-e36e-4033-b11d-6cb2fe73b07f"
+        "ac907b4a-cfe7-49cd-913d-4509b437a7a9",
+        "3eaedfea-6624-4ed6-bc5d-e6f877c40da3"
       ],
       "settings": {
       }
@@ -287,6 +234,7 @@
         "bf3d8aea-c64c-4a13-b639-7f3e6671830f": {
           "type": "product-card",
           "settings": {
+            "product-image": "shopify:\/\/shop_images\/220818_NinetyPercent_SS22_13_130_R1_1.png",
             "product-name": "<p>Mother of Pearl Buttons<\/p>",
             "product-origin": "Country, Country, Country",
             "product-description": "Our BioResin mother-of-pearl buttons are made in Italy with a resin created from trees, leaves and plant material to replace plastic-based and shell buttons. Replicating true mother of pearl’s iridescence, they are biodegradable and don’t release any toxic emissions.",
@@ -341,7 +289,7 @@
         "e4fa9727-450e-47c5-b1d1-04de97b54639": {
           "type": "spacer-block",
           "settings": {
-            "spacer-height": 200
+            "spacer-height": 20
           }
         },
         "4ac59d8f-6494-4312-b464-08f84797ce6a": {
@@ -737,7 +685,7 @@
     "0c1320cd-5c57-4238-8aca-39a48fca37d8",
     "74c1a040-e888-4c50-801a-593c3a2b7edf",
     "af04b12c-ee46-480d-b0a9-6d5837f918ad",
-    "9bfe33f4-efb1-4d89-93d5-3a1179d78328",
+    "b0e7c632-de50-4ff1-ad7c-cbf4f89ae078",
     "5888c222-629c-4403-bec1-d629050270e1",
     "99768ac2-09eb-40a4-a014-3e47cad3bd4f",
     "4262fd66-fc62-43c3-bfdb-65ec4a2b3a6b",

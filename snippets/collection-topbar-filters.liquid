@@ -257,10 +257,12 @@ function showClearFilter(){
         if (target.classList.contains("show-filter")){
           target.classList.remove("show-filter")
         }
-        document.querySelectorAll(".filter-options-list").forEach(item => {
-          item.classList.remove("show-filter")
-        })
-        target.classList.add("show-filter")
+        else {
+          target.classList.add("show-filter")
+          document.querySelectorAll(".filter-options-list").forEach(item => {
+            if (item !== target) item.classList.remove("show-filter");
+          })
+        }
       })
     })
   }

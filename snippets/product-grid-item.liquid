@@ -129,15 +129,15 @@ Arguments
         {%- endif -%}
 
         {% if settings.product_hover_multi_image %}
-          <ul class="image-list-{{ product.id }}">
+          <ul class="image-list-{{ product.id }} not-loaded">
             {% for image in product.images %}
                 {% if forloop.index == 1 %}
                     <li class="image-item-{{ product.id }} active">
-                      <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}">
+                      <img class="grid-product__image lazyload" loading="lazy" data-src="{{ image | img_url: 'grande' }}">
                     </li>
                 {% else %}    
                     <li class="image-item-{{ product.id }}">
-                      <img class="grid-product__image lazyload" src="{{ image | img_url: 'grande' }}">
+                      <img class="grid-product__image lazyload" loading="lazy" src="{{ image | img_url: 'grande' }}">
                     </li>
                 {% endif %}
             {% endfor %}
@@ -181,8 +181,8 @@ Arguments
       </div>
 
       <div class="grid-product__meta">
-        <div class="grid-product__title grid-product__title--{{ settings.type_product_style }}">{{ product.title }}</div>
-        <div class="grid-product__price">
+        <div class="grid-product__title grid-product__title--{{ settings.type_product_style }} custom-title">{{ product.title }}</div>
+        <div class="grid-product__price np-h6">
           {%- if on_sale -%}
             <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
             <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
@@ -224,9 +224,10 @@ Arguments
           {%- endif -%}
         </div>
         {%- if settings.vendor_enable -%}
-          <div class="grid-product__vendor">{{ product.vendor }}</div>
+          {% comment %} <div class="grid-product__vendor">{{ product.vendor }}</div> {% endcomment %}
           <div class="grid-product__vendor">{{ product.metafields.custom.material }}</div>
         {%- endif -%}
+        <div class="grid-product__material custom-material">{{ product.metafields.custom.material }}</div>
       </div>
     </a>
   </div>
@@ -299,11 +300,39 @@ Arguments
 
 
 {% style %}
+@keyframes skeleton-loading {
+    0% {
+      background-color: hsl(200, 20%, 95%);
+    }
+    100% {
+      background-color: hsl(200, 20%, 99%);
+    }
+  }
+  #CollectionAjaxContent .image-list-{{ product.id }}.not-loaded {
+    width: 470.327px;
+    height: 620.639px;
+    background-color: blue;
+    animation: skeleton-loading 1s linear infinite alternate;
+ }
+  #CollectionAjaxContent .custom-title {
+    font-family: "Silvana";
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.01em;
+  }
+  #CollectionAjaxContent .custom-material {
+    font-family: "Intervogue";
+    font-size: 12.5px;
+    line-height: 18px;
+    letter-spacing: 0.03em;
+  }
   #CollectionAjaxContent .image-list-{{ product.id }} {
       list-style: none;
       position: relative;
       overflow: hidden;
       margin: 0;
+      width: 470.327px;
+      height: 620.639px;
   }
   #CollectionAjaxContent .image-item-{{ product.id }} {
       position: absolute;
@@ -421,10 +450,6 @@ function changePreviousImage(productId, event) {
 // hover effect for mouseover
 {% if settings.product_hover_multi_image == true %}
   document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseover", (e)=>{
-    {% comment %} var arrowLeft = document.querySelector(".left-{{ product.id }}")
-    var arrowRight = document.querySelector(".right-{{ product.id }}")
-    arrowLeft.classList.add("show-arrow-{{ product.id }}")
-    arrowRight.classList.add("show-arrow-{{ product.id }}") {% endcomment %}
     var arrow = document.querySelectorAll(".arrow-{{ product.id }}")
     arrow.forEach(element=>{
       element.classList.add("show-arrow-{{ product.id }}")
@@ -433,10 +458,6 @@ function changePreviousImage(productId, event) {
   })
   // hover effect for mouseleave
   document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseleave", (e)=>{
-    {% comment %} var arrowLeft = document.querySelector(".left-{{ product.id }}")
-    var arrowRight = document.querySelector(".right-{{ product.id }}")
-    arrowLeft.classList.remove("show-arrow-{{ product.id }}")
-    arrowRight.classList.remove("show-arrow-{{ product.id }}") {% endcomment %}
     var arrow = document.querySelectorAll(".arrow-{{ product.id }}")
     arrow.forEach(element=>{
       element.classList.remove("show-arrow-{{ product.id }}")
@@ -458,4 +479,17 @@ function changePreviousImage(productId, event) {
     })
   })
 {% endif %}
+
+// content loader removing
+if(document.readyState === 'ready' || document.readyState === 'complete') {
+
+} else {
+  document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+      document.querySelectorAll(".not-loaded").forEach(item=>{
+        item.classList.remove("not-loaded")
+      })
+    }
+  }
+}
 </script>

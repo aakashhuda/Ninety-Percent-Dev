@@ -225,6 +225,7 @@ Arguments
         </div>
         {%- if settings.vendor_enable -%}
           <div class="grid-product__vendor">{{ product.vendor }}</div>
+          <div class="grid-product__vendor">{{ product.metafields.custom.material }}</div>
         {%- endif -%}
       </div>
     </a>

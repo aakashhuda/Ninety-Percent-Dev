@@ -239,7 +239,7 @@ function showClearFilter(){
           var index = window.location.search.indexOf("sort_by")
           switch (index) {
             case -1: url += `?sort_by=${e.target.dataset.name}`; break;
-            default: url += `&sort_by=${e.target.dataset.name}`;
+            default: url = window.location.search + `&sort_by=${e.target.dataset.name}`;
           }
         }
         else {
@@ -300,9 +300,7 @@ function showClearFilter(){
   }
   applyClickEventForFilter()
   applyClickEventForSorting()
-  {% comment %} applyMouseLeaveEventForFilter()
-  applyMouseLeaveEventForSorting() {% endcomment %}
-  sortingFunctionWithMultipleOptions()
+  sortingFunctionWithoutMultipleOptions()
   resetFilter()
   removeFilterOptionList()
   showClearFilter()

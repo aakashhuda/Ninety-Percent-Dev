@@ -225,9 +225,21 @@ Arguments
         </div>
         {%- if settings.vendor_enable -%}
           {% comment %} <div class="grid-product__vendor">{{ product.vendor }}</div> {% endcomment %}
-          <div class="grid-product__vendor">{{ product.metafields.custom.material }}</div>
+          <div class="grid-product__vendor">
+            {% comment %} {% for materiall in product.metafields.custom.materiall.value %}
+              {{ materiall }}
+            {% endfor %} {% endcomment %}
+          </div>
         {%- endif -%}
-        <div class="grid-product__material custom-material">{{ product.metafields.custom.material }}</div>
+        <div class="grid-product__material custom-material">
+          {% for materiall in product.metafields.custom.materiall.value %}
+            {% if forloop.last %}
+              <span>{{ materiall }}</span>
+            {% else %}
+            <span>{{ materiall }}, </span>
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
     </a>
   </div>

@@ -28,9 +28,9 @@
 
               {% else %}
                   {% if value.active %}
-                    <li class="filter-value-item active"><a href="{{ value.url_to_remove | append: '&filter.v.availability=1' }}">{{ value.label }}</a></li>
+                    <li class="filter-value-item active size-filter"><a data-url="{{ value.url_to_remove }}" href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
                   {% else %}
-                    <li class="filter-value-item"><a href="{{ value.url_to_add | append: '&filter.v.availability=1' }}">{{ value.label }}</a></li>
+                    <li class="filter-value-item inactive size-filter"><a data-url="{{ value.url_to_add }}" href="{{ value.url_to_add }}">{{ value.label }}</a></li>
                   {% endif %}
               {% endif %}
             {% endfor %}
@@ -210,6 +210,55 @@
   </style>
   
   <script>
+function filterSize() {
+  var sizeFilters = document.querySelectorAll(".active.size-filter")
+  sizeFilters.forEach(item=>{
+    item.addEventListener("click", (e)=>{
+      e.preventDefault()
+      console.log('test', e.target.dataset.url)
+      if (e.target.dataset.url.includes("option.size")){
+        var tempUrl = e.target.dataset.url
+      }
+      else {
+        var tempUrl = e.target.dataset.url.replace("&filter.v.availability=1", "")
+      }
+      var index = tempUrl.indexOf("?")
+      var length = tempUrl.length
+      var newParam = tempUrl.substr(index, length-1)
+      console.log(newParam)
+      if (newParam === '?filter.v.availability=1'){
+        window.location.search = ""
+      }
+      else {
+        window.location.search = newParam
+      }
+    })
+  })
+}
+
+function showActiveFilters(){
+  var sizeFilters = document.querySelectorAll(".inactive.size-filter")
+  sizeFilters.forEach(item=>{
+    item.addEventListener("click", (e)=>{
+      e.preventDefault()
+      var url;
+      console.log(e.target.dataset.url)
+      if (e.target.dataset.url.includes("availability")){
+        console.log('has')
+        url = e.target.dataset.url
+      }
+      else {
+        url = e.target.dataset.url + "&filter.v.availability=1"
+      }
+      var tempUrl = url
+      var index = tempUrl.indexOf("?")
+      var length = tempUrl.length
+      var newParam = tempUrl.substr(index, length-1)
+      window.location.search = newParam
+    })
+  })
+}
+
 function showClearFilter(){
     const activeFilters = document.querySelectorAll(".active-filter-item")
     if (activeFilters.length > 0) document.querySelector(".active-filter-clear-item").classList.remove("dont-show")
@@ -316,4 +365,6 @@ function showClearFilter(){
   resetFilter()
   removeFilterOptionList()
   showClearFilter()
+  filterSize()
+  showActiveFilters()
   </script>

@@ -43,70 +43,79 @@
       {% comment %} {{ customer.default_address | format_address }} {% endcomment %}
 
       {%- for address in customer.addresses -%}
-        <div id="EditDetails" class="form-vertical js-address-form text-left hide">
-          {%- form 'customer_address', address -%}
-    
-            <div class="grid grid--small">
-              <div class="grid__item small--one-whole">
-                <label for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>
-                <input type="text" id="AddressFirstName_{{form.id}}" class="input-full" placeholder="First Name here" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+        {% if address == customer.default_address %}
+          <div id="EditDetails" class="form-vertical js-address-form text-left hide">
+            {%- form 'customer_address', address -%}
+      
+              <div class="grid grid--small">
+                <div class="grid__item small--one-whole">
+                  <label for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>
+                  <input type="text" id="AddressFirstName_{{form.id}}" class="input-full" placeholder="First Name here" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+                </div>
+      
+                <div class="grid__item small--one-whole">
+                  <label for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}*</label>
+                  <input type="text" id="AddressLastName_{{form.id}}" class="input-full" placeholder="Last Name here" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+                </div>
+      
+                <div class="grid__item small--one-whole">
+                  <label for="Email">{{ 'customer.addresses.email' | t }}*</label>
+                  <input type="email" id="Email" class="input-full" placeholder="Email here" name="address[email]" value="{{customer.email}}" autocapitalize="words">
+                </div>
+      
+                <div class="grid__item small--one-whole">
+                  <label for="AddressPhone_{{form.id}}">{{ 'customer.addresses.phone' | t }}</label>
+                  <input type="tel" id="AddressPhone_{{form.id}}" placeholder="Phone no here" class="input-full" name="address[phone]" value="{{form.phone}}">
+                </div>
               </div>
-    
-              <div class="grid__item small--one-whole">
-                <label for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}*</label>
-                <input type="text" id="AddressLastName_{{form.id}}" class="input-full" placeholder="Last Name here" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
-              </div>
-    
-              <div class="grid__item small--one-whole">
-                <label for="Email">{{ 'customer.addresses.email' | t }}*</label>
-                <input type="email" id="Email" class="input-full" placeholder="Email here" name="address[email]" value="{{customer.email}}" autocapitalize="words">
-              </div>
-    
-              <div class="grid__item small--one-whole">
-                <label for="AddressPhone_{{form.id}}">{{ 'customer.addresses.phone' | t }}</label>
-                <input type="tel" id="AddressPhone_{{form.id}}" placeholder="Phone no here" class="input-full" name="address[phone]" value="{{form.phone}}">
-              </div>
-            </div>
-    
-            <label for="AddressAddress1_{{form.id}}">{{ 'customer.addresses.address' | t }}</label>
-            <input type="text" id="AddressAddress1_{{form.id}}" class="input-full" placeholder="Address Line 1" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
-    
-            <input type="text" id="AddressAddress2_{{form.id}}" class="input-full" placeholder="Address Line 2" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+      
+              <label for="AddressAddress1_{{form.id}}">{{ 'customer.addresses.address' | t }}</label>
+              <input type="text" id="AddressAddress1_{{form.id}}" class="input-full" placeholder="Address Line 1" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+      
+              <input type="text" id="AddressAddress2_{{form.id}}" class="input-full" placeholder="Address Line 2" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
 
-            <div class="grid grid--small">
-              <div class="grid__item small--one-whole">
-                {% comment %} <label for="County_{{form.id}}">{{ 'customer.addresses.county' | t }}</label> {% endcomment %}
-                <input type="text" id="County_{{form.id}}" class="input-full" placeholder="County" name="address[town]" value="" autocapitalize="characters">
+              <div class="grid grid--small">
+                <div class="grid__item small--one-whole">
+                  {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
+                  <input type="text" id="AddressCity_{{form.id}}" placeholder="Town" class="input-full" name="address[city]" value="{{form.city}}" autocapitalize="characters">
+                </div>
               </div>
-            </div>
-    
-            <div class="grid grid--small">
-              <div class="grid__item small--one-whole">
-                {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
-                <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+
+              <div class="grid grid--small">
+                <div class="grid__item small--one-whole">
+                  {% comment %} <label for="County_{{form.id}}">{{ 'customer.addresses.county' | t }}</label> {% endcomment %}
+                  <input type="text" id="AddressProvince_{{form.id}}" class="input-full" placeholder="County" name="address[province]" value="{{form.province}}" autocapitalize="characters">
+                </div>
               </div>
-            </div>
-    
-            <div class="grid grid--small">
-              <div class="grid__item small--one-whole">
-                {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
-                <input type="text" id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full" name="address[country]" value="{{customer.default_address.country}}" autocapitalize="characters">
+      
+              <div class="grid grid--small">
+                <div class="grid__item small--one-whole">
+                  {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
+                  <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+                </div>
               </div>
-            </div>
-    
-            <p>
-              <label for="addresses-update-submit" class="hidden-label">{{ 'customer.addresses.update' | t }}</label>
-              <button type="submit" id="addresses-update-submit" class="btn echo-btn">
-                {{ 'customer.addresses.update_account_details' | t }}
-              </button>
-            </p>
-            <p>
-              <label for="addresses-cancel-submit" class="hidden-label">{{ 'customer.addresses.cancel' | t }}</label>
-              <button type="button" id="addresses-cancel-submit" class="btn echo-btn">{{ 'customer.addresses.cancel' | t }}</button>
-            </p>
-            <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
-          {%- endform -%}
-        </div>
+      
+              <div class="grid grid--small">
+                <div class="grid__item small--one-whole">
+                  {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
+                  <input type="text" id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full" name="address[country]" value="{{customer.default_address.country}}" autocapitalize="characters">
+                </div>
+              </div>
+      
+              <p>
+                <label for="addresses-update-submit" class="hidden-label">{{ 'customer.addresses.update' | t }}</label>
+                <button type="submit" id="addresses-update-submit" class="btn echo-btn">
+                  {{ 'customer.addresses.update_account_details' | t }}
+                </button>
+              </p>
+              <p>
+                <label for="addresses-cancel-submit" class="hidden-label">{{ 'customer.addresses.cancel' | t }}</label>
+                <button type="button" id="addresses-cancel-submit" class="btn echo-btn">{{ 'customer.addresses.cancel' | t }}</button>
+              </p>
+              <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
+            {%- endform -%}
+          </div>
+        {% endif %}
       {%- endfor -%}
     </div>
   </div>

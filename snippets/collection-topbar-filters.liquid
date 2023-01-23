@@ -19,10 +19,19 @@
           </li>
           <ul class="filter-options-list filter-{{ filter_label }}-options">
             {% for value in filter.values %}
-              {% if value.active %}
-                <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+              {% if filter_label != 'Size' %}
+                {% if value.active %}
+                  <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+                {% else %}
+                  <li class="filter-value-item"><a href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+                {% endif %}
+
               {% else %}
-                <li class="filter-value-item"><a href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+                  {% if value.active %}
+                    <li class="filter-value-item active"><a href="{{ value.url_to_remove | append: '&filter.v.availability=1' }}">{{ value.label }}</a></li>
+                  {% else %}
+                    <li class="filter-value-item"><a href="{{ value.url_to_add | append: '&filter.v.availability=1' }}">{{ value.label }}</a></li>
+                  {% endif %}
               {% endif %}
             {% endfor %}
             
@@ -181,6 +190,9 @@
     }
     .dont-show {
         display: none;
+    }
+    .filter-Availability {
+      display: none;
     }
 
     @media (max-width: 768px) {

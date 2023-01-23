@@ -55,11 +55,21 @@
 
   <div class="topbar-active-filter-section">
     {% for filter in filters %}
+      {% if filter.label != 'Size' %}
         {% for value in filter.values %}
+          {% assign value_label = value.label | replace: ' ', '-' %}
             {% if value.active %}
-            <a href="{{ value.url_to_remove }}" class="active-filter-item"><span>{{ value.label }}</span><span>X</span></a>
+            <a href="{{ value.url_to_remove }}" class="active-filter-item item-{{ value_label }}"><span>{{ value.label }}</span><span>X</span></a>
             {% endif %}
         {% endfor %}
+      {% else %}
+        {% for value in filter.values %}
+          {% assign value_label = value.label | replace: ' ', '-' %}
+            {% if value.active %}
+              <a href="{{ value.url_to_remove }}" data-url="{{ value.url_to_remove }}" class="inactive-filter-item item-{{ value_label }} active size-filter"><span>{{ value.label }}</span><span>X</span></a>
+            {% endif %}
+        {% endfor %}
+      {% endif %}
     {% endfor %}
     <div class="active-filter-clear-item filter-reset dont-show"><span>CLEAR ALL</span></div>
   </div>
@@ -71,7 +81,7 @@
         align-items: center;
         margin-bottom: 32px;
     }
-    .active-filter-item, .active-filter-clear-item {
+    .active-filter-item, .active-filter-clear-item, .inactive-filter-item {
         min-width: 100px;
         border: 0.5px solid rgba(43, 39, 37, 0.25);
         padding: 0.2em 0.7em;
@@ -80,6 +90,7 @@
         align-items: center;
         margin-right: 15px;
         font-size: 12px;
+        text-transform: uppercase;
     }
     .active-filter-clear-item {
         justify-content: center;
@@ -195,6 +206,10 @@
       display: none;
     }
 
+    .item-In-stock {
+      display: none;
+    }
+
     @media (max-width: 768px) {
         .topbar-filter-section {
             flex-direction: column;
@@ -210,12 +225,11 @@
   </style>
   
   <script>
-function filterSize() {
+function sizeFilterRemoval() {
   var sizeFilters = document.querySelectorAll(".active.size-filter")
   sizeFilters.forEach(item=>{
     item.addEventListener("click", (e)=>{
       e.preventDefault()
-      console.log('test', e.target.dataset.url)
       if (e.target.dataset.url.includes("option.size")){
         var tempUrl = e.target.dataset.url
       }
@@ -225,7 +239,6 @@ function filterSize() {
       var index = tempUrl.indexOf("?")
       var length = tempUrl.length
       var newParam = tempUrl.substr(index, length-1)
-      console.log(newParam)
       if (newParam === '?filter.v.availability=1'){
         window.location.search = ""
       }
@@ -236,7 +249,7 @@ function filterSize() {
   })
 }
 
-function showActiveFilters(){
+function sizeFilterAddition(){
   var sizeFilters = document.querySelectorAll(".inactive.size-filter")
   sizeFilters.forEach(item=>{
     item.addEventListener("click", (e)=>{
@@ -244,7 +257,6 @@ function showActiveFilters(){
       var url;
       console.log(e.target.dataset.url)
       if (e.target.dataset.url.includes("availability")){
-        console.log('has')
         url = e.target.dataset.url
       }
       else {
@@ -365,6 +377,6 @@ function showClearFilter(){
   resetFilter()
   removeFilterOptionList()
   showClearFilter()
-  filterSize()
-  showActiveFilters()
+  sizeFilterRemoval()
+  sizeFilterAddition()
   </script>

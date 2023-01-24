@@ -350,18 +350,6 @@ function showClearFilter(){
       }
     })
   }
-  function applyMouseLeaveEventForFilter(){
-    document.querySelectorAll(".filter-options-list").forEach(list=>{
-      list.addEventListener("mouseleave", (e)=>{
-        e.target.classList.remove("show-filter")
-      })
-    })
-  }
-  function applyMouseLeaveEventForSorting(){
-    document.querySelector(".sort-list").addEventListener("mouseleave", (e)=>{
-      e.target.classList.remove("show-sort-list")
-    })
-  }
   function removeFilterOptionList(){
     var topBarFilterSection = document.querySelector(".topbar-filter-section")
     topBarFilterSection.addEventListener('click', (e)=>{

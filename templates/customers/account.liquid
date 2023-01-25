@@ -10,13 +10,20 @@
     </nav>
   {% endif %}
 
-  <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
+  {% comment %} <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
     <h1 class="section-header__title">{{ 'customer.addresses.title' | t }}</h1>
     <button type="button" class="btn btn--secondary btn--small section-header__link address-new-toggle js-no-transition">{{ 'customer.addresses.add_new' | t }}</a>
-  </header>
+  </header> {% endcomment %}
 
   <div class="grid">
-    <div class="grid__item medium-up--two-thirds medium-up--push-one-sixth text-center">
+    <div class="grid__item medium-up--two-fifths page-links">
+      <a class="page-link" href="#" data-handle="none">Orders & Return</a>
+      <a class="page-link" href="#" data-handle="none">My Wishlist</a>
+      <a class="page-link" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
+      <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
+    </div>
+
+    <div class="grid__item medium-up--three-fifths">
 
       <div id="AddressNewForm" class="form-vertical js-address-form text-left hide">
         {% form 'customer_address', customer.new_address %}
@@ -98,16 +105,16 @@
         List all customer addresses with a unique edit form.
         Also add pagination in case they have a large number of addresses
       {% endcomment %}
+      <header>
+        <div class="np-h1 account-title">{{ 'customer.account.title' | t }}</div>
+      </header>
+      <div class="np-h10 account-sub-header">{{ 'customer.account.details' | t }}</div>
       {% for address in customer.addresses %}
-        {% if address == customer.default_address %}
-          <p class="h4">{{ 'customer.addresses.default' | t }}</p>
-        {% endif %}
-
         {{ address | format_address }}
 
         <p>
           <button type="button" class="btn btn--small address-edit-toggle" data-form-id="{{ address.id }}">{{ 'customer.addresses.edit' | t }}</button>
-          <button type="button" class="btn btn--secondary btn--small address-delete" data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">{{ 'customer.addresses.delete' | t }}</button>
+          {% comment %} <button type="button" class="btn btn--secondary btn--small address-delete" data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">{{ 'customer.addresses.delete' | t }}</button> {% endcomment %}
         </p>
 
         <div id="EditAddress_{{ address.id }}" class="form-vertical js-address-form text-left hide">
@@ -195,3 +202,90 @@
 </div>
 
 {% endpaginate %}
+
+{% style %}
+/* New development css scripts */
+.account-title {
+  margin-bottom: 44px;
+}
+.account-sub-header {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.account-sub-header::after {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  content: "";
+  width: 581px;
+  height: 1px;
+  background-color: #2B2725;
+}
+.np-h1, .np-h2, .np-h3, .np-h4 {
+  font-family: 'Silvana';
+  font-weight: 400;
+  color: #2B2725;
+}
+.np-h1 {
+  font-size: 100px;
+  line-height: 105px;
+  letter-spacing: -0.03em;
+}
+.np-h2 {
+  font-size: 70px;
+  line-height: 75px;
+  letter-spacing: -0.01em;
+}
+.np-h3 {
+  font-size: 26px;
+  line-height: 36px;
+  letter-spacing: -0.01em;
+}
+.np-h4 {
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+}
+.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
+  font-style: italic;
+}
+.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
+  font-family: 'Intervogue';
+  font-weight: 400;
+  color: #2B2725;
+}
+.np-h5 {
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+}
+.np-h6 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.04em;
+}
+.np-h7 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+}
+.np-h8 {
+  font-size: 22px;
+  line-height: 32px;
+  letter-spacing: 0.04em;
+}
+.np-h9 {
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
+}
+.np-h10 {
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+.np-h6, .np-h8, .np-h9, .np-h10 {
+  text-transform: uppercase;
+}
+{% endstyle %}

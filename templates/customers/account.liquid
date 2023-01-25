@@ -19,8 +19,8 @@
     <div class="grid__item medium-up--two-fifths page-links">
       <a class="page-link" href="#" data-handle="none">Orders & Return</a>
       <a class="page-link" href="#" data-handle="none">My Wishlist</a>
-      <a class="page-link" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
-      <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
+      <a class="page-link {% if request.path == routes.account_url %}active{% endif %}" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
+      <a class="page-link {% if request.path == routes.account_logout_url %}active{% endif %}" class="" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
     </div>
 
     <div class="grid__item medium-up--three-fifths">
@@ -108,85 +108,100 @@
       <header>
         <div class="np-h1 account-title">{{ 'customer.account.title' | t }}</div>
       </header>
-      <div class="np-h10 account-sub-header">{{ 'customer.account.details' | t }}</div>
+      <div class="required-text hide">*Required</div>
+      <div class="account-sub-header">{{ 'customer.account.details' | t }}</div>
       {% for address in customer.addresses %}
-        {{ address | format_address }}
+        {% comment %} {{ address | format_address }} {% endcomment %}
+        <div id="customer-info" class="">
+          <div class="customer-info">
+            <div>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</div>
+            <div>{{ customer.default_address.address1 }}</div>
+            <div>{{ customer.default_address.city }}, {{ customer.default_address.province }}</div>
+            <div><span>{{ customer.default_address.zip }}</span>, <span>{{ customer.default_address.country }}</span></div>
+          </div>
+  
+          <div class="customer-contact-info">
+            <div>Email: <span class="email">{{ customer.email }}</span></div>
+            <div>Telephone:  {{ customer.default_address.phone }}</div>
+          </div>
+        </div>
 
         <p>
-          <button type="button" class="btn btn--small address-edit-toggle" data-form-id="{{ address.id }}">{{ 'customer.addresses.edit' | t }}</button>
+          <button type="button" class="update-account-link address-edit-toggle np-h10 main-update-btn" data-form-id="{{ address.id }}">Update Account Details</button>
           {% comment %} <button type="button" class="btn btn--secondary btn--small address-delete" data-form-id="{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">{{ 'customer.addresses.delete' | t }}</button> {% endcomment %}
         </p>
 
-        <div id="EditAddress_{{ address.id }}" class="form-vertical js-address-form text-left hide">
+        <div id="EditAddress_{{ address.id }}" class="form-vertical js-address-form text-left hide edit-address">
           {% form 'customer_address', address %}
-
-            <hr class="hr--large" />
-            <h2>{{ 'customer.addresses.edit_address' | t }}</h2>
+            {% comment %} <h2>{{ 'customer.addresses.edit_address' | t }}</h2> {% endcomment %}
 
             <div class="grid grid--small">
-              <div class="grid__item one-half small--one-whole">
-                <label for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}</label>
-                <input type="text" id="AddressFirstName_{{form.id}}" class="input-full" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+              <div class="grid__item one-whole small--one-whole">
+                <label class="np-h10" for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>
+                <input type="text" placeholder="First Name Here" id="AddressFirstName_{{form.id}}" class="input-full" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words" required>
               </div>
 
-              <div class="grid__item one-half small--one-whole">
-                <label for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}</label>
-                <input type="text" id="AddressLastName_{{form.id}}" class="input-full" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+              <div class="grid__item one-whole small--one-whole">
+                <label class="np-h10" for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}*</label>
+                <input type="text" placeholder="Last Name Here" id="AddressLastName_{{form.id}}" class="input-full" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words" required>
+              </div>
+              
+              <div class="grid__item one-whole small--one-whole">
+                <label class="np-h10" for="AddressPhone_{{form.id}}">Phone Number</label>
+                <input type="tel" placeholder="Phone Number Here" id="AddressPhone_{{form.id}}" class="input-full" name="address[phone]" value="{{form.phone}}" required>
               </div>
             </div>
+            {% comment %} <label for="AddressCompany_{{form.id}}">{{ 'customer.addresses.company' | t }}</label>
+            <input type="text" id="AddressCompany_{{form.id}}" class="input-full" name="address[company]" value="{{form.company}}" autocapitalize="words"> {% endcomment %}
 
-            <label for="AddressCompany_{{form.id}}">{{ 'customer.addresses.company' | t }}</label>
-            <input type="text" id="AddressCompany_{{form.id}}" class="input-full" name="address[company]" value="{{form.company}}" autocapitalize="words">
+            <label class="np-h10" for="AddressAddress1_{{form.id}}">Address</label>
+            <input type="text" placeholder="Address Line 1" id="AddressAddress1_{{form.id}}" class="input-full" name="address[address1]" value="{{form.address1}}" autocapitalize="words" required>
 
-            <label for="AddressAddress1_{{form.id}}">{{ 'customer.addresses.address1' | t }}</label>
-            <input type="text" id="AddressAddress1_{{form.id}}" class="input-full" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+            {% comment %} <label for="AddressAddress2_{{form.id}}">{{ 'customer.addresses.address2' | t }}</label> {% endcomment %}
+            <input type="text" placeholder="Address Line 2" id="AddressAddress2_{{form.id}}" class="input-full" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
 
-            <label for="AddressAddress2_{{form.id}}">{{ 'customer.addresses.address2' | t }}</label>
-            <input type="text" id="AddressAddress2_{{form.id}}" class="input-full" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
-
-            <label for="AddressCity_{{form.id}}">{{ 'customer.addresses.city' | t }}</label>
-            <input type="text" id="AddressCity_{{form.id}}" class="input-full" name="address[city]" value="{{form.city}}" autocapitalize="words">
+            {% comment %} <label for="AddressCity_{{form.id}}">{{ 'customer.addresses.city' | t }}</label> {% endcomment %}
+            <input type="text" placeholder="Town" id="AddressCity_{{form.id}}" class="input-full" name="address[city]" value="{{form.city}}" autocapitalize="words" required>
 
             <div
               class="js-address-country"
               data-country-id="AddressCountry_{{form.id}}"
               data-province-container-id="AddressProvinceContainer_{{form.id}}"
               data-province-id="AddressProvince_{{form.id}}">
-              <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label>
-              <select id="AddressCountry_{{form.id}}" class="input-full" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+              {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
+              <select id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full" name="address[country]" data-default="{{form.country}}" required>{{ country_option_tags }}</select>
             </div>
 
             <div id="AddressProvinceContainer_{{form.id}}" style="display: none;">
-              <label for="AddressProvince_{{form.id}}">{{ 'customer.addresses.province' | t }}</label>
-              <select id="AddressProvince_{{form.id}}" class="input-full" name="address[province]" data-default="{{form.province}}"></select>
+              {% comment %} <label for="AddressProvince_{{form.id}}">{{ 'customer.addresses.province' | t }}</label> {% endcomment %}
+              <select id="AddressProvince_{{form.id}}" placeholder="County" class="input-full" name="address[province]" data-default="{{form.province}}" required></select>
             </div>
 
             <div class="grid grid--small">
-              <div class="grid__item one-half small--one-whole">
-                <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label>
-                <input type="text" id="AddressZip_{{form.id}}" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
-              </div>
-
-              <div class="grid__item one-half small--one-whole">
-                <label for="AddressPhone_{{form.id}}">{{ 'customer.addresses.phone' | t }}</label>
-                <input type="tel" id="AddressPhone_{{form.id}}" class="input-full" name="address[phone]" value="{{form.phone}}">
+              <div class="grid__item one-whole small--one-whole">
+                {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
+                <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters" required>
               </div>
             </div>
 
-            <p>
+            {% comment %} <p>
               {{ form.set_as_default_checkbox }}
               <label for="address_default_address_{{form.id}}" class="inline">{{ 'customer.addresses.set_default' | t }}</label>
-            </p>
+            </p> {% endcomment %}
 
             <p>
-              <button type="submit" class="btn">
-                {{ 'customer.addresses.update' | t }}
+              <button type="submit" class="update-account-link np-h10 secondary-tgl-btn">
+                Update Account Details
               </button>
             </p>
             <p>
-              <button type="button" class="text-link address-edit-toggle" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</button>
+              <button type="button" class="text-link update-account-link np-h10 address-edit-toggle secondary-tgl-btn" data-form-id="{{ form.id }}">{{ 'customer.addresses.cancel' | t }}</button>
             </p>
           {% endform %}
+        </div>
+        <div class="account-manipulation-links">
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
         </div>
 
         <hr class="hr--medium">
@@ -205,12 +220,30 @@
 
 {% style %}
 /* New development css scripts */
+
+.required-text {
+  margin-bottom: 41px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
 .account-title {
   margin-bottom: 44px;
+  text-transform: capitalize;
 }
 .account-sub-header {
   position: relative;
   margin-bottom: 30px;
+  margin-bottom: 21px;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
 }
 
 .account-sub-header::after {
@@ -218,10 +251,109 @@
   top: 35px;
   left: 0;
   content: "";
-  width: 581px;
+  width: 74%;
+  max-width: 581px;
   height: 1px;
   background-color: #2B2725;
 }
+
+.customer-info {
+  margin-bottom: 20px;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+}
+
+.customer-contact-info {
+  margin-bottom: 21px;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+}
+
+.customer-contact-info .email{
+  text-transform: lowercase;
+}
+
+.update-account-link {
+  border: 0.75px solid #2B2725;
+  background-color: white;
+  display: block;
+  padding: 0.8em 0.5em;
+  width: 347px;
+  text-align: center;
+}
+
+.update-account-link:hover {
+  color: #ffffff;
+  background-color: #111111;
+}
+
+.account-manipulation-links {
+  margin-top: 29px;
+}
+
+.account-manipulation-link {
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 14.4px;
+  letter-spacing: 0.05em;
+  color: #000000;
+}
+
+input, select{
+  border: none;
+  border-bottom: 1px solid;
+  border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+  border-color: var(--colorBorder);
+  width: 100%;
+  max-width: 581px;
+  padding: 8px 10px;
+  padding-left: 0;
+  border-radius: 0;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+
+input:active,
+input:focus,
+select:active,
+select:focus {
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+.edit-address {
+  margin-top: 39px;
+}
+
+.edit-address label:not(.variant__button-label), .label {
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+
+.page-links {
+  display: flex;
+  flex-direction: column;
+  padding-top: 42px;
+  padding-left: 70px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+.page-link.active {
+  text-decoration: underline;
+}
+
 .np-h1, .np-h2, .np-h3, .np-h4 {
   font-family: 'Silvana';
   font-weight: 400;
@@ -288,4 +420,53 @@
 .np-h6, .np-h8, .np-h9, .np-h10 {
   text-transform: uppercase;
 }
+
+@media (max-width: 1000px) {
+  .account-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-links {
+    display: flex;
+    flex-direction: row;
+    padding-left: 17px;
+  }
+  .page-link {
+    margin: 0 5px;
+  }
+  .account-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+}
 {% endstyle %}
+
+<script>
+  function toggleMainUpdateBtn(){
+    const mainBtn = document.querySelector(".main-update-btn")
+    const customerInfo = document.querySelector(".customer-info")
+    const customerContactInfo = document.querySelector(".customer-contact-info")
+    const requireText = document.querySelector(".required-text")
+    mainBtn.addEventListener('click', ()=>{
+      if (!mainBtn.classList.contains("hide")){
+        mainBtn.classList.add("hide")
+      }
+      customerInfo.classList.add("hide")
+      customerContactInfo.classList.add("hide")
+      requireText.classList.remove("hide")
+    })
+    const secondaryBtns = document.querySelectorAll(".secondary-tgl-btn")
+    secondaryBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        mainBtn.classList.remove('hide')
+        customerInfo.classList.remove("hide")
+        customerContactInfo.classList.remove("hide")
+        requireText.classList.add("hide")
+      })
+    })
+  }
+  toggleMainUpdateBtn()
+</script>

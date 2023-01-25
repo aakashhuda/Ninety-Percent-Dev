@@ -26,23 +26,23 @@
             <div class="grid grid--small">
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormFName-{{ blockId }}">{{ 'contact.form.firstname' | t }}<span>*</span></label>
-                <input type="text" id="ContactFormFName-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[firstname]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.first_name }}{% endif %}" required>
+                <input placeholder="First Name*" type="text" id="ContactFormFName-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[firstname]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.first_name }}{% endif %}" required>
               </div>
               
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormLName-{{ blockId }}">{{ 'contact.form.lastname' | t }}</label>
-                <input type="text" id="ContactFormLName-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[lastname]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.last_name }}{% endif %}">
+                <input placeholder="Last Name*" type="text" id="ContactFormLName-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[lastname]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.last_name }}{% endif %}">
               </div>
               
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormEmail-{{ blockId }}">{{ 'contact.form.email' | t }}<span>*</span></label>
-                <input type="email" id="ContactFormEmail-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
+                <input placeholder="Email*" type="email" id="ContactFormEmail-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" required>
               </div>
               
               {% if block.settings.show_phone %}
                 <div class="grid__item one-whole">
                   <label for="ContactFormPhone-{{ blockId }}">{{ 'contact.form.phone' | t }}</label>
-                  <input type="tel" id="ContactFormPhone-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                  <input placeholder="Phone Number*" type="tel" id="ContactFormPhone-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
                 </div>
               {% endif %}
               
@@ -62,19 +62,19 @@
               
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormOrder-{{ blockId }}">{{ 'contact.form.order' | t }}</label>
-              	<input type="text" id="ContactFormOrder-{{ blockId }}" class="input-full contact-order commonHide contact-input" name="contact[order]" value="{% if form.order %}{{ form.order }}{% endif %}">
+              	<input placeholder="Order Now" type="text" id="ContactFormOrder-{{ blockId }}" class="input-full contact-order commonHide contact-input" name="contact[order]" value="{% if form.order %}{{ form.order }}{% endif %}">
               </div>
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormPublisher-{{ blockId }}">{{ 'contact.form.publisher' | t }}</label>
-              	<input type="text" id="ContactFormPublisher-{{ blockId }}" class="input-full publisher commonHide contact-input" name="contact[publisher]" value="{% if form.publisher %}{{ form.publisher }} {% endif %}">
+              	<input placeholder="Publisher" type="text" id="ContactFormPublisher-{{ blockId }}" class="input-full publisher commonHide contact-input" name="contact[publisher]" value="{% if form.publisher %}{{ form.publisher }} {% endif %}">
               </div>
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormCompany-{{ blockId }}">{{ 'contact.form.company' | t }}</label>
-              	<input type="text" id="ContactFormCompany-{{ blockId }}" class="input-full company commonHide contact-input" name="contact[company]" value="{% if form.company %}{{ form.company }} {% endif %}">
+              	<input placeholder="Company" type="text" id="ContactFormCompany-{{ blockId }}" class="input-full company commonHide contact-input" name="contact[company]" value="{% if form.company %}{{ form.company }} {% endif %}">
               </div>
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormWebsite-{{ blockId }}">{{ 'contact.form.website' | t }}</label>
-              	<input type="text" id="ContactFormWebsite-{{ blockId }}" class="input-full website commonHide contact-input" name="contact[website]" value="{% if form.website %}{{ form.website }} {% endif %}">
+              	<input placeholder="Messenger*" type="text" id="ContactFormWebsite-{{ blockId }}" class="input-full website commonHide contact-input" name="contact[website]" value="{% if form.website %}{{ form.website }} {% endif %}">
               </div>
               
             </div>
@@ -105,7 +105,12 @@
 </div>
 {% style %}
 
-.input-label {
+.contact-us-content label, .contact-us-content .label-info {
+  display: block;
+  margin-bottom: 0;
+}
+
+label.input-label {
   font-family: 'Intervogue';
   font-style: normal;
   font-weight: 400;
@@ -113,6 +118,7 @@
   line-height: 21px;
   letter-spacing: 0.05em;
   color: #2B2725;
+  text-transform: capitalize;
 }
 
 .form-vertical .contact-input, .form-vertical select.contact-input {

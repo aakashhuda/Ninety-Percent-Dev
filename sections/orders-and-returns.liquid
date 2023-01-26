@@ -1,17 +1,373 @@
-{% schema %}
-  {
-    "name": "Order and Retruns",
-    "settings": [],
-    "presets": [
-        {
-            "name": "Order and Returns"
-        }
-    ]
+{%- assign blockId = block.id -%}
+{% if product %}
+  {%- assign blockId = block.id | append: product.id -%}
+{% endif %}
+
+<div class="index-section">
+  <div class="page-width">
+
+    <div class="grid orders-returns-content">
+      <div class="grid-item medium-up--two-fifths page-links">
+        <a class="page-link {% if request.path == '/pages/contact' %}active{% endif %}" href="/pages/contact" data-handle="none">Contact Us</a>
+        <a class="page-link {% if request.path == '/pages/new-faq' %}active{% endif %}" href="/new-faq" data-handle="none">FAQs</a>
+        <a class="page-link" href="#" data-handle="none">Returns, Refunds & Exchanges</a>
+        <a class="page-link" href="#" data-handle="none">Payment, Promos & Giftcards</a>
+      </div>
+      <div class="grid__item{% if block.settings.narrow_column %} medium-up--three-quarters medium-up--push-one-eighth{% endif %} medium-up--three-fifths">
+        <header>
+          <div class="np-h1 page-title">Orders & Returns</div>
+        </header>
+          {% for order in customer.orders %}
+            <div class="order-container-{{ order.id }} order-container">
+              <div class="order-meta">
+                <div class="order-date">
+                  <div class="order-date-key">Order Date</div>
+                  <div class="order-date-value">
+                    {% assign date = order.created_at | split: " " %}
+                    {{ date[0] }}
+                  </div>
+                </div>
+                <div class="order-number">
+                  <div class="order-number-key">Order Number</div>
+                  <div class="order-number-value">{{ order.id }}</div>
+                </div>
+                <div class="order-status">
+                  <div class="order-status-key">Order Status</div>
+                  <div class="order-status-value">{{ order.fulfillment_status_label }}</div>
+                </div>
+              </div>
+              <div class="order-line-{{ order.id }} order-line">
+                <hr class="line-css">
+                <svg class="icon-down" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.49999 0.750016L4.75002 4.49999L1.00002 0.750014" stroke="#2B2725"/>
+                </svg>
+              </div>
+              
+              {% for item in order.line_items %}
+                <div class="order-details-{{ order.id }} order-details">
+                  <div class="product-image">
+                    <img src="{{ item.image | img_url: 'grande' }}" class="order-image">
+                  </div>
+                  <div class="product-details">
+                    <div class="product-name np-h10">{{ item.title }}</div>
+                    <div class="product-size">
+                      {% for variant in item.options_with_values %}
+                        {% if variant.name == "Size" %}
+                          Size: {{ variant.value }}
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                    <div class="product-quantity">Quantity: {{ item.quantity }}</div>
+                    <div class="product-price">{{ item.final_line_price | money }}</div>
+                    <div class="customer-name">Delivered to: <br>{{ order.customer.name }}</div>
+                    {% if order.shipping_address %}
+                      <div class="product-billing-address">{{ order.shipping_address.address1 }}</div>
+                      <div class="town-county">{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</div>
+                      <div class="postcode-country">{{ order.shipping_address.zip }}, {{ order.shipping_address.country }}</div>
+                    {% endif %}
+                    <div class="return-link">RETURNS</div>
+                  </div>
+                </div>
+                <hr class="item-hr">
+              {% endfor %}
+            </div>
+            {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% style %}
+
+hr.item-hr {
+  margin-bottom: 65px;
+}
+
+hr.line-css {
+  background: #2B2725;
+  height: 1px;
+  border: none;
+  color: #2B2725;
+}
+
+.order-image {
+  max-width: 164px;
+}
+
+.order-date {
+  margin-right: 118px;
+}
+
+.order-details {
+  display: flex;
+}
+
+.order-number {
+  margin-right: 77px;
+}
+
+.product-image {
+  margin-right: 73px;
+}
+
+.order-date-key, .order-status-key, .order-number-key {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: rgba(43, 39, 37, 0.5);
+  margin-bottom: 3px;
+}
+
+.order-date-value, 
+.order-status-value, 
+.order-number-value, 
+.product-size, 
+.product-price, 
+.customer-name, 
+.product-billing-address, 
+.town-county, 
+.postcode-country,
+.product-quantity,
+div.return-link {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
+.product-quantity {
+  margin-bottom: 15px;
+}
+
+.product-price {
+  margin-bottom: 15px;
+}
+
+.order-meta {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 6px;
+}
+
+.order-line {
+  position: relative;
+}
+
+.icon-down {
+  position: absolute;
+  top: -12px;
+  right: 0;
+}
+
+.orders-returns-content label, .orders-returns-content .label-info {
+  display: block;
+  margin-bottom: 0;
+}
+
+label.input-label {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  text-transform: capitalize;
+}
+
+.form-vertical .contact-input, .form-vertical select.contact-input {
+  margin-bottom: 51px;
+}
+.required-text {
+  margin-bottom: 48px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  text-align: start;
+}
+  .description {
+    margin-bottom: 38px;
+    max-width: 585px;
   }
-{% endschema %}
+  .orders-returns-content {
+    display: flex;
+    flex-direction: row;
+  }
+  .success-section, .submission-with-error {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  #contact_form label span{
+  	color:#fd0000;
+    font-size: 16px;
+    position: absolute;
+  }
+  input, select, textarea{
+    border: none;
+    border-bottom: 1px solid;
+    border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+    border-color: var(--colorBorder);
+    width: 100%;
+    max-width: 581px;
+    padding: 8px 10px;
+    padding-left: 0;
+    border-radius: 0;
+    font-size: 12.5px;
+    line-height: 21px;
+    letter-spacing: 0.05em;
+  }
+  .page-links {
+  display: flex;
+  flex-direction: column;
+  padding-top: 42px;
+  padding-left: 70px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+  .page-link.active {
+    text-decoration: underline;
+  }
 
-{% stylesheet %}
-{% endstylesheet %}
+  input:active,
+  input:focus,
+  select:active,
+  select:focus {
+    border: none;
+    border-bottom: 1px solid;
+    outline: none;
+  }
+  textarea {
+    border: 1px solid #2B2725;
+  }
 
-{% javascript %}
-{% endjavascript %}
+  div.return-link {
+    border: 0.75px solid #2B2725;
+    background-color: white;
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin-top: 32px;
+    margin-bottom: 20px;
+    max-width: 126px;
+    padding: 6px 10px;
+  }
+
+  div.return-link:hover {
+    color: #ffffff;
+    background-color: #111111;
+  }
+
+  .page-title {
+    margin-bottom: 42px;
+  }
+
+  .np-h1, .np-h2, .np-h3, .np-h4 {
+    font-family: 'Silvana';
+    font-weight: 400;
+    color: #2B2725;
+  }
+
+.np-h1 {
+  font-size: 100px;
+  line-height: 105px;
+  letter-spacing: -0.03em;
+}
+.np-h2 {
+  font-size: 70px;
+  line-height: 75px;
+  letter-spacing: -0.01em;
+}
+.np-h3 {
+  font-size: 26px;
+  line-height: 36px;
+  letter-spacing: -0.01em;
+}
+.np-h4 {
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+}
+.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
+  font-style: italic;
+}
+.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
+  font-family: 'Intervogue';
+  font-weight: 400;
+  color: #2B2725;
+}
+.np-h5 {
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+}
+.np-h6 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.04em;
+}
+.np-h7 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+}
+.np-h8 {
+  font-size: 22px;
+  line-height: 32px;
+  letter-spacing: 0.04em;
+}
+.np-h9 {
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
+}
+.np-h10 {
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+.np-h6, .np-h8, .np-h9, .np-h10 {
+  text-transform: uppercase;
+}
+
+@media (max-width: 1000px) {
+  .page-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-links {
+    padding-left: 17px;
+  }
+  .page-link {
+    margin: 0 5px;
+  }
+  .page-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+  .orders-returns-content {
+    flex-direction: column;
+  }
+}
+
+
+{% endstyle %}

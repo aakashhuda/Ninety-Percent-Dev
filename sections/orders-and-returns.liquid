@@ -38,10 +38,10 @@
               </div>
               <div class="order-line-{{ order.id }} order-line {{ order.id }}">
                 <hr class="line-css">
-                <svg class="icon-down {{ order.id }} arrow-icon arrow-icon-{{ order.id }}" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="icon-down {{ order.id }} arrow-icon arrow-icon-down-{{ order.id }}" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8.49999 0.750016L4.75002 4.49999L1.00002 0.750014" stroke="#2B2725"/>
                 </svg>
-                <svg class="icon-up {{ order.id }} arrow-icon arrow-icon-{{ order.id }} hide" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="icon-up {{ order.id }} arrow-icon arrow-icon-up-{{ order.id }} hide" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1.00001 4.75001L4.74998 1.00004L8.49998 4.75002" stroke="#2B2725"/>
                 </svg>  
               </div>
@@ -106,10 +106,12 @@
   })
   document.querySelectorAll(".icon-down").forEach(icon=>{
     icon.addEventListener('click', (e=>{
-      const iconUp = document.querySelector(".icon-up")
-      iconUp.classList.remove("hide")
+      // console.log(e.target.classList[1]
       const orderId = e.target.classList[1]
+      const iconUp = document.querySelector(`.arrow-icon-up-${orderId}`)
       const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      iconUp.classList.remove("hide")
+      e.target.classList.add("hide")
       targets.forEach(target=>{
         if (target.classList.contains("hide")) {
           target.classList.remove("hide")
@@ -119,7 +121,23 @@
       })
     }))
   })
-  console.log("hello")
+  document.querySelectorAll(".icon-up").forEach(icon=>{
+    icon.addEventListener('click', (e=>{
+      const orderId = e.target.classList[1]
+      console.log('orderid', orderId)
+      const icondown = document.querySelector(`.arrow-icon-down-${orderId}`)
+      const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      icondown.classList.remove("hide")
+      e.target.classList.add("hide")
+      targets.forEach(target=>{
+        if (target.classList.contains("hide")) {
+          target.classList.remove("hide")
+        }else {
+          target.classList.add("hide")
+        }
+      })
+    }))
+  })
 {% endjavascript %}
 
 {% style %}
@@ -395,9 +413,18 @@ label.input-label {
   text-transform: uppercase;
 }
 
+
+@media (max-width: 1200px) {
+  .page-title {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+}
+
+
 @media (max-width: 1000px) {
   .page-title {
-    font-size: 70px;
+    font-size: 60px;
     margin-bottom: 20px;
   }
 }
@@ -415,6 +442,13 @@ label.input-label {
   }
   .orders-returns-content {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-title {
+    font-size: 50px;
+    margin-bottom: 20px;
   }
 }
 

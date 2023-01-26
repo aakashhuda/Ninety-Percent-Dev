@@ -13,7 +13,7 @@
         <a class="page-link" href="#" data-handle="none">Returns, Refunds & Exchanges</a>
         <a class="page-link" href="#" data-handle="none">Payment, Promos & Giftcards</a>
       </div>
-      <div class="grid__item{% if block.settings.narrow_column %} medium-up--three-quarters medium-up--push-one-eighth{% endif %} medium-up--three-fifths">
+      <div class="grid__item medium-up--three-fifths">
         <header>
           <div class="np-h1 page-title">Orders & Returns</div>
         </header>
@@ -36,15 +36,18 @@
                   <div class="order-status-value">{{ order.fulfillment_status_label }}</div>
                 </div>
               </div>
-              <div class="order-line-{{ order.id }} order-line">
+              <div class="order-line-{{ order.id }} order-line {{ order.id }}">
                 <hr class="line-css">
-                <svg class="icon-down" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="icon-down {{ order.id }} arrow-icon arrow-icon-{{ order.id }}" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8.49999 0.750016L4.75002 4.49999L1.00002 0.750014" stroke="#2B2725"/>
                 </svg>
+                <svg class="icon-up {{ order.id }} arrow-icon arrow-icon-{{ order.id }} hide" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1.00001 4.75001L4.74998 1.00004L8.49998 4.75002" stroke="#2B2725"/>
+                </svg>  
               </div>
-              
+              <div>
               {% for item in order.line_items %}
-                <div class="order-details-{{ order.id }} order-details">
+                <div class="order-details-{{ order.id }} order-details hide">
                   <div class="product-image">
                     <img src="{{ item.image | img_url: 'grande' }}" class="order-image">
                   </div>
@@ -68,7 +71,7 @@
                     <div class="return-link">RETURNS</div>
                   </div>
                 </div>
-                <hr class="item-hr">
+                {% comment %} <hr class="item-hr"> {% endcomment %}
               {% endfor %}
             </div>
             {% endfor %}
@@ -77,6 +80,48 @@
     </div>
   </div>
 </div>
+
+{% javascript %}
+  document.querySelectorAll(".order-line").forEach(order=>{
+    order.addEventListener('click', (e=>{
+      const orderId = e.target.classList[2]
+      const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      const arrowTargets = document.querySelectorAll(`.arrow-icon-${orderId}`)
+      targets.forEach(target=>{
+        if (target.classList.contains("hide")) {
+          target.classList.remove("hide")
+        }else {
+          target.classList.add("hide")
+        }
+      })
+
+      arrowTargets.forEach(arrow=>{
+        if (arrow.classList.contains("hide")){
+          arrow.classList.remove("hide")
+        }else {
+          arrow.classList.add("hide")
+        }
+      })
+    }))
+  })
+  document.querySelectorAll(".icon-down").forEach(icon=>{
+    icon.addEventListener('click', (e=>{
+      const iconUp = document.querySelector(".icon-up")
+      iconUp.classList.remove("hide")
+      const orderId = e.target.classList[1]
+      const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      targets.forEach(target=>{
+        if (target.classList.contains("hide")) {
+          target.classList.remove("hide")
+        }else {
+          target.classList.add("hide")
+        }
+      })
+    }))
+  })
+  console.log("hello")
+{% endjavascript %}
+
 {% style %}
 
 hr.item-hr {
@@ -157,12 +202,16 @@ div.return-link {
 
 .order-line {
   position: relative;
+  padding: 4px 0;
+  cursor: pointer;
+  z-index: 1;
 }
 
-.icon-down {
+.icon-down, .icon-up {
   position: absolute;
-  top: -12px;
+  top: 0;
   right: 0;
+  z-index: -1;
 }
 
 .orders-returns-content label, .orders-returns-content .label-info {

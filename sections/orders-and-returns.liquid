@@ -70,7 +70,7 @@
                     <div class="return-link">RETURNS</div>
                   </div>
                 </div>
-                {% comment %} <hr class="item-hr"> {% endcomment %}
+                <hr class="item-hr item-hr-{{ order.id }} hide">
               {% endfor %}
             </div>
           {% endfor %}
@@ -87,6 +87,7 @@
       const orderId = e.target.classList[2]
       const targets = document.querySelectorAll(`.order-details-${orderId}`)
       const arrowTargets = document.querySelectorAll(`.arrow-icon-${orderId}`)
+      const itemHr = document.querySelectorAll(`.item-hr-${orderId}`)
       targets.forEach(target=>{
         if (target.classList.contains("hide")) {
           target.classList.remove("hide")
@@ -102,14 +103,22 @@
           arrow.classList.add("hide")
         }
       })
+      itemHr.forEach(itemHr=>{
+        if ( itemHr.classList.contains("hide")) {
+          itemHr.classList.remove("hide")
+        }
+        else {
+          itemHr.classList.add("hide")
+        }
+      })
     }))
   })
   document.querySelectorAll(".icon-down").forEach(icon=>{
     icon.addEventListener('click', (e=>{
-      // console.log(e.target.classList[1]
       const orderId = e.target.classList[1]
       const iconUp = document.querySelector(`.arrow-icon-up-${orderId}`)
       const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      const itemHr = document.querySelectorAll(`.item-hr-${orderId}`)
       iconUp.classList.remove("hide")
       e.target.classList.add("hide")
       targets.forEach(target=>{
@@ -119,14 +128,22 @@
           target.classList.add("hide")
         }
       })
+      itemHr.forEach(itemHr=>{
+        if ( itemHr.classList.contains("hide")) {
+          itemHr.classList.remove("hide")
+        }
+        else {
+          itemHr.classList.add("hide")
+        }
+      })
     }))
   })
   document.querySelectorAll(".icon-up").forEach(icon=>{
     icon.addEventListener('click', (e=>{
       const orderId = e.target.classList[1]
-      console.log('orderid', orderId)
       const icondown = document.querySelector(`.arrow-icon-down-${orderId}`)
       const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      const itemHr = document.querySelectorAll(`.item-hr-${orderId}`)
       icondown.classList.remove("hide")
       e.target.classList.add("hide")
       targets.forEach(target=>{
@@ -134,6 +151,14 @@
           target.classList.remove("hide")
         }else {
           target.classList.add("hide")
+        }
+      })
+      itemHr.forEach(itemHr=>{
+        if ( itemHr.classList.contains("hide")) {
+          itemHr.classList.remove("hide")
+        }
+        else {
+          itemHr.classList.add("hide")
         }
       })
     }))
@@ -144,6 +169,9 @@
 
 hr.item-hr {
   margin-bottom: 65px;
+  max-width: 581px;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 hr.line-css {

@@ -1,22 +1,21 @@
-{%- assign blockId = block.id -%}
-{% if product %}
-  {%- assign blockId = block.id | append: product.id -%}
-{% endif %}
 
 <div class="index-section">
   <div class="page-width">
 
     <div class="grid orders-returns-content">
       <div class="grid-item medium-up--two-fifths page-links">
-        <a class="page-link {% if request.path == '/pages/contact' %}active{% endif %}" href="/pages/contact" data-handle="none">Contact Us</a>
-        <a class="page-link {% if request.path == '/pages/new-faq' %}active{% endif %}" href="/new-faq" data-handle="none">FAQs</a>
-        <a class="page-link" href="#" data-handle="none">Returns, Refunds & Exchanges</a>
-        <a class="page-link" href="#" data-handle="none">Payment, Promos & Giftcards</a>
+        <a class="page-link {% if request.path == '/pages/orders-returns' %}active{% endif %}" href="/pages/orders-returns" data-handle="none">Orders and Returns</a>
+        <a class="page-link {% if request.path == '#' %}active{% endif %}" href="#" data-handle="none">My Wishlist</a>
+        <a class="page-link {% if request.path == '{{ routes.account_url }}' %}active{% endif %}" href="{{ routes.account_url }}" data-handle="none">My Account</a>
+        <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="none">Logout</a>
       </div>
       <div class="grid__item medium-up--three-fifths">
         <header>
           <div class="np-h1 page-title">Orders & Returns</div>
         </header>
+        {% if customer.orders_count < 1 %}
+          <div class="no-orders">You haven’t placed any orders yet.</div>
+        {% else %}
           {% for order in customer.orders %}
             <div class="order-container-{{ order.id }} order-container">
               <div class="order-meta">
@@ -38,10 +37,10 @@
               </div>
               <div class="order-line-{{ order.id }} order-line {{ order.id }}">
                 <hr class="line-css">
-                <svg class="icon-down {{ order.id }} arrow-icon arrow-icon-down-{{ order.id }}" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="icon-down {{ order.id }} arrow-icon arrow-icon-down-{{ order.id }} arrow-icon-{{ order.id}}" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8.49999 0.750016L4.75002 4.49999L1.00002 0.750014" stroke="#2B2725"/>
                 </svg>
-                <svg class="icon-up {{ order.id }} arrow-icon arrow-icon-up-{{ order.id }} hide" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="icon-up {{ order.id }} arrow-icon arrow-icon-up-{{ order.id }} arrow-icon-{{ order.id}} hide" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M1.00001 4.75001L4.74998 1.00004L8.49998 4.75002" stroke="#2B2725"/>
                 </svg>  
               </div>
@@ -52,7 +51,7 @@
                     <img src="{{ item.image | img_url: 'grande' }}" class="order-image">
                   </div>
                   <div class="product-details">
-                    <div class="product-name np-h10">{{ item.title }}</div>
+                    <div class="product-name np-h10">{{ item.product.title }}</div>
                     <div class="product-size">
                       {% for variant in item.options_with_values %}
                         {% if variant.name == "Size" %}
@@ -74,7 +73,8 @@
                 {% comment %} <hr class="item-hr"> {% endcomment %}
               {% endfor %}
             </div>
-            {% endfor %}
+          {% endfor %}
+        {% endif %}
 
       </div>
     </div>
@@ -194,7 +194,8 @@ hr.line-css {
 .town-county, 
 .postcode-country,
 .product-quantity,
-div.return-link {
+div.return-link,
+.no-orders {
   font-family: 'Intervogue';
   font-style: normal;
   font-weight: 400;
@@ -202,6 +203,10 @@ div.return-link {
   line-height: 21px;
   letter-spacing: 0.05em;
   color: #2B2725;
+}
+
+.no-orders {
+  margin-bottom: 73px;
 }
 
 .product-quantity {
@@ -220,9 +225,11 @@ div.return-link {
 
 .order-line {
   position: relative;
-  padding: 4px 0;
+  padding-top: 4px;
+  padding-bottom: 10px;
   cursor: pointer;
   z-index: 1;
+  max-width: 581px;
 }
 
 .icon-down, .icon-up {
@@ -269,6 +276,7 @@ label.input-label {
   .orders-returns-content {
     display: flex;
     flex-direction: row;
+    max-width:1440px;
   }
   .success-section, .submission-with-error {
     display: flex;
@@ -342,7 +350,7 @@ label.input-label {
   }
 
   .page-title {
-    margin-bottom: 42px;
+    margin-bottom: 72px;
   }
 
   .np-h1, .np-h2, .np-h3, .np-h4 {
@@ -414,6 +422,14 @@ label.input-label {
 }
 
 
+@media (max-width: 1300px) {
+  .page-title {
+    font-size: 90px;
+    margin-bottom: 20px;
+  }
+}
+
+
 @media (max-width: 1200px) {
   .page-title {
     font-size: 80px;
@@ -426,6 +442,9 @@ label.input-label {
   .page-title {
     font-size: 60px;
     margin-bottom: 20px;
+  }
+  .order-date {
+    margin-right: 73px;
   }
 }
 

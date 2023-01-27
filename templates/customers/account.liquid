@@ -17,13 +17,13 @@
 
   <div class="grid">
     <div class="grid__item medium-up--two-fifths page-links">
-      <a class="page-link" href="#" data-handle="none">Orders & Return</a>
-      <a class="page-link" href="#" data-handle="none">My Wishlist</a>
-      <a class="page-link {% if request.path == routes.account_url %}active{% endif %}" href="{{ routes.account_url }}" data-handle="/account">My Account</a>
-      <a class="page-link {% if request.path == routes.account_logout_url %}active{% endif %}" class="" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
+      <a class="page-link spa" id="order-return" href="#" data-handle="none">Orders & Return</a>
+      <a class="page-link spa" id="wishlist" href="#" data-handle="none">My Wishlist</a>
+      <a class="page-link spa active" id="account" href="#" data-handle="/account">My Account</a>
+      <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
     </div>
 
-    <div class="grid__item medium-up--three-fifths">
+    <div class="grid__item medium-up--three-fifths my-account-content spa-content">
 
       <div id="AddressNewForm" class="form-vertical js-address-form text-left hide">
         {% form 'customer_address', customer.new_address %}
@@ -213,6 +213,74 @@
       {% endif %}
 
     </div>
+    <div class="grid__item medium-up--three-fifths orders-returns-content spa-content hide">
+      <header>
+        <div class="np-h1 page-title">Orders & Returns</div>
+      </header>
+      {% if customer.orders_count < 1 %}
+        <div class="no-orders">You haven’t placed any orders yet.</div>
+      {% else %}
+        {% for order in customer.orders %}
+          <div class="order-container-{{ order.id }} order-container">
+            <div class="order-meta">
+              <div class="order-date">
+                <div class="order-date-key">Order Date</div>
+                <div class="order-date-value">
+                  {% assign date = order.created_at | split: " " %}
+                  {{ date[0] }}
+                </div>
+              </div>
+              <div class="order-number">
+                <div class="order-number-key">Order Number</div>
+                <div class="order-number-value">{{ order.id }}</div>
+              </div>
+              <div class="order-status">
+                <div class="order-status-key">Order Status</div>
+                <div class="order-status-value">{{ order.fulfillment_status_label }}</div>
+              </div>
+            </div>
+            <div class="order-line-{{ order.id }} order-line {{ order.id }}">
+              <hr class="line-css">
+              <svg class="icon-down {{ order.id }} arrow-icon arrow-icon-down-{{ order.id }} arrow-icon-{{ order.id}}" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.49999 0.750016L4.75002 4.49999L1.00002 0.750014" stroke="#2B2725"/>
+              </svg>
+              <svg class="icon-up {{ order.id }} arrow-icon arrow-icon-up-{{ order.id }} arrow-icon-{{ order.id}} hide" width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.00001 4.75001L4.74998 1.00004L8.49998 4.75002" stroke="#2B2725"/>
+              </svg>  
+            </div>
+            <div>
+            {% for item in order.line_items %}
+              <div class="order-details-{{ order.id }} order-details hide">
+                <div class="product-image">
+                  <img src="{{ item.image | img_url: 'grande' }}" class="order-image">
+                </div>
+                <div class="product-details">
+                  <div class="product-name np-h10">{{ item.product.title }}</div>
+                  <div class="product-size">
+                    {% for variant in item.options_with_values %}
+                      {% if variant.name == "Size" %}
+                        Size: {{ variant.value }}
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <div class="product-quantity">Quantity: {{ item.quantity }}</div>
+                  <div class="product-price">{{ item.final_line_price | money }}</div>
+                  <div class="customer-name">Delivered to: <br>{{ order.customer.name }}</div>
+                  {% if order.shipping_address %}
+                    <div class="product-billing-address">{{ order.shipping_address.address1 }}</div>
+                    <div class="town-county">{{ order.shipping_address.city }}, {{ order.shipping_address.province }}</div>
+                    <div class="postcode-country">{{ order.shipping_address.zip }}, {{ order.shipping_address.country }}</div>
+                  {% endif %}
+                  <div class="return-link">RETURNS</div>
+                </div>
+              </div>
+              <hr class="item-hr item-hr-{{ order.id }} hide">
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+    </div>
   </div>
 </div>
 
@@ -221,7 +289,7 @@
 {% style %}
 /* New development css scripts */
 
-.required-text {
+.my-account-content .required-text {
   margin-bottom: 41px;
   font-family: 'Intervogue';
   font-style: normal;
@@ -232,11 +300,11 @@
   color: #2B2725;
 }
 
-.account-title {
+.my-account-content .account-title {
   margin-bottom: 44px;
   text-transform: capitalize;
 }
-.account-sub-header {
+.my-account-content .account-sub-header {
   position: relative;
   margin-bottom: 30px;
   margin-bottom: 21px;
@@ -246,7 +314,7 @@
   text-transform: capitalize;
 }
 
-.account-sub-header::after {
+.my-account-content .account-sub-header::after {
   position: absolute;
   top: 35px;
   left: 0;
@@ -257,7 +325,7 @@
   background-color: #2B2725;
 }
 
-.customer-info {
+.my-account-content .customer-info {
   margin-bottom: 20px;
   font-size: 12.5px;
   line-height: 21px;
@@ -265,7 +333,7 @@
   text-transform: capitalize;
 }
 
-.customer-contact-info {
+.my-account-content .customer-contact-info {
   margin-bottom: 21px;
   font-size: 12.5px;
   line-height: 21px;
@@ -273,11 +341,11 @@
   text-transform: capitalize;
 }
 
-.customer-contact-info .email{
+.my-account-content .customer-contact-info .email{
   text-transform: lowercase;
 }
 
-.update-account-link {
+.my-account-content .update-account-link {
   border: 0.75px solid #2B2725;
   background-color: white;
   display: block;
@@ -286,16 +354,16 @@
   text-align: center;
 }
 
-.update-account-link:hover {
+.my-account-content .update-account-link:hover {
   color: #ffffff;
   background-color: #111111;
 }
 
-.account-manipulation-links {
+.my-account-content .account-manipulation-links {
   margin-top: 29px;
 }
 
-.account-manipulation-link {
+.my-account-content .account-manipulation-link {
   margin-bottom: 14px;
   text-transform: uppercase;
   font-size: 12px;
@@ -327,11 +395,11 @@ select:focus {
   border-bottom: 1px solid;
   outline: none;
 }
-.edit-address {
+.my-account-content .edit-address {
   margin-top: 39px;
 }
 
-.edit-address label:not(.variant__button-label), .label {
+.my-account-content .edit-address label:not(.variant__button-label), .label {
   font-size: 12.5px;
   line-height: 21px;
   letter-spacing: 0.05em;
@@ -422,7 +490,7 @@ select:focus {
 }
 
 @media (max-width: 1000px) {
-  .account-title {
+  .my-account-content .account-title {
     font-size: 70px;
     margin-bottom: 20px;
   }
@@ -437,8 +505,336 @@ select:focus {
   .page-link {
     margin: 0 5px;
   }
-  .account-title {
+  .my-account-content .account-title {
     font-size: 70px;
+    margin-bottom: 20px;
+  }
+}
+/* order and returns */
+
+.orders-returns-content hr.item-hr {
+  margin-bottom: 65px;
+  max-width: 581px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.orders-returns-content hr.line-css {
+  background: #2B2725;
+  height: 1px;
+  border: none;
+  color: #2B2725;
+}
+
+.orders-returns-content .order-image {
+  max-width: 164px;
+}
+
+.orders-returns-content .order-date {
+  margin-right: 118px;
+}
+
+.orders-returns-content .order-details {
+  display: flex;
+}
+
+.orders-returns-content .order-number {
+  margin-right: 77px;
+}
+
+.orders-returns-content .product-image {
+  margin-right: 73px;
+}
+
+.orders-returns-content .order-date-key, .orders-returns-content .order-status-key, .orders-returns-content .order-number-key {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: rgba(43, 39, 37, 0.5);
+  margin-bottom: 3px;
+}
+
+.orders-returns-content .order-date-value, 
+.orders-returns-content .order-status-value, 
+.orders-returns-content .order-number-value, 
+.orders-returns-content .product-size, 
+.orders-returns-content .product-price, 
+.orders-returns-content .customer-name, 
+.orders-returns-content .product-billing-address, 
+.orders-returns-content .town-county, 
+.orders-returns-content .postcode-country,
+.orders-returns-content .product-quantity,
+.orders-returns-content div.return-link,
+.orders-returns-content .no-orders {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+
+.orders-returns-content .no-orders {
+  margin-bottom: 73px;
+}
+
+.orders-returns-content .product-quantity {
+  margin-bottom: 15px;
+}
+
+.orders-returns-content .product-price {
+  margin-bottom: 15px;
+}
+
+.orders-returns-content .order-meta {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 6px;
+}
+
+.orders-returns-content .order-line {
+  position: relative;
+  padding-top: 4px;
+  padding-bottom: 10px;
+  cursor: pointer;
+  z-index: 1;
+  max-width: 581px;
+}
+
+.orders-returns-content .icon-down, .orders-returns-content .icon-up {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.orders-returns-content .orders-returns-content label, .orders-returns-content .orders-returns-content .orders-returns-content .label-info {
+  display: block;
+  margin-bottom: 0;
+}
+
+.orders-returns-content label.input-label {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  text-transform: capitalize;
+}
+
+.orders-returns-content .form-vertical .contact-input, .form-vertical select.contact-input {
+  margin-bottom: 51px;
+}
+.orders-returns-content .required-text {
+  margin-bottom: 48px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  text-align: start;
+}
+.orders-returns-content .description {
+    margin-bottom: 38px;
+    max-width: 585px;
+  }
+  .orders-returns-content .orders-returns-content {
+    display: flex;
+    flex-direction: row;
+    max-width:1440px;
+  }
+  .orders-returns-content .success-section, .submission-with-error {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .orders-returns-content input, .orders-returns-content select, .orders-returns-content textarea{
+    border: none;
+    border-bottom: 1px solid;
+    border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+    border-color: var(--colorBorder);
+    width: 100%;
+    max-width: 581px;
+    padding: 8px 10px;
+    padding-left: 0;
+    border-radius: 0;
+    font-size: 12.5px;
+    line-height: 21px;
+    letter-spacing: 0.05em;
+  }
+  .page-links {
+  display: flex;
+  flex-direction: column;
+  padding-top: 42px;
+  padding-left: 70px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+}
+  .page-link.active {
+    text-decoration: underline;
+  }
+
+  .orders-returns-content input:active,
+  .orders-returns-content input:focus,
+  .orders-returns-content select:active,
+  .orders-returns-content select:focus {
+    border: none;
+    border-bottom: 1px solid;
+    outline: none;
+  }
+  .orders-returns-content textarea {
+    border: 1px solid #2B2725;
+  }
+
+  .orders-returns-content div.return-link {
+    border: 0.75px solid #2B2725;
+    background-color: white;
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin-top: 32px;
+    margin-bottom: 20px;
+    max-width: 126px;
+    padding: 6px 10px;
+  }
+
+  .orders-returns-content div.return-link:hover {
+    color: #ffffff;
+    background-color: #111111;
+  }
+
+  .orders-returns-content .page-title {
+    margin-bottom: 72px;
+  }
+
+  .np-h1, .np-h2, .np-h3, .np-h4 {
+    font-family: 'Silvana';
+    font-weight: 400;
+    color: #2B2725;
+  }
+
+.np-h1 {
+  font-size: 100px;
+  line-height: 105px;
+  letter-spacing: -0.03em;
+}
+.np-h2 {
+  font-size: 70px;
+  line-height: 75px;
+  letter-spacing: -0.01em;
+}
+.np-h3 {
+  font-size: 26px;
+  line-height: 36px;
+  letter-spacing: -0.01em;
+}
+.np-h4 {
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+}
+.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
+  font-style: italic;
+}
+.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
+  font-family: 'Intervogue';
+  font-weight: 400;
+  color: #2B2725;
+}
+.np-h5 {
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+}
+.np-h6 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.04em;
+}
+.np-h7 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+}
+.np-h8 {
+  font-size: 22px;
+  line-height: 32px;
+  letter-spacing: 0.04em;
+}
+.np-h9 {
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
+}
+.np-h10 {
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+.np-h6, .np-h8, .np-h9, .np-h10 {
+  text-transform: uppercase;
+}
+
+
+@media (max-width: 1300px) {
+  .orders-returns-content .page-title {
+    font-size: 90px;
+    margin-bottom: 20px;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .orders-returns-content .page-title {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .orders-returns-content .page-title {
+    font-size: 60px;
+    margin-bottom: 20px;
+  }
+  .orders-returns-content .order-date {
+    margin-right: 73px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-links {
+    padding-left: 17px;
+  }
+  .page-link {
+    margin: 0 5px;
+  }
+  .page-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+  .orders-returns-content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-title {
+    font-size: 50px;
     margin-bottom: 20px;
   }
 }
@@ -469,4 +865,129 @@ select:focus {
     })
   }
   toggleMainUpdateBtn()
+  {% comment %} order return {% endcomment %}
+  document.querySelectorAll(".order-line").forEach(order=>{
+    order.addEventListener('click', (e=>{
+      const orderId = e.target.classList[2]
+      const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      const arrowTargets = document.querySelectorAll(`.arrow-icon-${orderId}`)
+      const itemHr = document.querySelectorAll(`.item-hr-${orderId}`)
+      targets.forEach(target=>{
+        if (target.classList.contains("hide")) {
+          target.classList.remove("hide")
+        }else {
+          target.classList.add("hide")
+        }
+      })
+
+      arrowTargets.forEach(arrow=>{
+        if (arrow.classList.contains("hide")){
+          arrow.classList.remove("hide")
+        }else {
+          arrow.classList.add("hide")
+        }
+      })
+      itemHr.forEach(itemHr=>{
+        if ( itemHr.classList.contains("hide")) {
+          itemHr.classList.remove("hide")
+        }
+        else {
+          itemHr.classList.add("hide")
+        }
+      })
+    }))
+  })
+  document.querySelectorAll(".icon-down").forEach(icon=>{
+    icon.addEventListener('click', (e=>{
+      const orderId = e.target.classList[1]
+      const iconUp = document.querySelector(`.arrow-icon-up-${orderId}`)
+      const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      const itemHr = document.querySelectorAll(`.item-hr-${orderId}`)
+      iconUp.classList.remove("hide")
+      e.target.classList.add("hide")
+      targets.forEach(target=>{
+        if (target.classList.contains("hide")) {
+          target.classList.remove("hide")
+        }else {
+          target.classList.add("hide")
+        }
+      })
+      itemHr.forEach(itemHr=>{
+        if ( itemHr.classList.contains("hide")) {
+          itemHr.classList.remove("hide")
+        }
+        else {
+          itemHr.classList.add("hide")
+        }
+      })
+    }))
+  })
+  document.querySelectorAll(".icon-up").forEach(icon=>{
+    icon.addEventListener('click', (e=>{
+      const orderId = e.target.classList[1]
+      const icondown = document.querySelector(`.arrow-icon-down-${orderId}`)
+      const targets = document.querySelectorAll(`.order-details-${orderId}`)
+      const itemHr = document.querySelectorAll(`.item-hr-${orderId}`)
+      icondown.classList.remove("hide")
+      e.target.classList.add("hide")
+      targets.forEach(target=>{
+        if (target.classList.contains("hide")) {
+          target.classList.remove("hide")
+        }else {
+          target.classList.add("hide")
+        }
+      })
+      itemHr.forEach(itemHr=>{
+        if ( itemHr.classList.contains("hide")) {
+          itemHr.classList.remove("hide")
+        }
+        else {
+          itemHr.classList.add("hide")
+        }
+      })
+    }))
+  })
+
+  //content changing functionality
+
+  function changeActiveClass(pageLinks, event) {
+    for( var i=0; i < pageLinks.length; i++) {
+      if (pageLinks[i] === event.target){
+        const activeValue = event.target.classList.contains("active")
+        switch(activeValue) {
+          case true: break;
+          case false: event.target.classList.add("active"); break;
+        }
+      }
+      else {
+        pageLinks[i].classList.remove("active")
+      }
+    }
+  }
+
+  function changeContent(id) {
+    const ordersReturns = document.querySelector(".orders-returns-content")
+    const account = document.querySelector(".my-account-content")
+    if (id === "account") {
+      ordersReturns.classList.add("hide")
+      account.classList.remove("hide")
+    }
+    else if (id === "order-return") {
+      ordersReturns.classList.remove("hide")
+      account.classList.add("hide")
+    }
+  }
+
+  function spaFunctionality() {
+    var pageLinks = document.querySelectorAll(".page-link.spa")
+    pageLinks.forEach(link=>{
+      link.addEventListener("click", (e=>{
+        e.preventDefault()
+        changeActiveClass(pageLinks, e)
+        const id = e.target.id
+        changeContent(id)
+      }))
+    })
+  }
+  spaFunctionality()
 </script>

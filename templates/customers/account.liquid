@@ -10,11 +10,6 @@
     </nav>
   {% endif %}
 
-  {% comment %} <header class="section-header{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}">
-    <h1 class="section-header__title">{{ 'customer.addresses.title' | t }}</h1>
-    <button type="button" class="btn btn--secondary btn--small section-header__link address-new-toggle js-no-transition">{{ 'customer.addresses.add_new' | t }}</a>
-  </header> {% endcomment %}
-
   <div class="grid">
     <div class="grid__item medium-up--two-fifths page-links">
       <a class="page-link spa" id="order-return" href="#" data-handle="none">Orders & Return</a>
@@ -111,7 +106,6 @@
       <div class="required-text hide">*Required</div>
       <div class="account-sub-header">{{ 'customer.account.details' | t }}</div>
       {% for address in customer.addresses %}
-        {% comment %} {{ address | format_address }} {% endcomment %}
         <div id="customer-info" class="">
           <div class="customer-info">
             <div>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</div>
@@ -133,8 +127,6 @@
 
         <div id="EditAddress_{{ address.id }}" class="form-vertical js-address-form text-left hide edit-address">
           {% form 'customer_address', address %}
-            {% comment %} <h2>{{ 'customer.addresses.edit_address' | t }}</h2> {% endcomment %}
-
             <div class="grid grid--small">
               <div class="grid__item one-whole small--one-whole">
                 <label class="np-h10" for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>

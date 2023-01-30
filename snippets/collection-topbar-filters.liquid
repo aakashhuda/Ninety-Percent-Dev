@@ -4,7 +4,7 @@
     assign sort_options = collection.sort_options
   %}
   
-  <div class="topbar-filter-section">
+  <div class="topbar-filter-section np-h6">
     <div class="collection-name">SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
     <ul class="filter-list">
       {% for filter in filters %}
@@ -53,13 +53,13 @@
     </div>
   </div>
 
-  <div class="topbar-active-filter-section">
+  <div class="topbar-active-filter-section np-h6">
     {% for filter in filters %}
       {% if filter.label != 'Size' %}
         {% for value in filter.values %}
           {% assign value_label = value.label | replace: ' ', '-' %}
             {% if value.active %}
-            <a href="{{ value.url_to_remove }}" class="active-filter-item item-{{ value_label }}"><span>{{ value.label }}</span><span>X</span></a>
+            <a href="{{ value.url_to_remove }}" class="active-filter-item item-{{ value_label }}"><span class="active-filter-label">{{ value.label }}</span><span class="active-filter-cross">X</span></a>
             {% endif %}
         {% endfor %}
       {% else %}
@@ -81,12 +81,17 @@
         align-items: center;
         margin-bottom: 32px;
     }
+    span.active-filter-label {
+      margin-right: 40px;
+    }
+    span.active-filter-cross {
+      font-size: 16px;
+    }
     .active-filter-item, .active-filter-clear-item, .inactive-filter-item {
         min-width: 100px;
         border: 0.5px solid rgba(43, 39, 37, 0.25);
         padding: 0.2em 0.7em;
         display: flex;
-        justify-content: space-between;
         align-items: center;
         margin-right: 15px;
         font-size: 12px;
@@ -98,9 +103,7 @@
     }
     .topbar-filter-section {
       display: flex;
-      justify-content: space-between;
       text-transform: uppercase;
-      font-size: 12px;
     }
     .filter-list {
       list-style: none;
@@ -152,7 +155,9 @@
         width: 260px;
         position: absolute;
         z-index: 1000;
-        left: -150px;
+        {% comment %} left: 41%; {% endcomment %}
+        right: 2%;
+        top: 25px;
         margin: 0;
         display: none;
         padding-top: 27px;
@@ -262,7 +267,6 @@ function sizeFilterAddition(){
     item.addEventListener("click", (e)=>{
       e.preventDefault()
       var url;
-      console.log(e.target.dataset.url)
       if (e.target.dataset.url.includes("availability")){
         url = e.target.dataset.url
       }
@@ -334,6 +338,7 @@ function showClearFilter(){
       label.addEventListener('click', (event)=> {
         var className = `${event.target.classList[1]}-options`
         var target = document.querySelector(`.${className}`)
+        var sortingList = document.querySelector(".sort-list")
         if (target.classList.contains("show-filter")){
           target.classList.remove("show-filter")
         }
@@ -343,12 +348,22 @@ function showClearFilter(){
             if (item !== target) item.classList.remove("show-filter");
           })
         }
+        if (sortingList.classList.contains("show-sort-list")) {
+          sortingList.classList.remove("show-sort-list")
+        }
       })
     })
   }
   function applyClickEventForSorting() {
     var target = document.querySelector(".sorting-section")
     target.addEventListener('click', ()=>{
+      // sorting
+      document.querySelectorAll(".filter-options-list").forEach(option=>{
+        if (option.classList.contains("show-filter")) {
+          option.classList.remove("show-filter")
+        }
+      })
+
       if (document.querySelector(".sort-list").classList.contains('show-sort-list')){
         document.querySelector(".sort-list").classList.remove('show-sort-list')
       }
@@ -369,7 +384,6 @@ function showClearFilter(){
 
   function checkForActiveFilters(){
     const target = document.querySelector(".topbar-active-filter-section")
-    console.log(target)
     if (window.location.search.indexOf("filter") != -1){
       target.classList.remove("hide")
     }

@@ -359,6 +359,18 @@ function showClearFilter(){
       })
     })
   }
+
+  function checkForActiveFilters(){
+    const target = document.querySelector(".topbar-active-filter-section")
+    console.log(target)
+    if (window.location.search.indexOf("filter") != -1){
+      target.classList.remove("hide")
+    }
+    else {
+      target.classList.add("hide")
+    }
+  }
+
   applyClickEventForFilter()
   applyClickEventForSorting()
   sortingFunctionWithoutMultipleOptions()
@@ -367,4 +379,5 @@ function showClearFilter(){
   showClearFilter()
   sizeFilterRemoval()
   sizeFilterAddition()
+  checkForActiveFilters()
   </script>

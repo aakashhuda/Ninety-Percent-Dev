@@ -133,11 +133,11 @@ Arguments
             {% for image in product.images %}
                 {% if forloop.index == 1 %}
                     <li class="image-item-{{ product.id }} active">
-                      <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}">
+                      <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}" data-widths="[360, 540, 720, 1000]" data-sizes="auto">
                     </li>
                 {% else %}    
                     <li class="image-item-{{ product.id }}">
-                      <img class="grid-product__image lazyload" src="{{ image | img_url: 'grande' }}">
+                      <img class="grid-product__image lazyload" src="{{ image | img_url: 'grande' }}" data-widths="[360, 540, 720, 1000]" data-sizes="auto">
                     </li>
                 {% endif %}
             {% endfor %}

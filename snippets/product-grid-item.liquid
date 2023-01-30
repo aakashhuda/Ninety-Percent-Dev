@@ -133,17 +133,17 @@ Arguments
             {% for image in product.images %}
                 {% if forloop.index == 1 %}
                     <li class="image-item-{{ product.id }} active">
-                      <img class="grid-product__image lazyload" loading="lazy" data-src="{{ image | img_url: 'grande' }}">
+                      <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}">
                     </li>
                 {% else %}    
                     <li class="image-item-{{ product.id }}">
-                      <img class="grid-product__image lazyload" loading="lazy" src="{{ image | img_url: 'grande' }}">
+                      <img class="grid-product__image lazyload" src="{{ image | img_url: 'grande' }}">
                     </li>
                 {% endif %}
             {% endfor %}
           </ul>
-          <span class="left-{{ product.id }}"><i class="arrow-{{ product.id }}"></i></span>
-          <span class="right-{{ product.id }}"><i class="arrow-{{ product.id }}"></i></span>
+          <span class="left-{{ product.id }}"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
+          <span class="right-{{ product.id }}"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
         {% endif %}
 
         {%- if settings.enable_swatches -%}
@@ -389,7 +389,7 @@ Arguments
   }
   #CollectionAjaxContent .grid-product__price {
     position: absolute;
-    top: 4px;
+    top: 3px;
     right: 0;
     font-size: 12px;
     display: flex;
@@ -409,49 +409,64 @@ Arguments
     padding-left: 5px;
   }
   @media (max-width: 1000px) {
-    #CollectionAjaxContent .custom-title {
-      font-size: 9px;
-      font-family: "Intervogue";
+    #CollectionAjaxContent .arrow-{{ product.id }} {
+      display: block;
     }
     [data-center-text=true] .grid-product__meta {
       text-align: left;
       padding: 0;
       padding-left: 4px;
+      font-size: 9px;
+      line-height: 15px;
+      letter-spacing: 0.05em;
+      color: #2B2725;
+      font-family: "Intervogue";
     }
     #CollectionAjaxContent .grid-product__price {
-      position: absolute;
-      top: 7px;
-      left: 4px;
-      font-size: 9px;
+      position: relative;
       font-family: "Intervogue";
+      margin: 0;
+      top: 0px;
+      right: 0;
     }
     #CollectionAjaxContent .grid__item.grid-product {
       margin-bottom: 20px;
     }
     #CollectionAjaxContent .custom-material {
-      padding-top: 5px;
-      font-size: 9px;
+      padding-top: 0px;
+      margin-top: 0px;
+    }
+    #CollectionAjaxContent .custom-title {
+      max-width: 100%;
     }
   }
   @media (max-width: 768px) {
+    #CollectionAjaxContent .arrow-{{ product.id }} {
+      display: block;
+    }
     #CollectionAjaxContent .custom-title {
       font-family: "Intervogue";
       font-size: 9px;
       line-height: 15px;
       letter-spacing: 0.05em;
       color: #2B2725;
+      max-width: 100%;
     }
     [data-center-text=true] .grid-product__meta {
       text-align: left;
       padding: 0;
       padding-left: 4px;
+      font-size: 9px;
+      line-height: 15px;
+      letter-spacing: 0.05em;
+      color: #2B2725;
+      font-family: "Intervogue";
     }
     #CollectionAjaxContent .grid-product__price {
-      position: absolute;
-      top: 7px;
-      left: 4px;
-      font-size: 9px;
-      font-family: "Intervogue";
+      position: relative;
+      margin: 0;
+      top: 0;
+      right: 0;
     }
 
     #CollectionAjaxContent .grid__item.grid-product {

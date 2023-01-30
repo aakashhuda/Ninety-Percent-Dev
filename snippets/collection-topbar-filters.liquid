@@ -5,7 +5,7 @@
   %}
   
   <div class="topbar-filter-section">
-    <div>SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
+    <div class="collection-name">SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
     <ul class="filter-list">
       {% for filter in filters %}
         {% assign filter_label = filter.label | replace: ' ', '-' %}
@@ -106,9 +106,13 @@
       list-style: none;
       display: flex;
       justify-content: center;
+      flex: 1;
     }
     .filter-label, .filter-label-reset {
       margin: 0 20px;
+    }
+    .collection-name {
+      flex: 1;
     }
     {% for filter in filters %}
       {% assign filter_label_css = filter.label | replace: ' ', '-' %}
@@ -140,6 +144,9 @@
       }
       .sorting-section {
         position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: end;
       }
       .sort-list {
         width: 260px;

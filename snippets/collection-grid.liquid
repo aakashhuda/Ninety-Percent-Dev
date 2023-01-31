@@ -69,20 +69,26 @@ Snippet Arguments
   </div>
 
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
-    {%- for item in items -%}
-      {%- if item.object_type == 'product' -%}
-        {%- render 'product-grid-item',
-          product: item,
-          per_row: per_row,
-          quick_shop_enable: quick_shop_enable
-        -%}
-      {%- else -%}
-        {%- render 'search-grid-item',
-          item: item,
-          per_row: per_row
-        %}
-      {%- endif -%}
-    {%- endfor -%}
+    {% if items.size > 0 %}
+      {%- for item in items -%}
+        {%- if item.object_type == 'product' -%}
+          {%- render 'product-grid-item',
+            product: item,
+            per_row: per_row,
+            quick_shop_enable: quick_shop_enable
+          -%}
+        {%- else -%}
+          {%- render 'search-grid-item',
+            item: item,
+            per_row: per_row
+          %}
+        {%- endif -%}
+      {%- endfor -%}
+      {% else %}
+        <div class="np-h6">
+          <div>No products available. Please clear your filters if applied.</div>
+        </div>
+    {% endif %}
   </div>
 </div>
 

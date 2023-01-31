@@ -66,7 +66,7 @@
         {% for value in filter.values %}
           {% assign value_label = value.label | replace: ' ', '-' %}
             {% if value.active %}
-              <a href="{{ value.url_to_remove }}" data-url="{{ value.url_to_remove }}" class="inactive-filter-item item-{{ value_label }} active size-filter"><span>{{ value.label }}</span><span>X</span></a>
+              <a href="{{ value.url_to_remove }}" data-url="{{ value.url_to_remove }}" class="inactive-filter-item item-{{ value_label }} active size-filter"><span class="active-filter-label">{{ value.label }}</span><span>X</span></a>
             {% endif %}
         {% endfor %}
       {% endif %}
@@ -223,16 +223,45 @@
     }
 
     @media (max-width: 768px) {
+      .active-filter-item {
+        margin-bottom: 5px;
+      }
         .topbar-filter-section {
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        .topbar-active-filter-section {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin-left: 10px;
         }
         ul.filter-list {
             margin: 0;
         }
         .filter-label {
             margin: 0 10px;
+            margin-left: 0;
         }
+        .sort-list {
+          width: 260px;
+          position: absolute;
+          z-index: 1000;
+          {% comment %} left: 41%; {% endcomment %}
+          left: 0px;
+          top: 21px;
+        }
+        {% for filter in filters %}
+          {% assign filter_label_css = filter.label | replace: ' ', '-' %}
+          .filter-container-{{ filter_label_css }}, .filter-container-Reset {
+            position: relative;
+            cursor: pointer;
+          }
+          .filter-{{ filter_label_css }}-options {
+            left: -21px;
+          }
+        {% endfor %}
     }
   </style>
   

@@ -1,0 +1,495 @@
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'double-image-with-text' %} 
+            <div id="wrapper-{{ block.id }}">
+                <section class="double-image-container-{{ block.id }} np-page-width">
+                    <div class="potrait-image-container-{{ block.id }}">
+                        <img src="{{ block.settings.image-portrait | img_url: "master" }}" class="image-p-{{ block.id }}">
+                    </div>
+
+                    <div class="image-with-text-container-{{ block.id }}">
+                        <div class="mobile-description-{{ block.id }}">{{ block.settings.mobile-description }}</div>
+                        <div class="hr-parent-{{ block.id }}">
+                            <hr class="hr-{{ block.id }}">
+                        </div>
+                        <div class="landscape-image-container-{{ block.id }}">
+                            <img src="{{ block.settings.image-landscape | img_url: "master" }}" class="image-l-{{ block.id }}">
+                        </div>
+                        <div class="title-{{ block.id }} np-h3 np-h3-italic">{{ block.settings.title }}</div>
+                        <div class="description-{{ block.id }} np-h5">{{ block.settings.description }}</div>
+                        <div class="url-button-div">
+                          <div class="link-{{ block.id }}">
+                            <a href="{{ block.settings.url }}">{{ block.settings.url-text }}</a>
+                        </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+
+<style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+        .np-page-width {
+            padding: 0 20px;
+        }
+    }
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'double-image-with-text' %}
+            #wrapper-{{ block.id }} {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #wrapper-{{ block.id }} .double-image-container-{{ block.id }} {
+                display: flex;
+                gap: {{ block.settings.gap }}%;
+                padding: 0 {{ block.settings.padding-both-side }}px;
+            }
+            #wrapper-{{ block.id }} .potrait-image-container-{{ block.id }} {
+                width: 100%;
+                padding-top: {{ block.settings.padding-top }}%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #wrapper-{{ block.id }} .image-with-text-container-{{ block.id }} {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+            #wrapper-{{ block.id }} .landscape-image-container-{{ block.id }} {
+                width: 100%;
+      padding-right: 23px;
+            }
+            #wrapper-{{ block.id }} .image-p-{{ block.id }} {
+                
+            }
+            #wrapper-{{ block.id }} .image-l-{{ block.id }} {
+                width: {{ block.settings.image-l-width }}%;
+            }
+            #wrapper-{{ block.id }} .link-{{ block.id }} a {
+      font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+text-align: center;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+                text-decoration: none;
+                padding-bottom: 7px;
+                border-bottom: 1px solid #2b2724;
+            }
+            #wrapper-{{ block.id }} .title-{{ block.id }} {
+                padding-top: 142px;
+                padding-bottom: 75px;
+                padding-left: 20px;
+            }
+            #wrapper-{{ block.id }} .description-{{ block.id }} {
+                text-align: justify;
+                width: {{ block.settings.description-width }}%;
+                margin-bottom: 66px;
+                padding-left: 20px;
+            }
+            #wrapper-{{ block.id }} .link-{{ block.id }} {
+                padding-left: 10px;
+            }
+            #wrapper-{{ block.id }} .mobile-description-{{ block.id }} {
+                display: none;
+                font-family: {{ block.settings.mobile-description-font }};
+                font-size: {{ block.settings.mobile-description-font-size }}px;
+                color: {{ block.settings.mobile-description-font-color }};
+                width: {{ block.settings.mobile-description-width }}%;
+            }
+            #wrapper-{{ block.id }} .hr-parent-{{ block.id }}{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 35px;
+            }
+            hr.hr-{{ block.id }}, hr.hr1-{{ block.id }} {
+                display: none;
+                width: 93%;
+                margin: 1rem 0;
+            }
+            hr.hr1-{{ block.id }} {
+                margin-top: 65px;
+            }
+            {% if block.settings.gap > 0 %}
+                #wrapper-{{ block.id }} .potrait-image-container-{{ block.id }} {
+                    width: calc(100% - ({{ block.settings.gap }}%/2));
+                }
+                #wrapper-{{ block.id }} .image-with-text-container-{{ block.id }} {
+                    width: calc(100% - ({{ block.settings.gap }}%/2));
+                }
+            {% endif %}
+            @media (max-width: 1000px) {
+                #wrapper-{{ block.id }} .title-{{ block.id }} {
+                    padding-bottom: 20px;
+                    padding-top: 20px;
+                }
+                #wrapper-{{ block.id }} .description-{{ block.id }} {
+                    margin-bottom: 40px;
+                }
+            }
+            @media (max-width: 900px) {
+                #wrapper-{{ block.id }} .double-image-container-{{ block.id }} {
+                gap: 5%;
+            }
+      #wrapper-{{ block.id }} .description-{{ block.id }} {
+                    width:95%;
+                }
+      #wrapper-{{ block.id }} .potrait-image-container-{{ block.id }}{
+      margin-top:15%;
+      }
+            }
+            @media (max-width: 768px) {
+                #wrapper-{{ block.id }} .double-image-container-{{ block.id }} {
+                    flex-wrap: wrap;
+                    width: 100%;
+                }
+                #wrapper-{{ block.id }} .potrait-image-container-{{ block.id }} {
+                    width: 100%;
+                    padding: 0;
+                }
+                #wrapper-{{ block.id }} .image-with-text-container-{{ block.id }} {
+                    width: 100%;
+                }
+                #wrapper-{{ block.id }} .image-p-{{ block.id }} {
+                    width: 100%;
+                }
+                #wrapper-{{ block.id }} .landscape-image-container-{{ block.id }} {
+                    width: 100%;
+                }
+                #wrapper-{{ block.id }} .image-l-{{ block.id }} {
+                    width: 100%;
+                }
+                #wrapper-{{ block.id }} .title-{{ block.id }}, .mobile-description-{{ block.id }} {
+                    padding: 0 4%;
+                }
+
+      #wrapper-{{ block.id }} .url-button-div{
+      margin: 0px auto;
+      }
+      
+                #wrapper-{{ block.id }} .title-{{ block.id }} {
+                  padding-left:0px;
+                    padding-bottom: 1.5em;
+                    padding-top: 1.5em;
+                    font-size: {{ block.settings.title-mobile-font-size }}px;
+                }
+                #wrapper-{{ block.id }} .description-{{ block.id }} {
+                  width:100%;
+                  padding-left:0px;
+                    padding-bottom: 30px;
+                    font-size: {{ block.settings.description-mobile-font-size }}px;
+                    line-height: {{ block.settings.description-mobile-line-height }}px;
+                }
+
+                #wrapper-{{ block.id }} .mobile-description-{{ block.id }} {
+                    display: block;
+                    padding-top: 16px;
+                    padding-bottom: 16px;
+                    line-height: {{ block.settings.mobile-description-line-height }}px;
+                }
+                hr.hr-{{ block.id }}, hr.hr1-{{ block.id }} {
+                    display: block;
+                }
+              #wrapper-{{ block.id }} .landscape-image-container-{{ block.id }} {
+                width: 100%;
+      padding-right: 0px;
+            }
+            }
+        {% when 'spacer' %}
+            .custom-spacer-{{ block.id }} {
+                height: {{ block.settings.spacer }}px;
+            }    
+  @media (max-width:768px){
+    .custom-spacer-{{ block.id }} {
+                height: 50px;
+            } 
+  }
+
+    {% endcase %}
+{% endfor %}
+</style>
+
+{% schema %}
+{
+    "name": "Double Image with Text",
+    "settings": [
+
+    ],
+    "blocks": [
+        {
+            "name": "Double Image with Text",
+            "type": "double-image-with-text",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "padding-both-side",
+                    "min": 0,
+                    "max": 100,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Section Padding Both Side"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image-portrait",
+                    "label": "Choose Portrait Image"
+                },
+                {
+                    "type": "range",
+                    "id": "image-p-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Portrait Image Width"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image-landscape",
+                    "label": "Choose Landscape Image"
+                },
+                {
+                    "type": "range",
+                    "id": "image-l-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Landscape Image Width"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Tangible Strides"
+                },
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "url-text",
+                    "label": "URL Name",
+                    "default": "learn more about our way"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "text",
+                    "id": "mobile-description",
+                    "label": "Mobile Description"
+                },
+                {
+                    "type": "range",
+                    "id": "padding-top",
+                    "label": "Portrait Image Position",
+                    "min": 0,
+                    "max": 20,
+                    "default": 12,
+                    "unit": "%",
+                    "step": 1
+                },
+                {
+                    "type": "range",
+                    "id": "gap",
+                    "label": "Column Gap",
+                    "min": 0,
+                    "max": 20,
+                    "default": 0,
+                    "unit": "%",
+                    "step": 1
+                },
+                {
+                    "type": "font",
+                    "id": "title-font",
+                    "label": "Title Font"
+                },
+                {
+                    "type": "color",
+                    "id": "title-font-color",
+                    "label": "Title Font Color (Mobile)",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "title-font-size",
+                    "min": 14,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Title Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "title-mobile-font-size",
+                    "min": 14,
+                    "max": 30,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 30,
+                    "label": "Title Font Size (Mobile)"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "title-italic",
+                    "label": "Title Italic",
+                    "default": true
+                },
+                {
+                    "type": "font",
+                    "id": "description-font",
+                    "label": "Description Font"
+                },
+                {
+                    "type": "color",
+                    "id": "description-font-color",
+                    "label": "Description Font Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "description-font-size",
+                    "min": 14,
+                    "max": 20,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-font-size",
+                    "min": 14,
+                    "max": 20,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "description-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "description-mobile-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Description Line Height (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "description-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Description Width"
+                },
+                {
+                    "type": "font",
+                    "id": "mobile-description-font",
+                    "label": "Mobile Description Font"
+                },
+                {
+                    "type": "color",
+                    "id": "mobile-description-font-color",
+                    "label": "Mobile Description Font Color",
+                    "default": "#000000"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-description-font-size",
+                    "min": 14,
+                    "max": 20,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Mobile Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-description-line-height",
+                    "min": 20,
+                    "max": 50,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Mobile Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "mobile-description-width",
+                    "min": 50,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 100,
+                    "label": "Moblie Description Width"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Double Image With Text"
+        }
+    ]
+}
+{% endschema %}

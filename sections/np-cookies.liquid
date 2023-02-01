@@ -1,0 +1,107 @@
+<section class="section-wrapper-{{section.id }} popUp-cookies">
+  <div class="cookies-wrapper-{{ section.id }}">
+    <p class="cookiesText">
+      {{ section.settings.cookiesText }}
+    </p>
+
+    <div class="cookiesButton">
+      <button class="allCookies">{{ section.settings.cookiesAllText }}</button>
+      <button class="necessaryCookies">{{ section.settings.cookiesNecessaryText }}</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-wrapper-{{section.id }}{
+  display:none;
+    position:fixed;
+    bottom:0;
+    left:0;
+    background: white;
+    margin:0 auto;
+    z-index:99999999999999999999999999999;
+  }
+   .cookies-wrapper-{{ section.id }}{
+   width: 100%;
+   padding: 55px 164px 55px 89px;
+  }
+
+  .cookiesText{
+    color: #000000;
+    
+  }
+
+  .cookiesButton{
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;
+  gap: 50px;
+    margin-top: 42px;
+  }
+
+  .cookiesText,  .allCookies, .necessaryCookies{
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+
+  }
+
+
+    .allCookies, .necessaryCookies{
+      text-align: center;
+    background: #2B2725;
+    color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+  .allCookies{
+  padding: 3px 31px;
+  }
+
+  .necessaryCookies{
+  padding: 3px 37px;
+  }
+
+  @media (max-width:950px){
+    .cookies-wrapper-{{ section.id }}{
+   padding: 35px;
+  }
+  }
+  @media (max-width:768px){
+    .cookies-wrapper-{{ section.id }}{
+   padding: 25px;
+  }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cookies",
+  "settings": [
+    {
+    "type":"textarea",
+    "label":"Cookies Text",
+    "id":"cookiesText",
+    "default":"This site uses cookies and similar technologies for its operation and for the provision of the services. We use analytical cookies (our own and from third parties) to understand and improve the user’s browsing experience, and profiling cookies (our own and third party) to send you advertisements in line with your preferences when surfing the web. To modify or opt-out of the use of some or all cookies, go to “Cookie Settings” or consult our Cookie Policy to find out more. By clicking on “Accept all cookies” you consent to the use of these cookies. By clicking “Allow technical cookies only”, you give your consent to the use of technical cookies only."
+    },
+  {
+    "type":"text",
+    "label":"Cookies All Text",
+    "id":"cookiesAllText",
+    "default":"accept all cookies"    },
+    {
+    "type":"text",
+    "label":"Cookies Necessary Text",
+    "id":"cookiesNecessaryText",
+    "default":"accept only necessary cookies"}
+  ],
+  "presets":[
+    {
+      "name": "Cookies"
+    }
+  ]
+}
+{% endschema %}

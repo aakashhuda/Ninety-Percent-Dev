@@ -1,0 +1,223 @@
+{%- style -%}
+.button-el {
+    display: inline-block;
+    padding: 0.85em 3.5em;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #2B2725;
+    border: 0.75px solid #2B2725;
+    margin-top: 50px;
+    line-height: 21px;
+    font-family: "Intervogue";
+  }
+.section-{{ section.id }} .section-width{
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+.section-{{ section.id }}  .custom-width-para{
+    max-width: 590px;
+    width: 98%;
+}
+.justify{
+  text-align: justify;
+}
+.single-text-container-el-{{ section.id }}{
+    max-width: 950px;
+    margin: 10px auto;
+}
+    /* dynamic */
+    .section-{{ section.id }}-padding {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    }
+    .section-{{ section.id }} a{
+      text-decoration: none;
+      color: #2b2725;
+    }
+    {% for block in section.blocks %}
+        .section-{{ section.id }} .space-container-{{ block.id }}{
+        height: {{ block.settings.spacer-height }}px;
+        padding: 0;
+      }
+    {% endfor %} 
+    @media only screen and (max-width: 1250px) {
+      .section-{{ section.id }} .np-h1{
+        font-size: 72px;
+        line-height:72px;
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .section-{{ section.id }}{
+        padding: 10px 25px;
+        overflow-x: hidden;
+      }
+      .section-{{ section.id }} .np-h1{
+        font-size: 48px;
+        line-height:48px;
+      }
+    }     
+{%- endstyle -%}
+  <section class="section-{{ section.id }} section-width section-{{ section.id }}-padding">
+    <div class="single-text-container-el-{{ section.id }}">
+          <div class="single-text-container-wrapper-el">
+        {% for block in section.blocks %}
+                {% case block.type %}
+                    {% when "text" %}
+                    <p class="np-h6">
+                        {{ block.settings.text | replace: 'p>', 'span>' }}</p>
+                        {% when "text0" %}
+                        <p class="np-h1">
+                            {{ block.settings.text00 | replace: 'p>', 'span>' }}</p>
+                        {% when "text1" %}
+                        <p class="np-h3 custom-width-para">
+                            {{ block.settings.text11 | replace: 'p>', 'span>' }}</p>
+                            {% when "text2" %}
+                            <p class="np-h5 custom-width-para justify">
+                                {{ block.settings.text22 | replace: 'p>', 'span>' }}</p>
+                        {%- when 'spacer' -%}
+                            <div class="space-container-{{ block.id }}"></div>
+                            {%- when 'button-el' -%}
+                            <div id="btn-cta">
+                                    <a href="{{ block.settings.btn-link }}" class="button-el">{{ block.settings.btn-link-text }}</a>
+                            </div>
+                {% endcase %}
+      {% endfor %}
+    </div>
+    </div>
+    </section>
+    {% schema %}
+        {
+          "name": "QR Error Main",
+          "settings": [
+            {
+              "type": "header",
+              "content": "Section Padding"
+            },
+            {
+              "type": "range",
+              "id": "padding_top",
+              "min": 0,
+              "max": 100,
+              "step": 4,
+              "unit": "px",
+              "label": "Top padding",
+              "default": 36
+            }, {
+              "type": "range",
+              "id": "padding_bottom",
+              "min": 0,
+              "max": 100,
+              "step": 4,
+              "unit": "px",
+              "label": "Bottom Padding",
+              "default": 36
+            }
+          ],
+          "blocks": [
+            {
+              "type": "text",
+              "name": "Text",
+              "settings": [
+                {
+                  "type": "richtext",
+                  "id": "text",
+                  "default": "<p>All of our profits are now shared equally between our charities.</p>",
+                  "label": "Content"
+                }
+              ]
+            },
+            {
+              "type": "text0",
+              "name": "Text Style 2",
+              "settings": [
+                {
+                  "type": "richtext",
+                  "id": "text00",
+                  "default": "<p>All of our profits are now shared equally between our charities.</p>",
+                  "label": "Content"
+                }
+              ]
+            },
+            {
+              "type": "text1",
+              "name": "Text Style 3",
+              "settings": [
+                {
+                  "type": "richtext",
+                  "id": "text11",
+                  "default": "<p>All of our profits are now shared equally between our charities.</p>",
+                  "label": "Content"
+                }
+              ]
+            },
+            {
+              "type": "text2",
+              "name": "Text Style 4",
+              "settings": [
+                {
+                  "type": "richtext",
+                  "id": "text22",
+                  "default": "<p>All of our profits are now shared equally between our charities.</p>",
+                  "label": "Content"
+                }
+              ]
+            },
+            {
+              "name": "Button",
+              "type": "button-el",
+              "settings": [
+                {
+                  "id": "btn-text-box",
+                  "type": "text",
+                  "label": "Heading",
+                  "default": "Button Text"
+                }, {
+                  "id": "btn-link",
+                  "type": "url",
+                  "label": "Button link"
+                }, {
+                  "id": "btn-link-text",
+                  "type": "text",
+                  "label": "Button text",
+                  "default": "LEARN MORE ABOUT PROFIT SHARING"
+                }
+              ]
+            }, {
+              "name": "spacer",
+              "type": "spacer",
+              "settings": [
+                {
+                  "type": "range",
+                  "id": "spacer-height",
+                  "min": 5,
+                  "max": 300,
+                  "step": 5,
+                  "unit": "px",
+                  "label": "Space height",
+                  "default": 45
+                }
+              ]
+            }
+          ],
+          "presets": [
+            {
+              "name": "QR Error Main",
+              "blocks": [
+                {
+                  "type": "text"
+                }, {
+                  "type": "text0"
+                }, {
+                  "type": "text1"
+                },
+                {
+                  "type": "text2"
+                }
+              ]
+            }
+          ]
+        }
+      {% endschema %}

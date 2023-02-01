@@ -1,0 +1,201 @@
+<div class="page-width text-with-image-container">
+    <div class="left-block">
+        {% if section.settings.image %}
+          <img class="left-img-block" src="{{ section.settings.image  | img_url: 'master' }}" alt="" srcset="">        
+        {% endif %}
+       
+       <div class="collection-text">
+          {% if section.settings.title2 %}
+          <h3>{{ section.settings.title2 }}</h3>
+          {% endif %}
+          {% if section.settings.text2 %}
+          <p>{{ section.settings.text2 }}</p>
+          {% endif %}
+          <button class="btn-custom">OUR WAY</button>
+       </div>
+    </div>
+    <div class="right-block">
+        <div >
+            <!-- <h1>jkndsflkn</h1> -->
+            {% if section.settings.title %}
+            <h3>{{ section.settings.title }}</h3>
+            {% endif %}
+            {% if section.settings.text %}
+            <p>{{ section.settings.text }}</p>
+            {% endif %}
+<!--             <button class="btn-custom">SHOP NOW</button> -->
+        </div>
+        {% if section.settings.image2 %}
+        <img class="right-img-block" src="{{ section.settings.image2 | img_url: 'master' }}" alt="" srcset="">
+        {% endif %}
+    </div>
+    <div class="responsive-txt-collection">
+      {% if section.settings.title2 %}
+      <h3>{{ section.settings.title2 }}</h3>
+      {% endif %}
+      {% if section.settings.text2 %}
+      <p>{{ section.settings.text2 }}</p>
+      {% endif %}
+      
+   </div>
+</div>
+    
+    {% schema %}
+      {
+        "name": "Image with text new",
+        "class": "index-section",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "image_width",
+            "label": "Image width",
+            "default": 500,
+            "min": 100,
+            "max": 500,
+            "step": 10,
+            "unit": "px"
+          },
+
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Image with text"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Pair large text with an image to tell a story, explain a detail about your product, or describe a new promotion.</p>"
+          },
+          {
+            "type": "text",
+            "id": "title2",
+            "label": "Heading-2",
+            "default": "Image with text"
+          },
+          {
+            "type": "richtext",
+            "id": "text2",
+            "label": "Text-2",
+            "default": "<p>Pair large text with an image to tell a story, explain a detail about your product, or describe a new promotion.</p>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Image-2"
+          }
+        ],
+        "presets": [
+          {
+            "name": "Image with text new",
+            "category": "Image"
+          }
+        ]
+      }
+    {% endschema %}
+    
+    <style>
+      .btn-custom{
+        border-bottom: 0.75px solid #2B2725;
+      }
+      .text-with-image-container p{
+            font-weight: 400 !important;
+            font-family: 'Silvana';
+           /* text-transform: capitalize; */
+            line-height: 26px;
+            font-size: 18px;
+        /*   margin-bottom: 50px; */
+             text-align: justify;
+      }
+      .text-with-image-container{
+        padding: 0 130px;
+      }
+      .text-with-image-container img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+
+      }
+       .left-block img{
+        width: 65%;
+        margin-bottom: 5em;
+      }
+      .right-block img{
+        width: 60%;
+      }
+      .right-block > div > p{
+            margin-top: 6em;
+            margin-bottom: 5em;
+            padding-right: 65px;
+      }
+      .text-with-image-container{
+        display: flex;
+      }
+      .responsive-txt-collection{
+        display: none;
+      }
+
+      .collection-text h3{
+        font-family: 'Silvana';
+    font-style: italic;
+      }
+      .left-img-block{
+        margin-left: inherit !important;
+      }
+      .right-img-block{
+        margin-right: inherit !important;
+      }
+      .collection-text{
+        padding-left: 65px;
+      }
+
+      @media only screen and (max-width: 428px)  {
+        .text-with-image-container p{
+          margin-bottom: 0px;
+        }
+        .collection-text{
+          display: none;
+        }
+        .text-with-image-container{
+          flex-flow: row wrap;
+          flex-direction: column;
+          padding: 0 15px;
+        }
+        .left-block img{
+          
+
+        }
+        .right-block{
+          margin-bottom: 30px;
+        }
+        .right-block > div > p{
+          margin-bottom: 0px;
+          margin-top: 2em;
+        }
+        .right-block img{
+          width: 100%;
+        }
+        .left-block img{
+          width: 100%;
+          margin-bottom: 5px;
+        }
+        .responsive-txt-collection{
+          display: block;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        .responsive-txt-collection h3{
+          font-family: 'Silvana';
+    font-style: italic;
+    text-transform: capitalize;
+    margin-bottom: 12px;
+        }
+      }
+
+    </style>

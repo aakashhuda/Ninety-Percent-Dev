@@ -1,0 +1,410 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'image-text-block' %} 
+  <div class="block-{{ block.id }}">    <div class="first-row">        <div class="first-row-image">        <img class="first-row-image-{{ block.id }}" src="{{ block.settings.first-row-image | img_url: "master" }}">        <div class="first-row-image-text-{{ block.id }}">              <p>{{ block.settings.first-row-image-text }} <a class="np-h6" href="{{ block.settings.first-row-image-url }}">Shop Here</a></p>            </div>      </div>      <div class="first-row-text np-h5">        {{ block.settings.first-row-text }}
+        <div class="first-text-button">            <a href="{{ block.settings.first-button-url }}">                {{ block.settings.first-button-text}}
+            </a>            <div class="border-bottom">            </div>        </div>      </div>    </div>    <div class="second-row">      <div class="second-row-text np-h5">        {{ block.settings.second-row-text }}
+        <div class="second-text-button button-border">                    <a href="{{ block.settings.second-button-url }}">                        {{ block.settings.second-button-text}}
+                    </a>                    <div class="border-bottom">                    </div></div>      </div>      <div class="second-row-image">            <img class="second-row-image-{{ block.id }}" src="{{ block.settings.second-row-image| img_url: "master" }}">            <div class="second-row-image-text-{{ block.id }}">                <p>{{ block.settings.second-row-image-text }} <a class="np-h6" href="{{ block.settings.Second-row-image-url }}">Shop Here</a></p>            </div>      </div>    </div>  </div>  {% when 'spacer-block' %}
+    <div class="spacer-{{ block.id }}">    </div>{% endcase %}
+{% endfor %}
+</section> <style> .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+.np-page-width {
+                        padding: 0 20px;
+                    }
+}
+.section-wrapper-{{ section.id }} {
+  padding: 0 {{ section.settings.both-side-padding }}px;
+}
+{% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'image-text-block' %} 
+        .first-row-mobile-button{
+            display: none;
+        }
+        .first-text-button{
+            margin-top:71.71px;
+            width:{{ block.settings.first-row-button-size }}px;
+            text-align: center;
+        }
+        .second-text-button{
+            margin-top:66px;
+            width:{{ block.settings.second-row-button-size }}px;
+            text-align: center;
+        }
+        .first-text-button a, .second-text-button a{
+            font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+        }
+        .first-text-button .border-bottom, .second-text-button .border-bottom{
+    margin-top: 12.86px;
+    width: 100%;
+    border: 1px solid #2B2725;
+  }
+  .first-text-button .border-bottom{
+    width:{{ block.settings.first-row-button-size }}px;
+  }
+  .second-text-button .border-bottom{
+        width: {{ block.settings.second-row-button-size }}px;
+  }
+    .block-{{ block.id }} {
+        display: flex;
+        flex-direction: column;
+    }
+    .block-{{ block.id }} .first-row {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .block-{{ block.id }} .second-row {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .first-row-text{
+        margin-left: 12%;
+      margin-top: -14%;
+    }
+    .second-row-text{
+        margin-right: 16.5%;
+    }
+    .first-row-text, .second-row-text { 
+        width: 45%;
+        text-align: justify;
+    }
+    .first-row-image-{{ block.id }}, .second-row-image-{{ block.id }}{
+        width:100%;
+    }
+    .block-{{ block.id }} .second-row-image {
+        margin-top: -130px;
+    }
+    .block-{{ block.id }} .second-row-text {
+        width: 435px;
+    }
+    .block-{{ block.id }} .first-row-text{
+        width: 447px;
+    }
+    .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text   {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .first-row-image-text-{{ block.id }} p, .second-row-image-text-{{ block.id }} p{
+        font-family: 'Intervogue';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 21px;        
+        letter-spacing: 0.04em;
+        text-transform: uppercase;        
+        color: rgba(43, 39, 37, 0.6); 
+    }
+    .first-row-image-text-{{ block.id }} p a, .second-row-image-text-{{ block.id }} p a{
+        text-decoration: underline;
+        color: rgba(43, 39, 37, 0.6); 
+    }
+   {% if block.settings.show-first-image-text==false %}
+   .first-row-image-text-{{ block.id }}{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.show-second-image-text==false %}
+   .second-row-image-text-{{ block.id }}{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.show-first-image-button==false %}
+   .first-text-button{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.show-second-image-button==false %}
+   .second-text-button{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.second-image-button-border==true %}
+   .section-wrapper-{{section.id}} .second-text-button .border-bottom{
+          display:none;
+        }
+
+  .section-wrapper-{{section.id}} .second-text-button.button-border{
+    padding: 9px 22px;
+  border: 0.75px solid #2B2725;
+  margin:40px 0;
+  }
+
+  .section-wrapper-{{section.id}} .second-text-button.button-border a{
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+text-align: center;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+  }
+ {% endif %}
+ @media only screen and (max-width: 768px){
+    .block-{{ block.id }} .second-row{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .block-{{ block.id }} .first-row{
+        display: block;
+        margin-bottom:20px;
+    }
+    .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text{
+        width: 100%;
+        margin: 0;
+    }
+    .block-{{ block.id }} .second-row-image {
+        margin-top: 0px;
+    }
+ }
+    {% when "spacer-block" %}
+        .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+            height: {{ block.settings.spacer-height }}px;
+        }
+{% endcase %}
+{% endfor %}
+</style>{% schema %}
+  {
+    "name": "Fibre Double Img Text",
+    "settings": [
+      {
+        "type": "range",
+        "id": "both-side-padding",
+        "label": "Both Side Padding",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      }
+    ],
+    "blocks": [
+      {
+        "name": "image-text-block",
+        "type": "image-text-block",
+        "settings": [
+            {
+          "type": "checkbox",
+          "id":"flip-position",
+          "label": "Display Settings",
+          "default": false
+         },
+         {
+          "type": "checkbox",
+          "id":"show-first-image-text",
+          "label": "Show First Image Text",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-second-image-text",
+          "label": "Show Second Image Text",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-first-image-button",
+          "label": "Show First Image Button",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-second-image-button",
+          "label": "Show Second Image Button",
+          "default": true
+         },{
+          "type": "checkbox",
+          "id":"second-image-button-border",
+          "label": "Second Image Button border",
+          "default": false
+         },
+            {
+                    "type": "image_picker",
+                    "id": "first-row-image",
+                    "label": "Select first row image"
+                },
+           {
+                    "type":"text",
+                    "id":"first-row-text",
+                    "label":"First Row Text",
+                    "default": "Conventional cotton often has a high environmental impact, requiring a vasts amounts of water to produce and depleting the soil quality. Our value chain from farm to yarn ensures no harmful chemicals are used in the fields or contaminate water, that water consumption is controlled and workers’ rights are preserved."
+                },
+                {
+                    "type":"text",
+                    "id":"first-row-image-text",
+                    "label":"First Row Image Text",
+                    "default": "Product Name"
+                },
+                {
+                    "type":"url",
+                    "id":"first-row-image-url",
+                    "label":"First Row Image Text URL",
+                    "default": "/"
+                },
+         {"type": "text",
+           "id": "first-button-text",
+           "label":"Change the First Button Text",
+           "default":"more on design"
+         },
+         {"type": "url",
+           "id": "first-button-url",
+           "label":"Change the First Button URL",
+           "default":"/"
+         },
+         {"type": "text",
+           "id": "first-row-mobile-button-text",
+           "label":"Change the Mobile Button Text",
+           "default":"meet elliot"
+         },
+         {"type": "url",
+           "id": "first-row-mobile-button-url",
+           "label":"Change the Mobile Button URL",
+           "default":"/"
+         },
+                {
+                 "type":"range",
+                 "id":"first-row-text-size",
+                 "label":"First Row text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-first-row-text-size",
+                 "label":"First row text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                    "type":"color",
+                    "id":"first-row-text-color",
+                    "label":"First row text color"
+                },
+                {
+                 "type":"range",
+                 "id":"first-row-button-size",
+                 "label":"First Row Button size",
+                 "min":136.8,
+                 "max":400,
+                 "step":9.4,
+                 "unit":"px",
+                 "default":136.8
+              },
+              {
+                    "type": "image_picker",
+                    "id": "second-row-image",
+                    "label": "Select second row image"
+                },
+           {
+                    "type":"text",
+                    "id":"second-row-text",
+                    "label":"second Row Text",
+                    "default": "We care about people. Paying premium prices for organic cotton keeps farmers and their families safe and facilitates crop rotation, as well as protecting against child labour and the health dangers associated with the exposure to toxic chemicals."
+                },
+                {
+                    "type":"text",
+                    "id":"second-row-image-text",
+                    "label":"Second Row Image Text",
+                    "default": "Product Name"
+                },
+                {
+                    "type":"url",
+                    "id":"Second-row-image-url",
+                    "label":"Second Row Image Text URL",
+                    "default": "/"
+                },
+         {"type": "text",
+           "id": "second-button-text",
+           "label":"Change the Second Button Text",
+           "default":"more on sustainability"
+         },
+         {"type": "url",
+           "id": "second-button-url",
+           "label":"Change the Second Button URL",
+           "default":"/"
+         },
+                {
+                 "type":"range",
+                 "id":"second-row-text-size",
+                 "label":"second Row text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-second-row-text-size",
+                 "label":"second row text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                    "type":"color",
+                    "id":"second-row-text-color",
+                    "label":"second row text color"
+                },
+                {
+                 "type":"range",
+                 "id":"second-row-button-size",
+                 "label":"Second Row Button size",
+                 "min":169,
+                 "max":400,
+                 "step":11,
+                 "unit":"px",
+                 "default":169
+              }
+        ]
+      }, {
+        "type": "spacer-block",
+        "name": "Spacer",
+        "settings": [
+          {
+            "type": "range",
+            "id": "spacer-height",
+            "label": "Spacer Height",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "content",
+        "name": "Fibre Double Img Text",
+        "blocks":[{
+            "type": "image-text-block"
+        }]
+      }
+    ]
+  }
+{% endschema %}

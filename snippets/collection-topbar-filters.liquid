@@ -1,0 +1,435 @@
+{% liquid
+    assign sort_by = collection.sort_by
+    assign default_sort_by = collection.default_sort_by
+    assign sort_options = collection.sort_options
+  %}
+  
+  <div class="topbar-filter-section np-h6">
+    <div class="collection-name">SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
+    <ul class="filter-list">
+      {% for filter in filters %}
+        {% assign filter_label = filter.label | replace: ' ', '-' %}
+        <div class="filter-container-{{ filter_label }}">
+          <li class="filter-label filter-{{ filter_label }}">
+            {% if filter_label == "Product-type" %}
+              Category
+            {% else %}
+              {{ filter_label }}
+            {% endif %}
+          </li>
+          <ul class="filter-options-list filter-{{ filter_label }}-options">
+            {% for value in filter.values %}
+              {% if filter_label != 'Size' %}
+                {% if value.active %}
+                  <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+                {% else %}
+                  <li class="filter-value-item"><a href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+                {% endif %}
+
+              {% else %}
+                  {% if value.active %}
+                    <li class="filter-value-item active size-filter"><a data-url="{{ value.url_to_remove }}" href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+                  {% else %}
+                    <li class="filter-value-item inactive size-filter"><a data-url="{{ value.url_to_add }}" href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+            
+          </ul>
+        </div>
+      {% endfor %}
+    </ul>
+    <div class="sorting-section">
+      <span class="sort-btn">SORT BY</span>
+      <ul class="sort-list">
+        {% for option in sort_options %}
+          {% if sort_by == option.value %}
+            <li class="sort-list-item active" data-name="{{ option.value }}">{{ option.name }}</li>
+          {% else %}
+            <li class="sort-list-item" data-name="{{ option.value }}">{{ option.name }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="topbar-active-filter-section np-h6">
+    {% for filter in filters %}
+      {% if filter.label != 'Size' %}
+        {% for value in filter.values %}
+          {% assign value_label = value.label | replace: ' ', '-' %}
+            {% if value.active %}
+            <a href="{{ value.url_to_remove }}" class="active-filter-item item-{{ value_label }}"><span class="active-filter-label">{{ value.label }}</span><span class="active-filter-cross">X</span></a>
+            {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for value in filter.values %}
+          {% assign value_label = value.label | replace: ' ', '-' %}
+            {% if value.active %}
+              <a href="{{ value.url_to_remove }}" data-url="{{ value.url_to_remove }}" class="inactive-filter-item item-{{ value_label }} active size-filter"><span class="active-filter-label">{{ value.label }}</span><span class="active-filter-cross">X</span></a>
+            {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    <div class="active-filter-clear-item filter-reset dont-show"><span>CLEAR ALL</span></div>
+  </div>
+  
+  <style>
+    .topbar-active-filter-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+    }
+    span.active-filter-label {
+      margin-right: 40px;
+    }
+    span.active-filter-cross {
+      font-size: 16px;
+    }
+    .active-filter-item, .active-filter-clear-item, .inactive-filter-item {
+        min-width: 100px;
+        border: 0.5px solid rgba(43, 39, 37, 0.25);
+        padding: 0.2em 0.7em;
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+    .active-filter-clear-item {
+        justify-content: center;
+        cursor: pointer;
+    }
+    .topbar-filter-section {
+      display: flex;
+      text-transform: uppercase;
+    }
+    .filter-list {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex: 1;
+    }
+    .filter-label, .filter-label-reset {
+      margin: 0 20px;
+    }
+    .collection-name {
+      flex: 1;
+    }
+    {% for filter in filters %}
+      {% assign filter_label_css = filter.label | replace: ' ', '-' %}
+      .filter-container-{{ filter_label_css }}, .filter-container-Reset {
+        position: relative;
+        cursor: pointer;
+      }
+      .filter-{{ filter_label_css }}-options {
+        display: none;
+        position: absolute;
+        z-index: 10000;
+        background-color: #ffffff;
+        border: none;
+        box-shadow: 0 1px 1px 0px #dddddd;
+        left: -67px;
+        width: 290px;
+        padding-left: 67px;
+        padding-top: 19px;
+        padding-bottom: 29px;
+        padding-right: 2px;
+      }
+      .filter-{{ filter_label_css }}-options li {
+        list-style: none;
+        margin: 5px 0;
+        padding: 0;
+        font-size: 12px;
+        line-height: 22px;
+        font-family: 'Intervogue';
+      }
+      .sorting-section {
+        position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: end;
+      }
+      .sort-list {
+        width: 260px;
+        position: absolute;
+        z-index: 1000;
+        {% comment %} left: 41%; {% endcomment %}
+        right: 2%;
+        top: 25px;
+        margin: 0;
+        display: none;
+        padding-top: 27px;
+        padding-bottom: 33px;
+        padding-left: 64px;
+        font-size: 12px;
+        line-height: 22px;
+        letter-spacing: 0.05em;
+        background-color: #ffffff;
+        border: none;
+        box-shadow: 0 1px 1px 0px #dddddd;
+        text-transform: uppercase;
+        color: #2B2725;
+      }
+      .sort-list li {
+        list-style: none;
+        margin: 5px 0;
+        padding: 0;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .show-sort-list {
+        display: block;
+      }
+    {% endfor %}
+    .filter-Size-options {
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 22px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #2B2725;
+    }
+    .filter-Color-options {
+      font-size: 12px;
+      line-height: 21px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: 'Intervogue';
+      font-weight: 400;
+      color: #2B2725;
+    }
+    .show-filter {
+      display: block;
+    }
+    .sort-btn {
+      cursor: pointer;
+    }
+    .filter-value-item.active, .sort-list-item.active {
+      text-decoration: underline;
+    }
+    .dont-show {
+        display: none;
+    }
+    .filter-Availability {
+      display: none;
+    }
+
+    .item-In-stock {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .active-filter-item {
+        margin-bottom: 5px;
+      }
+        .topbar-filter-section {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        .topbar-active-filter-section {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin-left: 10px;
+        }
+        ul.filter-list {
+            margin: 0;
+        }
+        .filter-label {
+            margin: 0 10px;
+            margin-left: 0;
+        }
+        .sort-list {
+          width: 260px;
+          position: absolute;
+          z-index: 1000;
+          {% comment %} left: 41%; {% endcomment %}
+          left: 0px;
+          top: 21px;
+        }
+        {% for filter in filters %}
+          {% assign filter_label_css = filter.label | replace: ' ', '-' %}
+          .filter-container-{{ filter_label_css }}, .filter-container-Reset {
+            position: relative;
+            cursor: pointer;
+          }
+          .filter-{{ filter_label_css }}-options {
+            left: -21px;
+          }
+        {% endfor %}
+    }
+  </style>
+  
+  <script>
+function sizeFilterRemoval() {
+  var sizeFilters = document.querySelectorAll(".active.size-filter")
+  sizeFilters.forEach(item=>{
+    item.addEventListener("click", (e)=>{
+      e.preventDefault()
+      if (e.target.dataset.url.includes("option.size")){
+        var tempUrl = e.target.dataset.url
+      }
+      else {
+        var tempUrl = e.target.dataset.url.replace("&filter.v.availability=1", "")
+      }
+      var index = tempUrl.indexOf("?")
+      var length = tempUrl.length
+      var newParam = tempUrl.substr(index, length-1)
+      if (newParam === '?filter.v.availability=1'){
+        window.location.search = ""
+      }
+      else {
+        window.location.search = newParam
+      }
+    })
+  })
+}
+
+function sizeFilterAddition(){
+  var sizeFilters = document.querySelectorAll(".inactive.size-filter")
+  sizeFilters.forEach(item=>{
+    item.addEventListener("click", (e)=>{
+      e.preventDefault()
+      var url;
+      if (e.target.dataset.url.includes("availability")){
+        url = e.target.dataset.url
+      }
+      else {
+        url = e.target.dataset.url + "&filter.v.availability=1"
+      }
+      var tempUrl = url
+      var index = tempUrl.indexOf("?")
+      var length = tempUrl.length
+      var newParam = tempUrl.substr(index, length-1)
+      window.location.search = newParam
+    })
+  })
+}
+
+function showClearFilter(){
+    const activeFilters = document.querySelectorAll(".active-filter-item")
+    if (activeFilters.length > 0) document.querySelector(".active-filter-clear-item").classList.remove("dont-show")
+}
+  function resetFilter(){
+    var target = document.querySelector(".filter-reset")
+    target.addEventListener('click', ()=>{
+      window.location.search = ""
+    })
+  }
+  function sortingFunctionWithoutMultipleOptions(){
+    var sortItems = document.querySelectorAll(".sort-list-item")
+    sortItems.forEach(item=>{
+      item.addEventListener('click', (e)=>{
+        let url = "";
+        if (window.location.search.indexOf("filter") === -1){
+          url += `?sort_by=${e.target.dataset.name}`
+        }
+        else {
+          var index = window.location.search.indexOf("sort_by")
+          switch (index) {
+            case -1: url += window.location.search + `&sort_by=${e.target.dataset.name}`; break;
+            default:
+              var initIndex = window.location.search.indexOf("sort_by")
+              var toBeReplaced = window.location.search.slice(initIndex)
+              url += window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
+          }
+        }
+        window.location.search = url
+      })
+    })
+  }
+  function sortingFunctionWithMultipleOptions(){
+    var sortItems = document.querySelectorAll(".sort-list-item")
+    sortItems.forEach(item=>{
+      item.addEventListener('click', (e)=>{
+        let url = "";
+        if (window.location.search.indexOf("filter") === -1){
+          var index = window.location.search.indexOf("sort_by")
+          switch (index) {
+            case -1: url += `?sort_by=${e.target.dataset.name}`; break;
+            default: url = window.location.search + `&sort_by=${e.target.dataset.name}`;
+          }
+        }
+        else {
+          url += window.location.search + `&sort_by=${e.target.dataset.name}`
+        }
+        window.location.search = url
+      })
+    })
+  }
+  function applyClickEventForFilter() {
+    document.querySelectorAll(".filter-label").forEach(label=>{
+      label.addEventListener('click', (event)=> {
+        var className = `${event.target.classList[1]}-options`
+        var target = document.querySelector(`.${className}`)
+        var sortingList = document.querySelector(".sort-list")
+        if (target.classList.contains("show-filter")){
+          target.classList.remove("show-filter")
+        }
+        else {
+          target.classList.add("show-filter")
+          document.querySelectorAll(".filter-options-list").forEach(item => {
+            if (item !== target) item.classList.remove("show-filter");
+          })
+        }
+        if (sortingList.classList.contains("show-sort-list")) {
+          sortingList.classList.remove("show-sort-list")
+        }
+      })
+    })
+  }
+  function applyClickEventForSorting() {
+    var target = document.querySelector(".sorting-section")
+    target.addEventListener('click', ()=>{
+      // sorting
+      document.querySelectorAll(".filter-options-list").forEach(option=>{
+        if (option.classList.contains("show-filter")) {
+          option.classList.remove("show-filter")
+        }
+      })
+
+      if (document.querySelector(".sort-list").classList.contains('show-sort-list')){
+        document.querySelector(".sort-list").classList.remove('show-sort-list')
+      }
+      else {
+        document.querySelector(".sort-list").classList.add('show-sort-list')
+      }
+    })
+  }
+  function removeFilterOptionList(){
+    var topBarFilterSection = document.querySelector(".topbar-filter-section")
+    topBarFilterSection.addEventListener('click', (e)=>{
+      if (e.target !== topBarFilterSection) return false
+      document.querySelectorAll(".filter-options-list").forEach(item => {
+        item.classList.remove("show-filter")
+      })
+    })
+  }
+
+  function checkForActiveFilters(){
+    const target = document.querySelector(".topbar-active-filter-section")
+    if (window.location.search.indexOf("filter") != -1){
+      target.classList.remove("hide")
+    }
+    else {
+      target.classList.add("hide")
+    }
+  }
+
+  applyClickEventForFilter()
+  applyClickEventForSorting()
+  sortingFunctionWithoutMultipleOptions()
+  resetFilter()
+  removeFilterOptionList()
+  showClearFilter()
+  sizeFilterRemoval()
+  sizeFilterAddition()
+  checkForActiveFilters()
+  </script>

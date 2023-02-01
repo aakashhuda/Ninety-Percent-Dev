@@ -1,0 +1,70 @@
+{% if section.settings.collection != blank %}
+    
+
+<!--     <div class=""
+              {% assign image_url = section.settings.collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+              <img fetchpriority="high" class="Slideshow__Image Image--lazyLoad hide-no-js"
+                   data-src="{{ image_url }}"
+                   data-optimumx="1.2"
+                   data-widths="[400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200]"
+                   data-sizes="auto"
+                   alt="{{ section.settings.collection.image.alt | escape }}">
+              <noscript>
+                <img class="Slideshow__Image" src="{{ section.settings.collection.image | img_url: '1000x' }}" alt="{{ section.settings.collection.image.alt | escape }}">
+              </noscript>
+    </div> -->
+
+
+                <div class="top-banner-container">
+                  {%- assign img_url = section.settings.collection.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[360, 540, 720, 900, 1080, 1600]"
+                      data-aspectratio="{{ section.settings.collection.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ block.settings.image.alt }}">
+                  <noscript>
+                    <img class="lazyloaded" src="{{ section.settings.collection.image | img_url: '400x' }}" alt="{{ section.settings.collection.image.alt }}">
+                  </noscript>
+                  <h5 class="collection-name">{{ section.settings.collection.title }}</h5>
+                </div>
+            
+{% endif %}  
+
+{% schema %}
+  {
+    "name": "Top Banner Collection",
+    "settings": [
+      {
+      "type": "collection",
+      "id": "collection",
+      "label": "collection" 
+      }
+    ],
+    "presets":[
+      {
+        "name": "Top Banner Collection"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+<style>
+  .top-banner-container{
+    padding: 0 40px;
+  }
+  .collection-name{
+      font-family: Intervogue;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      letter-spacing: 0.05em;
+      text-align: left;
+    }
+</style>

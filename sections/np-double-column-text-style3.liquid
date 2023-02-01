@@ -1,0 +1,209 @@
+<section class="section-wrapper-{{ section.id }}">
+    {% for block in section.blocks %}
+      
+          {% case block.type %}
+          {% when 'double-column-text-block' %}
+             
+            <div class="text-block-{{ block.id }}">
+              <div class="block-inner">
+                <div class="left-text np-h9">
+                  {{ block.settings.left-text-content }}
+              </div>
+
+              <div class="right-text np-h4">
+                  {{ block.settings.right-text-content }}
+              </div>
+              </div>
+
+               
+            
+            </div>
+  
+          {% when 'spacer-block' %}
+          <section class="spacer-{{ block.id }}">
+              
+          </section>
+  
+          {% endcase %}
+      
+    {% endfor %}
+  </section>
+  
+  <style>
+
+  .section-wrapper-{{ section.id }} {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+      
+      {% for block in section.blocks %}
+          {% case block.type %} 
+  
+          {% when "double-column-text-block" %}
+
+            .text-block-{{ block.id }} {
+               
+                border-top: 0px;
+                border-bottom: 0px;
+              
+                
+            }
+            .text-block-{{ block.id }} .block-inner {
+              display: flex;
+              flex-direction: row;
+              padding: {{ block.settings.border-distance }}px {{ block.settings.padding }}px;
+            }
+
+            .text-block-{{ block.id }} .left-text , .text-block-{{ block.id }}  .right-text {
+                flex: 1;
+                text-align: justify;
+               
+            }
+
+            
+
+          {% if block.settings.show-top-border %}
+          .text-block-{{ block.id }} {
+                
+                border-top: 1px Solid rgba(43, 39, 37, 0.3);
+               
+                margin: auto {{ block.settings.border-gap }}px;
+                
+            }
+       {% endif %}
+
+       {% if block.settings.show-bottom-border %}
+          .text-block-{{ block.id }} {
+                
+                border-bottom: 1px Solid rgba(43, 39, 37, 0.3);
+                margin: auto {{ block.settings.border-gap }}px;
+                
+                
+            }
+       {% endif %}
+       @media only screen and (max-width: 980px) {
+        
+        .text-block-{{ block.id }} .block-inner {
+              
+        padding: {{ block.settings.border-distance }}px 60px;
+            }
+        }
+       @media only screen and (max-width: 768px) {
+        .text-block-{{ block.id }} .block-inner {
+        
+          flex-direction: column;
+        
+          padding: 50px 10px;
+          
+      }
+      .text-block-{{ block.id }} .left-text , .text-block-{{ block.id }}  .right-text {
+                
+                padding: 0px;
+            }
+           
+       }
+
+  
+          {% when "spacer-block" %}
+            .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+              height: {{ block.settings.spacer-height }}px;
+          }
+      {% endcase %}
+      {% endfor %}
+  
+  
+  </style>
+  
+  {% schema %}
+  {
+      "name": "Double Column Text Style3",
+      "blocks": [
+          {
+              "name": "double-column-text-block",
+              "type": "double-column-text-block",
+              "settings": [
+                {
+        "type": "checkbox",
+        "id": "show-top-border",
+        "label": "show top border",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show-bottom-border",
+        "label": "show bottom border",
+        "default": true
+      },
+      {
+                    "type": "range",
+                    "id":"border-distance",
+                    "label":"Border Distance of the block",
+                    "min":0,
+                    "max":200,
+                    "step":2,
+                    "unit":"px",
+                    "default": 50
+                },
+                {
+                    "type": "range",
+                    "id":"border-gap",
+                    "label":"Border Gap from Left-Right",
+                    "min":0,
+                    "max":30,
+                    "step":1,
+                    "unit":"px",
+                    "default": 10
+                },
+      {
+                    "type": "range",
+                    "id":"padding",
+                    "label":"Left-Right Space of the block",
+                    "min":0,
+                    "max":200,
+                    "step":2,
+                    "unit":"px",
+                    "default":138
+                },
+                  {
+                   "type":"richtext",
+                   "id":"left-text-content",
+                   "label":"Change left Text Block",
+                   "default":"<p>HOW TO: GARMENT CARE</p>"
+                },
+               
+                {
+                   "type":"richtext",
+                   "id":"right-text-content",
+                   "label":"Change right Text Block",
+                   "default":"<p>You needn’t wash an item every time you wear it. Spot clean marks or stains and hang your pieces to air out before putting them away at the end of the day. Pay attention to our care labels to see which temperature to wash at, whether to hand wash, and if ironing is allowed. You can freshen garments between washes with a steamer or by hanging them in the bathroom whilst you shower.</p>"
+                }
+                
+                
+                 
+              ]
+          },
+          {
+             "type": "spacer-block",
+              "name": "Spacer",
+                "settings":[
+                  {
+                      "type": "range",
+                      "id": "spacer-height",
+                      "label": "Spacer Height",
+                      "min": 0,
+                      "max": 200,
+                      "step": 5,
+                      "unit": "px",
+                      "default": 30
+                  }
+                ]
+            }
+      ],
+      "presets": [
+          {
+           "category":"content",
+            "name":"Double Column Text Style3"
+          }
+      ]
+  }
+  {% endschema %} 

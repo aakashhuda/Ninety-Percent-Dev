@@ -1,0 +1,130 @@
+{% style %}
+    .section-{{ section.id }}{
+      margin: 50px auto;
+      padding: 40px 0;
+    }
+    .img-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 80px;
+    }
+  .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .np-page-width {
+            padding: 0 20px;
+        }
+    }
+  
+    {% for block in section.blocks %}
+      .grid-item-{{ block.id }}{
+        flex: 0 0 1;
+        max-width: {{ block.settings.custom-image-width }}px;
+        width: 100%;
+      }
+      .grid-item-{{ block.id }} img{
+        width: 100%;
+      }
+      .customized-caption-{{ block.id }}{
+        color: #000000;
+  
+      }
+      @media only screen and (max-width: 1250px){
+        .customized-caption-{{ block.id }}{
+           margin-left: 5px;
+  
+      }
+  
+      }
+  
+    {% endfor %}
+  {% endstyle %}
+  <section class="section-{{ section.id }} np-page-width">
+    <div class="img-container">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'column' %}
+          <div class="grid-item-{{ block.id }}">
+            {% if block.settings.image %}
+              <img
+                src=" {{ block.settings.image | img_url: 'master' }} "
+                alt=""
+                height=""
+                width=""
+                loading="lazy">
+            {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+            {% if block.settings.caption %}
+            <p class="np-h6 customized-caption-{{ block.id }}">{{ block.settings.caption }}</p>
+          {% endif %}
+  
+          </div>
+  
+        {% endcase %}
+  
+  
+      {% endfor %}
+  
+    </div>
+  
+  </section>
+  
+  {% schema %}
+    {
+      "name": "Three Column Image SM",
+      "class": "section",
+      "tag": "section",
+      "settings": [],
+      "blocks": [
+  
+        {
+          "type": "column",
+          "name": "Column",
+          "limit": 3,
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Choose Image"
+            }, {
+              "type": "range",
+              "id": "custom-image-width",
+              "label": "Custom image width",
+              "min": 150,
+              "max": 550,
+              "step": 5,
+              "unit": "px",
+              "default": 300
+            },
+            {
+              "type": "text",
+              "id": "caption",
+              "label": "Image caption",
+              "info": "Blank will remove the caption from image"
+            }
+          ]
+        }
+  
+      ],
+      "presets": [
+        {
+          "name": "Three Column Image SM",
+          "blocks": [
+            {
+              "type": "column"
+            }, {
+              "type": "column"
+            }, {
+              "type": "column"
+            }
+          ]
+        }
+      ]
+    }
+  {% endschema %}

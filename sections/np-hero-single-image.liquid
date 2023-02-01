@@ -1,0 +1,263 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "image-block" %}
+                <div class="block-{{ block.id }}">
+                    
+                        <div class="image-block-inner" >
+                            
+                            <div class="image-block-text">
+                                <div class="image-block-title np-h1"> <span> {{ block.settings.title }} </span>  </div>
+                                <div class="image-block-desc np-h4"> <span> {{ block.settings.desc }}  </span> </div>
+                            </div>
+                           
+                        </div>
+
+                        <span class="image-block-caption np-h6"> {{ block.settings.caption }} </span>
+                </div>
+            
+            {% when 'spacer-block' %}
+
+                <div class="spacer-{{ block.id }}">
+                        
+                </div>
+
+        {% endcase %}
+    {% endfor %}
+
+</section>
+
+<style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "image-block" %}
+                
+                 .block-{{ block.id }} {
+                    padding: 0px {{ block.settings.padding }}px;
+                 }
+                 .block-{{ block.id }} .image-block-inner {
+                    background-image: url("{{ block.settings.bg-image | img_url: 'grande' }}");
+                    width: 100%;
+                    height: 1100px;
+                    position: relative;
+                    background-repeat: no-repeat;
+                    overflow: hidden;
+                    background-size: cover;
+                    background-position: 100% center;
+                 }
+                 
+                 .block-{{ block.id }} .image-block-inner .image-block-text {
+                    text-align: center;
+                   display: flex;
+                   flex-direction: column;
+                   align-items: center;
+                
+                    margin-top: 120px;                
+                    color: white;
+                    
+                 } 
+             
+              .image-block-title , .image-block-desc, .image-block-caption {
+                display: none;
+              }
+               
+                 .block-{{ block.id }} .image-block-text .image-block-title p {
+                    margin: 0 auto;
+                 }
+
+                 .block-{{ block.id }} .image-block-text .image-block-desc {
+                    
+                    max-width: 698px;
+                
+                    margin: 50px 50px;
+                 }
+                  
+
+                 .block-{{ block.id }} .image-block-inner .image-block-caption  {
+                    margin-top: 12px;
+                 }
+                 .block-{{ block.id }} .image-block-inner .image-block-caption p {
+                    margin: 0 auto;
+                 }
+
+                 {% if block.settings.show-title %}
+                    .block-{{ block.id }} .image-block-title {
+                        display: block;
+                     }
+                 {% endif %}
+
+                 {% if block.settings.show-desc %}
+                    .block-{{ block.id }} .image-block-desc {
+                        display: block;
+                     }
+                 {% endif %}
+
+                 {% if block.settings.show-caption %}
+                    .block-{{ block.id }}  .image-block-caption {
+                        display: block;
+                     }
+                 {% endif %}
+
+          @media (max-width: 1200px) {
+          .np-page-width {
+        padding: 0 20px;
+    }
+          }
+          
+                 @media only screen and (max-width: 768px) {
+                   .np-page-width {
+        padding: 0 20px;
+    }
+                    .block-{{ block.id }} .image-block-inner .image-block-text {
+                        margin-top: 60px;
+                    }
+                 .block-{{ block.id }} .image-block-title {
+                    font-size: 40px;
+                    line-height: 30px;
+                 }
+
+                 .block-{{ block.id }} .image-block-desc {
+                    font-size: 14px;
+                    line-height: 20px;
+                 }
+                     
+                     .block-{{ block.id }} .image-block-text .image-block-desc {
+                    
+                       margin-top: 20px;
+                 }
+                 .block-{{ block.id }} .image-block-inner {
+                    
+                    height: 440px;
+                   
+                    
+                  }
+                  }
+
+  @media only screen and (max-width: 400px) {
+  .block-{{ block.id }} .image-block-text .image-block-desc {
+                    
+                       margin: 20px 10px;
+                 }
+  }
+                
+            {% when 'spacer-block' %}
+
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>
+
+
+{% schema %}
+{
+    "name": "Hero Single Image",
+    "settings": [
+        
+    ],
+    "blocks": [
+        {
+            "type": "image-block",
+            "name": "Image",
+            "settings": [
+               
+            {
+        "type": "checkbox",
+        "id": "show-title",
+        "label": "Show Title",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show-desc",
+        "label": "Show Descriptions",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show-caption",
+        "label": "Show caption",
+        "default": true
+      },
+      {
+                    "type": "range",
+                    "id":"padding",
+                    "label":"Left-Right Space of the block",
+                    "min":0,
+                    "max":100,
+                    "step":1,
+                    "unit":"px",
+                    "default":52
+                },
+                {
+                    "type": "image_picker",
+                    "label": "Image Pick",
+                    "id": "bg-image"
+                },
+                {
+                    "type": "text",
+                    "label": "Add title",
+                    "id": "title",
+                    "default": "For The World We Want."
+                },
+              
+              
+               
+                {
+                    "type": "text",
+                    "label": "Add description",
+                    "id": "desc",
+                    "default": "We're a responsible luxury fashion label sharing 90% of our profits with people and causes we believe in. We're cultivating a culture of beauty that goes beyond our clothing, pioneering a new business culture rooted in community. All we do is rooted in people, planet and our values making tangible strides for the world we want."
+                  
+                },
+              
+              {
+                    "type": "richtext",
+                    "label": "Add caption",
+                    "id": "caption"
+                
+                }
+               
+              
+       
+            ]
+        },
+        {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"Hero Single Image",
+           "blocks": [
+        {
+          "type": "image-block"
+        },
+        {
+          "type": "spacer-block"
+        }
+      ]
+        }
+    ]
+}
+{% endschema %}

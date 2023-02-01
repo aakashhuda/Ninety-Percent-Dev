@@ -1,0 +1,254 @@
+<div id="wrapper-{{ section.id }}"> 
+    <section class="product-with-info-{{ section.id }} np-page-width">
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'product-card' %}
+                    <div class="product-card-{{ block.id }}">
+                        <div class="product-image-{{ block.id }}">
+                            <img src="{{ block.settings.product-image | img_url: 'master' }}">
+                        </div>
+                        <div class="product-name-{{ block.id }} np-h3">{{ block.settings.product-name }}</div>
+                        <div class="product-origin-{{ block.id }} np-h6"><span>ORIGIN</span>: <span>{{ block.settings.product-origin }}</span></div>
+                        <div class="product-description-{{ block.id }} np-h5">
+                            {{ block.settings.product-description }}
+                        </div>
+                        <div class="url-{{ block.id }} np-h6">
+                            <a href="{{ block.settings.url }}">{{ block.settings.url-name }}</a>
+                        </div>
+                    </div>
+            {% endcase %}
+        {% endfor %}
+    </section>
+</div>
+
+<style>
+    #wrapper-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .product-with-info-{{ section.id }} {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        min-height: 1100px;
+        padding: 0 {{ section.settings.padding-both-sides }}px;
+    }
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .product-with-info-{{ section.id }} {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+            {% when 'product-card' %}
+                .url-{{ block.id }} a {
+                    text-decoration: none;
+                    color: #2b2724;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    padding-bottom: 7px;
+                    border-bottom: 1px solid #2b2724;
+                }
+                .product-card-{{ block.id }} {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: stretch;
+                    align-items: center;
+                    flex: 1;
+                    padding: 1%;
+                    padding-top: 0;
+                    position: relative;
+                    width: calc(100%/ {{ forloop.length }});
+                }
+                {% if forloop.length < 3 %}
+                    .product-card-{{ block.id }} {
+                        max-width: 33.33%;
+                    }  
+                {% endif %}
+                .product-image-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                }
+                .product-name-{{ block.id }} {
+                    padding-top: 28px;
+                    padding-bottom: 24px;
+                }
+                .product-description-{{ block.id }} {
+                    text-align: justify;
+                }
+                .product-origin-{{ block.id }} {
+                    padding-bottom: 35px;
+                }
+                .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
+                    padding-left: 35px;
+                    padding-right: 45px;
+                    align-self: start;
+                }
+                .url-{{ block.id }} {
+                    position: absolute;
+                    bottom: 100px;
+                }
+                {% if block.settings.enable-border == true %}
+                    .product-card-{{ block.id }} {
+                        border-right: 0.25px solid rgba(43, 39, 37, 0.3);
+                    }
+                {% endif %}
+
+                {% if block.settings.show-origin == false %}
+                    .product-origin-{{ block.id }} {
+                        display: none;
+                    }
+                {% endif %}
+                @media (max-width: 768px) {
+                    .np-page-width {
+                        padding: 0 20px;
+                    }
+                    .product-card-{{ block.id }} {
+                        margin: 10px 0;
+                        padding: 0;
+                        width:100%;
+                    }
+                    .product-with-info-{{ section.id }} {
+                        min-height: none;
+                    }
+                    {% if forloop.length < 3 %}
+                          .product-card-{{ block.id }} {
+                              max-width: 100%;
+                          }  
+                      {% endif %}
+                    .product-name-{{ block.id }} {
+                        font-size: {{ block.settings.product-name-mobile-font-size }}px;
+                        line-height: {{ block.settings.product-name-mobile-line-height }}px;
+          padding-top: 20px;
+          padding-bottom: 0px;
+                    }
+                    .product-description-{{ block.id }} {
+                        font-size: {{ block.settings.product-description-mobile-font-size }}px;
+                        line-height: {{ block.settings.product-description-mobile-line-height }}px;
+                      margin: 20px 0;
+                    }
+                    .product-origin-{{ block.id }} {
+                        font-size: {{ block.settings.product-origin-mobile-font-size }}px;
+                        line-height: {{ block.settings.product-origin-mobile-line-height }}px;
+                    }
+                    .product-name-{{ block.id }}, .product-origin-{{ block.id }}, .product-description-{{ block.id }}, .url-{{ block.id }} {
+                        padding-left: 0;
+                        padding-right: 0;
+                      
+                    }
+                    .product-image-{{ block.id }}, .product-image-{{ block.id }} img {
+                        width: 100%;
+                    }
+                    .url-{{ block.id }} {
+                        position: relative;
+                        bottom: -6px;
+                      margin: 20px auto;
+                    }
+                    {% if block.settings.enable-border == true %}
+                        .product-card-{{ block.id }} {
+                            border-right: none;
+                        }
+                    {% endif %}
+                }
+                {% if block.settings.show-button == false %}
+                    .url-{{ block.id }} {
+                        display: none;
+                    }
+                {% endif %}
+
+        {% endcase %}
+
+    {% endfor %}
+
+</style>
+
+{% schema %}
+
+{
+    "name": "Ninety Product With Info",
+    "settings": [
+        {
+            "type": "range",
+            "id": "padding-both-sides",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "unit": "px",
+            "default": 0,
+            "label": "Padding Both Sides"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Product",
+            "type": "product-card",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "label": "Image",
+                    "id": "product-image"
+                },
+                {
+                    "type": "html",
+                    "id": "product-name",
+                    "label": "Product Name"
+                },
+                {
+                    "type": "text",
+                    "id": "product-origin",
+                    "label": "Product Origin",
+                    "default": "Country, Country, Country"
+                },
+                {
+                    "type": "text",
+                    "id": "product-description",
+                    "label": "Product Description"
+                },
+                {
+                    "type": "text",
+                    "id": "url-name",
+                    "label": "URL Text",
+                    "default": "Learn More"          
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show-button",
+                    "label": "Show Button",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "id": "enable-border",
+                    "label": "Enable Right Line",
+                    "default": false
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show-origin",
+                    "label": "Show Origin",
+                    "default": true
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Product With Info"
+        }
+    ]
+}
+{% endschema %}

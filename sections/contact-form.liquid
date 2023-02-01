@@ -1,51 +1,115 @@
+{%- assign blockId = block.id -%}
+{% if product %}
+  {%- assign blockId = block.id | append: product.id -%}
+{% endif %}
+
 <div class="index-section">
   <div class="page-width">
 
-    <div class="grid">
-      <div class="grid__item{% if section.settings.narrow_column %} medium-up--three-quarters medium-up--push-one-eighth{% endif %}">
-
-        {% if section.settings.title != blank %}
-          <div class="section-header">
-            <h2 class="section-header__title">
-              {{ section.settings.title }}
-            </h2>
-          </div>
-        {% endif %}
+    <div class="grid contact-us-content">
+      <div class="grid-item medium-up--two-fifths page-links">
+        <a class="page-link {% if request.path == '/pages/contact-us' %}active{% endif %}" href="/pages/contact-us" data-handle="none">Contact Us</a>
+        <a class="page-link {% if request.path == '/pages/new-faq' %}active{% endif %}" href="/pages/new-faq" data-handle="none">FAQs</a>
+        <a class="page-link" href="#" data-handle="none">Returns, Refunds & Exchanges</a>
+        <a class="page-link" href="#" data-handle="none">Payment, Promos & Giftcards</a>
+      </div>
+      <div class="grid__item{% if block.settings.narrow_column %} medium-up--three-quarters medium-up--push-one-eighth{% endif %} medium-up--three-fifths">
+        <header>
+          <div class="np-h1 page-title">Contact Us</div>
+        </header>
+        <div class="np-h3 description">Any questions? We are here to help. We respond to each email within 24 hours, Monday to Friday, excluding bank holidays.</div>
 
         <div class="form-vertical">
           {% form 'contact' %}
-
-            {% if form.posted_successfully? %}
-              <p class="note note--success">
-                {{ 'contact.form.post_success' | t }}
-              </p>
-            {% endif %}
-
-            {{ form.errors | default_errors }}
+            <div class="required-text">*Required</div>
 
             <div class="grid grid--small">
-              <div class="grid__item medium-up--one-half">
-                <label for="ContactFormName-{{ section.id }}">{{ 'contact.form.name' | t }}</label>
-                <input type="text" id="ContactFormName-{{ section.id }}" class="input-full" name="contact[name]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormFName-{{ blockId }}">{{ 'contact.form.firstname' | t }}<span>*</span></label>
+                <input placeholder="First Name*" type="text" id="ContactFormFName-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[firstname]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.first_name }}{% endif %}" required>
               </div>
-
-              <div class="grid__item medium-up--one-half">
-                <label for="ContactFormEmail-{{ section.id }}">{{ 'contact.form.email' | t }}</label>
-                <input type="email" id="ContactFormEmail-{{ section.id }}" class="input-full" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+              
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormLName-{{ blockId }}">{{ 'contact.form.lastname' | t }} <span>*</span> </label>
+                <input placeholder="Last Name*" type="text" id="ContactFormLName-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[lastname]" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.last_name }}{% endif %}" required>
               </div>
+              
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormEmail-{{ blockId }}">{{ 'contact.form.email' | t }}<span>*</span></label>
+                <input placeholder="Email*" type="email" id="ContactFormEmail-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[email]" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+              </div>
+              
+             
+                <div class="grid__item one-whole">
+                  <label for="ContactFormPhone-{{ blockId }}">{{ 'contact.form.phone' | t }} <span>*</span> </label>
+                  <input placeholder="Phone Number*" type="tel" id="ContactFormPhone-{{ blockId }}" class="input-full.form-vertical  contact-input" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" required>
+                </div>
+           
+              
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormSubject-{{ blockId }}">{{ 'contact.form.subject' | t }}<span>*</span></label>
+                <select id="ContactFormSubject-{{ blockId }}" class="contact-input input-full contact-form" name="contact[subject]" required>
+                   <option value="">Please Select Subject</option>
+                  <option value="Product Query">Product Query</option>
+                  <option value="Order Query">Order Query</option>
+                  <option value="Returns or Exchange">Returns or Exchange</option>
+                  <option value="Press">Press</option>
+                  <option value="Wholesale">Wholesale</option>
+                  <option value="Affiliate">Affiliate</option>
+                  <option value="8">Other</option>
+                </select>
+              </div>
+              
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormOrder-{{ blockId }}">{{ 'contact.form.order' | t }}</label>
+              	<input placeholder="Order Now" type="text" id="ContactFormOrder-{{ blockId }}" class="input-full contact-order commonHide contact-input" name="contact[order]" value="{% if form.order %}{{ form.order }}{% endif %}">
+              </div>
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormPublisher-{{ blockId }}">{{ 'contact.form.publisher' | t }}</label>
+              	<input placeholder="Publisher" type="text" id="ContactFormPublisher-{{ blockId }}" class="input-full publisher commonHide contact-input" name="contact[publisher]" value="{% if form.publisher %}{{ form.publisher }} {% endif %}">
+              </div>
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormCompany-{{ blockId }}">{{ 'contact.form.company' | t }}</label>
+              	<input placeholder="Company" type="text" id="ContactFormCompany-{{ blockId }}" class="input-full company commonHide contact-input" name="contact[company]" value="{% if form.company %}{{ form.company }} {% endif %}">
+              </div>
+              <div class="grid__item one-whole">
+                <label class="input-label" for="ContactFormWebsite-{{ blockId }}">{{ 'contact.form.website' | t }}</label>
+              	<input placeholder="Messenger*" type="text" id="ContactFormWebsite-{{ blockId }}" class="input-full website commonHide contact-input" name="contact[website]" value="{% if form.website %}{{ form.website }} {% endif %}">
+              </div>
+              
             </div>
 
-            {% if section.settings.show_phone %}
-              <label for="ContactFormPhone-{{ section.id }}">{{ 'contact.form.phone' | t }}</label>
-              <input type="tel" id="ContactFormPhone-{{ section.id }}" class="input-full" name="contact[phone]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+            <label class="input-label" for="ContactFormMessage-{{ blockId }}">{{ 'contact.form.message' | t }} <span>*</span> </label>
+            <textarea required rows="17"  placeholder="Message" id="ContactFormMessage-{{ blockId }}" class="input-full ContactFormMessage" name="contact[body]" >{% if form.body %}{{ form.body }}{% endif %}  </textarea>
+
+            <div class="submission-with-error">
+              <button type="submit" class="update-account-link">
+                {{ 'contact.form.send' | t }}
+              </button>
+              
+              <ul class="error-message-wrapper" >          
+                    {% for error in form.errors %}
+                <li class="error-message">{% if error == 'form' %}
+                 {{ form.errors.messages[error] }}
+               {% else %}
+                    Incomplete information: {{ form.errors.translated_fields[error] }} Incomplete
+                 {% endif %}
+               </li>    
+                      {% endfor %}
+             </ul>
+            
+             
+             
+            
+            </div>
+            {% if form.posted_successfully? %}
+              <div class="success-section">
+                <button type="button" class="update-account-link">
+                  Thank You
+                </button>
+                <div class="np-h10">We respond to all messages within 24 hours, Monday to Friday.</div>
+              </div>
             {% endif %}
-
-            <label for="ContactFormMessage-{{ section.id }}">{{ 'contact.form.message' | t }}</label>
-            <textarea rows="5" id="ContactFormMessage-{{ section.id }}" class="input-full" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
-
-            <button type="submit" class="btn">
-              {{ 'contact.form.send' | t }}
-            </button>
 
           {% endform %}
         </div>
@@ -53,33 +117,280 @@
     </div>
   </div>
 </div>
+{% style %}
 
-{% schema %}
-  {
-    "name": "Contact form",
-    "class": "index-section",
-    "settings": [
-      {
-        "type": "text",
-        "id": "title",
-        "label": "Title",
-        "default": "Contact us"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_phone",
-        "label": "Show phone number"
-      },
-      {
-        "type": "checkbox",
-        "id": "narrow_column",
-        "label": "Narrow column",
-        "default": true
-      }
-    ],
-    "presets": [{
-      "name": "Contact form",
-      "category": "Store information"
-    }]
+.contact-us-content label, .contact-us-content .label-info {
+  display: block;
+  margin-bottom: 0;
+}
+
+.label, label:not(.variant__button-label):not(.text-label), label.input-label {
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  text-transform: capitalize;
+}
+
+.form-vertical .contact-input, .form-vertical select.contact-input {
+  margin-bottom: 51px;
+}
+.required-text {
+  margin-bottom: 48px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+  text-align: start;
+}
+  .description {
+    margin-bottom: 38px;
+    max-width: 585px;
   }
-{% endschema %}
+  .contact-us-content {
+    display: flex;
+    flex-direction: row;
+  }
+  .success-section, .submission-with-error {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  #contact_form label span{
+  	color:#fd0000;
+    font-size: 16px;
+    position: absolute;
+  }
+  input, select, textarea{
+    border: none;
+    border-bottom: 1px solid;
+    border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+    border-color: var(--colorBorder);
+    width: 100%;
+    max-width: 581px;
+    padding: 8px 10px;
+    padding-left: 0;
+    border-radius: 0;
+    font-size: 12.5px;
+    line-height: 21px;
+    letter-spacing: 0.05em;
+  }
+  .page-links {
+  display: flex;
+  flex-direction: column;
+  padding-top: 42px;
+  padding-left: 70px;
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: #2B2725;
+      height: max-content;
+    position: sticky;
+    top: 95px;
+}
+  .page-link.active {
+    text-decoration: underline;
+  }
+
+  input:active,
+  input:focus,
+  select:active,
+  select:focus {
+    border: none;
+    border-bottom: 1px solid;
+    outline: none;
+  }
+  textarea {
+    border: 1px solid #2B2725;
+  }
+
+  .update-account-link {
+    border: 0.75px solid #2B2725;
+    background-color: white;
+    display: block;
+    padding: 0.7em 0.5em;
+    width: 347px;
+    text-align: center;
+  }
+
+  .update-account-link:hover {
+    color: #ffffff;
+    background-color: #111111;
+  }
+
+  .page-title {
+    margin-bottom: 42px;
+  }
+
+  .np-h1, .np-h2, .np-h3, .np-h4 {
+    font-family: 'Silvana';
+    font-weight: 400;
+    color: #2B2725;
+  }
+
+.np-h1 {
+  font-size: 100px;
+  line-height: 105px;
+  letter-spacing: -0.03em;
+}
+.np-h2 {
+  font-size: 70px;
+  line-height: 75px;
+  letter-spacing: -0.01em;
+}
+.np-h3 {
+  font-size: 26px;
+  line-height: 36px;
+  letter-spacing: -0.01em;
+}
+.np-h4 {
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+}
+.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
+  font-style: italic;
+}
+.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
+  font-family: 'Intervogue';
+  font-weight: 400;
+  color: #2B2725;
+}
+.np-h5 {
+  font-size: 16px;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+}
+.np-h6 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.04em;
+}
+.np-h7 {
+  font-size: 12px;
+  line-height: 21px;
+  letter-spacing: 0.02em;
+}
+.np-h8 {
+  font-size: 22px;
+  line-height: 32px;
+  letter-spacing: 0.04em;
+}
+.np-h9 {
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
+}
+.np-h10 {
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+.np-h6, .np-h8, .np-h9, .np-h10 {
+  text-transform: uppercase;
+}
+.ContactFormMessage {
+  padding: 10px;
+}
+.error-message-wrapper {
+  margin: 0px 0px;
+  list-style: none;
+}
+
+.error-message {
+  text-transform: capitalize;
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+
+
+letter-spacing: 0.05em;
+
+color: #2B2725;
+}
+@media (max-width: 1000px) {
+  .page-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-links {
+    padding-left: 17px;
+    height: max-content;
+    position: relative;
+    top: 0px;
+  }
+  .page-link {
+    margin: 0 5px;
+  }
+  .page-title {
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+  .contact-us-content {
+    flex-direction: column;
+  }
+}
+
+
+{% endstyle %}
+
+<script>
+
+(function atPollForjQuery() {
+    if (window.jQuery !== undefined) {
+        var $ = window.jQuery;
+        if ($("select.contact-form").length > 0) {
+          $('#contact_form .contact-order').parent().css( "display", "none" );
+          $('#contact_form .commonHide').parent().css( "display", "none" );
+            try {
+                $('select.contact-form').on('change', function() {
+                  
+                  if(this.value == "Order Query" || this.value == "Returns or Exchange"){
+                    $('#contact_form .commonHide').parent().css( "display", "none" );
+                  	$('#contact_form .contact-order').parent().css( "display", "block" );
+                  }
+                  else if(this.value == "Press"){
+                    $('#contact_form .commonHide').parent().css( "display", "none" );
+                  	$('#contact_form .publisher').parent().css( "display", "block" );
+                  }
+                  else if(this.value == "Wholesale"){
+                    $('#contact_form .commonHide').parent().css( "display", "none" );
+                  	$('#contact_form .company').parent().css( "display", "block" );
+                  }
+                  else if(this.value =="Affiliate"){
+                    $('#contact_form .commonHide').parent().css( "display", "none" );
+                  	$('#contact_form .website').parent().css( "display", "block" );
+                  }
+                  else{
+                  	$('#contact_form .commonHide').parent().css( "display", "none" );
+                  }
+                });
+
+            } catch (err) {
+                console.log('TRY ERROR: ' + err);
+            }
+        } else {
+            setTimeout(atPollForjQuery, 25);
+        }
+    } else {
+        setTimeout(atPollForjQuery, 25);
+    }
+})();  
+    
+  
+</script>

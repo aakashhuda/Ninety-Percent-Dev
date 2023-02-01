@@ -1,0 +1,302 @@
+{%- assign per_row = section.settings.per_row -%}
+{%- assign product_limit = per_row | times: section.settings.rows -%}
+{%- assign collection = collections[section.settings.home_featured_products] -%}
+{% if section.settings.divider %}
+  <div class="section--divider">  {% endif %}
+  <div
+    id="CollectionSection-{{ section.id }} np-page-width"
+    data-section-id="{{ section.id }}"
+    data-section-type="collection-template">    {% if section.settings.title != blank %}
+      <div class="new-arrival-slider-container">        <div class="section-header{% if section.settings.view_all %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">          <p class="section-header__title arrival-slider-title np-h6">            {{ section.settings.title }}
+          </p>          {% if section.settings.view_all and section.settings.rows == 1 %}
+            <a href="{{ collections[section.settings.home_featured_products].url }}" class="btn btn--secondary btn--small section-header__link">{{ 'collections.general.all_of_collection' | t }}</a>          {% endif %}
+        </div>      </div>    {% endif %}
+    <div class="new-arrival-container {% if section.settings.mobile_scrollable %}page-width--flush-small{% endif %} page-width">      <div>        <div class="slider-container">          {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+          {% case per_row %}
+            {% when 1 %}
+            {%- assign grid_item_width = '' -%}
+            {% when 2 %}
+            {%- assign grid_item_width = 'medium-up--one-half' -%}
+            {% when 3 %}
+            {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+            {% when 4 %}
+            {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+            {% when 5 %}
+            {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+          {% endcase %}
+          {% if section.settings.home_featured_products == blank or collections[section.settings.home_featured_products].empty? or collections[section.settings.home_featured_products].products_count == 0 %}
+            {% unless emptyState %}
+              {%- assign emptyState = true -%}
+            {% endunless %}
+            <!--           <div class="grid__item">            <div class="grid grid--uniform">            {% for i in (1..product_limit) %}
+            <div class="grid__item grid-product {{ grid_item_width }}" data-aos="row-of-{{ per_row }}">            <div class="grid-product__content">            <a href="{{ product.url | within: collection }}" class="grid-product__link {% if sold_out %} grid-product__link--disabled{% endif %}">            <div class="grid-product__image-mask">            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            <div class="image-wrap">{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}</div>            </div>            <div class="grid-product__meta">            <div class="grid-product__title">{{ 'home_page.onboarding.product_title' | t }}</div>            <div class="grid-product__price">$29</div>            </div>            </a>            </div>            </div>            {% endfor %}
+            </div>            </div> -->          {% else %}
+            {% for product in collections[section.settings.home_featured_products].products limit: product_limit %}
+              {% include 'product-item-slider' %}
+            {% endfor %}
+            {% if section.settings.view_all %}
+              {% if section.settings.rows > 1 %}
+                <div class="grid__item text-center {% if section.settings.mobile_scrollable %}small--hide{% endif %}">                  <a href="{{ collections[section.settings.home_featured_products].url }}" class="btn">{{ 'collections.general.all_of_collection' | t }}</a>                </div>              {% endif %}
+              <!--             {% if section.settings.mobile_scrollable %}
+              <div class="grid__item grid__item--view-all text-center {{ grid_item_width }} medium-up--hide">              <a href="{{ collections[section.settings.home_featured_products].url }}" class="grid-product__see-all">              {{ 'collections.general.view_all_products_html' | t: count: collection.products_count }}
+              </a>              </div>              {% endif %} -->            {% endif %}
+          {% endif %}
+        </div>      </div>    </div>  </div>  <div class="shop-all-btn">    <button>      <a class="shop-all-button" href="{{section.settings.shop-all-url}}">{{ section.settings.shop-all }}</a>    </button>  </div>  {% if settings.quick_shop_enable %}
+    {% for product in collections[section.settings.home_featured_products].products limit: product_limit %}
+      {% include 'quick-shop-modal' %}
+    {% endfor %}
+  {% endif %}
+  {% if section.settings.divider %}
+  </div>{% endif %}
+{% schema %}
+  {
+    "name": "New Arrival Slider",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "type": "text",
+        "id": "shop-all",
+        "label": "Button Text",
+        "default": "Shop All"
+      },
+      {
+        "type": "url",
+        "id": "shop-all-url",
+        "label": "Button URL",
+        "default": "/"
+      },
+      {
+        "type": "collection",
+        "id": "home_featured_products",
+        "label": "Collection"
+      }, {
+        "type": "range",
+        "id": "per_row",
+        "label": "Products per row1",
+        "default": 4,
+        "min": 1,
+        "max": 15,
+        "step": 1
+      }, {
+        "type": "range",
+        "id": "rows",
+        "label": "Rows of products",
+        "default": 1,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "checkbox",
+        "id": "change-title-size",
+        "label": "Change Title Size",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "mobile_scrollable",
+        "label": "Enable swipe on mobile",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "view_all",
+        "label": "Show 'View all' link",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }, {
+        "type": "checkbox",
+        "id": "show-button",
+        "label": "Show Button",
+        "default": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Arrival Slider",
+        "category": "Collection"
+      }
+    ],
+    "blocks": []
+  }
+{% endschema %}
+<style>  .np-page-width {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  {% if section.settings.show-button %}
+.shop-all-btn{
+  display:block;
+}  
+  {% else %}
+    .shop-all-btn{
+  display:none;
+}
+    {% endif %}
+    
+  {% if section.settings.change-title-size %}
+.section-header__title.arrival-slider-title{
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 22px;
+line-height: 32px;
+text-align: center;
+letter-spacing: 0.04em;
+text-transform: uppercase;
+color: #2B2725;
+}  
+    {% endif %}
+  
+  @media(max-width: 768px) {
+    .CollectionSection-{{ section.id }}{
+      padding: 0 10px;
+    }
+    .np-page-width {
+      padding: 0 20px;
+    }
+  }
+  .shop-all-btn {
+    text-align: center;
+    padding-top: 17px;
+    margin-top: 63px;
+    padding-bottom: 70px;
+  }
+  .shop-all-btn button {
+    text-align: left;
+    border-bottom: 0.75px solid #2B2725;
+  }
+  .shop-all-button {
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 21px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #2B2725;
+  }
+  .new-arrival-container .slick-list {
+    margin: 0 -10px;
+  }
+  .custom-slick-padding .slick-track {
+    margin-left: -150px;
+  }
+  /* .slick-slider .slick-dots li button:before{
+    margin-top: 1px;
+  } */
+  .slick-slider .slick-dots li.slick-active,
+  .slick-slider .slick-dots li.slick-active button,
+  .slick-slider .slick-dots li.slick-active button:before {
+    /*width: 6px;*/
+    margin-top: 0.6px;
+  }
+  .arrival-slider-title {
+    text-align: center;
+  }
+  .grid-product__price {
+    padding-left: 10px;
+    font-size: 12px;
+    margin-top: 0;
+  }
+  .grid-product-metaFields {
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12.5px;
+    line-height: 21px;
+    letter-spacing: 0.03em;
+    color: #2B2725;
+  }
+  .grid-product__title--body p {
+    text-align: left;
+    margin: 0;
+  }
+  .grid-product__meta {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    padding: 0 10px;
+  }
+  .new-arrival-container {
+    overflow: hidden;
+  }
+  .new-arrival-container .slick-initialized .slick-slide {
+    display: block;
+    padding: 0 5px;
+  }
+  /*   .new-arrival-container .slick-track {
+    margin-left: 105px;
+  } */
+  .slick-dots li button:before {
+    font-size: 25px !important;
+    content: ' \25A0' !important;
+    color: #6d6262 !important;
+  }
+  .slick-dots li {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: pointer;
+  }
+    .new-arrival-slider-container .section-header{
+      margin-bottom: 30px;
+    }
+  .new-arrival-container .grid-product__content:nth-child(1){
+    margin-right: 0px;
+  }
+  @media only screen and (max-width: 428px) {
+
+    .grid-product__title {
+      margin-left: 12px;
+      font-size: 9px !important;
+    }
+    .grid-product__price {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .new-arrival-container .slick-track {
+      margin-left: 0;
+    }
+    .new-arrival-container .slick-initialized .slick-slide {
+      margin-right: 0;
+    }
+  }
+</style><script>  $('ul.slick-dots li:last').on('click', function(e) {
+    console
+      .log("Yes, clicked!")
+      console
+      .log("{{ product | json }}")
+      $(this)
+      .parent()
+      .parent()
+      .find('.draggable')
+      .addClass("custom-slick-padding");
+  });
+  $('ul.slick-dots li:not(:last)').on('click', function(e) {
+    console
+      .log("Yes, clicked!")
+      $(this)
+      .parent()
+      .parent()
+      .find('.draggable')
+      .removeClass("custom-slick-padding");
+  });
+</script>

@@ -1,0 +1,437 @@
+<div id="wrapper-{{ section.id }}"> 
+    <section class="company-with-info-{{ section.id }} np-page-width">
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'company-card' %}
+                    <div class="company-card-{{ block.id }}">
+                        <div class="company-name-{{ block.id }} np-h3">{{ block.settings.company-name }}</div>
+                        <div class="company-origin-{{ block.id }} np-h6"><span>WHERE</span>: <span>{{ block.settings.company-origin }}</span></div>
+                        <div class="company-description-{{ block.id }} np-h5">
+                            {{ block.settings.company-description }}
+                        </div>
+                        <ul class="company-speciality-list-{{ block.id }} np-h5">
+                            <li class="list-item-{{ block.id }}">{{ block.settings.list-content-1 }}</li>
+                            <li class="list-item-{{ block.id }}">{{ block.settings.list-content-2 }}</li>
+                        </ul>
+                    </div>
+            {% endcase %}
+        {% endfor %}
+    </section>
+</div>
+
+<style>
+    #wrapper-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .company-with-info-{{ section.id }} {
+        display: flex;
+        justify-content: center;
+        padding: 0 {{ section.settings.padding-both-sides }}px;
+    }
+
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .company-with-info-{{ section.id }} {
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+        }
+        .np-page-width {
+            padding: 0 20px;
+        }
+    }
+
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+            {% when 'company-card' %}
+                {% if forloop.length < 3 %}
+                    .company-with-info-{{ section.id }} {
+                        justify-content: flex-start;
+                    }   
+                {% endif %}
+                .company-card-{{ block.id }} {
+                    max-width: 440px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: stretch;
+                    align-items: start;
+                    flex: 1;
+                    padding: 4%;
+                    padding-top: 0;
+                    position: relative;
+                }
+                .company-name-{{ block.id }} {
+                    padding-bottom: 24px;
+                }
+                .company-description-{{ block.id }} {
+                    text-align: justify;
+                    height: 200px;
+                }
+                .company-origin-{{ block.id }} {
+                    padding-bottom: 35px;
+                }
+                .company-name-{{ block.id }}, .company-origin-{{ block.id }}, .company-description-{{ block.id }}, .company-speciality-list-{{ block.id }} {
+                    padding-left: {{ block.settings.product-text-left-padding }}px;
+                    padding-right: {{ block.settings.product-text-right-padding }}px;
+                }
+                .list-item-{{ block.id }} {
+                    margin: 30px 0;
+                    text-align: justify;
+                }
+
+                {% if block.settings.enable-border == true %}
+                    .company-card-{{ block.id }} {
+                        border-right: 1px solid #c0bfbd;
+                    }
+                {% endif %}
+
+                @media (max-width: 1300px) {
+                    .company-name-{{ block.id }} {
+                        font-size: 20px;
+                    }
+                }
+
+                @media (max-width: 1050px) {
+                    .company-description-{{ block.id }} {
+                        height: 250px;
+                    }
+                }
+
+                @media (max-width: 900px) {
+                    .company-description-{{ block.id }} {
+                        height: 300px;
+                    }
+                }
+
+                @media (max-width: 768px) {
+                    .company-card-{{ block.id }} {
+                        max-width: 100%;
+                        padding: 0;
+          margin-bottom:40px;
+                    }
+                    .company-name-{{ block.id }} {
+                        font-size: {{ block.settings.company-name-mobile-font-size }}px;
+                        line-height: {{ block.settings.company-name-line-height }}px;
+                    }
+                    .company-description-{{ block.id }} {
+                        font-size: {{ block.settings.company-description-mobile-font-size }}px;
+                        line-height: {{ block.settings.company-description-line-height }}px;
+                    }
+                    .company-origin-{{ block.id }} {
+                        font-size: {{ block.settings.company-origin-mobile-font-size }}px;
+                        line-height: {{ block.settings.company-origin-mobile-line-height }}px;
+                    }
+                    .company-speciality-list-{{ block.id }} {
+                        padding: 0 20px;
+                        margin: 0;
+                    }
+                    .list-item-{{ block.id }} {
+                        font-size: {{ block.settings.list--mobile-font-size }}px;
+                        line-height: {{ block.settings.list-mobile-line-height }}px;
+                    }
+                    .company-description-{{ block.id }} {
+                        height: auto;
+                    }
+                    {% if block.settings.enable-border == true %}
+                        .company-card-{{ block.id }} {
+                            border-right: none;
+                        }
+                    {% endif %}
+                }
+
+        {% endcase %}
+
+    {% endfor %}
+
+</style>
+
+{% schema %}
+
+{
+    "name": "Ninety Company With Info",
+    "settings": [
+        {
+            "type": "range",
+            "id": "padding-both-sides",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "unit": "px",
+            "default": 0,
+            "label": "Padding Both Sides"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Company",
+            "type": "company-card",
+            "settings": [
+                {
+                    "type": "richtext",
+                    "id": "company-name",
+                    "label": "Company Name"
+                },
+                {
+                    "type": "font",
+                    "id": "company-name-font",
+                    "label": "Company Name Font"
+                },
+                {
+                    "type": "range",
+                    "id": "company-name-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Company Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "company-name-mobile-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 26,
+                    "label": "Company Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "company-name-font-weight",
+                    "label": "Company Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "company-name-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Company Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "company-name-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 37,
+                    "label": "Company Line Height (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "company-origin",
+                    "label": "Company Origin",
+                    "default": "Country, Country, Country"
+                },
+                {
+                    "type": "font",
+                    "id": "company-origin-font",
+                    "label": "Origin Font"
+                },
+                {
+                    "type": "range",
+                    "id": "company-origin-font-size",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 12,
+                    "label": "Origin Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "company-origin-mobile-font-size",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 12,
+                    "label": "Origin Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "company-origin-font-weight",
+                    "label": "Origin Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "company-origin-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 21,
+                    "label": "Origin Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "company-origin-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 21,
+                    "label": "Origin Line Height (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "company-description",
+                    "label": "Company Description"
+                },
+                {
+                    "type": "font",
+                    "id": "company-description-font",
+                    "label": "Description Font"
+                },
+                {
+                    "type": "range",
+                    "id": "company-description-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "company-description-mobile-font-size",
+                    "min": 14,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "Description Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "company-description-font-weight",
+                    "label": "Description Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "company-description-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Product Description Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "company-description-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "Product Description Line Height (Mobile)"
+                },
+                {
+                    "type": "text",
+                    "id": "list-content-1",
+                    "label": "First List Content"
+                },
+                {
+                    "type": "text",
+                    "id": "list-content-2",
+                    "label": "Second List Content"
+                },
+                {
+                    "type": "font",
+                    "id": "list-font",
+                    "label": "List Font"
+                },
+                {
+                    "type": "range",
+                    "id": "list-font-size",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "List Font Size"
+                },
+                {
+                    "type": "range",
+                    "id": "list-mobile-font-size",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 16,
+                    "label": "List Font Size (Mobile)"
+                },
+                {
+                    "type": "range",
+                    "id": "list-font-weight",
+                    "label": "List Font Weight",
+                    "min": 100,
+                    "max": 900,
+                    "step": 100,
+                    "default": 400,
+                    "unit": "num"
+                },
+                {
+                    "type": "range",
+                    "id": "list-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "List Line Height"
+                },
+                {
+                    "type": "range",
+                    "id": "list-mobile-line-height",
+                    "min": 10,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "px",
+                    "default": 28,
+                    "label": "List Line Height (Mobile)"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "enable-border",
+                    "label": "Enable Right Line",
+                    "default": false
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Company With Info"
+        }
+    ]
+}
+{% endschema %}

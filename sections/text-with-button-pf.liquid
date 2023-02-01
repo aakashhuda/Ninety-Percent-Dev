@@ -1,0 +1,303 @@
+<section class="section-wrapper-{{section.id}} np-page-width {{ section.settings.alignment }}">    {% for block in section.blocks %}
+        {% case block.type %}
+        {% when 'text-with-button' %}
+            <div class="text-with-button-{{ block.id }}">                <div class="text-title">                    <div class="np-h9">{{ block.settings.text-title }}</div>                <div class="np-h4">{{ block.settings.text-subTitle }}</div>                </div>                {% if block.settings.change-paragraph-size %}
+                  <div class="text-paragraph np-h3 text-alignment">                    {{ block.settings.text-paragraph }}
+                </div>                {%else%}
+                <div class="text-paragraph np-h5">                  {{ block.settings.text-paragraph }}
+              </div>        {%endif%}
+                {% if block.settings.change-button-size  %}
+                <div class="change-button np-h6 button-border">                    <a href="{{ block.settings.button-url }}">                        {{ block.settings.button-text}}
+                    </a>                    <div class="border-bottom">                    </div>                </div>                
+                  {% else %}
+                <div class="text-button">                    <a href="{{ block.settings.button-url }}">                        {{ block.settings.button-text}}
+                    </a>                    <div class="border-bottom">                    </div>                </div>                {% endif %}
+            </div>          {% when 'spacer-block' %}
+          <div class="spacer-{{ block.id }}">          </div>        {% endcase %}
+      {% endfor %}
+</section><style>  .np-page-width {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  @media(max-width: 768px) {
+    .np-page-width {
+      padding: 0 20px;
+    }
+  }
+{% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'text-with-button' %}
+      .mobile-button{
+        display: none;
+      }
+.text-with-button-{{ block.id }}{
+    max-width: {{ block.settings.paragraph-Size }}px;
+    margin:0 auto;
+  }
+  .text-with-button-{{ block.id }} .text-title{
+    display: block;
+  }
+  .text-with-button-{{ block.id }} .text-paragraph{
+    display: block;
+    margin: 67px 0;
+  }
+  .text-with-button-{{ block.id }} .text-paragraph.text-alignment{
+    text-align: center;
+  }
+  .text-with-button-{{ block.id }} .text-button{
+    width: {{ block.settings.button-Size }}px;
+    display: block;
+  }
+  .text-with-button-{{ block.id }} .change-button{
+    width: {{ block.settings.button-Size }}px;
+  }
+  .text-with-button-{{ block.id }} .text-button a{
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ block.settings.font-size-button-text}}px;
+    line-height: 19px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color:{{ block.settings.button-text-color }};
+  }
+  .text-with-button-{{ block.id }} .border-bottom{
+    margin-top: 12.86px;
+    width: 100%;
+    border: 1px solid #2B2725;
+  }
+  @media(max-width: 768px) {
+  .text-with-button-{{ block.id }} .text-paragraph{
+  margin-top:0;
+  margin-bottom: 30px 0;
+  }
+  {% if block.settings.only-desktop==true %}
+  .text-with-button-{{ block.id }} .text-title, .text-with-button-{{ block.id }} .text-paragraph, .text-with-button-{{ block.id }} .text-button, .text-with-button-{{ block.id }} .change-button{
+    display: none;
+  }
+  {%else%}
+  .text-with-button-{{ block.id }} .text-title, .text-with-button-{{ block.id }} .text-paragraph, .text-with-button-{{ block.id }} .text-button, .text-with-button-{{ block.id }} .change-button{
+    display: block;
+  }
+{% endif %}
+  }
+  {% if block.settings.show-title==false %}
+  .text-with-button-{{ block.id }} .text-title{
+    display:none;
+  }
+{% endif %}
+  {% if block.settings.show-paragraph==false %}
+  .text-with-button-{{ block.id }} .text-paragraph{
+    display:none;
+  }
+{% endif %}
+  {% if block.settings.show-button==false %}
+  .text-with-button-{{ block.id }} .text-button, .text-with-button-{{ block.id }} .change-button{
+    display:none;
+  }
+{% endif %}
+  {% if block.settings.change-button-position==false %}
+  .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .text-button{
+    margin: 0;
+  }
+  {%  else %}
+  .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .change-button{
+    margin: 0 auto;
+  }
+{% endif %}
+
+      {% if block.settings.button-border %}
+        .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .border-bottom{
+          display:none;
+        }
+
+  .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .button-border{
+    padding: 9px 22px;
+  border: 0.75px solid #2B2725;
+  margin:0 auto;
+  }
+
+  .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .button-border a{
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+text-align: center;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+  }
+
+        {% endif %}
+  
+      {% when 'spacer-block' %}
+      .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
+        height: {{ block.settings.spacer-height }}px;
+      }
+
+  @media(max-width: 768px) {
+      {% if block.settings.show-button==false %}
+  .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
+        height: 30px;
+      }
+        {% else %}
+        .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
+        height: 50px;
+      }
+{% endif %}
+ 
+  }
+    {% endcase %}
+  {% endfor %}
+</style>{% schema %}
+  {
+    "name": "Text With Button",
+    "blocks": [
+        {
+        "name": "Text With Button",
+        "type": "text-with-button",
+        "settings": [
+            {"type": "text",
+           "id": "text-title",
+           "label":"Change the Text Title",
+           "default":"Next:"
+         },
+         {"type": "text",
+           "id": "text-subTitle",
+           "label":"Change the Text Sub-Title",
+           "default":"Sustainability"
+         },
+         {"type": "richtext",
+           "id": "text-paragraph",
+           "label":"Change the Text Paragraph",
+           "default":"<p>We care about the wellbeing of the people who handle our garments, from raw materials to finished products. We carefully choose fibres and dyes that have the lowest impact on our global environment and on the workers in our supply chain.</p>"
+         },
+         {"type": "url",
+           "id": "button-url",
+           "label":"Change the Button URL",
+           "default":"/"
+         },
+         {"type": "text",
+           "id": "button-text",
+           "label":"Change the Button Text",
+           "default":"EXPLORE SUSTAINABILITY"
+         },
+         {
+         "type": "range",
+           "id":"font-size-button-text",
+           "label":"Button Text Font Size",
+           "min": 8,
+           "max": 80,
+           "step": 4,
+           "unit": "px",
+           "default": 16
+         },
+         {
+         "type": "range",
+           "id":"paragraph-Size",
+           "label":"Text Paragraph Size",
+           "min": 400,
+           "max": 880,
+           "step": 5,
+           "unit": "px",
+           "default": 465
+         },
+         {
+         "type": "range",
+           "id":"button-Size",
+           "label":"Button Size",
+           "min": 100,
+           "max": 500,
+           "step": 5,
+           "unit": "px",
+           "default": 205
+         },
+         {
+         "type": "color",
+           "id":"button-text-color",
+           "label":"Button Text Color",
+           "default": "#2B2725"
+         },
+         {
+          "type": "checkbox",
+          "id":"only-desktop",
+          "label": "Show Only For Desktop",
+          "default": false
+         },
+         {
+          "type": "checkbox",
+          "id":"show-title",
+          "label": "Show Title",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-paragraph",
+          "label": "Show Paragraph",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-button",
+          "label": "Show Button",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"change-button-size",
+          "label": "Change Button Size",
+          "default": false
+         },
+         {
+          "type": "checkbox",
+          "id":"change-paragraph-size",
+          "label": "Change Paragraph Size",
+          "default": false
+         },
+         {
+          "type": "checkbox",
+          "id":"change-button-position",
+          "label": "Change Button Position",
+          "default": false
+         },
+          {
+          "type": "checkbox",
+          "id":"button-border",
+          "label": "Change Button Border",
+          "default": false
+         }
+        ]
+      },
+      {
+        "name": "Spacer",
+        "type": "spacer-block",
+        "settings": [
+          {
+            "type": "range",
+            "id": "spacer-height",
+            "label": "Spacer Height",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text With Button ninety",
+        "blocks": [
+            {
+            "type": "text-with-button"
+            },
+          {
+            "type": "spacer-block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

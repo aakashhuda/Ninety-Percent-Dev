@@ -1,0 +1,47 @@
+{% style %}
+  .custom-page-navigation {
+    margin: 20px 10px;
+  }
+  .custom-page-navigation ul {
+    list-style-type: none;
+    margin-left: 0px;
+  }
+  .custom-page-navigation .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:25px;
+  }
+  .custom-page-navigation .navbar a {
+    text-underline-offset: 10px;
+  }
+  .custom-page-navigation .active a {
+    text-decoration: underline
+  }
+  @media only screen and (max-width: 650px) {
+    .custom-page-navigation .navbar a{
+      font-size: 8px;
+      text-underline-offset: 8px;
+    }
+    .custom-page-navigation .navbar {
+        gap: 12px;
+  }
+  }
+{% endstyle %}
+<section class="custom-page-navigation">  <ul class="navbar">    
+  <li class="{% if request.path == '/pages/about-us-new' %}active{% endif %}">      <a class="np-h6" href="/pages/about-us-new">ABOUT US</a>    </li>   
+ <li class="{% if request.path == '/pages/new-our-way' %}active{% endif %}">      <a class="np-h6" href="/pages/new-our-way">OUR WAY</a>    </li>  
+  <li class="{% if request.path == '/pages/new-profit-sharing-1' %}active{% endif %}">      <a class="np-h6" href="/pages/new-profit-sharing-1">PROFIT SHARING</a>    </li>  
+  <li class="{% if request.path == '/pages/new-sustainability' %}active{% endif %}">      <a class="np-h6" href="/pages/new-sustainability">SUSTAINABILITY & MATERIALS</a>    </li>  </ul></section>{% schema %}
+  {
+    "name": "Np Static Page Navigation",
+    "class": "section",
+    "tag": "section",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Np Static Page Navigation"
+      }
+    ]
+  }
+{% endschema %}

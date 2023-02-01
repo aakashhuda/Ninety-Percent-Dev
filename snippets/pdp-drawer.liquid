@@ -1,0 +1,147 @@
+<div class="pdp-drawer-wrapper">
+  <div class="delivery-retunrs-wrapper">
+    <div class="pdp-drawer-header">
+      <h2 class="drawer-title">DELIVERY AND RETURNS</h2>
+      <div class="pdp-drawer-close">
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 17 17"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L16 16M1 16L16 1" stroke="black" />
+        </svg>
+      </div>
+    </div>
+    <div class="pdp-drawer-contents">
+      {{ pages[settings.product_delivery_return].content }}
+    </div>
+  </div>
+
+  <div class="care-instructions-container">
+    <div class="pdp-drawer-header">
+      <h2 class="drawer-title">Care Instructions</h2>
+      <div class="pdp-drawer-close">
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 17 17"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L16 16M1 16L16 1" stroke="black" />
+        </svg>
+      </div>
+    </div>
+    <div class="pdp-drawer-contents">
+      {{ product.metafields.custom.care_instructions }}
+    </div>
+  </div>
+
+
+  <div class="pdp-material-container">
+    {%- for tag in product.tags -%}
+      {%- if tag contains '_organic-cotton' or tag contains '_tenceltm' -%}
+        {%- assign include_page_handle = tag | split: '_' -%}
+        {%- assign include_page = pages[include_page_handle.last] -%}
+        <div class="pdp-drawer-header">
+          <h2 class="drawer-title">{{ include_page.title }}</h2>
+          <div class="pdp-drawer-close">
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 17 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L16 16M1 16L16 1" stroke="black" />
+            </svg>
+          </div>
+        </div>
+        <div class="pdp-drawer-contents material-content">
+          {{ include_page.content }}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+    <div class="size-guide-container">
+    <div class="pdp-drawer-header">
+      <h2 class="drawer-title">Size Guide</h2>
+      <div class="pdp-drawer-close">
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 17 17"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L16 16M1 16L16 1" stroke="black" />
+        </svg>
+      </div>
+    </div>
+    <div class="pdp-drawer-contents">
+        <!-- START KiwiSizing code !-->
+        <div
+          id="KiwiSizingChart"
+          data-collections="{{ product.collections | map: 'id' | join: ','}}"
+          data-tags="{{ product.tags | join: ',' | escape}}"
+          data-product="{{product.id}}"
+          data-vendor="{{product.vendor | escape}}"
+          data-product-name="{{product.title}}"
+          data-product-images="{{product.images | json| escape}}"
+          data-type="{{product.type | escape}}"></div>
+        <!-- END KiwiSizing code !-->
+      </div>
+    </div>
+  </div>
+
+
+<style>
+  .pdp-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.25px solid rgba(43, 39, 37, 0.5);
+    padding-bottom: 45px;
+    padding-top: 25px;
+  }
+  .pdp-material-container .pdp-drawer-header:not(:first-child) .pdp-drawer-close:not(:first-child){
+    display: none;
+  }
+  .pdp-drawer-contents {
+    padding-top: 30px;
+  }
+  .pdp-drawer-close {
+    cursor: pointer;
+  }
+  .drawer-title {
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 21px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #2B2725;
+  }
+  .material-content {
+    width: 80%;
+  }
+  @media only screen and (max-width: 768px) {
+    .pdp-drawer-wrapper {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  $('.pdp-drawer-close').on('click', function(e) {
+    if ($('body').hasClass('show-drawer-delivery') || $('body').hasClass('show-care-instructions') || $('body').hasClass('show-material-pdp') || $('body').hasClass('show-size-guide-pdp')) {
+      $('body').removeClass('show-drawer-delivery');
+      $('body').removeClass('show-care-instructions');
+      $('body').removeClass('show-material-pdp');
+      $('body').removeClass('show-size-guide-pdp');
+    }
+    e.preventDefault();
+    $('.pdp-drawer-wrapper').removeClass("pdp-drawer-open");
+    $('body').removeClass('pdp-drawer-is-open');
+    $('.cart-window-bg').removeClass("window-show");
+  })
+</script>

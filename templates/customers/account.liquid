@@ -1,6 +1,6 @@
 {% paginate customer.addresses by 5 %}
 
-<div class="page-width page-content">
+<div class="page-width">
 
   {% if settings.show_breadcrumbs %}
     <nav class="breadcrumb{% if settings.type_headers_align_text %} text-center{% endif %}" role="navigation" aria-label="breadcrumbs">
@@ -344,6 +344,7 @@
   padding: 0.8em 0.5em;
   width: 347px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .my-account-content .update-account-link:hover {
@@ -409,76 +410,13 @@ select:focus {
   line-height: 26px;
   letter-spacing: 0.05em;
   color: #2B2725;
+
+  position: sticky;
+  height: max-content;
+  top: 100px;
 }
 .page-link.active {
   text-decoration: underline;
-}
-
-.np-h1, .np-h2, .np-h3, .np-h4 {
-  font-family: 'Silvana';
-  font-weight: 400;
-  color: #2B2725;
-}
-.np-h1 {
-  font-size: 100px;
-  line-height: 105px;
-  letter-spacing: -0.03em;
-}
-.np-h2 {
-  font-size: 70px;
-  line-height: 75px;
-  letter-spacing: -0.01em;
-}
-.np-h3 {
-  font-size: 26px;
-  line-height: 36px;
-  letter-spacing: -0.01em;
-}
-.np-h4 {
-  font-size: 20px;
-  line-height: 30px;
-  letter-spacing: -0.01em;
-}
-.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
-  font-style: italic;
-}
-.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
-  font-family: 'Intervogue';
-  font-weight: 400;
-  color: #2B2725;
-}
-.np-h5 {
-  font-size: 16px;
-  line-height: 28px;
-  letter-spacing: 0.02em;
-}
-.np-h6 {
-  font-size: 12px;
-  line-height: 21px;
-  letter-spacing: 0.04em;
-}
-.np-h7 {
-  font-size: 12px;
-  line-height: 21px;
-  letter-spacing: 0.02em;
-}
-.np-h8 {
-  font-size: 22px;
-  line-height: 32px;
-  letter-spacing: 0.04em;
-}
-.np-h9 {
-  font-size: 18px;
-  line-height: 27px;
-  letter-spacing: 0.05em;
-}
-.np-h10 {
-  font-size: 12.5px;
-  line-height: 21px;
-  letter-spacing: 0.05em;
-}
-.np-h6, .np-h8, .np-h9, .np-h10 {
-  text-transform: uppercase;
 }
 
 @media (max-width: 1000px) {
@@ -493,6 +431,10 @@ select:focus {
     display: flex;
     flex-direction: row;
     padding-left: 17px;
+
+    position: relative;
+    height: max-content;
+    top: 0px;
   }
   .page-link {
     margin: 0 5px;
@@ -712,75 +654,6 @@ select:focus {
   .orders-returns-content .page-title {
     margin-bottom: 72px;
   }
-
-  .np-h1, .np-h2, .np-h3, .np-h4 {
-    font-family: 'Silvana';
-    font-weight: 400;
-    color: #2B2725;
-  }
-
-.np-h1 {
-  font-size: 100px;
-  line-height: 105px;
-  letter-spacing: -0.03em;
-}
-.np-h2 {
-  font-size: 70px;
-  line-height: 75px;
-  letter-spacing: -0.01em;
-}
-.np-h3 {
-  font-size: 26px;
-  line-height: 36px;
-  letter-spacing: -0.01em;
-}
-.np-h4 {
-  font-size: 20px;
-  line-height: 30px;
-  letter-spacing: -0.01em;
-}
-.np-h1-italic, .np-h2-italic, .np-h3-italic, .np-h4-italic {
-  font-style: italic;
-}
-.np-h5, .np-h6, .np-h7, .np-h8, .np-h9, .np-h10 {
-  font-family: 'Intervogue';
-  font-weight: 400;
-  color: #2B2725;
-}
-.np-h5 {
-  font-size: 16px;
-  line-height: 28px;
-  letter-spacing: 0.02em;
-}
-.np-h6 {
-  font-size: 12px;
-  line-height: 21px;
-  letter-spacing: 0.04em;
-}
-.np-h7 {
-  font-size: 12px;
-  line-height: 21px;
-  letter-spacing: 0.02em;
-}
-.np-h8 {
-  font-size: 22px;
-  line-height: 32px;
-  letter-spacing: 0.04em;
-}
-.np-h9 {
-  font-size: 18px;
-  line-height: 27px;
-  letter-spacing: 0.05em;
-}
-.np-h10 {
-  font-size: 12.5px;
-  line-height: 21px;
-  letter-spacing: 0.05em;
-}
-.np-h6, .np-h8, .np-h9, .np-h10 {
-  text-transform: uppercase;
-}
-
 
 @media (max-width: 1300px) {
   .orders-returns-content .page-title {

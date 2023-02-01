@@ -1,0 +1,316 @@
+<section class="section-{{ section.id }} np-page-width"> 
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'hero-block' %} 
+            <div id="wrapper-{{ block.id }}"> 
+                <section class="about-us-{{ block.id }} full-page-width">
+
+                <div class="image-container-{{ block.id }}">
+                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "grande" }}">
+                        </div> 
+                   
+                        <div class="text-container-{{ block.id }}">
+                            <div class="np-h1 title-{{ block.id }}">{{ block.settings.title }}</div>
+                            <div class="description-container-{{ block.id }}">
+                                <div class="np-h5 main-description-{{ block.id }}">
+                                    {{ block.settings.description }}
+                                </div>
+                                <div class="np-h3 sub-description-{{ block.id }}">
+                                    {{ block.settings.sub-description }}
+                                </div>
+                            </div>
+                        </div>
+                           
+                </section>
+            </div>
+
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+</section>
+{% style %} 
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'hero-block' %}
+
+                #wrapper-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+          padding-top: 55px;
+                }
+                .about-us-{{ block.id }} {
+                    display: flex;
+                    flex-direction: row;
+                width: 1170px;
+                    padding: 0 {{ block.settings.padding-both-sides }}px;
+                }
+                .text-container-{{ block.id }} {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    width: 50%;
+                }
+                .description-container-{{ block.id }} {
+                    max-width: 585px;
+                }
+                .image-container-{{ block.id }} {
+                    display: flex;
+                   justify-content: flex-start;
+                    width: 50%;
+                }
+                .image-{{ block.id }} {
+                    width: 466px;
+                }
+                {% if block.settings.image-first-layout == false %} 
+                .about-us-{{ block.id }} {
+                  
+                flex-direction: row-reverse;
+                }
+               {% endif %}
+                {% if block.settings.title == 'Sustainability & Materials' %}
+                    .title-{{ block.id }} {
+                        max-width: 490px;
+                    }
+                {% endif %}
+                .main-description-{{ block.id }} {
+                    margin-bottom: 35px;
+                }
+                .sub-description-{{ block.id }} {
+          width: 104%;
+                }
+                .hr-parent-{{ section.id }}{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                } 
+                hr.hr-{{ section.id }} {
+                    display: none;
+                    width: 93%;
+                    margin: 1rem 0;
+                }
+
+                #wrapper-{{ block.id }} .bullet-point  {  
+                    margin-bottom: 40px;
+                }
+                
+                {% if block.settings.show-title != true %} 
+                .text-container-{{ block.id }} .title-{{ block.id }} {
+                    display: none;
+                }
+                
+              {% endif %}
+              {% if  block.settings.show-main-description != true %} 
+                .text-container-{{ block.id }}  .main-description-{{ block.id }} {
+                    display: none;
+                }
+            {% endif %}
+              {% if  block.settings.show-point != true %} 
+                .text-container-{{ block.id }}  .bullet-point {
+                    display: none;
+                }
+            {% endif %}
+
+            @media (max-width: 1280px) {
+                .about-us-{{ block.id }} {
+                    
+                width: 980px;
+                gap: 20px;
+                }
+                .title-{{ block.id }} {
+                    font-size: 80px;
+                }
+            }
+
+            @media (max-width: 1170px) {
+                .about-us-{{ block.id }} {
+                    
+                width: 765px;
+                gap: 20px;
+                }
+                .title-{{ block.id }} {
+                    font-size: 80px;
+                }
+            }
+
+            @media (max-width: 800px) {
+                .about-us-{{ block.id }} {
+                    
+                width: 740px;
+               
+                }
+                
+            }
+
+               
+          
+                @media (max-width: 768px) {
+                    .np-page-width {
+                        padding: 0 20px;
+                    }
+                    .about-us-{{ block.id }} {
+                        flex-wrap: wrap;
+                        gap: 15px;
+                    }
+                    .text-container-{{ block.id }}{
+                        flex: none;
+                        order: 1;
+                        width: 100%;
+                    }
+                    .image-container-{{ block.id }} {
+                        flex: none;
+                        order: 0;
+                    }
+                    .main-description-{{ block.id }} {
+                        margin: 0;
+                    }
+                    .title-{{ block.id }} {
+                        font-size: 30px;
+                        margin-bottom: 20px;
+                        margin-top: 20px;
+                        max-width: 100%;
+                    }
+                    .main-description-{{ block.id }} {
+                        font-size: 16px;
+                        line-height: 23px;
+                        letter-spacing: -0.01em;
+                        margin-bottom: 20px;
+                        text-align: justify;
+                    }
+                    .sub-description-{{ block.id }} {
+                        
+                    }
+                    .image-container-{{ block.id }} {
+                        width: 100%;
+                    }
+                    .image-container-{{ block.id }} img {
+                        width: 100%;
+                    }
+                    .about-us-{{ block.id }} {
+                        width: 100%;
+                    }
+                    hr.hr-{{ section.id }} {
+                        display: block;
+                    }
+                    .description-container-{{ block.id }} {
+                        max-width: 100%;
+                    }
+                    .about-us-{{ block.id }} {
+                        display: flex;
+                       
+                        padding: 0;
+                    }
+                }
+            {% when 'spacer' %}
+                .custom-spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Garment Care Hero Section",
+    "settings": [
+        
+    ],
+    "blocks": [
+        {
+            "name": "Hero - Text with Image",
+            "type": "hero-block",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "padding-both-sides",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Padding Both Sides"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "image-first-layout",
+                    "default": true,
+                    "label": "Image First Layout"
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Show-Title",
+                    "id": "show-title",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Show Main Description",
+                    "id": "show-main-description",
+                    "default": false
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Caretaking"
+                    
+                },
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Main Description",
+                    "default": "Ninety Percent was founded in London in 2018 born of the friendship between Para Hamilton and Shafiq Hassan. Our label is established on their revolutionary spirit of care, and our business culture focused on profit sharing thus providing the tools of empowerment for everyone involved in the creation of our collections."
+                },
+                {
+                    "type": "text",
+                    "id": "sub-description",
+                    "label": "Sub Description",
+                    "default": "Care and consideration with your clothes is the best way to ensure their longevity. Though our clothes are designed to last, care and consideration will ensure their longevity."
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Garment Care Hero Section",
+            "blocks": [
+        {
+          "type": "hero-block"
+        },
+        {
+          "type": "spacer"
+        }
+      ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,457 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'image-text-block' %} 
+  <div class="block-{{ block.id }}">    <div class="first-row">        <div class="first-row-image">        <img class="first-row-image-{{ block.id }}" src="{{ block.settings.first-row-image | img_url: "master" }}">      </div>      <div class="first-row-text">        <p class="first-title np-h3 np-h3-italic">{{block.settings.first-row-title}}</p>            <p class="first-paragraph np-h5">{{ block.settings.first-row-text }}</p>        <div class="first-text-button">            <a href="{{ block.settings.first-button-url }}">                {{ block.settings.first-button-text}}
+            </a>            <div class="border-bottom">            </div>        </div>        <div class="first-row-mobile-button np-h6">          <a href="{{ block.settings.first-button-url }}">            {{ block.settings['first-row-mobile-button-text'] }}
+          </a>        </div>      </div>    </div>    <div class="second-row">      <div class="second-row-text">        <p class="second-title np-h3 np-h3-italic">{{block.settings.second-row-title}}</p>        <p class="second-paragraph np-h5">{{ block.settings.second-row-text }}</p>        <div class="second-text-button">                    <a href="{{ block.settings.second-button-url }}">                        {{ block.settings.second-button-text}}
+                    </a>                    <div class="border-bottom">                    </div></div><div class="second-row-mobile-button np-h6">          <a href="{{ block.settings.second-button-url }}">            {{ block.settings['second-row-mobile-button-text'] }}
+          </a>        </div>      </div>      <div class="second-row-image">            <img class="second-row-image-{{ block.id }}" src="{{ block.settings.second-row-image| img_url: "master" }}">      </div>    </div>  </div>  {% when 'spacer-block' %}
+    <div class="spacer-{{ block.id }}">    </div>{% endcase %}
+{% endfor %}
+</section> <style> .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+.np-page-width {
+                        padding: 0 20px;
+                    }
+}
+.section-wrapper-{{ section.id }}{
+    padding: 0 {{ section.settings.both-side-padding }}px;
+  }
+{% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'image-text-block' %} 
+      p{
+        margin: 0;
+      }
+        .first-row-mobile-button{
+            display: none;
+        }
+        .first-text-button{
+            margin-top:46px;
+            width:{{ block.settings.first-row-button-size }}px;
+        }
+        .second-text-button{
+            margin-top:59px;
+            width:{{ block.settings.second-row-button-size }}px;
+        }
+        .first-text-button a, .second-text-button a{
+            font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+        }
+        .first-text-button .border-bottom, .second-text-button .border-bottom{
+    margin-top: 6px;
+    width: 100%;
+    border: 0.75px solid #2B2725;
+  }
+  .first-text-button .border-bottom{
+    width:{{ block.settings.first-row-button-size }}px;
+  }
+  .second-text-button .border-bottom{
+        width: {{ block.settings.second-row-button-size }}px;
+  }
+    .block-{{ block.id }} {
+        display: flex;
+        flex-direction: column;
+    }
+    .block-{{ block.id }} .first-row {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .block-{{ block.id }} .second-row {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .first-title{
+        margin-bottom: 48px;
+    } 
+    .first-row-text{
+        margin-left: 9%;
+    }
+    .second-row-text{
+        margin-right: 9%;
+    }
+    .first-row-text, .second-row-text { 
+        width: 45%;
+        text-align: justify;
+    }
+    .first-anchor, .second-anchor{
+        font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px;
+line-height: 21px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+    }
+    .first-row-image-{{ block.id }}, .second-row-image-{{ block.id }}{
+        width:100%;
+    }
+    .block-{{ block.id }} .second-row-image {
+        margin-top: -130px;
+    }
+    .block-{{ block.id }} .second-row-text {
+        width: 547px;
+    }
+    .block-{{ block.id }} .first-row-text{
+        width:547px;
+    }
+    .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text   {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .first-row-image-text-{{ block.id }} p, .second-row-image-text-{{ block.id }} p{
+        font-family: 'Intervogue';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 21px;        
+        letter-spacing: 0.04em;
+        text-transform: uppercase;        
+        color: rgba(43, 39, 37, 0.6); 
+    }
+    .first-row-image-text-{{ block.id }} p a, .second-row-image-text-{{ block.id }} p a{
+        text-decoration: underline;
+        color: rgba(43, 39, 37, 0.6); 
+    }
+    .first-row-mobile-button, .second-row-mobile-button{
+      display: none;
+    }
+   {% if block.settings.show-first-row == false %}
+   .first-row-image, .first-row-text{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.show-second-row == false %}
+   .second-row{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.show-first-image-button == false %}
+   .first-text-button{
+     display:none;
+   }
+ {% endif %}
+   {% if block.settings.show-second-image-button == false %}
+   .second-text-button{
+     display:none;
+   }
+ {% endif %}
+ @media only screen and (max-width: 1120px){
+  .block-{{ block.id }} .second-row-image {
+    margin-top: -80px;
+}
+  .block-{{ block.id }} .first-row-text{
+      margin-top:-10%;
+   }   
+      .block-{{ block.id }} .first-text-button{
+            margin-top:26px;
+        }
+      
+      .section-wrapper-{{ section.id }}{
+    padding: 0 35px;
+  }
+      
+      
+ }
+ @media only screen and (max-width: 980px){
+  .block-{{ block.id }} .second-row-image {
+    margin-top: -50px;
+}
+.block-{{ block.id }} .first-text-button{
+            margin-top:26px;
+        }
+ }
+ @media only screen and (max-width: 900px){
+  .block-{{ block.id }} .second-row-image {
+    margin-top: -30px;
+}
+  .block-{{ block.id }} .first-title {
+    margin-bottom: 12px;
+  }
+.block-{{ block.id }} .first-text-button{
+            margin-top:10px;
+        }
+ }
+ @media only screen and (max-width: 820px){
+  .block-{{ block.id }} .first-title {
+    margin-bottom: 5px;
+  }
+
+ }
+ @media only screen and (max-width: 768px){
+    .block-{{ block.id }} .second-row{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .block-{{ block.id }} .first-row{
+        display: block;
+        margin-bottom:20px;
+    }
+    .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text{
+        width: 100%;
+        margin: 0;
+    }
+    .block-{{ block.id }} .first-row-image {
+        margin-top: 0px;
+        margin-bottom: 37px;
+    }
+    .block-{{ block.id }} .second-row-image {
+        margin-top: 0px;
+        margin-bottom: 15px;
+    }
+    .second-text-button, .first-text-button{
+      margin: 40px auto;
+    }
+    .block-{{ block.id }} .first-row-mobile-button, .block-{{ block.id }} .second-row-mobile-button{
+      display: none;
+      {% comment %} display: block;
+      width: 100%;
+      border: 1px solid #2B2725;
+      padding: 10px 21px 10px 18px;
+      margin-top: 34px; {% endcomment %}
+  }
+  {% if block.settings.show-first-mobile-row==false %}{
+   .block-{{ block.id }} .first-row{
+      display: none;
+    }
+  }
+  {% endif %}
+  {% if block.settings.show-second-mobile-row==false %}{
+   .block-{{ block.id }} .second-row{
+      display: none;
+    }
+  }
+  {% endif %}
+ }
+    {% when "spacer-block" %}
+        .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+            height: {{ block.settings.spacer-height }}px;
+        }
+{% endcase %}
+{% endfor %}
+</style>{% schema %}
+  {
+    "name": "Home Double Image Text",
+    "settings": [    {
+        "type": "range",
+        "id": "both-side-padding",
+        "label": "Both Side Padding",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      }],
+    "blocks": [
+      {
+        "name": "image-text-block",
+        "type": "image-text-block",
+        "settings": [
+         {
+          "type": "checkbox",
+          "id":"show-first-row",
+          "label": "Show First Row",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-second-row",
+          "label": "Show Second Row",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-first-mobile-row",
+          "label": "Show First Mobile Row",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-second-mobile-row",
+          "label": "Show Second Mobile Row",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-first-image-button",
+          "label": "Show First Image Button",
+          "default": true
+         },
+         {
+          "type": "checkbox",
+          "id":"show-second-image-button",
+          "label": "Show Second Image Button",
+          "default": true
+         },
+            {
+                    "type": "image_picker",
+                    "id": "first-row-image",
+                    "label": "Select first row image"
+                },
+           {
+                    "type":"html",
+                    "id":"first-row-title",
+                    "label":"First Row Title"
+                },
+           {
+                    "type":"textarea",
+                    "id":"first-row-text",
+                    "label":"First Row Text",
+                    "default": "An offering of soft, modern tailoring and airy layers for Spring and Summer. The new silhouette is gentle and forgiving, clothes cut generously with room to breathe and move. Considered pieces in earth tones, which can be paired together effortlessly and across the seasons. There's a focus on craftsmanship, texture and detail, connecting you to the sensual world we live in."
+                },                
+         {"type": "text",
+           "id": "first-button-text",
+           "label":"Change the First Button Text",
+           "default":"Shop Now"
+         },
+         {"type": "url",
+           "id": "first-button-url",
+           "label":"Change the First Button URL",
+           "default":"/"
+         },
+         {"type": "text",
+           "id": "first-row-mobile-button-text",
+           "label":"Change the Mobile Button Text",
+           "default":"Shop Now"
+         },
+                {
+                 "type":"range",
+                 "id":"first-row-text-size",
+                 "label":"First Row text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-first-row-text-size",
+                 "label":"First row text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                    "type":"color",
+                    "id":"first-row-text-color",
+                    "label":"First row text color"
+                },
+                {
+                 "type":"range",
+                 "id":"first-row-button-size",
+                 "label":"First Row Button size",
+                 "min":0,
+                 "max":400,
+                 "step":5,
+                 "unit":"px",
+                 "default":75
+              },
+              {
+                    "type": "image_picker",
+                    "id": "second-row-image",
+                    "label": "Select second row image"
+                }, {
+                    "type":"html",
+                    "id":"second-row-title",
+                    "label":"Second Row Title"
+                },
+           {
+                    "type":"textarea",
+                    "id":"second-row-text",
+                    "label":"second Row Text",
+                    "default": "Ninety Percent is a responsible, luxury fashion label that share 90% of our profits between our people and the causes we believe in. We’re cultivating a culture of beauty that goes beyond our clothing, pioneering a new business ethos rooted in community."
+                },
+         {"type": "text",
+           "id": "second-button-text",
+           "label":"Change the Second Button Text",
+           "default":"Our Way"
+         },
+         {"type": "url",
+           "id": "second-button-url",
+           "label":"Change the Second Button URL",
+           "default":"/"
+         },
+         {"type": "text",
+           "id": "second-row-mobile-button-text",
+           "label":"Change the Second Mobile Button Text",
+           "default":"Our Way"
+         },
+                {
+                 "type":"range",
+                 "id":"second-row-text-size",
+                 "label":"second Row text size",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                 "type":"range",
+                 "id":"mobile-second-row-text-size",
+                 "label":"second row text size for mobile devices",
+                 "min":8,
+                 "max":40,
+                 "step":1,
+                 "unit":"px",
+                 "default":16
+              },
+              {
+                    "type":"color",
+                    "id":"second-row-text-color",
+                    "label":"second row text color"
+                },
+                {
+                 "type":"range",
+                 "id":"second-row-button-size",
+                 "label":"Second Row Button size",
+                 "min":0,
+                 "max":200,
+                 "step":2,
+                 "unit":"px",
+                 "default":62
+              }
+        ]
+      }, {
+        "type": "spacer-block",
+        "name": "Spacer",
+        "settings": [
+          {
+            "type": "range",
+            "id": "spacer-height",
+            "label": "Spacer Height",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "content",
+        "name": "Home Double Image With Text",
+        "blocks":[{
+            "type": "image-text-block"
+        }]
+      }
+    ]
+  }
+{% endschema %}

@@ -47,6 +47,9 @@
               {% endif %}
             </nav>
           </div>
+          <div id="single-contact">
+            <a href="https://ninetypercent.com/pages/contact-us"">Contact Us</a>
+          </div>
           <div id="faq-contact">
             <p>{{ section.settings.faq-contact-title }}</p>
             <img src="{{ section.settings.faq-contact-icon | img_url: 'master' }}" class="custom-contact-icon" alt="{{ section.settings.faq-contact-icon.alt | escape }}">
@@ -57,22 +60,65 @@
         </section>
         
         <section id="faq-first">
+          <div class="">
+            <p class="np-h1">      
+              FAQs
+            </p>
+            <p class="np-h3 fmt-3">
+              {{ section.settings.faq_menu_title }}
+            </p>
+        </div>
           {% for block in section.blocks %}
           {% case block.type %}
           {% when 'question' %}
-          <div class="faq-card">
-            <a href="#">{{ block.settings.title }}<i class="custom-tab-icon tab-open"></i></a>
+          <div class="faq-card faq-card-custom-font">
+            {% comment %} <a href="#">{{ block.settings.title }}<i class="custom-tab-icon tab-open"></i></a> {% endcomment %}
+            <a href="#">{{ block.settings.title }}
+              <span id="custom-icon-faq-el" class="collapsible-trigger__icon collapsible-trigger__icon--circle collapsible-trigger__icon--open custom-icon-faq-el" role="presentation">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"/></svg>
+              </span>
+            </a>
             <div class="content">
               {{ block.settings.text }}
             </div>
           </div>
           {% endcase %}
           {% endfor %}
+          <div class="bottom-text-faq-el">
+            <p>Still can’t find what you’re looking for? Any questions, <a href="https://ninetypercent.com/pages/contact-us">send us a message.</a></p>
+          </div>
         </section>
       </div>
   </div>
 </div>
 	<style>
+    #custom-icon-faq-el.custom-icon-faq-el{
+      border: none;
+      right: 0;
+      left: auto;
+    }
+    #single-contact{
+      padding: 20px;
+      margin-top: -42px;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12.5px;
+      line-height: 26px;
+      letter-spacing: 0.05em;
+      color: #2B2725;
+    }
+    .bottom-text-faq-el{
+      margin-top:108px;
+      margin-bottom:50px;
+    }
+    .bottom-text-faq-el p{
+      font-size: 13px;
+      color: #2b2725
+    }
+    .bottom-text-faq-el a{
+      text-decoration: underline
+    }
 		.custom-tab-icon {
           position: absolute;
           height: 13px;
@@ -94,6 +140,7 @@
           }
         {% endif %}
       	#faq-contact {
+          display: none;
           border: 1px solid #E4E4E4;
           margin-top: 30px;
           text-align: center;
@@ -134,6 +181,12 @@
         	#faq-contact {
               width: 275px;
 	        }
+        }
+        @media screen and (max-width: 768px) {
+         #single-contact{
+          text-align: center;
+
+         }
         }
       	@media only screen and (min-width: 769px) and (max-width: 1023px) {
         	#faq-contact > h3 {

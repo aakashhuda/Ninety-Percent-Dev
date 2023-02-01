@@ -1,47 +1,163 @@
-<div class="page-width page-content">
-  <div class="grid">
+<div class="page-width page-width--tiny page-content register-section">
+  <header class="section-header">
+    <h1 class="section-header__title">{{ 'customer.register.title' | t }}</h1>
+  </header>
 
-    <div class="grid__item medium-up--one-third medium-up--push-one-third">
+  <div class="form-vertical">
+    {%- form 'create_customer' -%}
 
-      <header class="section-header">
-        <h1 class="section-header__title">{{ 'customer.register.title' | t }}</h1>
-      </header>
+    <p class="register-form-font required-field">*Required</p>
 
-      <div class="form-vertical">
-        {% form 'create_customer' %}
+      {{ form.errors | default_errors }}
 
-          {{ form.errors | default_errors }}
+      <label class="register-form-font" for="FirstName">{{ 'customer.register.first_name' | t }}</label>
+      <input placeholder="First Name*" type="text" name="customer[first_name]" id="FirstName" class="input-full"{% if form.first_name %} value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
 
-          <label for="FirstName">{{ 'customer.register.first_name' | t }}</label>
-          <input type="text" name="customer[first_name]" id="FirstName" class="input-full" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+      <label class="register-form-font" for="LastName">{{ 'customer.register.last_name' | t }}</label>
+      <input placeholder="Last Name*" type="text" name="customer[last_name]" id="LastName" class="input-full"{% if form.last_name %} value="{{ form.last_name }}"{% endif %} autocapitalize="words">
 
-          <label for="LastName">{{ 'customer.register.last_name' | t }}</label>
-          <input type="text" name="customer[last_name]" id="LastName" class="input-full" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+      <label class="register-form-font" for="Email">{{ 'customer.register.email' | t }}</label>
+      <input placeholder="Email*" type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}"{% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
 
-          <label for="Email">{{ 'customer.register.email' | t }}</label>
-          <input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+      <label class="register-form-font" for="CreatePassword">{{ 'customer.register.password' | t }}</label>
+      <input placeholder="Password*" type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
+      
+    <label class="register-form-font" for="CreateConfirmPassword">Confirm Password*</label>
+      <input placeholder="Confirm Password*" type="password" name="customer[confirmPassword]" id="CreateConfirmPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
 
-          <label for="CreatePassword">{{ 'customer.register.password' | t }}</label>
-          <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
-			
-        <label class="checkbox_container">Subscribe to our newsletter
+    <p class="register-form-font pass-style">
+      Password must be at least 8 characters; must contain at least one uppercase letter, one numeric digit, and one special character.
+    </p>
+
+    <div class="subs-label">
+      <label class="checkbox_container register-form-font">Subscribe to our newsletter?
           <input type="hidden" name="customer[accepts_marketing]" value="false" />
               <input type="checkbox" name="customer[accepts_marketing]" class="input-full{% if form.errors contains 'email' %} error{% endif %}" id="accepts_marketing" value="true">
               <span class="checkmark"></span>
           </label>
-          <p>
-            <input type="submit" value="{{ 'customer.register.submit' | t }}" class="btn btn--full">
-          </p>
-
-        {% endform %}
-      </div>
-
     </div>
 
+    <p>
+        <label for="register-submit" class="hidden-label">{{ 'customer.register.submit' | t }}</label>
+        <input type="submit" id="register-submit" value="{{ 'customer.register.submit' | t }}" class="btn btn--full login-new-button new-register-button">
+      </p>
+
+    {%- endform -%}
   </div>
 </div>
+
 <style>
-/* The container */
+input{
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px !important;
+line-height: 21px !important;
+letter-spacing: 0.05em !important;
+color: rgba(43, 39, 37, 0.5);
+}
+  
+    input, select{
+  border: none;
+  border-bottom: 1px solid;
+  border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+  border-color: var(--colorBorder);
+  width: 100%;
+  max-width: 581px;
+  padding: 4px 10px;
+  padding-left: 0;
+  border-radius: 0;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+  
+input:active,
+input:focus,
+select:active,
+select:focus {
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+
+  .register-section{
+    max-width: 530px;
+  }
+
+  .register-section .section-header .section-header__title{
+  text-align:left;
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+}
+
+  .register-section .form-vertical{
+padding-top: 42px;
+    border-top: 0.25px solid rgba(43, 39, 37, 0.5);
+  }
+
+  .register-section .form-vertical .register-form-font{
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px !important;
+line-height: 21px !important;
+letter-spacing: 0.05em !important;
+color: #000000;
+    text-transform: capitalize;
+    text-align:left;
+    margin:0;
+  }
+
+  .register-section .form-vertical .register-form-font.required-field{
+    margin-bottom:48px;
+  }
+  
+  .register-section .form-vertical .register-form-font.pass-style{
+    text-transform: none;
+    margin-bottom:34px;
+    margin-top:23px;
+  }
+
+  .subs-label{
+    display:flex;
+    justify-content: start;
+    gap:20px;
+    margin: 35px 0;
+  }
+  .subs-label input{
+width:16px;
+    height:25px;
+
+  }
+  .subs-label .register-form-font{
+text-transform: none;
+
+  }
+
+   .btn.new-register-button{
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+    margin:0;
+    border: 1px solid #000000;
+    text-align:left;
+    background: white !important;
+padding: 25px 24px;
+  }
+
+  /* The container */
 .checkbox_container {
   display: block;
   position: relative;
@@ -69,9 +185,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+  height: 21px;
+  width: 16px;
+  background-color: white;
+  border: 0.5px solid #2B2725;
 }
 
 /* On mouse-over, add a grey background color */
@@ -98,8 +215,8 @@
 
 /* Style the checkmark/indicator */
 .checkbox_container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 4px;
+  top: 0px;
   width: 7px;
   height: 14px;
   border: solid white;
@@ -108,4 +225,5 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+  
 </style>

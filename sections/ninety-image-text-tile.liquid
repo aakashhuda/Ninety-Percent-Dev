@@ -1,0 +1,310 @@
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when "image-and-text-tile" %}
+            <section class="block-parent-{{ block.id }} np-page-width">
+                <div class="image-text-tile-container-{{ block.id }}">
+                    {% if block.settings.selected-layout == "image-first" %}
+                        <div class="image-text-tile-image-container-{{ block.id }} item-{{ block.id }}">
+                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: 'master' }}">
+                        </div>
+                        <div class="image-text-tile-text-container-{{ block.id }} item-{{ block.id }}">
+                            <div class="text-container">
+                                <div class="title-{{ block.id }} np-h3">{{ block.settings.title }}</div>
+                                <div class="description-{{ block.id }} np-h5">{{ block.settings.text }}</div>
+                                <div class="redirect-button">
+                                  <a class="text-tile-btn-{{ block.id }}" href="{{ block.settings.button-url | url_encode }}">
+                                    {{ block.settings.button-label }}
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="image-text-tile-text-container-{{ block.id }} item-{{ block.id }}">
+                            <div class="text-container">
+                                <div class="title-{{ block.id }} np-h3">{{ block.settings.title }}</div>
+                                <div class="description-{{ block.id }} np-h5">{{ block.settings.text }}</div>
+                                <div class="redirect-button">
+                                  <a class="text-tile-btn-{{ block.id }}" href="{{ block.settings.button-url | url_encode }}">
+                                    {{ block.settings.button-label }}
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-text-tile-image-container-{{ block.id }} item-{{ block.id }}">
+                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: 'master' }}">
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+
+<style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    .text-container {
+        max-width: 464px;
+    }
+    @media (max-width: 768px) {
+        .np-page-width { 
+            padding: 0 20px;
+        }
+    }
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when "image-and-text-tile" %}
+            .block-parent-{{ block.id }}{
+                display: flex;
+                justify-content: center;
+                padding: 0 {{ block.settings.padding-both-sides }}px;
+            }
+            .block-parent-{{ block.id }} .image-text-tile-container-{{ block.id }} {
+                display: flex;
+            }
+
+            {% if block.settings.width == "600" %}
+                .block-parent-{{ block.id }} .image-text-tile-container-{{ block.id }} {
+                    width: 600px;
+                }
+                
+            {% elsif block.settings.width == "900" %}
+               .block-parent-{{ block.id }} .image-text-tile-container-{{ block.id }} {
+                    width: 900px;
+                }
+                
+            {% else %}
+                .block-parent-{{ block.id }} .image-text-tile-container-{{ block.id }} {
+                    width: 100%;
+                }
+            {% endif %}
+
+            .block-parent-{{ block.id }} .item-{{ block.id }} {
+                {% comment %} width: 50%; {% endcomment %}
+            }
+            .block-parent-{{ block.id }} .image-{{ block.id }}{
+                {% comment %} width: 100%;
+                height: 100%; {% endcomment %}
+            }
+            
+            .block-parent-{{ block.id }} .image-text-tile-text-container-{{ block.id }} {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: {{ block.settings.bg-color }};
+                width: 50%;
+            }
+            .block-parent-{{ block.id }} .image-text-tile-image-container-{{ block.id }} {
+                width: 50%;
+            }
+            .block-parent-{{ block.id }} .description-{{ block.id }} {
+                text-align: justify;
+                margin-bottom: 61px;
+            }
+            .block-parent-{{ block.id }} .title-{{ block.id }} {
+                padding-bottom: 55px;
+            }
+            .block-parent-{{ block.id }} .image-text-tile-text-container-{{ block.id }} p {
+                margin: 0;
+            }
+            .block-parent-{{ block.id }} .text-tile-btn-{{ block.id }} {
+                color: #2B2725;
+                font-size: 16px;
+                line-height: 28px;
+                letter-spacing: 0.02em;
+                font: 'Intervouge';
+                text-decoration: none;
+                text-transform: uppercase;
+                padding-bottom: 7px;
+                border-bottom: 1px solid #2b2724;
+                margin-top: 86px;
+            }
+
+            {% if block.settings.show-button == false %}
+                .block-parent-{{ block.id }} .text-tile-btn-{{ block.id }} {
+                    display: none;
+                }
+            {% endif %}
+
+            {% if block.settings.make-image-larger == true %}
+                .block-parent-{{ block.id }} .image-text-tile-image-container-{{ block.id }} {
+                    width: 65%;
+                }
+                .block-parent-{{ block.id }} .image-text-tile-text-container-{{ block.id }} {
+                    width: 35%;
+                }
+
+            {% endif %}
+            @media (max-width: 1000px) {
+                .block-parent-{{ block.id }} .image-text-tile-text-container-{{ block.id }} {
+                    padding: 16px;
+                }
+            }
+            @media (max-width: 768px) {
+                .block-parent-{{ block.id }} .image-text-tile-container-{{ block.id }} {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .block-parent-{{ block.id }} .image-text-tile-text-container-{{ block.id }} {
+                    padding: 0 20px;
+                    order: 1;
+                    align-items : flex-start;
+                }
+                .block-parent-{{ block.id }} .item-{{ block.id }} {
+                    width: 100%;
+                }
+                .block-parent-{{ block.id }} .image-text-tile-image-container-{{ block.id }} {
+                    order: 0;
+                    padding: 0 20px;
+                }
+                .block-parent-{{ block.id }} .description-{{ block.id }} {
+                    font-size: 16px;
+                }
+              .block-parent-{{ block.id }} .redirect-button{
+                margin:0 auto;
+              }
+
+              .block-parent-{{ block.id }} .title-{{ block.id }}{
+                padding: 30px 0;
+              }
+            }
+        {% when 'spacer' %}
+            .custom-spacer-{{ block.id }} {
+                height: {{ block.settings.spacer }}px;
+            }
+    {% endcase %}
+        
+{% endfor %}
+
+</style>    
+
+{% schema %}
+{
+    "name": "Ninety Image Text Tile",
+    "blocks": [
+        {
+            "name": "Image and Text Tile",
+            "type": "image-and-text-tile",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "padding-both-sides",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Padding Both Sides"
+                },
+                {
+                    "type": "select",
+                    "id": "width",
+                    "label": "Select Section Width",
+                    "options": [
+                        {
+                            "value": "600",
+                            "label": "Small"
+                        },
+                        {
+                            "value": "900",
+                            "label": "Medium"
+                        },
+                        {
+                            "value": "100",
+                            "label": "Full Width"
+                        }
+                    ],
+                    "default": "100"
+                },
+                {
+                    "type": "select",
+                    "id": "selected-layout",
+                    "label": "Select Section Layout",
+                    "default": "image-first",
+                    "options": [
+                        {
+                            "value": "image-first",
+                            "label": "Image First Layout"
+                        },
+                        {
+                            "value": "text-first",
+                            "label": "Text First Layout"
+                        }
+                    ]
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "make-image-larger",
+                    "default": false,
+                    "label":  "Make Image Larger"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Add Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": "Add Description"
+                },
+                {
+                    "type": "color",
+                    "id": "bg-color",
+                    "label": "Choose text background color",
+                    "default": "#FFFFFF"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show-button",
+                    "label": "Show Button",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "button-label",
+                    "label": "Button Label",
+                    "default": "Shop The Look"
+                },
+                {
+                    "type": "url",
+                    "id": "button-url",
+                    "label": "Button URL"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Image Text Tile"
+        }
+    ]
+}
+{% endschema %}

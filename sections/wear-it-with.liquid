@@ -1,0 +1,231 @@
+{%- assign per_row = section.settings.per_row -%}
+{%- assign product_limit = per_row | times: section.settings.rows -%}
+{%- assign collection = collections[section.settings.home_featured_products] -%}
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+<style>
+  @media only screen and (max-width: 959px){
+  .feature-row {
+    flex-direction: column-reverse !important;
+  }
+  .feature-row .feature-row__text{
+    padding-bottom: 30px;
+  }
+  .feature-row .h3{
+    padding-bottom: 10px;
+  }
+}
+</style>
+<div class="page-width the-look wear-it-with-pdp">
+  <h5 class="np-h8">HOW TO WEAR IT</h5>
+  {% capture image_layout %}
+    <div class="feature-row__item">
+      <div class="custom-look-collection" style="margin: 0 auto;">
+       
+          {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" title="{{ section.settings.button_label }}">{% endif %}
+          <div class="image-wrap" style="height: auto;">
+            {%- assign img_url = product.metafields.custom.wear_it_with_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img
+                
+                class="feature-row__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720, 900, 1080]"
+                data-aspectratio="{{ product.metafields.custom.wear_it_with_image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ product.metafields.custom.wear_it_with_image.alt }}"
+                 width="100%"
+                 height="{{ product.metafields.custom.wear_it_with_image.aspect_ratio }}*{{ width }}">
+          </div>
+          {% if section.settings.button_label != blank and section.settings.button_link != blank %}</a>{% endif %}
+
+      </div>
+    </div>
+  {% endcapture %}
+
+  <div class="feature-row" data-aos>
+    {% if section.settings.layout == 'left' %}
+      {{ image_layout }}
+    {% endif %}
+
+    <div class="feature-row__item feature-row__text">
+      <div class="custom-look-collection pdp-custom-look" style="margin: 0 auto; text-align: center;">
+        
+        {% if section.settings.subtitle != blank %}
+        <p class="h5">{{ section.settings.subtitle }}</p>
+      {% endif %}
+      {% if section.settings.title != blank %}
+        <p class="h3">{{ section.settings.title | escape }}</p>
+      {% endif %}
+
+<!--       {% if section.settings.pick_product != blank %}
+          {% include 'product-item-slider', product: section.settings.pick_product, per_row: 2, grid_item_width: "single-pd-width" %}
+      {% endif %} -->
+          {% for product in product.metafields.custom.wear_it_with_products.value limit: product_limit %}
+            {% include 'product-grid-item-home' %}
+          {% endfor %}
+    </div>
+
+      
+    </div>
+
+    {% if section.settings.layout == 'right' %}
+      {{ image_layout }}
+    {% endif %}
+  </div>
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+
+{% schema %}
+  {
+    "name": "Featured Image Prod",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "collection",
+        "id": "home_featured_products",
+        "label": "Collection"
+      },
+      {
+        "type": "range",
+        "id": "per_row",
+        "label": "Products per row",
+        "default": 4,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "label": "Rows of products",
+        "default": 1,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "image_width",
+        "label": "Image width",
+        "default": 500,
+        "min": 100,
+        "max": 600,
+        "step": 10,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subheading",
+        "default": "Improved"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+      {
+        "type": "product",
+        "id": "pick_product",
+        "label": "Product"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Image on left"
+          },
+          {
+            "value": "right",
+            "label": "Image on right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }
+    ],
+    "presets": [
+      {
+        "name": "The Look Prod",
+        "category": "Image"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  .custom-look-collection div:nth-child(3){
+    display: none;
+  }
+  .the-look{
+    text-align: center;
+  }
+  .the-look h5{
+    padding-bottom: 20px;
+  }
+  .wear-it-with-pdp .feature-row__item{
+    flex: 0 1 47%;
+  }
+  .wear-it-with-pdp .feature-row__text{
+    min-width: 49%;
+    flex: 0 1 33%;
+  }
+  .wear-it-with-pdp .custom-look-collection{
+    max-width: 666px;
+  }
+  .wear-it-with-pdp .pdp-custom-look{
+    max-width: 701px;
+    text-align: center;
+    display: flex;
+  }
+  .wear-it-with-pdp .medium-up--one-quarter{
+    width: 64%;
+    margin-right: 15px;
+  }
+  .pdp-custom-look .grid__item{
+    padding-left: 0px;
+  }
+  .feature-row__item:first-child{
+    margin-right: 0px;
+  }
+  .wear-it-with-pdp .grid-product__meta{
+    display: flex;
+  }
+   .wear-it-with-pdp .grid-product__price{
+     margin-top: 0px;
+   }
+  .wear-it-with-pdp .grid-product-title{
+    padding-right: 10px;
+  }
+  .wear-it-with-pdp .feature-row__text{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  @media only screen and (min-width: 1050px){
+    .wear-it-with-pdp .feature-row{
+      margin: 0;
+    }
+
+  }
+    @media only screen and (max-width: 768px){
+      .wear-it-with-pdp .medium-up--one-quarter{
+        margin-right: 3px;
+      }
+
+  }
+</style>

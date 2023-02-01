@@ -1,0 +1,236 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'image-with-text' %}
+      <div class="image-with-text-{{ block.id }}">
+        <div class="image-section-{{ block.id }}">
+          <img class="image-{{ block.id }}-width" src="{{ block.settings.upload_image | img_url: 'grande' }}">
+        </div>
+        <div class="text-section-{{ block.id }}">
+          <div class="upper-part-text">
+            <div class="upper-part-text-type np-h3">{{ block.settings.fabric-type }}</div>
+            <div class="upper-part-text-origin">
+              <p class="np-h4">
+                {{ block.settings['fabric-origin'] }}:
+                <span class="country np-h9">{{ block.settings.fabric-origin-country }}</span>
+              </p>
+            </div>
+          </div>
+          <div class="lower-part-text">
+            <div class="lower-part-text-details">
+              {{ block.settings.lower-part-text-details }}
+            </div>
+            <div class="lower-part-text-process np-h5">
+              {{ block.settings.lower-part-text-process }}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endcase %}
+  {% endfor %}
+</section>
+<style>
+  .np-page-width {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  @media(max-width: 768px) {
+    .np-page-width {
+      padding: 0 20px;
+    }
+  }
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'image-with-text' %}
+      .image-with-text-{{ block.id }}{
+        display: flex;
+        gap:9.5%;
+        padding: 0 {{ block.settings.both-side-padding }}px;
+      }
+      .image-section-{{ block.id }}{
+        width: 40.5%;
+      }
+      .text-section-{{ block.id }}{
+      width: 50%
+      }
+      .text-section-{{ block.id }}{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .upper-part-text-type {
+        margin-bottom: 25px;
+        font-feature-settings: 'ordn' on;
+      }
+      .image-{{ block.id }}-width{
+        width:100%
+      }
+      .lower-part-text-details {
+        width: 585px;
+        font-family: 'Silvana';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 37px;
+        letter-spacing: -0.01em;
+        font-feature-settings: 'ordn' on, 'ss03' on;
+        color: #2B2725;
+      }
+      .lower-part-text-process {
+        width: 447px;
+        margin-top: 49px;
+      }
+      .country {
+        padding-left: 20px;
+      }
+      @media(max-width: 1120px) {
+        .image-with-text-{{ block.id }}{
+        padding: 0 90px;
+      }
+      .image-with-text-{{ block.id }}{
+        gap:120px;
+      }
+      .lower-part-text-details {
+        width: 100%;
+      }
+      .lower-part-text-process {
+        width: 100%;
+      }
+      }
+      @media(max-width: 950px) {
+        .image-with-text-{{ block.id }}{
+        padding: 0 70px;
+      }
+      .image-with-text-{{ block.id }}{
+        gap:100px;
+      }
+      .lower-part-text-details {
+        width: 100%;
+        font-size: 22px;
+      }
+      .lower-part-text-process {
+        width: 100%;
+        margin-top:30px;
+      }
+      }
+      @media(max-width: 850px) {
+        .image-with-text-{{ block.id }}{
+        padding: 0 50px;
+      }
+      .image-with-text-{{ block.id }}{
+        gap:80px;
+      }
+      .lower-part-text-details {
+        width: 100%;
+        font-size: 18px;
+      }
+      .lower-part-text-process {
+        width: 100%;
+        margin-top:20px;
+      }
+      }
+      @media(max-width: 790px) {
+      .upper-part-text-origin p, .upper-part-text-origin p span{
+        font-size: 14px;
+      }
+      }
+      @media(max-width: 768px) {
+        .image-with-text-{{ block.id }}{
+        padding: 0;
+      }
+        .image-with-text-{{ block.id }}{
+          display: block;
+        }
+        .image-section-{{ block.id }}{
+        margin-bottom: 50px;
+      }
+      .image-section-{{ block.id }},
+      .text-section-{{ block.id }},
+      .lower-part-text-details,
+      .lower-part-text-process {
+        width: 100%;
+      }
+      .upper-part-text-type{
+        font-size: 26px;
+      }
+      .upper-part-text-origin p{
+        font-size: 20px;
+      margin: 20px 0;
+      }
+      .upper-part-text-origin p span{
+        font-size: 18px;
+      }
+      .lower-part-text-details {
+        font-size: 26px;
+      }
+      .lower-part-text-process {
+        font-size: 16px;
+      }
+      }
+    {% endcase %}
+  {% endfor %}
+</style>
+{% schema %}
+  {
+    "name": "Fibre Hero",
+    "blocks": [
+      {
+        "name": "Image with Text ",
+        "type": "image-with-text",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "upload_image",
+            "label": "Change Your Image"
+          },
+          {
+            "type": "text",
+            "id": "fabric-type",
+            "label": "Change the Fabric Type",
+            "default": "Cotton"
+          },
+          {
+            "type": "text",
+            "id": "fabric-origin",
+            "label": "Change origin Text",
+            "default": "Origins"
+          },
+          {
+            "type": "text",
+            "id": "fabric-origin-country",
+            "label": "Change Country Name",
+            "default": "Portugal Bangladesh"
+          }, {
+            "type": "html",
+            "id": "lower-part-text-details",
+            "label": "Change Lower Part Text"
+          }, {
+            "type": "html",
+            "id": "lower-part-text-process",
+            "label": "Change Process Text"
+          },
+          {
+        "type": "range",
+        "id": "both-side-padding",
+        "label": "Both Side Padding",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Fibre Hero",
+        "blocks": [
+          {
+            "type": "image-with-text"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

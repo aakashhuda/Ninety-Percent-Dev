@@ -1,0 +1,375 @@
+{%- style -%}
+    /* dynamic css - section */
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+    .section-{{ section.id }}.section-width-small {
+          max-width: 600px;
+          margin: 0 auto;
+      }
+      .section-{{ section.id }}.section-width-medium {
+          max-width: 900px;
+          margin: 0 auto;
+      }
+      .section-{{ section.id }}.section-width-full {
+          max-width: 100%;
+          margin: 10px auto;
+      }
+      .section-{{ section.id }}.section-width-custom {
+          max-width: {{ section.settings.custom-section-width | append: "px" }};
+          margin: 0 auto;
+      }
+      /* dynamic css - block */
+      {% for block in section.blocks %}
+        .item-{{ block.id }} {
+            position: relative;
+          }
+          .item-{{ block.id }} .customized-heading-{{ block.id }} {
+              font-size: {{ block.settings.heading-size }}px;
+              margin-top: 0;
+              margin-bottom: 0;
+              color: {{ block.settings.heading-font-color }};
+          }
+          .item-{{ block.id }} .customized-sub-heading-{{ block.id }} {
+              font-size: {{ block.settings.sub-heading-size }}px;
+              margin-top: 17px;
+              margin-bottom: -17px;
+              color: {{ block.settings.sub-heading-font-color }};
+              text-align: justify; 
+          }
+          .item-{{ block.id }} .customized-description-{{ block.id }} {
+              font-size: {{ block.settings.description-size }}px;
+              margin-top: 35px;
+              margin-bottom: 0;
+              color: {{ block.settings.text-font-color }};
+              text-align: justify; 
+          }
+      {% endfor %}
+      /* static css */
+      .np-multicolumn-wrapper{
+          padding: 20px 0px;
+          height: 100%;
+      }
+      .np-grid-container {
+          display: grid;
+          margin: 5px;
+      }
+      .np-grid-container.column-3 {
+          grid-template-columns: 1fr 1fr 1fr;
+      }
+      .np-grid-item{
+          height: auto;
+          position: relative;
+      }
+      #special_el.np-grid-item:first-child .capital-head{
+        font-size: 70px;
+        line-height: 75px;
+        letter-spacing: -0.03em;
+        font-family: Silvana;
+        font-weight: 400;
+        color: #000000;
+        margin-top: -18px;
+        margin-bottom: 52px;  
+      }
+  .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(n){
+    border-right: 0.25px solid rgba(43, 39, 37, 0.3);
+padding: 115px 53px 130px 45px;
+  }
+  .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(-n+3){
+border-bottom: 0.25px solid rgba(43, 39, 37, 0.3);
+  }
+  .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n+3){
+    border-right: 0;
+  }
+   .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(1){
+padding: 115px 53px 174px 24px;
+  }
+  .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(4){
+padding: 115px 53px 174px 24px;
+  }
+      /* condition dynamic css */
+      {% if section.settings.multicolumn-style == "style1" %}
+          .section-{{ section.id }} .np-multicolumn-wrapper.divider-bg{
+              background: linear-gradient(#2B2725, #2B2725) center/0.25px 100% no-repeat,
+                          linear-gradient(#2B2725, #2B2725) center/0.25px 100% no-repeat;
+              background-position: 33% 0, 67% 0;
+          }
+          .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n+1)::after {
+              content: "";
+              position: absolute;
+              top: calc(100% + 45px);
+              border-bottom: 0.25px solid #b8afab;
+              max-width: 1440px;
+              width: calc(300% + 2 * {{ section.settings.column-gap }}px);
+         }
+         {% if section.settings.section-width == "small" %} 
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n + 1)::after {
+              max-width: 600px;
+         }
+         {% elsif section.settings.section-width == "medium" %} 
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n + 1)::after {
+              max-width: 900px;
+         }
+         {% elsif section.settings.section-width == "full" %} 
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n + 1)::after {
+              max-width: 1440px;
+         }
+         {% elsif section.settings.section-width == "custom" %} 
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n + 1)::after {
+          max-width: {{ section.settings.custom-section-width | append: "px" }};
+         }
+         {% endif %}
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-last-child(3)::after , 
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-last-child(2)::after,
+         .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-last-child(1)::after {
+                display: none;
+          }
+      {% endif %}
+    /* mobile screen responsive */
+    @media only screen and (max-width: 992px) and (min-width: 768px){
+        #special_el.np-grid-item:first-child .capital-head{
+                font-size: 48px;
+                line-height: 36px; 
+        }
+    }
+    @media only screen and (max-width: 1350px) and (min-width: 992px){
+        #special_el.np-grid-item:first-child .capital-head{
+                font-size: 56px;
+                line-height: 42px; 
+                margin-top: 10px;
+        }
+    }
+    @media only screen and (max-width: 768px) {
+      .section-{{ section.id }}{
+        padding: 10px 25px;
+        overflow-x: hidden;
+      }
+      .np-multicolumn-wrapper{
+        padding-top: 50px;
+        padding-bottom: 30px;
+      }
+      .np-grid-item{
+        height: 100%;
+      }
+      .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(n){
+    border-right: 0;
+        border-bottom: 0;
+padding: 20px 10px;
+  }
+      .section-{{ section.id }} .np-multicolumn-wrapper.divider-bg{
+              background: linear-gradient(#2B2725, #2B2725) center/0px 100% no-repeat,
+                          linear-gradient(#2B2725, #2B2725) center/0px 100% no-repeat;
+              background-position: 33% 0, 67% 0;
+      }
+      .np-grid-container.column-3 {
+          grid-template-columns: 1fr;
+          align-items: center;
+          justify-content:center;
+          width: 90%;
+      }
+      .section-{{ section.id }} .np-grid-container.column-3 > .np-grid-item:nth-child(3n+1)::after {
+              content: "";
+              position: absolute;
+              border-bottom: 0px;
+         }
+      .np-grid-container.column-3 h3{
+        font-size: 48px;
+        line-height: 1.2
+      }
+      {% for block in section.blocks %}
+      {% endfor %}
+    }
+  {%- endstyle -%}
+  <section class="section-{{ section.id }} section-width-{{ section.settings.section-width }} section-{{ section.id }}-padding ">      <div class="np-multicolumn-wrapper divider-bg">          <div class="np-grid-container column-3">              {% for block in section.blocks %}
+                  {% case block.type %}
+                      {% when 'column' %}      
+                              <div id="special_el" class="np-grid-item item-{{ block.id }}">                                  {% if block.settings.heading %}
+                                    <p class="capital-head customized-heading-{{ block.id }} np-h3 " >{{ block.settings.heading }}</p>                                  {% endif %} 
+                                  {% if block.settings.heading %}
+                                    <p class="customized-sub-heading-{{ block.id }} np-h6" >{{ block.settings.sub-heading }}</p>                                  {% endif %} 
+                                  {% if block.settings.description %}
+                                    <p id="custom-space-col" class="customized-description-{{ block.id }} np-h5 ">{{ block.settings.description | replace: 'p>', 'span>' }}</p>                                  {% endif %}
+                              </div>                  {% endcase %}
+              {% endfor %}
+          </div>      </div>  </section>  {% schema %}
+  {
+    "name": "Six Column Text PS",
+    "class": "section",
+    "tag": "section",
+    "settings": [   
+      {
+      "type": "select",
+      "id": "section-width",
+      "label": "Section width",
+      "options": [
+          {
+          "value": "small",
+          "label": "Small"
+          },
+          {
+          "value": "medium",
+          "label": "Medium"
+          },
+          {
+          "value": "full",
+          "label": "Full"
+          },
+          {
+          "value": "custom",
+          "label": "Custom"
+          }
+      ],
+      "default": "custom",
+      "info":"Choose custom for changing custom width"
+      },
+      {  
+          "type": "range",
+          "id": "custom-section-width",
+          "label": "Custom Section width",
+          "min": 450,
+          "max": 1485,
+          "step": 45,
+          "unit": "px",
+          "default": 1440
+      },
+      {
+          "type": "range",
+          "id": "column-gap",
+          "min": 0,
+          "max": 300,
+          "step": 10,
+          "unit": "px",
+          "label": "Column Gap",
+          "default": 90
+        },
+      {
+      "type": "select",
+      "id": "multicolumn-style",
+      "label": "Select Multi Column Style",
+      "options": [
+          {
+          "value": "style1",
+          "label": "Style 1"
+          },
+          {
+          "value": "style2",
+          "label": "Style 2"
+          }
+      ],
+      "default": "style1"
+      }, 
+      {
+        "type": "header",
+        "content": "Section Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 36
+      }
+    ],
+    "blocks": [
+      {
+        "type": "column",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "default": "Column",
+            "label": "Heading"
+          },
+          {
+          "type": "color",
+          "id": "heading-font-color",
+          "label": "Heading Font Color" 
+          },
+          {
+          "type": "range",
+          "id": "heading-size",
+          "min": 8,
+          "max": 108,
+          "step": 1,
+          "unit": "px",
+          "label": "Heading Font Size",
+          "default": 26
+          },
+          {
+            "type": "text",
+            "id": "sub-heading",
+            "default": "Add a Sub Heading",
+            "label": "Sub Heading"
+          },  
+          {
+          "type": "color",
+          "id": "sub-heading-font-color",
+          "label": "Sub Heading Font Color" 
+          },
+          {
+          "type": "range",
+          "id": "sub-heading-size",
+          "min": 4,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Sub Heading Font Size",
+          "default": 16
+          },
+          {
+            "type": "richtext",
+            "id": "description",
+            "default": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "label": "Description"
+          },
+          {
+          "type": "color",
+          "id": "text-font-color",
+          "label": "Text Font Color" 
+          },
+          {
+          "type": "range",
+          "id": "description-size",
+          "min": 4,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Text Font Size",
+          "default": 16
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Six Column Text PS",
+        "blocks": [
+          {
+            "type": "column"
+          },
+          {
+            "type": "column"
+          },
+          {
+            "type": "column"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

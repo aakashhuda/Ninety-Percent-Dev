@@ -1,5 +1,7 @@
 {% layout 'gift_card' %}
 
+{%- assign formatted_initial_value = gift_card.initial_value | money_without_trailing_zeros: gift_card.currency -%}
+
 <div class="giftcard__border{% if gift_card.expired or gift_card.enabled != true %} disabled{% endif %}">
   <div class="giftcard__content">
 

@@ -1,0 +1,477 @@
+<section class="section-wrapper-{{ section.id }}">
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "double-column-text-block" %}
+
+                <div class="block-{{ block.id }} ">
+
+                    <div class="left-text-part">
+                        
+                        <div class="left-text-part-inner">
+
+                            <span class="left-pre-title np-h9"> {{ block.settings.left-pre-title }} </span>
+                            <span class="left-title np-h4"> {{ block.settings.left-title }} </span> 
+                            <span class="left-desc np-h5"> {{ block.settings.left-desc }}  </span>
+                            <a href="{{ block.settings.left-btn-url }}" class="left-learn-more-btn"> {{ block.settings.left-btn-text }}  </a>
+                            
+                            
+                           
+                        </div>
+
+                        
+                    </div>
+
+                    <div class="right-text-part">
+
+                        <div class="right-text-part-inner">
+
+                            <span class="right-pre-title np-h9"> {{ block.settings.right-pre-title }} </span>
+                            <span class="right-title np-h4"> {{ block.settings.right-title }} </span> 
+                            <span class="right-desc np-h5"> {{ block.settings.right-desc }}  </span>
+                            <a href="{{ block.settings.btn-url }}" class="right-learn-more-btn"> {{ block.settings.right-btn-text }}  </a>
+                            
+                            
+                           
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            
+
+
+            {% when 'spacer-block' %}
+
+                <div class="spacer-{{ block.id }}">
+                        
+                </div>
+
+        {% endcase %}
+    {% endfor %}
+</section>
+
+
+
+<style>
+   .section-wrapper-{{ section.id }} {
+      max-width: 1440px;
+      margin: 0 auto;
+   }
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+
+            {% when "double-column-text-block" %}
+                
+
+               .block-{{ block.id }} {
+                  padding: 0px 136px;
+               }
+
+             .block-{{ block.id }}  {
+                display: flex;
+                
+                min-height: {{ block.settings.block-height }}px;
+              
+             }
+             
+             .block-{{ block.id }} .left-text-part  {
+                display: flex;
+                
+
+               align-items: center;
+
+                background-color: {{ block.settings.left-text-bg-color }};
+                width: 50%;
+                
+                
+             }
+
+             .block-{{ block.id }} .right-text-part  {
+                display: flex;
+                
+                align-items: center;
+
+                background-color: {{ block.settings.right-text-bg-color }};
+                width: 50%;
+                
+             }
+             .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                text-align: justify;
+                width: 464px;
+                margin-right: 110px;
+             }
+             .block-{{ block.id }} .right-text-part .right-text-part-inner {
+               text-align: justify;
+                margin-left: 110px;
+             width: 461px;
+             }
+
+
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn, .block-{{ block.id }} .right-text-part .right-learn-more-btn {
+                
+             font-size: 16px;
+             color: #2B2725;
+             font-family: "Intervogue";
+             line-height: 19px;
+             letter-spacing: 0.05em;
+             font-weight:  400;
+                text-transform: uppercase;
+                display: inline-block;
+                margin-top: 20px;
+             }
+
+            
+             
+             .block-{{ block.id }} .left-text-part a {
+                text-decoration: none;
+                color: {{ block.settings.left-btn-color }};
+             }
+             .block-{{ block.id }} .right-text-part a {
+                text-decoration: none;
+                color: {{ block.settings.right-btn-color }};
+             }
+
+
+
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn p, .block-{{ block.id }} .right-text-part .right-learn-more-btn p  {
+                display: inline;              
+                padding-bottom: 7px;
+                border-bottom: 1px solid black;
+             }
+             .block-{{ block.id }} .left-text-part .left-pre-title p ,  .block-{{ block.id }} .left-text-part .left-title p,  .block-{{ block.id }} .right-text-part .right-pre-title p ,  .block-{{ block.id }} .right-text-part .right-title p {
+                margin: 0 auto;
+             }
+             .block-{{ block.id }} .left-text-part .left-desc p, .block-{{ block.id }} .right-text-part .right-desc p  {
+                margin: 25px auto;
+             }
+
+          
+             
+
+            
+
+
+             {% unless block.settings.show-left-part %}
+               .block-{{ block.id }} .left-text-part  {
+                   
+                   visibility: hidden;
+                   
+                }
+               {% endunless %}
+
+            {% unless block.settings.show-right-part %}
+               .block-{{ block.id }} .right-text-part  {
+                   
+                  visibility: hidden;
+                   
+                }
+            {% endunless %}
+
+            {% if block.settings.show-divider %}
+               .block-{{ block.id }} .left-text-part  {
+                   
+                   border-right:  0.5px solid #2B2725
+                   
+                }
+            {% endif %}
+            
+            @media only screen and (max-width: 1439px) { 
+             .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                  
+                  margin-right: 60px;
+               }
+               .block-{{ block.id }} .right-text-part .right-text-part-inner {
+                 
+                  margin-left: 60px;
+               
+               } 
+               .block-{{ block.id }} {
+                  padding: 0px 80px;
+               }
+            }
+             @media only screen and (max-width: 1260px) { 
+               .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                  
+                  margin-right: 40px;
+               }
+               .block-{{ block.id }} .right-text-part .right-text-part-inner {
+                 
+                  margin-left: 40px;
+               
+               } 
+               .block-{{ block.id }} {
+                  padding: 0px 60px;
+               }
+            } 
+
+            @media only screen and (max-width: 961px) { 
+               .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                  
+                  margin-right: 30px;
+               }
+               .block-{{ block.id }} .right-text-part .right-text-part-inner {
+                 
+                  margin-left: 30px;
+               
+               } 
+               .block-{{ block.id }} {
+                  padding: 0px 30px;
+               }
+            } 
+
+
+             @media only screen and (max-width: 768px) { 
+               .section-wrapper-{{ section.id }} {
+      padding: 0px 20px;
+   }
+   .block-{{ block.id }} {
+      padding: 0px 0px;
+   }
+               .block-{{ block.id }} .left-text-part  {
+               
+                width: 100%;
+                
+                
+             }
+
+             .block-{{ block.id }} .right-text-part  {
+               margin-top: 80px;
+                width: 100%;
+                
+             }
+                .block-{{ block.id }}  {
+               
+                    flex-direction: column;
+                    align-items: center;
+                    min-height: auto;
+                  
+                 }
+                 .block-{{ block.id }} .left-text-part  {
+                    
+                    border-right: 0px;
+                    
+                 }
+               
+    
+    
+                
+                 .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                  margin-right: 0px;
+                    width: 100%;
+                 }
+               .block-{{ block.id }} .right-text-part .right-text-part-inner { 
+                  width: 100%;
+                  margin-left: 0px;
+               }
+             }
+
+
+
+
+            {% when "spacer-block" %}
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+            
+        {% endcase %}
+        
+    {% endfor %}
+
+
+</style>
+
+
+
+
+{% schema %}
+{
+    "name": "OurWay-Double Column Text",
+    "settings": [
+      
+    ],
+    "blocks": [
+        {
+            "name": "Double-column-text-block",
+            "type": "double-column-text-block",
+            "settings": [
+              
+            {
+        "type": "checkbox",
+        "id": "show-left-part",
+        "label": "show-left-part",
+        "default": true
+      }  ,
+      {
+        "type": "checkbox",
+        "id": "show-right-part",
+        "label": "show-right-part",
+        "default": true
+      }  ,
+            
+      {
+        "type": "checkbox",
+        "id": "show-divider",
+        "label": "show-divider",
+        "default": true
+      }  ,
+         {
+                 "type":"range",
+                 "id":"block-height",
+                 "label":"divider height",
+                 "min":250,
+                 "max":700,
+                 "step":5,
+                 "unit":"px",
+                 "default": 695
+              } ,
+              {
+                    "type": "range",
+                    "id":"padding",
+                    "label":"Left-Right Space of the block",
+                    "min":0,
+                    "max":200,
+                    "step":2,
+                    "unit":"px",
+                    "default":140
+                },
+      
+              {
+                    "type":"color",
+                    "id":"left-text-bg-color",
+                    "label":"left text part background color"
+                   
+                },
+                
+                {
+                    "type":"richtext",
+                    "id":"left-pre-title",
+                    "label":"left pre-title",
+                    "default": "<p>Tangible Strides:</p>" 
+                },
+               
+                
+                {
+                    "type":"richtext",
+                    "id":"left-title",
+                    "label":"left title",
+                    "default": "<p>Profit Sharing</p>" 
+                },
+               
+                {
+                    "type":"richtext",
+                    "id":"left-desc",
+                    "label":"left description",
+                    "default": "<p>Ninety Percent's founders created a visionary business model with deep-rooted values in our people and the planet each year 90% of our distributable profits are shared between charitable causes and the people that make our collections happen.</p>" 
+                },
+               
+
+                {
+                    "type":"richtext",
+                    "id":"left-btn-text",
+                    "label":"left-button text",
+                    "default": "<p>LEARN MORE ABOUT PROFIT SHARING</p>" 
+                },
+                
+                
+             
+            
+            
+                
+             
+              {
+                "type": "url",
+                "id": "left-btn-url",
+                "label" : "left button URL"
+              },
+              
+              {
+                    "type":"color",
+                    "id":"right-text-bg-color",
+                    "label":"right text part background color"
+                    
+                },
+
+              {
+                    "type":"richtext",
+                    "id":"right-pre-title",
+                    "label":"right pre-title",
+                    "default": "<p>Tangible Strides:</p>"
+                },
+               
+                {
+                    "type":"richtext",
+                    "id":"right-title",
+                    "label":"right title",
+                    "default": "<p>Sustainability & Materials</p>"
+                },
+               
+               
+                {
+                    "type":"richtext",
+                    "id":"right-desc",
+                    "label":"right description",
+                    "default": "<p>From the beginning, our purpose has been to create ready-to-wear clothing, cut in the finest vegan materials, selected to have the lowest impact on our global environment. Pieces designed for longevity, made with purpose  for the world we want. </p>"
+                },
+              
+                {
+                    "type":"richtext",
+                    "id":"right-btn-text",
+                    "label":"right button text",
+                    "default": "<p>EXPLORE SUSTAINABILITY & MATERIALS</p>"
+                },
+               
+               
+               
+             
+          
+              {
+                "type": "url",
+                "id": "right-btn-url",
+                "label" : "right button URL"
+                
+              }
+
+             
+              
+
+            ]
+        },
+        {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"OurWay-Double Column Text",
+           "blocks": [
+              {
+          "type": "spacer-block"
+        },
+        {
+          "type": "double-column-text-block"
+        },
+        {
+          "type": "spacer-block"
+        }
+      ]
+        }
+    ]
+}
+{% endschema %}

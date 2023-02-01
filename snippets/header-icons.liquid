@@ -1,245 +1,64 @@
 <div class="site-nav">
   <div class="site-nav__icons">
-    {% if shop.customer_accounts_enabled %}
+    {%- if shop.customer_accounts_enabled -%}
       <a class="site-nav__link site-nav__link--icon small--hide" href="{{ routes.account_url }}">
-        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-user hide" viewBox="0 0 64 64"><path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16z"/></svg>
-        <span class="icon__fallback-text user-log-ac">
-          {% if customer %}
+<!--         <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-user" viewBox="0 0 64 64"><path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16z"/></svg> -->
+        <span class="icon__fallback-text">
+          {%- if customer -%}
             {{ 'layout.customer.account' | t }}
-          {% else %}
+          {%- else -%}
             {{ 'layout.customer.log_in' | t }}
-          {% endif %}
+          {%- endif -%}
         </span>
       </a>
-    {% endif %}
+    {%- endif -%}
 
-    {% if settings.search_enable %}
-      <a  href="{{ routes.search_url }}" class="site-nav__link site-nav__link--icon js-search-header js-no-transition{% if section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-split' %} medium-up--hide{% endif %}">
-        <svg  width="26" aria-hidden="true" focusable="false" role="presentation" class=" icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+    {%- if settings.search_enable -%}
+      <a href="{{ routes.search_url }}"  id="drawer-search-icon" class="site-nav__link site-nav__link--icon js-search-header{% if section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-split' %} medium-up--hide{% endif %}">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
         <span class="icon__fallback-text">{{ 'general.search.title' | t }}</span>
       </a>
-    {% endif %}
+    {%- endif -%}
 
-    <a href="{{ routes.cart_url }}" class="site-nav__link site-nav__link--icon js-drawer-open-cart js-no-transition" aria-controls="CartDrawer">
-      <span class="cart-link">
-        <svg width="26" aria-hidden="true" focusable="false" role="presentation" class="" viewBox="0 0 36 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M22.75 6.41C22.73 3.2 19.34 0.589996 15.17 0.589996C11 0.589996 7.61003 3.2 7.59003 6.41H0.97998V27.31H29.02V6.41H22.75ZM15.17 2.26001C18.41 2.26001 21.05 4.12 21.08 6.41H9.27002C9.29002 4.12 11.93 2.26001 15.17 2.26001ZM27.35 25.63H2.65997V8.07999H27.35V25.63Z" fill="#2B2725"/>
-</svg>
-        <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
-        <span class="cart-link__bubble "></span>
-         <span class="cart-np-count">{% if cart.item_count > 0 %} {{ cart.item_count }} {% endif %}</span>
-      </span>
-    </a>
-
-    {% if section.settings.main_menu_alignment == 'left' or section.settings.main_menu_alignment == 'left-center' or section.settings.main_menu_alignment == 'left-drawer' %}
+    {%- if section.settings.main_menu_alignment == 'left' or section.settings.main_menu_alignment == 'left-center' or section.settings.main_menu_alignment == 'left-drawer' -%}
       <button
         type="button"
-        class="site-nav__link site-nav__link--icon icon-hamburger js-drawer-open-nav{% if section.settings.main_menu_alignment == 'left' or section.settings.main_menu_alignment == 'left-center' %} medium-up--hide{% endif %}"
+        class="site-nav__link site-nav__link--icon js-drawer-open-nav{% if section.settings.main_menu_alignment == 'left' or section.settings.main_menu_alignment == 'left-center' %} medium-up--hide{% endif %}"
         aria-controls="NavDrawer">
-      
-<!--         <svg  class="icon icon-hamburger" aria-hidden="true" focusable="false" role="presentation"  viewBox="0 0 28 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M27.55 0.860001H0.859985V2.36H27.55V0.860001Z" fill="#2B2725"/>
-<path d="M27.55 11.85H0.859985V13.35H27.55V11.85Z" fill="#2B2725"/>
-<path d="M27.55 22.84H0.859985V24.34H27.55V22.84Z" fill="#2B2725"/>
-</svg>
- -->
-      <img  style="height: 15px;" class="" src="https://cdn.shopify.com/s/files/1/0283/1338/7053/files/Group_3_1.png?v=1660737336" alt="" >
-<!--         <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><path d="M7 15h51M7 32h43M7 49h51"/></svg> -->
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><path d="M7 15h51M7 32h43M7 49h51"/></svg>
         <span class="icon__fallback-text">{{ 'general.drawers.navigation' | t }}</span>
       </button>
-    {% endif %}
-    
-    {% if settings.enable_currencies %}
-       
-          {% include 'currency-picker', picker_id: 'header', currency_class: 'currency-picker--toolbar' %}
-       
-      {% endif %}
+    {%- endif -%}
+
+    <a href="{{ routes.cart_url }}" class="site-nav__link site-nav__link--icon js-drawer-open-cart" aria-controls="CartDrawer" data-icon="{{ settings.cart_icon }}">
+      <span class="cart-link">
+        {%- if settings.cart_icon == 'cart' -%}
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-cart" viewBox="0 0 64 64"><path fill="none" d="M14 17.44h46.79l-7.94 25.61H20.96l-9.65-35.1H3"/><circle cx="27" cy="53" r="2"/><circle cx="47" cy="53" r="2"/></svg>
+        {%- elsif settings.cart_icon == 'bag-minimal' -%}
+<!--           <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-bag-minimal" viewBox="0 0 64 64"><path stroke="null" id="svg_4" fill-opacity="null" stroke-opacity="null" fill="null" d="M11.375 17.863h41.25v36.75h-41.25z"/><path stroke="null" id="svg_2" d="M22.25 18c0-7.105 4.35-9 9.75-9s9.75 1.895 9.75 9"/></svg> -->
+              <svg width="18" height="22" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.4092 6.22806V1.22806H5.40918V6.22806" stroke="#2B2725"/>
+              <path d="M18.3715 6.22806H1.44678V22.7719H18.3715V6.22806Z" stroke="#2B2725" stroke-miterlimit="10"/>
+              </svg>
+  
+        {%- else -%}
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-bag" viewBox="0 0 64 64"><g fill="none" stroke="#000" stroke-width="2"><path d="M25 26c0-15.79 3.57-20 8-20s8 4.21 8 20"/><path d="M14.74 18h36.51l3.59 36.73h-43.7z"/></g></svg>
+        {%- endif -%}
+        <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+        <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
+      </span>
+    </a>
   </div>
 </div>
 
-<style>
+       <style>
+          span.icon__fallback-text:first-child {
+          position: relative;
+          }
+      </style>
 
-span.icon__fallback-text.user-log-ac {
-    position: inherit;
-}
-
-  .site-nav__icons .js-search-header, .site-nav__icons .js-drawer-open-cart {
-
-    line-height: 1.0;
-    padding-bottom: 3px;
-}
-@media only screen and (max-width: 400px) {
-  .site-nav__link--icon .icon {
-    width: 20px;
-    height: 25px;
-}
-.currency-picker--toolbar {
-    padding: 1px;
-
-}      
-  }
-  @media only screen and (max-width: 768px) {
-  button.icon-hamburger {
-    padding-top: 5px;
-}
-    #CurrencyPicker-header {
-    	display:none;
-    }
-      .site-nav__icons .js-search-header, .site-nav__icons .js-drawer-open-cart {
-/*     padding-right: 5px; */
-    /* font-size: 0px; */
-    line-height: 1.0;
-    padding-bottom: 0;
- }
-    
-}
-@media only screen and (max-width: 1080px) {  
-  .np-header-wrapper-sticky #CurrencyPicker-header, .np-header-wrapper-sticky .site-nav__icons a:first-child{
-  	display:none;
-  }
-}
-  /* loader css start*/
-  
-
-  body.np-fully-loaded .np-loader {
-    display: none;
-  }
-  
-  .np-loader {
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    position: fixed;
-    z-index: 999999;
-    background-color: #FFFFFF;
-    background-image: url({{ "np-loader-logo.svg" | asset_url | split: '?' | first }});
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100px 100px;
-  }
-
-  .np-loader::before {
-    content: '';
-    display: block;
-    margin: calc(50vh - 50px) auto;
-    background-image: url({{ "np-loader-ring.svg" | asset_url | split: '?' | first }});
-    width: 100px;
-    height: 100px;
-    -moz-animation: spin 2s linear infinite;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-  
-  @-moz-keyframes spin {
-    0% {
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-
-    100% {
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @-webkit-keyframes spin {
-    0% {
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-
-    100% {
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin {
-    0% {
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-
-    100% {
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  /* loader css end */
-  
-  .cart-np-count {
-  	position: relative;
-	display: inline-block;
-	left: -5px;
-	top: 3px;
-  }
-  .site-nav__link--icon {
-  	padding-left: 5px;
-	padding-right: 5px;
-  }
-  .cart-link__bubble--visible {
-  
-  	display: none;
-  }
-  
-  body.js-drawer-open, body.np-instructionModal-open {
-/*     height: calc(100vh - 1px) !important; */
-  	overflow: hidden !important;
-/*     position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;   
-    width: 100% !important; */
-  }
-  body.np-menuModal-open {
-  
-  overflow: hidden !important;
-  }
-</style>
-
-<script>
-(function atPollForjQuery() {
-    if (window.jQuery !== undefined) {
-      var $ = window.jQuery, updateCartFlag = true;
-      $(document).ready(function() {
-        updateCart();
-          $(document).on('click', '.add-to-cart:not([disabled])', function() {
-            if(updateCartFlag) {  
-              updateCart();
-              updateCartFlag = false;
-            }
-          });
-          $('.js-drawer-open-cart').click(function() {
-            if(updateCartFlag) {  
-              updateCart();
-              updateCartFlag = false;
-            }
-          });
-      });
-    } else {
-        setTimeout(atPollForjQuery, 25);
-    }
-})();
-  
-  function updateCart() {
-    $(document).ajaxComplete(function() {
-      setTimeout(function() {
-        var cartTotalQty = 0;
-        $.each($('#CartContainer input.js-qty__num'), function() {
-          cartTotalQty += parseInt($(this).val().trim());
-        });
-        if (cartTotalQty > 0) {
-        	$('.cart-np-count').text(cartTotalQty);
+      <script>
+          document.getElementById('drawer-search-icon').onclick = function() {
+          document.querySelectorAll('.js-drawer-close')[0].click();
         }
-        
-      }, 500);
-    });
-  }
-</script>
-
+      </script>      

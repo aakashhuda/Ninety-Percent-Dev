@@ -1,0 +1,242 @@
+<section class="section-{{ section.id }} np-page-width"> 
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'text' %} 
+            <div id="wrapper-{{ block.id }}"> 
+                <section class="section-{{ block.id }}">
+                    {% if block.settings.text-in-left == true %}
+                        <div class="text-container-{{ block.id }}">
+                            <div class="np-h2 title-{{ block.id }}">{{ block.settings.title }}</div>
+                            <div class="np-h3 main-description-{{ block.id }}">
+                                {{ block.settings.description }}
+                            </div>
+                            <div class="np-h5 sub-description-{{ block.id }}">
+                                {{ block.settings.sub-description }}
+                            </div>
+                        </div>
+                        <div class="empty-container-{{ block.id }}"></div>
+
+                    {% else %}
+                        <div class="empty-container-{{ block.id }}"></div>
+                        <div class="text-container-{{ block.id }}">
+                            <div class="np-h2 title-{{ block.id }}">{{ block.settings.title }}</div>
+                            <div class="np-h3 main-description-{{ block.id }}">
+                                {{ block.settings.description }}
+                            </div>
+                            <div class="np-h5 sub-description-{{ block.id }}">
+                                {{ block.settings.sub-description }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </section>
+            </div>
+
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+
+{% schema %}
+{
+    "name": "Np Single Column Desc",
+    "settings": [],
+    "blocks": [
+        {
+            "name": "Np Single Column Text",
+            "type": "text",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "padding-both-sides",
+                    "min": 0,
+                    "max": 300,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Padding Both Sides"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "text-in-left",
+                    "default": true,
+                    "label": "Text in Left"
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Show Sub Description",
+                    "id": "show-sub-description",
+                    "default": true
+                },
+                {
+                    "type": "checkbox",
+                    "label" : "Change Button Position",
+                    "id": "change-button-position",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Our Factories"
+                    
+                },
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Main Description",
+                    "default": "Sustainability is about taking responsibility for every decision we make. It goes beyond simply the materials we use; for us it incorporates respectful working environments, garment longevity, transparency and traceability, animal welfare and water stewardship."
+                },
+                {
+                    "type": "text",
+                    "id": "sub-description",
+                    "label": "Sub Description",
+                    "default": "By focusing on the past, present and future of our clothes and working closely with our suppliers, we make strides towards a more responsible, transparent future."
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Np Single Column Des"
+        }
+    ]
+}
+{% endschema %}
+
+{% style %} 
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'text' %}
+                #wrapper-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .section-{{ block.id }} {
+                    display: flex;
+                    padding: 0 {{ block.settings.padding-both-sides }}px;
+                }
+                .text-container-{{ block.id }} {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    width: 60%;
+                }
+                .empty-container-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    width: 40%;
+                }
+
+                .title-{{ block.id }} {
+                    margin-bottom: 50px;
+          line-height: 80%;
+                }
+
+                .main-description-{{ block.id }} {
+                    margin-bottom: 40px;
+                }
+                .sub-description-{{ block.id }} {
+                }
+
+                
+                {% if  block.settings.show-sub-description == false %} 
+                .sub-description-{{ block.id }} {
+                    display: none;
+                }
+                {% endif %}
+          
+                {% if  block.settings.title%} 
+                  {% if block.settings.change-button-position %}
+                #wrapper-{{ block.id }}{
+                    justify-content: start;
+                    padding-left: 130px;
+                }
+
+                    @media (max-width: 1200px){
+                    #wrapper-{{ block.id }}{
+                    padding-left: 85px;
+                }
+                    @media (max-width: 768px){
+                    #wrapper-{{ block.id }}{
+                    padding-left: 0px;
+                }
+                    }
+                {% endif %}
+                {% endif %}
+
+                @media (max-width: 1000px) {
+                    .text-container-{{ block.id }} {
+                        width: 100%;
+                    }
+                    .section-{{ block.id }} {
+                        padding: 0 5px;
+                    }
+                }
+
+          
+                @media (max-width: 768px) {
+                    .np-page-width {
+                        padding: 0 20px;
+                    }
+                    .section-{{ block.id }} {
+                        flex-wrap: wrap;
+                        gap: 15px;
+                      padding:0;
+                    }
+                    .text-container-{{ block.id }}{
+                        flex: none;
+                        order: 1;
+                        width: 100%;
+                    }
+                    .main-description-{{ block.id }} {
+                        
+                    }
+                    .title-{{ block.id }} {
+                        max-width: 100%;
+                    }
+                    .main-description-{{ block.id }}, .sub-description-{{ block.id }} {
+                        text-align: justify;
+                    }
+                    .empty-container-{{ block.id }} {
+                        width: 100%;
+                    }
+                    
+                    .section-{{ block.id }} {
+                        width: 100%;
+                    }
+                }
+            {% when 'spacer' %}
+                .custom-spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer }}px;
+                }
+                      @media (max-width: 768px){
+                        .custom-spacer-{{ block.id }} {
+                    height: 50px;
+                }
+                      }
+        {% endcase %}
+    {% endfor %}
+{% endstyle %}

@@ -1,0 +1,304 @@
+{% unless section.settings.mode == blank or section.settings.disable_for_account_holders and customer %}
+{% for block in section.blocks %}
+  {% if block.type == 'welcome-block' %}
+    {% assign has_reminder = true %}
+  {% endif %}
+{% endfor %}
+<div
+  id="NewsletterPopup-{{ section.id }}"
+  class="modal modal--square modal--mobile-friendly welcome-new-modal"
+  data-section-id="{{ section.id }}"
+  data-section-type="np-welcome-popUp"
+  data-delay-days="{{ section.settings.popup_days }}"
+  data-has-reminder="{{ has_reminder }}"
+  data-delay-seconds="{{ section.settings.popup_seconds }}"
+  {% if section.settings.popup_image != blank %}data-has-image{% endif %}
+  data-test-mode="{{ request.design_mode }}"
+  data-enabled="{{ section.settings.mode }}">  <div class="modal__inner ">    <div class="modal__centered">      <div class="modal__centered-content welcome-back-popup">        <div class="np-welcome-popUp">          <div class="np-welcome-popUp__content">          <p class="np-h8 offer-text">{{ section.settings.offer-text }}</p>          <p class="np-h6 subscribe-text">{{ section.settings.subscribe-text }}</p>          <p class="np-h6 newsletter-button">{{ section.settings.newsletter-text }}</p>          {%- form 'customer', id: 'newsletter_form_id_new' -%}
+            {%- if form.posted_successfully? -%}
+              <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>            {%- endif -%}
+            {%- if form.context == 'snippet_context' -%}
+              {%- if form.errors -%}
+                {{ form.errors | default_errors }}
+              {%- endif -%}
+            {%- endif -%}
+            {%- unless form.posted_successfully? -%}
+            <label for="Email-{{ section.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label> 
+    <label for="newsletter-form-submit-{{ section.id }}" class="hidden-label">{{ 'general.newsletter_form.submit' | t }}</label> 
+    <input
+              type="hidden"
+              name="contact[tags]"
+              value="prospect,newsletter">            
+    <input
+              type="hidden"
+              name="contact[context]"
+              value="{{ 'snippet_context' }}">            
+    <div class="input-group email-button">              
+      <input
+                type="text"
+                value="{% if customer %}{{ customer.email }}{% endif %}"
+                placeholder="Enter your email address"
+                name="contact[email]"
+                id="Email-{{ section.id }}"
+                class="email-input"
+                autocorrect="off"
+                autocapitalize="off">              
+      <button
+                type="submit"
+                id="newsletter-form-submit-{{ section.id }}"
+                name="commit">                <span class="form-submit">                  {%- comment -%}
+                  {{ 'general.newsletter_form.submit' | t }}
+                  {%- endcomment -%}
+                  SIGN UP
+                </span>              </button>            </div>          {%- endunless -%}       
+          {%- endform -%}
+            {% comment %} {%- if section.settings.enable_newsletter -%}
+              <div class="popup-cta">                {%- render 'np-new-welcome-popup', section_id: section.id, snippet_context: 'popup' -%}
+              </div>            {%- endif -%} {% endcomment %}
+          </div>        </div>      </div>      <button type="button" class="modal__close js-modal-close text-link">        <svg
+            width="17"
+            height="17"
+            viewBox="0 0 17 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg">            <path d="M1 1L16 16M1 16L16 1" stroke="black" />          </svg>        <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>      </button>    </div>  </div></div>{% for block in section.blocks %}
+  {% if block.type == 'welcome-block' %}
+    {% render 'newsletter-reminder',
+      section: section,
+      block: block
+    %}
+  {% endif %}
+{% endfor %}
+{% endunless %}
+<style>      
+  .welcome-new-modal.modal--is-active {
+    z-index:999999999;
+  }
+  
+  .modal__centered-content.welcome-back-popup{
+        max-width: 650px;
+        padding: 112px 132px 103px 92px;
+        position: relative;
+        margin: 0 auto;
+      }
+      p{
+        margin: 0;
+      }
+      .modal__close {
+        position: absolute;
+        top: 6%;
+        right: 4%;
+      }
+      .offer-text {
+        margin-bottom: 19px;
+      }
+      .subscribe-text {
+        margin-bottom: 62px;
+      }
+      .newsletter-button {
+        display: none;
+      }
+
+  #newsletter-form-submit-{{ section.id }}{
+    padding:0;
+  }
+  
+      .email-button {
+        border-bottom: 0.5px solid #000000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .email-button .form-submit {
+        font-family: 'Intervogue';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        text-align: right;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #000000;
+      }
+      .email-button .email-input {
+        font-family: 'Intervogue';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: 0.05em;
+        color: rgba(0, 0, 0, 0.5);
+        border: 0;
+        width: 70%;
+      }
+      .email-button input:focus {
+        outline: none;
+        color: #000000;
+      }
+
+  .input-group.email-button{
+    padding: 10px 0px;
+  }
+
+  #Email-np-welcome-popUp{
+    padding:5px;
+  }
+  
+      @media(max-width: 768px) {
+        .welcome-block-{{ block.id }}{
+          max-width: 360px;
+          padding: 59px 45px 94px;
+        }
+
+        .modal__centered-content.welcome-back-popup{
+        margin: auto;
+      }
+        
+        .offer-text {
+          font-family: 'Intervogue';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 27px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          color: #000000;
+        }
+        .subscribe-text {
+          font-family: 'Intervogue';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 23px;
+          letter-spacing: 0.02em;
+          color: #000000;
+          text-transform: none;
+        }
+        .newsletter-button {
+          display: block;
+          margin-bottom: 37px;
+        }
+        .email-button .email-input {
+          font-family: 'Intervogue';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 10px;
+          line-height: 12px;
+          letter-spacing: 0.05em;
+          color: rgba(43, 39, 37, 0.5);
+        }
+        .email-button .form-submit {
+          font-family: 'Intervogue';
+          font-style: normal;
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 21px;
+          text-align: center;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          color: #2B2725;
+        }
+        .modal::before {
+          content: "";
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #e6e6e6;
+          background-color: var(--colorModalBg);
+          animation: overlay-on .5s forwards;
+          cursor: pointer;
+        }
+      }
+</style>{% schema %}
+  {
+    "name": "Welcome PopUp",
+    "max_blocks": 1,
+    "settings": [{
+        "type": "checkbox",
+        "id": "mode",
+        "label": "t:sections.np-welcome-popUp.settings.mode.label",
+        "default": false,
+        "info": "t:sections.np-welcome-popUp.settings.mode.info"
+      },
+      {
+        "type": "checkbox",
+        "id": "disable_for_account_holders",
+        "label": "t:sections.np-welcome-popUp.settings.disable_for_account_holders.label",
+        "default": true,
+        "info": "t:sections.np-welcome-popUp.settings.disable_for_account_holders.info"
+      },
+      {
+        "type": "range",
+        "id": "popup_seconds",
+        "label": "t:sections.np-welcome-popUp.settings.popup_seconds.label",
+        "info": "t:sections.np-welcome-popUp.settings.popup_seconds.info",
+        "default": 5,
+        "min": 2,
+        "max": 60,
+        "step": 1,
+        "unit": "sec"
+      },
+      {
+        "type": "range",
+        "id": "popup_days",
+        "label": "t:sections.np-welcome-popUp.settings.popup_days.label",
+        "default": 30,
+        "info": "t:sections.np-welcome-popUp.settings.popup_days.info",
+        "min": 2,
+        "max": 30,
+        "step": 1,
+        "unit": "day"
+      },{
+        "type": "checkbox",
+        "id": "enable_newsletter",
+        "label": "t:sections.np-welcome-popUp.settings.enable_newsletter.label",
+        "default": true
+      },
+      {
+            "type": "text",
+            "id": "offer-text",
+            "label": "Offer Text",
+            "default": "10% off your first order"
+          },
+          {
+            "type": "text",
+            "id": "subscribe-text",
+            "label": "Subscribe Text",
+            "default": "Subscribe to our newsletter to be the first to know about new arrivals, events, and special offers."
+          },
+     {
+            "type": "text",
+            "id": "newsletter-text",
+            "label": "Newsletter Text",
+            "default": "Sign up for our newsletter"
+          }
+      ],
+    "blocks": [
+      {
+        "type": "welcome-block",
+        "name": "Welcome PopUp",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "text",
+            "id": "reminder_label",
+            "label": "t:sections.newsletter-popup.blocks.header.settings.text.label",
+            "default": "Get 10% off",
+            "info": "t:sections.newsletter-popup.blocks.header.settings.text.info"
+          }
+          ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Welcome PopUp",
+        "blocks": [
+          {
+            "type": "welcome-block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

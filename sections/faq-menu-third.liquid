@@ -1,17 +1,32 @@
 <div class="page-width faq-page-width">
   <section id="faq-third" class="faq-menu-contents">
     <a class="faq-menu" href="#faq-third">{{ section.settings.faq_menu_title }}</a>
+    <div class="">
+      <p class="np-h1">      
+        FAQs
+      </p>
+      <p class="np-h3 fmt-3">
+        {{ section.settings.faq_menu_title }}
+      </p>
+  </div>
     {% for block in section.blocks %}
     {% case block.type %}
     {% when 'question' %}
-    <div class="faq-card">
-      <a href="#">{{ block.settings.title }}<i class="custom-tab-icon tab-open"></i></a>
+    <div class="faq-card faq-card-custom-font">
+      <a href="#">{{ block.settings.title }}
+        <span id="custom-icon-faq-el" class="collapsible-trigger__icon collapsible-trigger__icon--circle collapsible-trigger__icon--open custom-icon-faq-el" role="presentation">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"/></svg>
+        </span>
+      </a>
       <div class="content">
         {{ block.settings.text }}
       </div>
     </div>
     {% endcase %}
     {% endfor %}
+    <div class="bottom-text-faq-el">
+      <p>Still can’t find what you’re looking for? Any questions, <a href="https://ninetypercent.com/pages/contact-us">send us a message.</a></p>
+    </div>
   </section>
 </div>
 {% schema %}

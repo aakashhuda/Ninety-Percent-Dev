@@ -1,0 +1,336 @@
+<section class="section-wrapper-{{ section.id }}">    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "double-column-text-block" %}
+                <div class="block-{{ block.id }}">                   
+                  <div class="left-text-part">    
+                    <div class="left-text-part-inner">  
+                      <span class="left-title"> {{ block.settings.left-title }} </span> 
+                      <span class="left-desc np-h5"> {{ block.settings.left-desc }}  </span>   
+                      <a href="{{ block.settings.left-btn-url }}" class="left-learn-more-btn"> {{ block.settings.left-btn-text }}  </a>      
+                    </div>    
+                    
+                  </div>      
+                  <div class="border-bottom"></div>
+                  <div class="right-text-part">   
+                    <div class="right-text-part-inner">  
+                      <span class="right-title"> {{ block.settings.right-title }} </span>  
+                      <span class="right-desc np-h5"> {{ block.settings.right-desc }}  </span>   
+                      <a href="{{ block.settings.btn-url }}" class="right-learn-more-btn"> {{ block.settings.right-btn-text }}  </a>    
+                    </div>            
+                  </div>       
+                </div>        
+  
+          {% when 'spacer-block' %}
+                <div class="spacer-{{ block.id }}">                </div>        {% endcase %}
+    {% endfor %}
+</section><style>  .section-wrapper-{{ section.id }} {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "double-column-text-block" %}
+              .block-{{ block.id }} {
+                    padding: 0px {{ block.settings.padding }}px;
+                 }
+                  .block-{{ block.id }} .left-title , .block-{{ block.id }} .left-learn-more-btn {
+                    display: none;
+                }
+                .block-{{ block.id }} .right-title , .block-{{ block.id }} .right-learn-more-btn {
+                    display: none;
+                }
+             .block-{{ block.id }}  {
+                display: flex;
+                justify-content: center;
+                flex-direction: row;
+                min-height: {{ block.settings.block-height }}px;
+             }
+             .block-{{ block.id }} .left-text-part  {
+                display: flex;
+                align-items: center;
+                background-color: {{ block.settings.left-text-bg-color }};
+                width: 50%;
+                border-right: 0.5px solid rgba(43, 39, 37, 0.5);
+             }
+             .block-{{ block.id }} .right-text-part  {
+                display: flex;
+                align-items: center;
+                background-color: {{ block.settings.right-text-bg-color }};
+                width: 50%;
+             }
+             .block-{{ block.id }} .left-text-part .left-text-part-inner {
+                margin-right: 120px;
+                width: 340px;
+             }
+             .block-{{ block.id }} .right-text-part .right-text-part-inner {
+              margin-left: 120px;
+             width: 340px;
+             }
+             .block-{{ block.id }} .left-text-part .left-title {
+              display: inline-block;
+                margin-bottom: 35px;
+                font-size: 100px;
+                color: #2B2725;
+                font-family: "Silvana";
+                line-height: 80px;
+                letter-spacing: -5px;
+                font-weight:  400;
+             }
+             .block-{{ block.id }} .right-text-part .right-title {
+              display: inline-block;
+              margin-bottom: 35px;
+                  font-size: 100px;
+                  color: #2B2725;
+                  font-family: "Silvana";
+                  line-height: 80px;
+                  letter-spacing: -5px;
+                  font-weight:  400;
+             }
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn {
+             font-size: 16px;
+             color: #2B2725;
+             font-family: "Intervogue";
+             line-height: 19px;
+             letter-spacing: 0.05em;
+             font-weight:  400;
+                text-transform: uppercase;
+                margin-top: 20px;
+             }
+             .block-{{ block.id }} .right-text-part .right-learn-more-btn {
+              font-size: 16px;
+              color: #2B2725;
+              font-family: "Intervogue";
+              line-height: 19px;
+              letter-spacing: 0.05em;
+              font-weight:  400;
+                 text-transform: uppercase;
+                 margin-top: 20px;
+             }
+             .block-{{ block.id }} .left-text-part a {
+                text-decoration: none;
+             }
+             .block-{{ block.id }} .right-text-part a {
+                text-decoration: none;
+             }
+             .block-{{ block.id }} .left-text-part .left-learn-more-btn p, .block-{{ block.id }} .right-text-part .right-learn-more-btn p  {
+                display: inline;              
+                padding-bottom: 7px;
+                border-bottom: 1px solid black;
+             }
+               .block-{{ block.id }} .left-text-part .left-title p,   .block-{{ block.id }} .right-text-part .right-title p {
+                margin: 0 auto;
+             }
+             .block-{{ block.id }} .left-text-part .left-desc p, .block-{{ block.id }} .right-text-part .right-desc p  {
+                margin: 0px auto;
+             }
+             {% if block.settings.show-left-title %}
+                .block-{{ block.id }} .left-title {
+                    display: inline;
+                }
+             {% endif %}
+             {% if block.settings.show-left-btn %}
+                .block-{{ block.id }} .left-learn-more-btn {
+                    display: inline-block;
+                }
+             {% endif %}
+             {% if block.settings.show-right-title %}
+                .block-{{ block.id }} .right-title {
+                    display: inline;
+                }
+             {% endif %}
+             {% if block.settings.show-right-btn %}
+                .block-{{ block.id }} .right-learn-more-btn {
+                    display: inline-block;
+                }
+             {% endif %}
+
+          .block-{{ block.id }} .border-bottom{
+          display:none;
+          }
+             @media only screen and (max-width: 768px) {
+              .block-{{ block.id }}  {
+                align-items: center;
+                flex-direction: column;
+                padding: 0px 0px;
+                min-height: auto;
+             }
+             .block-{{ block.id }} .left-text-part  {
+              border-right: 0px; 
+           justify-content: center;
+           margin-bottom: 40px;
+            width: 90%;
+         }
+
+               .block-{{ block.id }} .border-bottom{
+          display:block;
+                 width:80%;
+                 margin:0 auto;
+                 border-bottom: 0.5px solid rgba(43, 39, 37, 0.5);
+                 margin-bottom: 40px;
+          }
+
+         .block-{{ block.id }} .right-text-part  {
+            width: 90%;
+            justify-content: center;
+         }
+         .block-{{ block.id }} .left-text-part .left-text-part-inner {
+          margin-right: 0px;
+       }
+       .block-{{ block.id }} .right-text-part .right-text-part-inner {
+        margin-left: 0px;
+       }
+              }
+            {% when "spacer-block" %}
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>{% schema %}
+{
+    "name": "Double Column Text Style1",
+    "settings": [
+    ],
+    "blocks": [
+        {
+            "name": "double-column-text-block",
+            "type": "double-column-text-block",
+            "settings": [
+      {
+        "type": "checkbox",
+        "id": "show-left-title",
+        "label": "show left title",
+        "default": true
+      }, 
+      {
+        "type": "checkbox",
+        "id": "show-left-btn",
+        "label": "show left button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show-right-title",
+        "label": "show right title",
+        "default": true
+      }, 
+      {
+        "type": "checkbox",
+        "id": "show-right-btn",
+        "label": "show right button",
+        "default": true
+      },
+      {
+                 "type":"range",
+                 "id":"block-height",
+                 "label":"divider height",
+                 "min":250,
+                 "max":700,
+                 "step":5,
+                 "unit":"px",
+                 "default": 635
+              },
+              {
+                    "type": "range",
+                    "id":"padding",
+                    "label":"Left-Right Space of the block",
+                    "min":0,
+                    "max":200,
+                    "step":2,
+                    "unit":"px",
+                    "default":138
+                },
+              {
+                    "type":"color",
+                    "id":"left-text-bg-color",
+                    "label":"left text part background color"
+                },
+                {
+                    "type":"richtext",
+                    "id":"left-title",
+                    "label":"left title",
+                    "default": "<p> 90% </p>"
+                },
+                {
+                    "type":"richtext",
+                    "id":"left-desc",
+                    "label":"left description",
+                    "default": "<p> of our profits are shared. 80% to charitable causes, 10% between all of the people who make our collections. </p>"
+                },
+                {
+                    "type":"richtext",
+                    "id":"left-btn-text",
+                    "label":"left-button text",
+                    "default": "<p> LEARN MORE ABOUT PROFIT SHARING </p>"
+                },
+              {
+                "type": "url",
+                "id": "left-btn-url",
+                "label" : "left button URL"
+              },
+              {
+                    "type":"color",
+                    "id":"right-text-bg-color",
+                    "label":"right text part background color"
+                },
+                {
+                    "type":"richtext",
+                    "id":"right-title",
+                    "label":"right title",
+                    "default": "<p> 10% </p>"
+                },
+                {
+                    "type":"richtext",
+                    "id":"right-desc",
+                    "label":"right description",
+                    "default": "<p> of our profits are reinvested into the business to help us grow and explore the newest in sustainable ways of doing. </p>"
+                },
+                {
+                    "type":"richtext",
+                    "id":"right-btn-text",
+                    "label":"right button text",
+                    "default": "<p> EXPLORE SUSTAINABILITY & MATERIALS </p>"
+                },
+              {
+                "type": "url",
+                "id": "right-btn-url",
+                "label" : "right button URL"
+              }
+            ]
+        },
+        {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"Double Column Text Style1",
+           "blocks": [
+              {
+          "type": "spacer-block"
+        },
+        {
+          "type": "double-column-text-block"
+        },
+        {
+          "type": "spacer-block"
+        }
+      ]
+        }
+    ]
+}
+{% endschema %}

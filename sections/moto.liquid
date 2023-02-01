@@ -1,0 +1,111 @@
+<section class="section-wrapper-{{ section.id }} page-width">
+  {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'moto-text' %}
+        <div class="moto-text-{{ block.id }}">
+            <p class="np-h1">
+                {{ block.settings.motoText}}
+            </p>
+        </div>
+      {% when 'spacer-block' %}
+      <div class="spacer-{{ block.id }}">
+      </div>
+    {% endcase %}
+  {% endfor %}
+</section>
+<style>
+  {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'moto-text' %}
+        .moto-text-{{ block.id }} p{
+            font-size: {{block.settings.font-size}}px;
+            text-align: center;
+            font-feature-settings: 'ordn' on;
+            color: {{ block.settings.text-color }};
+        }
+  @media (max-width: 1015px){
+    .moto-text-{{ block.id }} p{
+            font-size: 80px;
+      line-height: 80px;
+        }
+  }
+  @media (max-width: 768px){
+    .moto-text-{{ block.id }} p{
+            font-size: 60px;
+      line-height: 60px;
+        }
+  }
+      {% when 'spacer-block' %}
+      .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
+        height: {{ block.settings.spacer-height }}px;
+      }
+   @media (max-width: 1015px){
+    .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
+        height: 50px;
+      }
+  }
+    {% endcase %}
+  {% endfor %}
+</style>
+{% schema %}
+  {
+    "name": "Motto",
+    "blocks": [
+        {
+        "name": "Moto Text",
+        "type": "moto-text",
+        "settings": [
+            {"type": "text",
+           "id": "motoText",
+           "label":"Change the Moto Text",
+           "default":"For The World We Want."
+         },
+         {
+         "type": "range",
+           "id":"font-size",
+           "label":"Font Size",
+           "min": 100,
+           "max": 200,
+           "step": 10,
+           "unit": "px",
+           "default": 100
+         },{
+         "type": "color",
+           "id":"text-color",
+           "label":"Text Color",
+           "default": "#2B2725"
+         }
+        ]
+        },
+      {
+        "name": "Spacer",
+        "type": "spacer-block",
+        "settings": [
+          {
+            "type": "range",
+            "id": "spacer-height",
+            "label": "Spacer Height",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Moto",
+        "blocks": [
+          {
+            "type": "moto-text"
+          },
+          {
+            "type": "spacer-block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

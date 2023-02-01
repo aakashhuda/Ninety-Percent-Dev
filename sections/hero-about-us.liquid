@@ -1,0 +1,269 @@
+ {% for block in section.blocks %}
+    {% case block.type %}
+        {% when 'hero-about-us' %} 
+            <div id="wrapper-{{ block.id }}"> 
+                <section class="about-us-{{ block.id }} np-page-width">
+                    <div class="text-{{ block.id }} ">
+                        <div class="title-{{ block.id }} np-h1">{{ block.settings.header-title }}</div>
+                        <div class="description-{{ block.id }} np-h3">
+                            <p>{{ block.settings.description }}</p>
+                        </div>
+                        <div class="history-description-{{ block.id }} np-h5">
+                            <p>{{ block.settings.history-description }}</p>
+                        </div>
+                    </div>
+                    <div class="image-container-{{ block.id }}">
+                        <img src="{{ block.settings.image | img_url: "master" }}">
+                    </div>
+                </section>
+            </div>
+
+        {% when 'spacer' %}
+            <section class="custom-spacer-{{ block.id }}">
+
+            </section>
+    {% endcase %}
+{% endfor %}
+<style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .np-page-width {
+            padding: 0 0px;
+        }
+    }
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'hero-about-us' %}
+                #wrapper-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .about-us-{{ block.id }} {
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: stretch;
+                    gap: 120px;
+                    padding: 0 {{ block.settings.padding-both-side }}px;
+                }
+                .text-{{ block.id }} {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 50%;
+                }
+                .text-{{ block.id }} h1 {
+                    margin-bottom: 28px;
+                    margin-top: 16px;
+                }
+                .image-container-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: stretch;
+                    width: 50%;
+                }
+                .title-{{ block.id }} {
+                    margin-bottom: 91px;
+          font-feature-settings: 'ordn' on;
+                }
+                .description-{{ block.id }} {
+                    width: 587px;
+                    margin-bottom: 50px;
+                }
+                .history-description-{{ block.id }} {
+                    width: 464px;
+                    text-align: justify;
+                }
+                .hr-parent-{{ section.id }}{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                } 
+                hr.hr-{{ section.id }} {
+                    display: none;
+                    width: 93%;
+                    margin: 1rem 0;
+                }
+
+             @media (max-width: 1200px) {
+   .about-us-{{ block.id }} {
+                    gap: 60px;
+                    padding: 0 25px;
+                }
+               .description-{{ block.id }} {
+                    width: 400px;
+                    margin-bottom: 40px;
+                }
+     .history-description-{{ block.id }} {
+                    width: 400px;
+                }
+     .title-{{ block.id }} {
+                    margin-bottom: 45px;
+                }
+    }
+
+  @media (max-width: 1015px){
+    .title-{{ block.id }}{
+            font-size: 80px;
+      line-height: 80px;
+        }    
+  }
+  @media (max-width: 920px){
+      .about-us-{{ block.id }} {
+                    gap: 40px;
+                }
+    .description-{{ block.id }} {
+                   font-size: 20px;
+                }
+     .history-description-{{ block.id }} {
+                    font-size: 16px;
+                }
+    .image-container-{{ block.id }}{
+            margin-bottom: 20px;
+          }
+  }
+  @media (max-width: 850px){
+    .description-{{ block.id }} {
+      width:380px;
+                }
+    .history-description-{{ block.id }} {
+                    width: 380px;
+                }
+          
+  }
+
+
+  
+                @media (max-width: 768px) {
+                    .about-us-{{ block.id }} {
+          justify-content: start;
+                        flex-wrap: wrap;
+                        gap: 0;
+                    }
+                    .about-us-{{ block.id }}.page-width {
+                      padding: 0;
+                    }
+                    .text-{{ block.id }}{
+                        order: 1;
+                        width: 100%;
+                    }
+                    .image-container-{{ block.id }} {
+                        order: 0;
+                    }
+                    .description-{{ block.id }} p {
+                        margin: 0;
+                    }
+                    .title-{{ block.id }} {
+                        font-size: 60px;
+          margin-bottom: 20px;
+                      line-height: 60px;
+                    }
+
+                    .description-{{ block.id }} {
+                        font-size: 20px;
+                        text-align: justify;
+                        letter-spacing: -0.01em;
+                        line-height: 23px;
+          color: #000000;
+          width: 100%;
+          margin-bottom: 0px;
+                    }
+                    .history-description-{{ block.id }} {
+                      font-size:16px;
+                      width:100%;
+                      margin-top: 30px;
+                    }
+                    .image-container-{{ block.id }} {
+                        width: 100%;
+                    }
+                    .image-container-{{ block.id }} img {
+                        width: 100%;
+                    }
+                    .about-us-{{ block.id }} {
+                        width: 100%;
+                    }
+                    hr.hr-{{ section.id }} {
+                        display: block;
+                    }
+                }
+            {% when 'spacer' %}
+                .custom-spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>
+
+{% schema %}
+{
+    "name": "Hero - About Us",
+    "settings": [
+        
+    ],
+    "blocks": [
+        {
+            "name": "Hero - About Us",
+            "type": "hero-about-us",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "padding-both-side",
+                    "min": 0,
+                    "max": 100,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Section Padding Both Side"
+                },
+                {
+                    "type": "text",
+                    "id": "header-title",
+                    "label": "Title",
+                    "default": "About Us"
+                },
+                {
+                    "type": "text",
+                    "id": "description",
+                    "label": "Description"
+                },
+                {
+                    "type": "text",
+                    "id": "history-description",
+                    "label": "History Description"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Ninety - About Us - Hero"
+        }
+    ]
+}
+{% endschema %}

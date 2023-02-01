@@ -1,0 +1,368 @@
+<section class="section-wrapper-{{ section.id }} page-width">
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "image-text-block" %}
+
+                <div class="block-{{ block.id }}">
+                    <div class="image-part">
+                        <div class="image">
+                            <img src="{{ block.settings.image | img_url: 'grande' }}" alt="" width="" height="" loading="lazy">
+                        </div>
+                        <div  class="caption np-h6">
+                            <span> {{ block.settings.caption }}</span>
+                        </div>                               
+                    </div>
+
+                    <div class="text-part">
+                        <div class="text-part-inner">
+                            <span class="title np-h2"> {{ block.settings.title }}</span>
+                            <span class="main-desc np-h3"> {{ block.settings.main-desc }}</span>
+                            <span class="desc np-h5"> {{ block.settings.desc }}  </span>
+                                <a href="{{ block.settings.btn-url }}" class="learn-more-btn"> {{ block.settings.btn-text }}  </a>
+                        </div>
+                    </div>
+                </div>
+
+            {% when 'spacer-block' %}
+                <div class="spacer-{{ block.id }}"></div>
+
+        {% endcase %}
+    {% endfor %}
+</section>
+
+
+
+<style>
+   
+    {% for block in section.blocks %}
+
+        {% case block.type %}
+
+            {% when "image-text-block" %}
+                .block-{{ block.id }} .caption  {
+                    display: none;
+                }
+                .block-{{ block.id }} .main-desc  {
+                    display: none;
+                }
+                .block-{{ block.id }} .desc  {
+                    display: none;
+                }
+                .block-{{ block.id }} .title {
+                    display: none;
+                }
+                .block-{{ block.id }} .learn-more-btn  {
+                    display: none;
+                }
+               
+              
+
+             .block-{{ block.id }}  {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                padding: 0px {{ block.settings.padding }}px;
+              
+             }
+             
+            
+
+             .block-{{ block.id }} .image-part   {
+                width: 50%;
+
+             }
+           
+             .block-{{ block.id }} .image-part .image  {
+                height: 100%;
+
+             }
+             .block-{{ block.id }} .image-part .caption {
+                
+             }
+
+             .block-{{ block.id }} .text-part  {
+                display: flex;
+               align-content: center;
+                flex-wrap: wrap; 
+
+                background-color: {{ block.settings.text-bg-color }};
+                width: 50%;
+                
+             }
+             .block-{{ block.id }} .text-part .text-part-inner {
+                margin: 20px auto; 
+                width: 80%;
+             }
+
+             .block-{{ block.id }} .text-part .learn-more-btn {
+                
+                
+             }
+             
+             .block-{{ block.id }} .text-part a {
+                text-decoration: none;
+             }
+
+
+             .block-{{ block.id }} .text-part .learn-more-btn p {
+                display: inline;              
+                padding-bottom: 7px;
+                border-bottom: 1px solid black;
+             }
+             .block-{{ block.id }} .text-part .main-desc p ,  .block-{{ block.id }} .text-part .title p {
+                margin: 0 auto;
+             }
+             .block-{{ block.id }} .text-part .desc p  {
+                margin: 25px auto;
+             }
+
+             .block-{{ block.id }} img  {
+                
+             }
+             .title p {
+                margin-bottom: 52px;
+             }
+             .block-{{ block.id }} .text-part .desc {
+                
+             }
+
+             .main-desc p {
+                margin-bottom: 51px;
+             }
+             
+
+            
+
+
+             {% if block.settings.show-title %}
+                .block-{{ block.id }} .title {
+                    display: inline;
+                }
+             {% endif %}
+            
+
+             {% if block.settings.show-caption %}
+                .block-{{ block.id }} .caption {
+                    display: inline;
+                }
+             {% endif %}
+
+             {% if block.settings.show-btn %}
+                .block-{{ block.id }} .learn-more-btn {
+                    display: inline;
+                }
+             {% endif %}
+
+             {% if block.settings.show-main-desc %}
+                .block-{{ block.id }} .main-desc {
+                    display: inline;
+                }
+             {% endif %}
+             {% if block.settings.show-desc %}
+                .block-{{ block.id }} .text-part .desc {
+                    display: inline;
+                }
+            {% endif %}
+
+        
+
+             {% if block.settings.image-right %}
+                .block-{{ block.id }}  {
+                  
+                    flex-direction: row-reverse;
+                  
+                 }
+                
+             {% endif %}
+
+             @media only screen and (max-width: 768px) {
+                
+             .block-{{ block.id }}  {
+               flex-direction: column;
+               align-items: center;
+              
+             }
+             .block-{{ block.id }} .image-part   {
+                width: 100%;
+
+             }
+             .block-{{ block.id }} .text-part  {
+                
+                width: 100%;
+                
+             }
+             .block-{{ block.id }} .text-part .text-part-inner {
+                
+                width: 100%;
+             }
+                .block-{{ block.id }} .image-part .caption {
+                    font-size: {{ block.settings.mobile-caption-text-size }}px;
+               
+                 }
+    
+              
+                 .block-{{ block.id }} .text-part .title {
+        
+                    font-size: {{ block.settings.mobile-title-text-size }}px;
+                   
+                 }
+                 .block-{{ block.id }} .text-part .desc {
+                    font-size: {{ block.settings.mobile-desc-text-size }}px;
+           
+                    line-height: {{ block.settings.mobile-desc-line-height }}px;
+                 }
+    
+                 .block-{{ block.id }} .text-part .main-desc {
+                    font-size: {{ block.settings.mobile-main-desc-text-size }}px;
+
+                 }
+    
+    
+                 .block-{{ block.id }} .text-part .learn-more-btn {
+                    
+                    font-size: {{ block.settings.mobile-btn-text-size }}px;
+                   
+                  
+                    
+                 }
+             }
+
+
+            {% when "spacer-block" %}
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+            
+        {% endcase %}
+        
+    {% endfor %}
+
+
+</style>
+
+
+
+{% schema %}
+{
+    "name": "Np-Image-Text",
+    "settings": [
+      
+    ],
+    "blocks": [
+      {
+        "name": "image-text-block",
+        "type": "image-text-block",
+        "settings": [
+          {
+            "type": "range",
+            "id": "padding",
+            "label": "Left-Right Space of the block",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 20
+          },
+          {
+            "type": "checkbox",
+            "id": "image-right",
+            "label": "image right",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "show-caption",
+            "label": "show caption",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "show-main-desc",
+            "label": "show main desc",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show-desc",
+            "label": "show sub desc",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show-title",
+            "label": "show title",
+            "default": true
+          },
+          {
+            "type": "checkbox",
+            "id": "show-btn",
+            "label": "show button",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "caption",
+            "label": "Image Caption",
+            "default": "caption"
+          },
+          {
+            "type": "text",
+            "id": "main-desc",
+            "label": "main-desc",
+            "default": "Sharing with"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title",
+            "default": "Our Causes"
+          },
+          {
+            "type": "text",
+            "id": "desc",
+            "label": "description",
+            "default": "80% of our profits are shared between five charitable causes. Chosen because they speak to our values. Eclectic in their reach, but each cause is connected through their own care for people and planet. Our chosen charities are Big Life and Wild Aid, BRAC, Children's Hope and War Child UK"
+          },
+          {
+            "type": "text",
+            "id": "btn-text",
+            "label": "button text",
+            "default": "LEARN MORE ABOUT THE CAUSES"
+          },
+          {
+            "type": "url",
+            "id": "btn-url",
+            "label": "button URL"
+          }
+        ]
+      },
+      {
+        "type": "spacer-block",
+        "name": "Spacer",
+        "settings": [
+          {
+            "type": "range",
+            "id": "spacer-height",
+            "label": "Spacer Height",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Np-Image-Text"
+      }
+    ]
+  }
+{% endschema %}

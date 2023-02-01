@@ -1,44 +1,29 @@
 {%- assign newsletter_form_id = 'newsletter-' | append: section_id -%}
 {% form 'customer', id: newsletter_form_id %}
-   {% if form.posted_successfully? %}
-    <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}{{ form.newsletter_form_id }}</div>
-  {% endif %} 
-  <label for="Email-{{ section_id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
-  <input type="hidden" name="contact[tags]" value="prospect,newsletter">
-  <input type="hidden" name="contact[context]" class="{{ newsletter_form_id }}" value="{{ snippet_context }}">
-  <div class="input-group newsletter__input-group custom-newsletter-group">
-    <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email-{{ section_id }}" class="input-group-field newsletter__input" autocorrect="off" autocapitalize="off">
-    <div class="input-group-btn">
-      <button type="submit" class="btn" name="commit">
-        <span class="form__submit">{{ 'general.newsletter_form.submit' | t }}</span>
-      </button>
+  {%- if form.posted_successfully? -%}
+    <div class="note note--success">
+      {{ 'general.newsletter_form.newsletter_confirmation' | t }}
     </div>
-  </div>
-  <div id="custom-newsletter-error">
-    {% if form.errors %}
-      {% for field in form.errors %}
-        <p>
-    	{% if form.errors.translated_fields[field] == 'email' and form.errors.messages[field] == "can&#39;t be blank" %}
-         Please enter your email address
-        {% elsif form.errors.translated_fields[field] == 'email' and form.errors.messages[field] == "is invalid" %}
-         Please enter valid email address { form.id }}
-    	{% endif %}
-    	<p>
-      {% endfor %}
-	{%- endif -%}
-  </div>
-<style>
-  .input-group.newsletter__input-group.custom-newsletter-group {
-  	margin: 0 auto 5px;
-  }
-  #custom-newsletter-error {
-  	display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: center !important;
-  }
-  #custom-newsletter-error p {
-    color: #ff0000;
-  }
-</style>
+  {%- endif -%}
+  {%- if form.errors and form.context == snippet_context -%}
+    {{ form.errors | default_errors }}
+  {%- endif -%}
+
+  {%- unless form.posted_successfully? -%}
+    <label for="Email-{{ section_id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+    <label for="newsletter-form-submit-{{ section_id }}" class="hidden-label">{{ 'general.newsletter_form.submit' | t }}</label>
+    <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+    <input type="hidden" name="contact[context]" value="{{ snippet_context }}">
+    <div class="input-group newsletter__input-group">
+      <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email-{{ section_id }}" class="input-group-field newsletter__input" autocorrect="off" autocapitalize="off">
+      <div class="input-group-btn">
+        <button type="submit" id="newsletter-form-submit-{{ section_id }}" class="btn" name="commit">
+          <span class="form__submit--large">{{ 'general.newsletter_form.submit' | t }}</span>
+          <span class="form__submit--small">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-right" viewBox="0 0 50 15"><path d="M0 9.63V5.38h35V0l15 7.5L35 15V9.63z"/></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  {%- endunless -%}
 {% endform %}

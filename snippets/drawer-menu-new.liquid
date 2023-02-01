@@ -1,0 +1,233 @@
+{%- assign animation_row = 1 -%}
+{%- assign drawer_position = 'right' -%}
+{% if logo_alignment == 'center' %}
+  {%- assign drawer_position = 'left' -%}
+{% endif %}
+
+<div id="NavDrawer" class="drawer drawer--{{ drawer_position }}">
+  <div class="drawer__contents">
+
+    <div class="drawer__fixed-header">
+      <div class="drawer__header appear-animation ">
+<!--         <div class="h2 drawer__title"></div> -->
+        <div class="drawer-menu-close">
+          <button type="button" class="menu-drawer__close-button js-drawer-close">
+            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L16 16M1 16L16 1" stroke="black"/>
+</svg>
+            <span class="icon__fallback-text">{{ 'general.drawers.close_menu' | t }}</span>
+          </button>
+              <svg class="ninetypercent-icon" width="130" height="8" viewBox="0 0 130 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1640_477)">
+                  <path d="M0 7.5468V0L5.55314 5.39245V0.479475H6.69913V7.98029L1.146 2.60099V7.5468H0Z" fill="#2B2725"/>
+                  <path d="M12.8818 0.453125V7.52702H11.7358V0.453125H12.8818Z" fill="#2B2725"/>
+                  <path d="M18.0318 7.5468V0L23.5849 5.39245V0.479475H24.7309V7.98029L19.1778 2.60099V7.5468H18.0318Z" fill="#2B2725"/>
+                  <path d="M33.8706 1.45805H30.8217V3.1592H33.2056V4.16413H30.8217V6.52866H33.8706V7.53359H29.6686V0.453125H33.8706V1.45805Z" fill="#2B2725"/>
+                  <path d="M41.1852 1.45805V7.52702H40.0392V1.45805H37.9807V0.453125H43.2367V1.45805H41.1852Z" fill="#2B2725"/>
+                  <path d="M49.1081 4.47285L46.6251 0.459717H47.948L49.6882 3.28402L51.4355 0.459717H52.7583L50.2612 4.47285V7.52704H49.1152V4.47285H49.1081Z" fill="#2B2725"/>
+                  <path d="M127.949 1.47783V7.54679H126.803V1.47783H124.744V0.4729H130V1.47783H127.949Z" fill="#2B2725"/>
+                  <path d="M68.1869 4.67651V7.54679H67.0409V0.4729H68.3425C68.9792 0.4729 69.4602 0.512309 69.7856 0.597695C70.111 0.683081 70.4011 0.834148 70.6557 1.06403C71.0943 1.45812 71.3136 1.96387 71.3136 2.56814C71.3136 3.21838 71.0802 3.7307 70.6133 4.10508C70.1464 4.47947 69.5168 4.66994 68.7245 4.66994H68.194L68.1869 4.67651ZM68.1869 3.68472H68.6184C69.6724 3.68472 70.203 3.31034 70.203 2.555C70.203 1.79967 69.6583 1.45812 68.5689 1.45812H68.1869V3.68472Z" fill="#2B2725"/>
+                  <path d="M79.9369 1.47783H76.888V3.17898H79.272V4.1839H76.888V6.54843H79.9369V7.55336H75.7349V0.4729H79.9369V1.47783Z" fill="#2B2725"/>
+                  <path d="M87.5203 4.53201L89.8759 7.54679H88.4682L86.2965 4.65681H86.0913V7.54679H84.9453V0.4729H86.2894C87.2939 0.4729 88.0225 0.65024 88.4682 0.998352C88.9634 1.38587 89.211 1.90476 89.211 2.54843C89.211 3.04761 89.0553 3.48111 88.7441 3.84236C88.4328 4.20361 88.0296 4.43349 87.5203 4.53201ZM86.0913 3.72413H86.4592C87.5486 3.72413 88.0933 3.33661 88.0933 2.56814C88.0933 1.84564 87.5627 1.48439 86.5087 1.48439H86.0984V3.7307L86.0913 3.72413Z" fill="#2B2725"/>
+                  <path d="M109.605 1.47783H106.557V3.17898H108.941V4.1839H106.557V6.54843H109.605V7.55336H105.404V0.4729H109.605V1.47783Z" fill="#2B2725"/>
+                  <path d="M114.105 7.56657V0.0197754L119.658 5.41222V0.49925H120.804V8.00007L115.251 2.62076V7.56657H114.105Z" fill="#2B2725"/>
+                  <path d="M99.4188 5.87195C99.2349 6.01645 99.051 6.14125 98.8812 6.24634C98.7114 6.35143 98.5487 6.43025 98.3931 6.49593C98.1101 6.62072 97.7635 6.67984 97.3603 6.67984C96.5751 6.67984 95.9172 6.42368 95.3796 5.91793C94.8419 5.41218 94.5731 4.78164 94.5731 4.03944C94.5731 3.29724 94.8419 2.65356 95.3796 2.13468C95.9172 1.6158 96.5751 1.35307 97.3532 1.35307C98.0606 1.35307 98.7468 1.60923 99.4118 2.12811C99.4118 2.12811 99.6594 2.32516 99.8645 2.58131L100.72 2.02959C100.72 2.02959 100.02 1.16916 99.4047 0.86046C99.3976 0.86046 99.3905 0.86046 99.3835 0.853892C98.7539 0.518916 98.1031 0.348145 97.431 0.348145C96.1789 0.348145 95.1603 0.781642 94.368 1.64207C93.7242 2.34486 93.4059 3.15274 93.4059 4.05258C93.4059 5.0575 93.7879 5.91136 94.5519 6.62729C95.323 7.33008 96.2497 7.68476 97.3391 7.68476C98.0606 7.68476 98.7539 7.51399 99.4118 7.16588C100.048 6.87031 100.72 5.97048 100.72 5.97048L99.8645 5.41875C99.6523 5.67491 99.4118 5.87852 99.4118 5.87852L99.4188 5.87195Z" fill="#2B2725"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_1640_477">
+                  <rect width="130" height="8" fill="white"/>
+                  </clipPath>
+                  </defs>
+              </svg>
+            <div class="header-item header-item--icons nav-drawer-icons">
+              {%- render 'header-icons', section: section -%}
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="mobile-menu-wrapper">
+      {%- for link in drawer_menu.links -%}
+      <li class="single-item-menu">
+        <div class="parent-link-container">
+          <a class="parent-link">{{ link.title }}</a>
+        </div>
+        <div class="child-link-container hidden">
+          {%- for childlink in link.links -%}
+          <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+          
+          {% endfor %}
+        </div>   
+      </li>
+<!--       <li class="single-item-menu">
+        <div>
+          <a class="parent-link">OUR WAY</a>
+        </div>
+        <div class="child-link-container">
+          <a href="">SHOP ALL</a>
+          <br>
+          <a href="">NEW IN</a>
+          <br>
+          <a href="">DRESSES</a>
+          <br>
+          <a href="">TOPS & SHIRTS</a>
+        </div>
+      </li> -->
+      {% endfor %}
+    </ul>
+   <div class="bottom-hr-line"></div>
+    <div class="nav-drawer-footer">
+      <ul class="mobile-nav__social appear-animation ">
+        {%- if settings.social_instagram_link != blank -%}
+          <li class="mobile-nav__social-item">
+            <a target="_blank" rel="noopener" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
+<!--               <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-instagram" viewBox="0 0 32 32"><path fill="#444" d="M16 3.094c4.206 0 4.7.019 6.363.094 1.538.069 2.369.325 2.925.544.738.287 1.262.625 1.813 1.175s.894 1.075 1.175 1.813c.212.556.475 1.387.544 2.925.075 1.662.094 2.156.094 6.363s-.019 4.7-.094 6.363c-.069 1.538-.325 2.369-.544 2.925-.288.738-.625 1.262-1.175 1.813s-1.075.894-1.813 1.175c-.556.212-1.387.475-2.925.544-1.663.075-2.156.094-6.363.094s-4.7-.019-6.363-.094c-1.537-.069-2.369-.325-2.925-.544-.737-.288-1.263-.625-1.813-1.175s-.894-1.075-1.175-1.813c-.212-.556-.475-1.387-.544-2.925-.075-1.663-.094-2.156-.094-6.363s.019-4.7.094-6.363c.069-1.537.325-2.369.544-2.925.287-.737.625-1.263 1.175-1.813s1.075-.894 1.813-1.175c.556-.212 1.388-.475 2.925-.544 1.662-.081 2.156-.094 6.363-.094zm0-2.838c-4.275 0-4.813.019-6.494.094-1.675.075-2.819.344-3.819.731-1.037.4-1.913.944-2.788 1.819S1.486 4.656 1.08 5.688c-.387 1-.656 2.144-.731 3.825-.075 1.675-.094 2.213-.094 6.488s.019 4.813.094 6.494c.075 1.675.344 2.819.731 3.825.4 1.038.944 1.913 1.819 2.788s1.756 1.413 2.788 1.819c1 .387 2.144.656 3.825.731s2.213.094 6.494.094 4.813-.019 6.494-.094c1.675-.075 2.819-.344 3.825-.731 1.038-.4 1.913-.944 2.788-1.819s1.413-1.756 1.819-2.788c.387-1 .656-2.144.731-3.825s.094-2.212.094-6.494-.019-4.813-.094-6.494c-.075-1.675-.344-2.819-.731-3.825-.4-1.038-.944-1.913-1.819-2.788s-1.756-1.413-2.788-1.819c-1-.387-2.144-.656-3.825-.731C20.812.275 20.275.256 16 .256z"/><path fill="#444" d="M16 7.912a8.088 8.088 0 0 0 0 16.175c4.463 0 8.087-3.625 8.087-8.088s-3.625-8.088-8.088-8.088zm0 13.338a5.25 5.25 0 1 1 0-10.5 5.25 5.25 0 1 1 0 10.5zM26.294 7.594a1.887 1.887 0 1 1-3.774.002 1.887 1.887 0 0 1 3.774-.003z"/></svg> -->
+              <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.625" y="0.625" width="17.75" height="17.75" rx="4.375" stroke="#2B2725" stroke-width="1.25"/>
+              <circle cx="9.5" cy="9.5" r="4.5" stroke="#2B2725" stroke-width="1.25"/>
+              <circle cx="15.25" cy="4.25" r="1.25" fill="#2B2725"/>
+              </svg>
+
+              <span class="icon__fallback-text">Instagram</span>
+            </a>
+          </li>
+        {%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}
+          <li class="mobile-nav__social-item">
+            <a target="_blank" rel="noopener" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+<!--               <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-facebook" viewBox="0 0 14222 14222"><path d="M14222 7112c0 3549.352-2600.418 6491.344-6000 7024.72V9168h1657l315-2056H8222V5778c0-562 275-1111 1159-1111h897V2917s-814-139-1592-139c-1624 0-2686 984-2686 2767v1567H4194v2056h1806v4968.72C2600.418 13603.344 0 10661.352 0 7112 0 3184.703 3183.703 1 7111 1s7111 3183.703 7111 7111zm-8222 7025c362 57 733 86 1111 86-377.945 0-749.003-29.485-1111-86.28zm2222 0v-.28a7107.458 7107.458 0 0 1-167.717 24.267A7407.158 7407.158 0 0 0 8222 14137zm-167.717 23.987C7745.664 14201.89 7430.797 14223 7111 14223c319.843 0 634.675-21.479 943.283-62.013z"/></svg> -->
+              <svg width="9" height="19" viewBox="0 0 9 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.62163 6.27727L8.40519 9.12076H5.54481V19H1.92768V9.12076H0V6.27727H1.92768V4.37314C1.92768 3.53215 1.95259 2.23417 2.55052 1.42809C3.18426 0.577585 4.05 0 5.54481 0C7.97543 0 9 0.355437 9 0.355437L8.52042 3.26716C8.01272 3.12403 7.48988 3.04411 6.96332 3.02915C6.21747 3.02915 5.54481 3.30207 5.54481 4.07007V6.29155L8.62163 6.27727Z" fill="#2B2725"/>
+              </svg>
+
+              <span class="icon__fallback-text">Facebook</span>
+            </a>
+          </li>
+        {%- endif -%}
+      </ul> 
+      <a class="localization-selector-drawer">UK/EN</a>
+      <a href="{{ routes.account_url }}">LOGIN</a>          
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  .mobile-menu-wrapper {
+    list-style-type: none;
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid;
+    width: 85%;
+    border-bottom-color: var(--colorDrawerBorder);
+  }
+  .mobile-menu-wrapper li{
+    padding-bottom: 0.75em;
+  }
+  .parent-link {
+    padding-right: 15px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.7em;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hidden {
+    display: none;
+  }
+  .child-link-container {
+    position: absolute;
+    left: 0;
+    margin-top: 3em;
+    width: 100%;
+    height: 56vh;
+    overflow-y: scroll;
+  }
+  .option-not-selected{
+    color: rgba(43, 39, 37, 0.5) !important;
+  }
+  .drawer-menu-close{
+    text-align: left;
+    position: absolute;
+    top: 30%;
+  }
+  .ninetypercent-icon{
+    position: absolute;
+    left: 233%;
+    top: 39%;
+  }
+  .menu-drawer__close-button{
+    padding-top: 3px;
+  }
+  .nav-drawer-icons{
+    position: absolute;
+    left: 736%;
+    top: -23%;
+  }
+  .nav-drawer-footer{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+  .localization-selector-drawer{
+    padding-left: 30px;
+    padding-right: 35px;
+  }
+  .child-link-container a{
+    display: block;
+    padding-bottom: 1em;
+  } 
+  .bottom-hr-line{
+    position: absolute;
+    bottom: 8%;
+    width: 85%;
+    left: 7%;
+    border-bottom: 1px solid;
+    border-bottom-color: #cfcfc2;
+  }
+</style>
+
+<script>
+  $('.parent-link').not(':first').addClass('option-not-selected');
+  $('.single-item-menu').on('click', function() {
+    //console.log("clicked on a");
+    $('.child-link-container').not(this).addClass('hidden');
+    $('.parent-link').not(this).addClass('option-not-selected');
+    $(this).find('.child-link-container').removeClass('hidden');
+    $(this).find('.parent-link').removeClass('option-not-selected');
+  });
+        window.onload = (event) => {
+        document.querySelectorAll('.child-link-container')[0].classList.remove('hidden');
+      };
+    function iPhoneDevices() {
+
+    return [
+
+      'iPad Simulator',
+
+      'iPhone Simulator',
+
+      'iPod Simulator',
+
+      'iPad',
+
+      'iPhone',
+
+      'iPod'
+
+    ].includes(navigator.platform)
+
+// iPad on iOS 13 detection
+
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+
+  };
+
+  const iphoneDetector = iPhoneDevices();
+  if (iphoneDetector == true) {
+    document.querySelector('body').classList.add("adjust-header");
+  }
+</script>

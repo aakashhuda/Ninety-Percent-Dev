@@ -1,0 +1,185 @@
+<div class="page-width grid-with-image-container">    <div class="left-block-grid">        {% if section.settings.image %}
+          <img src="{{ section.settings.image  | img_url: 'master' }}" alt="" srcset="">        {% endif %}
+       <div class="collection-text">          {% if section.settings.title2 %}
+          <h3>{{ section.settings.title2 }}</h3>          {% endif %}
+          {% if section.settings.text2 %}
+          <p>{{ section.settings.text2 }}</p>          {% endif %}
+       </div>      <a class="shop-now-border" href="{{section.settings.shop-now-url}}">SHOP NOW</a>    </div>    <div class="right-block-grid"><!--         <div >            {% if section.settings.title %}
+            <h3>{{ section.settings.title }}</h3>            {% endif %}
+            {% if section.settings.text %}
+            <p>{{ section.settings.text }}</p>            {% endif %}
+        </div> -->        {% if section.settings.image2 %}
+           <img class="right-block-grid-top-img" src="{{ section.settings.image2 | img_url: 'master' }}" alt="" srcset="">        {% endif %}
+        {% if section.settings.image3 %}
+           <img class="right-block-grid-bottom-img" src="{{ section.settings.image3 | img_url: 'master' }}" alt="" srcset="">        {% endif %}
+    </div>    <div class="responsive-txt-collection">      {% if section.settings.title2 %}
+      <h3>{{ section.settings.title2 }}</h3>      {% endif %}
+      {% if section.settings.text2 %}
+      <p>{{ section.settings.text2 }}</p>      {% endif %}
+   </div></div>    {% schema %}
+      {
+        "name": "Collection Grid With Text",
+        "class": "index-section",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "image_width",
+            "label": "Image width",
+            "default": 500,
+            "min": 100,
+            "max": 500,
+            "step": 10,
+            "unit": "px"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Image with text"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Pair large text with an image to tell a story, explain a detail about your product, or describe a new promotion.</p>"
+          },
+          {
+            "type": "text",
+            "id": "title2",
+            "label": "Heading-2",
+            "default": "Image with text"
+          },
+          {
+            "type": "richtext",
+            "id": "text2",
+            "label": "Text-2",
+            "default": "<p>Pair large text with an image to tell a story, explain a detail about your product, or describe a new promotion.</p>"
+          },
+          {
+            "type": "url",
+            "id": "shop-now-url",
+            "label": "Button URL",
+            "default": "/"
+          },
+          {
+            "type": "image_picker",
+            "id": "image2",
+            "label": "Image-2"
+          },
+          {
+            "type": "image_picker",
+            "id": "image3",
+            "label": "Image-3"
+          }
+        ],
+        "presets": [
+          {
+            "name": "Collection Grid With Text",
+            "category": "Image"
+          }
+        ]
+      }
+    {% endschema %}
+    <style>      .right-block-grid-top-img {
+/*             width: 85%; */
+      }
+      .right-block-grid-bottom-img{
+            width: 80%;
+            padding-top: 75px;
+      }
+      .left-block-grid img{
+            width: 80%;
+            margin-bottom: 5em;
+      }
+      .right-block-grid{
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+      }
+      .grid-with-image-container p{
+        font-weight: 400 !important;
+    font-family: 'Silvana';
+    /* text-transform: capitalize; */
+    line-height: 26px;
+    font-size: 18px;
+/*     margin-bottom: 50px; */
+     text-align: left;
+      }
+      .grid-with-image-container{
+        padding: 0 130px;
+      }
+      .collection-text{
+        margin-bottom:104px;
+      }
+/*       .grid-with-image-container img{
+        display: block;
+    margin-left: auto;
+    margin-right: auto;
+      } */
+/*        .left-block img{
+        width: 65%;
+        margin-bottom: 5em;
+      }
+      .right-block img{
+        width: 60%;
+      }
+      .right-block > div > p{
+            margin-top: 6em;
+            margin-bottom: 5em;
+      } */
+      .grid-with-image-container{
+        display: flex;
+      }
+      .responsive-txt-collection{
+        display: none;
+      }
+      .collection-text h3{
+        font-family: 'Silvana';
+    font-style: italic;
+      }
+      @media only screen and (max-width: 428px)  {
+        .grid-with-image-container p{
+          margin-bottom: 0px;
+        }
+        .collection-text{
+          display: none;
+        }
+        .grid-with-image-container{
+          flex-flow: row wrap;
+          flex-direction: column;
+          padding: 0 15px;
+        }
+/*         .left-block img{
+        }
+        .right-block{
+          margin-bottom: 30px;
+        }
+        .right-block > div > p{
+          margin-bottom: 0px;
+          margin-top: 2em;
+        }
+        .right-block img{
+          width: 100%;
+        }
+        .left-block img{
+          width: 100%;
+          margin-bottom: 5px;
+        } */
+        .responsive-txt-collection{
+          display: block;
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        .responsive-txt-collection h3{
+          font-family: 'Silvana';
+    font-style: italic;
+    text-transform: capitalize;
+    margin-bottom: 12px;
+        }
+      }
+    </style>

@@ -6802,7 +6802,7 @@ lazySizesConfig.expFactor = 4;
           .renderPage(window.location.pathname, searchParams, updateURLHash)
           .then(() => {
             theme.sections.reinit('collection-grid');
-            this.updateScroll(false);
+            this.updateScroll(true);
             this.initPriceRange();
             theme.reinitProductGridItem();
   

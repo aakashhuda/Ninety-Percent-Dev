@@ -71,7 +71,7 @@
   <div class="page-content page-content--product">
     <div class="pdp-mobile-header">
       <span class="np-mobile-pdp-title" style="padding-right: 20px;">{{ product.title }}</span>
-      <span class="np-h9">{{ current_variant.price | money }}</span>
+      <span class="np-h9 np-mobile-pdp-price">{{ current_variant.price | money }}</span>
     </div>
 
     <div class="material-page-title-wrapper mobile-material-wrapper">
@@ -440,7 +440,7 @@
                   {%- when 'buy_buttons' -%}
                   <div class="product-block" {{ block.shopify_attributes }}>
                     {%- unless product.empty? -%}
-                      <div class="product-block">
+                      <div class="product-block" style="max-width: 464px;">
                         {%- render 'product-form'
                           , form_id: form_id,
                           product: product,
@@ -748,8 +748,8 @@
             {%- endunless -%}
             
             <div class="pdp-mobile-drawer">
-              <a href="#" class="pdp-drawer-item">SIZE GUIDE</a>
-              <a href="#" class="pdp-drawer-item">DELIVERY & RETURNS</a>
+              <a href="#" class="pdp-drawer-item size-guide">SIZE GUIDE</a>
+              <a href="#" class="pdp-drawer-item delivery-return">DELIVERY & RETURNS</a>
             </div>
 
              
@@ -879,7 +879,7 @@
   }
 
   .material-page-title-wrapper a{
-    font-family: 'Silvana';
+    font-family: 'Intervogue';
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -953,6 +953,9 @@
   margin-bottom: 14px;
   }
   @media only screen and (max-width: 768px) {
+    .np-mobile-pdp-price {
+      font-size: 16px;
+    }
     .pdp-mobile-drawer{
       padding-top: 10px;
     }
@@ -1023,6 +1026,14 @@
       padding-top: 15px;
       padding-bottom: 15px;
       padding-left: 15px;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 25px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #2B2725;
     }
     .pdp-mobile-slider, .pdp-mobile-drawer, .pdp-image-wrap{
       display: block;

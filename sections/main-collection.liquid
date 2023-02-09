@@ -11,10 +11,11 @@
   data-section-id="{{ section.id }}"
   data-section-type="collection-grid"
 >
+
   <div id="CollectionAjaxContent">
     <div class="page-width">
       <div class="grid">
-        <div class="grid__item medium-up--one-fifth grid__item--sidebar">
+        <div class="grid__item medium-up--one-fifth grid__item--sidebar custom-collection-position">
           {%- render 'collection-grid-filters',
             collection: collection,
             enable_sidebar: section.settings.enable_sidebar,
@@ -23,7 +24,7 @@
             enable_color_swatches: section.settings.enable_color_swatches
           -%}
         </div>
-        <div class="grid__item medium-up--four-fifths grid__item--content">
+        <div class="grid__item medium-up--four-fifths grid__item--content custom-collection-width">
           {%- liquid
             for block in section.blocks
               case block.type
@@ -69,6 +70,7 @@
 
           {%- endpaginate -%}
         </div>
+        
       </div>
     </div>
   </div>
@@ -81,13 +83,19 @@
 {% style %}
   .collection-content .grid__item--sidebar { width: 0; padding:0; }
   .collection-content .grid__item--content { width: 100%; }
-  .grid__item--sidebar { position: static; overflow: hidden; }
+  .grid__item--sidebar { overflow: hidden; }
 {% endstyle %}
 {%- endif -%}
 
 {% style %}
+#CollectionAjaxContent .grid__item.medium-up--four-fifths.grid__item--content.custom-collection-width {
+  width: 100%;
+}
+#CollectionAjaxContent .custom-collection-position {
+  z-index: 9;
+}
 @media( max-width: 768px ){
-  .page-width {
+  #CollectionAjaxContent .page-width {
     padding: 0;
   }
 }
@@ -112,6 +120,7 @@
   "name": {{ collection.title | json }}
 }
 </script>
+
 
 {% schema %}
 {

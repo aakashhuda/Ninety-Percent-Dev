@@ -218,7 +218,7 @@
             </div>          {%- endif -%}
         </div>        {%- if settings.enable_product_reviews -%}
           <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>        {%- endif -%}
-      </div>      <div class="fabric-type">        {% for materiall in product.metafields.custom.materiall.value %}
+      </div>      <div class="fabric-type">        {% for materiall in product.metafields.custom.material.value %}
           {% if forloop.last %}
             <span>{{ materiall }}</span>            {% else %}
           <span>{{ materiall }}, </span>            {% endif %}

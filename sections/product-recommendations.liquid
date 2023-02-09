@@ -37,7 +37,7 @@
       class="index-section">
       <div class="page-width">
         <header class="section-header">
-          <h3 class="section-header__title np-h8">
+          <h3 class="section-header__title np-h8 mobile-header">
             {{ section.settings.product_recommendations_heading }}
           </h3>
         </header>
@@ -108,6 +108,23 @@
 {% endschema %}
 
 <style>
+  .product-recommendations .grid-product__title.custom-title {
+    max-width: 250px;
+    font-size: 12px;
+  }
+  @media (max-width: 1000px) {
+    .product-recommendations .custom-title {
+      max-width: 100%;
+    }
+    .product-recommendations .grid-product__meta{
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 768px) {
+    .product-recommendations .custom-title {
+      max-width: 180px;
+    }
+  }
   .product-recommendations .grid__item .grid-product__image-mask ul{
     display: none;
   }
@@ -147,6 +164,12 @@
     }
     .grid-product__price{
       padding-right: 5px;
+    }
+    .section-header__title.np-h8.mobile-header {
+      font-size: 12px;
+    }
+    .material-tag-pdp{
+      display: none;
     }
   }
 </style>

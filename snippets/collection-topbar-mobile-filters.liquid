@@ -1,0 +1,81 @@
+{% liquid
+    assign sort_by = collection.sort_by
+    assign default_sort_by = collection.default_sort_by
+    assign sort_options = collection.sort_options
+  %}
+  
+  <div class="topbar-filter-section np-h6">
+    <div class="collection-name">SHOP - {{ collection.title }} ({{ collection.products_count }})</div>
+    <ul class="filter-list">
+      {% for filter in filters %}
+        {% assign filter_label = filter.label | replace: ' ', '-' %}
+        <div class="filter-container-{{ filter_label }}">
+          <li class="filter-label filter-{{ filter_label }}">
+            {% if filter_label == "Product-type" %}
+              Category
+            {% else %}
+              {{ filter_label }}
+            {% endif %}
+          </li>
+          <ul class="filter-options-list filter-{{ filter_label }}-options">
+            {% for value in filter.values %}
+              {% if filter_label != 'Size' %}
+                {% if value.active %}
+                  <li class="filter-value-item active"><a href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+                {% else %}
+                  <li class="filter-value-item"><a href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+                {% endif %}
+
+              {% else %}
+                  {% if value.active %}
+                    <li class="filter-value-item active size-filter"><a data-url="{{ value.url_to_remove }}" href="{{ value.url_to_remove }}">{{ value.label }}</a></li>
+                  {% else %}
+                    <li class="filter-value-item inactive size-filter"><a data-url="{{ value.url_to_add }}" href="{{ value.url_to_add }}">{{ value.label }}</a></li>
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+            
+          </ul>
+        </div>
+      {% endfor %}
+    </ul>
+    <div class="sorting-section">
+      <span class="sort-btn">SORT BY</span>
+      <ul class="sort-list">
+        {% for option in sort_options %}
+          {% if sort_by == option.value %}
+            <li class="sort-list-item active" data-name="{{ option.value }}">{{ option.name }}</li>
+          {% else %}
+            <li class="sort-list-item" data-name="{{ option.value }}">{{ option.name }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="topbar-active-filter-section np-h6">
+    {% for filter in filters %}
+      {% if filter.label != 'Size' %}
+        {% for value in filter.values %}
+          {% assign value_label = value.label | replace: ' ', '-' %}
+            {% if value.active %}
+            <a href="{{ value.url_to_remove }}" class="active-filter-item item-{{ value_label }}"><span class="active-filter-label">{{ value.label }}</span><span class="active-filter-cross">X</span></a>
+            {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for value in filter.values %}
+          {% assign value_label = value.label | replace: ' ', '-' %}
+            {% if value.active %}
+              <a href="{{ value.url_to_remove }}" data-url="{{ value.url_to_remove }}" class="inactive-filter-item item-{{ value_label }} active size-filter"><span class="active-filter-label">{{ value.label }}</span><span class="active-filter-cross">X</span></a>
+            {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    <div class="active-filter-clear-item filter-reset dont-show"><span>CLEAR ALL</span></div>
+  </div>
+
+  <style>
+    .header-layout {
+        display: none;
+    }
+  </style>

@@ -35,38 +35,50 @@ Snippet Arguments
 
 <div class="collection-grid__wrapper">
   <div class="collection-filter">
-    <div class="collection-filter__item collection-filter__item--drawer">
-      <button
-        type="button"
-        class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
-        aria-controls="FilterDrawer">
-          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5zM7 42h31M16 22H6M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5zM57 22H26"/></svg>
-          {{ 'collections.filters.title_tags' | t }}
-          {%- if current_filter_size > 0 -%}
-              ({{ current_filter_size }})
-          {%- endif -%}
-      </button>
+    <div class="product-count-mobile">
+      SHOP - {{ collection.title }} ({{ collection.products_count }})
     </div>
-
-    <div class="collection-filter__item collection-filter__item--count small--hide">
-      {%- if enable_collection_count -%}
-        {{ count_label | t: count: count }}
-      {%- endif -%}
-    </div>
-
-    <div class="collection-filter__item collection-filter__item--sort">
-        <div class="collection-filter__sort-container">
+    <div class="filter-sort-mobile-container">
+      <div class="collection-filter__item collection-filter__item--drawer">
+        <button
+          type="button"
+          class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
+          aria-controls="FilterDrawer">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5zM7 42h31M16 22H6M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5zM57 22H26"/></svg>
+            {{ 'collections.filters.title_tags' | t }}
+            {%- if current_filter_size > 0 -%}
+                ({{ current_filter_size }})
+            {%- endif -%}
+        </button>
+      </div>
+      <div class="collection-filter__item collection-filter__item--sort">
+        {% comment %} <div class="collection-filter__sort-container">
         {%- assign sort_by = sort_by | default: default_sort_by -%}
         <label for="SortBy" class="hidden-label">{{ 'collections.sorting.title' | t }}</label>
         <select name="SortBy" id="SortBy" data-default-sortby="{{ default_sort_by }}">
-          <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option>
+          {% comment %} <option value="title-ascending"{% if sort_by == default_sort_by %} selected="selected"{% endif %}>{{ 'collections.sorting.title' | t }}</option> {% endcomment %}
+          <option value="sort" selected="selected">Sort</option>
           {%- for option in sort_options -%}
           <option value="{{ option.value }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>
           {%- endfor -%}
         </select>
+        </div> {% endcomment %}
+        <div class="sorting-section-mobile">
+          <span class="sort-btn sort-btn-mobile">SORT BY</span>
+          <ul class="sort-list-mobile">
+            {% for option in sort_options %}
+              {% if sort_by == option.value %}
+                <li class="sort-list-item active" data-name="{{ option.value }}">{{ option.name }}</li>
+              {% else %}
+                <li class="sort-list-item" data-name="{{ option.value }}">{{ option.name }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
         </div>
+      </div>
     </div>
   </div>
+  <hr class="filter-line-mobile">
 
   <div class="grid grid--uniform{% if mobile_flush_grid %} small--grid--flush{% endif %}"{% unless enable_collection_count %} data-scroll-to{% endunless %}>
     {% if items.size > 0 %}
@@ -97,6 +109,41 @@ Snippet Arguments
   Sidebar enabled but not in drawer mode, only show filter button on mobile
 {% endcomment %}
 {% style %}
+hr.filter-line-mobile {
+  display: none;
+}
+#CollectionAjaxContent .collection-filter .btn {
+  padding: 0 20px;
+  border: none;
+  outline: none;
+}
+#CollectionAjaxContent .collection-filter .btn svg {
+  display: none;
+}
+.collection-filter select {
+  border: none;
+  outline: none;
+  appearance: none;
+}
+
+
+.collection-filter__item {
+  margin-bottom: 0;
+}
+.filter-sort-mobile-container {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .collection-filter {
+    margin: 0 17px;
+}
+  hr.filter-line-mobile {
+    display: block;
+    margin: 0 17px;
+    margin-bottom: 7px;
+  }
+}
 @media screen and (min-width: 769px) {
   .collection-filter__item--drawer {
     display: none;
@@ -106,6 +153,9 @@ Snippet Arguments
   }
   html[dir="rtl"] .collection-filter__item--count {
     text-align: right;
+  }
+  .collection-filter {
+    display: none;
   }
 }
 {% endstyle %}
@@ -133,5 +183,45 @@ html[dir="rtl"] .collection-filter__item--count {
 .collection-filter__sort-container {
   display: none;
 }
+
 {% endstyle %}
 {%- endunless -%}
+
+<script>
+  function sortingFunctionWithoutMultipleOptions(){
+    var sortItems = document.querySelectorAll(".sort-list-item")
+    sortItems.forEach(item=>{
+      item.addEventListener('click', (e)=>{
+        let url = "";
+        if (window.location.search.indexOf("filter") === -1){
+          url += `?sort_by=${e.target.dataset.name}`
+        }
+        else {
+          var index = window.location.search.indexOf("sort_by")
+          switch (index) {
+            case -1: url += window.location.search + `&sort_by=${e.target.dataset.name}`; break;
+            default:
+              var initIndex = window.location.search.indexOf("sort_by")
+              var toBeReplaced = window.location.search.slice(initIndex)
+              url += window.location.search.replace(toBeReplaced, `sort_by=${e.target.dataset.name}`)
+          }
+        }
+        window.location.search = url
+      })
+    })
+  }
+  function applyClickEventForSorting() {
+    var target = document.querySelector(".sort-btn-mobile")
+    target.addEventListener('click', ()=>{
+      // sorting
+      if (document.querySelector(".sort-list-mobile").classList.contains('show-sort-list')){
+        document.querySelector(".sort-list-mobile").classList.remove('show-sort-list')
+      }
+      else {
+        document.querySelector(".sort-list-mobile").classList.add('show-sort-list')
+      }
+    })
+  }
+  sortingFunctionWithoutMultipleOptions()
+  applyClickEventForSorting()
+</script>

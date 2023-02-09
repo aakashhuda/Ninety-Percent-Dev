@@ -11,19 +11,19 @@
 {%- if enable_sidebar -%}
 <div id="CollectionSidebar" data-style="{{ filter_style }}">
 
+    {%- if filter_style == 'sidebar' -%}
+    <div class="collection-sidebar small--hide">
+        {%- render 'collection-grid-filters-form', location: 'CollectionSidebar', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
+    </div>
+    {%- endif -%}
+
     {%- if filter_style == 'topbar' -%}
-      <div>
+      <div class="filters-for-desktop">
         {%- render 'collection-topbar-filters', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
       </div>
     {% endif %}
 
-<!--     {%- if filter_style == 'sidebar' -%}
-    <div class="collection-sidebar small--hide hide">
-        {%- render 'collection-grid-filters-form', location: 'CollectionSidebar', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
-    </div>
-    {%- endif -%} -->
-
- <div id="FilterDrawer" class="drawer drawer--left custom-filter-drawer">
+    <div id="FilterDrawer" class="drawer drawer--left">
       <div class="drawer__contents">
         <div class="drawer__fixed-header">
           <div class="drawer__header appear-animation appear-delay-{{ animation_row }}">
@@ -50,18 +50,6 @@
 
 <style>
   {% if filter_style == "topbar" %}
-    .drawer.drawer--left.custom-filter-drawer.drawer--is-open {
-      position: absolute;
-      width: 100%;
-      max-width: 343px !important;
-      height: 494px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      top: 256px;
-      transform: unset;
-      transition: unset;
-    }
     #CollectionAjaxContent .grid {
       margin-left: -8px;
     }
@@ -78,12 +66,22 @@
     #CollectionSidebar .collection-filter {
       display: none;
     }
-    .collection-sidebar__group {
-      border: none;
+
+    @media (max-width: 768px) {
+      .filters-for-desktop {
+        display: none;
+      }
+      #CollectionSidebar .collection-filter {
+        display: block;
+      }
     }
+    
   {% elsif filter_style == "sidebar" %}
     #CollectionAjaxContent .grid {
       margin: 0 0 0 0;
     }
   {% endif %}
+  .header-layout {
+    display: none;
+  }
 </style>

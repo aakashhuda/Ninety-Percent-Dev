@@ -78,7 +78,7 @@ Arguments
       assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.'
     -%}
 
-    <a href="{{ product.url | within: collection }}" class="grid-product__link grid-product__link-{{ product.id }}">
+    <div class="grid-product__link grid-product__link-{{ product.id }}">
       <div class="grid-product__image-mask">
         {%- if quick_shop_enable -%}
           <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-{{ product.id }} small--hide">
@@ -129,19 +129,19 @@ Arguments
         {%- endif -%}
 
         {% if settings.product_hover_multi_image %}
-          <ul class="image-list-{{ product.id }} not-loaded">
+          <a href="{{ product.url | within: collection }}" class="image-list-{{ product.id }} not-loaded">
             {% for image in product.images %}
                 {% if forloop.index == 1 %}
-                    <li class="image-item-{{ product.id }} active">
+                    <div class="image-item-{{ product.id }} active">
                       <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}">
-                    </li>
+                    </div>
                 {% else %}    
-                    <li class="image-item-{{ product.id }}">
+                    <div class="image-item-{{ product.id }}">
                       <img class="grid-product__image lazyload" src="{{ image | img_url: 'grande' }}">
-                    </li>
+                    </div>
                 {% endif %}
             {% endfor %}
-          </ul>
+          </a>
           <span class="left-{{ product.id }}"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
           <span class="right-{{ product.id }}"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
         {% endif %}
@@ -181,7 +181,7 @@ Arguments
       </div>
 
       <div class="grid-product__meta">
-        <div class="grid-product__title grid-product__title--{{ settings.type_product_style }} custom-title">{{ product.title }}</div>
+        <a href="{{ product.url | within: collection }}" class="grid-product__title grid-product__title--{{ settings.type_product_style }} custom-title">{{ product.title }}</a>
         <div class="grid-product__price np-h6">
           {%- if on_sale -%}
             <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
@@ -231,7 +231,7 @@ Arguments
             {% endfor %} {% endcomment %}
           </div>
         {%- endif -%}
-        <div class="grid-product__material custom-material">
+        <a href="{{ product.url | within: collection }}" class="grid-product__material custom-material">
           {% for materiall in product.metafields.custom.material.value %}
             {% if forloop.last %}
               <span>{{ materiall }}</span>
@@ -239,9 +239,9 @@ Arguments
             <span>{{ materiall }}, </span>
             {% endif %}
           {% endfor %}
-        </div>
+        </a>
       </div>
-    </a>
+    </div>
   </div>
   {%- if settings.enable_swatches -%}
     {%- liquid
@@ -320,12 +320,96 @@ Arguments
       background-color: hsl(200, 20%, 99%);
     }
   }
+
+  #CollectionAjaxContent .grid-product__image {
+    width: 100%;
+    object-fit: cover;
+    height: 600px;
+  }
+  @media (max-width: 1340px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 550px;
+    }
+  }
+  @media (max-width: 1240px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 500px;
+    }
+  }
+  @media (max-width: 1140px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 450px;
+    }
+  }
+  @media (max-width: 1040px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 400px;
+    }
+  }
+
+  @media (max-width: 940px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 350px;
+    }
+  }
+
+  @media (max-width: 840px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 500px;
+    }
+  }
+
+  @media (max-width: 668px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 450px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 420px;
+    }
+  }
+
+  @media (max-width: 568px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 350px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 320px;
+    }
+  }
+  @media (max-width: 450px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 290px;
+    }
+  }
+  @media (max-width: 400px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 260px;
+    }
+  }
+  @media (max-width: 350px) {
+    #CollectionAjaxContent .grid-product__image {
+      height: 227px;
+    }
+  }
   
   #CollectionAjaxContent .custom-title {
     font-family: "Silvana";
     font-size: 12px;
     line-height: 18px;
     letter-spacing: -0.01em;
+    display: block;
     max-width: 250px;
   }
   #CollectionAjaxContent .custom-material {
@@ -333,12 +417,14 @@ Arguments
     font-size: 12.5px;
     line-height: 18px;
     letter-spacing: 0.03em;
+    display: inline-block;
   }
   #CollectionAjaxContent .image-list-{{ product.id }} {
       list-style: none;
       position: relative;
       overflow: hidden;
       margin: 0;
+      display: block;
   }
   #CollectionAjaxContent .image-item-{{ product.id }} {
       position: absolute;
@@ -477,6 +563,11 @@ Arguments
       display: none;
     }
   }
+  @media (max-width: 500px) {
+    #CollectionAjaxContent .custom-title {
+      max-width: 160px;
+    }
+  }
   {% if settings.product_hover_multi_image == true %}
     #CollectionAjaxContent .image-wrap {
       display: none;
@@ -520,8 +611,10 @@ function changePreviousImage(productId, event) {
         images[index].classList.remove("active")
     }
     if(images[index-1] === undefined){
-      images[images.length -1].classList.add("active")
-      images[index].classList.remove("active")
+      if (images.length > 1) {
+        images[images.length -1].classList.add("active")
+        images[index].classList.remove("active")
+      }
     }
 }
 // hover effect for mouseover
@@ -556,17 +649,18 @@ function changePreviousImage(productId, event) {
     })
   })
 {% endif %}
-
-// content loader removing
-if(document.readyState === 'ready' || document.readyState === 'complete') {
-
-} else {
-  document.onreadystatechange = function () {
-    if (document.readyState == "complete") {
-      document.querySelectorAll(".not-loaded").forEach(item=>{
-        item.classList.remove("not-loaded")
+  if(document.readyState === 'ready' || document.readyState === 'complete') {
+  
+  } else {
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        console.log("completed")
+        setTimeout(()=>{
+          document.querySelectorAll(".not-loaded").forEach(item=>{
+            item.classList.remove("not-loaded")
+        }, 1000);
       })
+      }
     }
   }
-}
 </script>

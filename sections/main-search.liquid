@@ -26,7 +26,7 @@
         {%- assign paginate_by = section.settings.per_row | times: section.settings.rows_per_page -%}
         {%- paginate search.results by paginate_by -%}
 
-        <div id="CollectionAjaxContent" class="grid grid--uniform" data-scroll-to>
+        <div id="CollectionAjaxContent" class="grid grid--uniform">
 
           <div class="grid__item medium-up--one-fifth grid__item--sidebar">
             {%- render 'collection-grid-filters',

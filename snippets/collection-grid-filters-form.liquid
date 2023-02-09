@@ -32,7 +32,11 @@
           class="collapsible-trigger collapsible-trigger-btn collapsible--auto-height{% unless collapsed %} is-open{% endunless %} tag-list__header"
           aria-controls="{{ location }}-{{ filter_index }}{% if filter_id %}-{{ filter_id }}{% endif %}"
           data-collapsible-id="{{ filter_id }}">
+          {% if filter.label == "Product type" %}
+            Category
+          {% else %}
           {{ filter.label | escape }}
+          {% endif %}
           {%- render 'collapsible-icons' -%}
       </button>
       <div

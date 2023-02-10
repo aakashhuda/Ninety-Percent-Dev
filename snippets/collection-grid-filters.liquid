@@ -43,6 +43,9 @@
         <div class="drawer__scrollable appear-animation appear-delay-{{ animation_row }}">
           {%- render 'collection-grid-filters-form', location: 'SidebarDrawer', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
         </div>
+        <div class="mobile-filter-btn-container">
+          <button class="mobile-filter-reset-btn">RESET FILTER</button>
+        </div>
       </div>
     </div>
 </div>
@@ -54,11 +57,11 @@
       position: absolute;
       width: 100%;
       max-width: 343px !important;
-      height: 494px;
+      max-height: 494px;
       left: 0;
       right: 0;
       margin: 0 auto;
-      top: 256px;
+      top: 20vh;
       transform: unset;
       transition: unset;
     }
@@ -80,6 +83,52 @@
     }
     .collection-sidebar__group {
       border: none;
+    }
+    .collapsible-content__inner .no-bullets.tag-list {
+      column-count: 2;
+      margin-bottom: 0;
+    }
+    .collection-sidebar__group .collapsible-content__inner {
+      padding-top: 20px;
+    }
+    .collapsible-trigger-btn {
+      padding-top: 13px;
+      padding-bottom: 13px;
+    }
+    .collection-sidebar__group {
+      padding-top: 0;
+      margin-bottom: 0;
+    }
+    .drawer__fixed-header {
+      height: 60px;
+    }
+    .mobile-filter-reset-btn {
+      padding: 7px 25px;
+      border: 1px solid #2B2725;
+      background: #FFFFFF;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 21px;
+      text-align: center;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #2B2725;
+    }
+    .drawer__fixed-header, .drawer__scrollable {
+      padding-left: 44px;
+    }
+    .mobile-filter-btn-container {
+      margin: 17px 0;
+      margin-left: 18px;
+    }
+    .tag__checkbox:before, .tag__checkbox:after {
+      width: 11px;
+      height: 14px;
+    }
+    .tag--active .tag__checkbox:after, .tag-list--checkboxes .tag--active a:after, input:checked~.tag__checkbox:after {
+      background-color: #2B2725;
     }
   {% elsif filter_style == "sidebar" %}
     #CollectionAjaxContent .grid {

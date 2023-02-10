@@ -61,7 +61,7 @@
       left: 0;
       right: 0;
       margin: 0 auto;
-      top: 20vh;
+      top: 25vh;
       transform: unset;
       transition: unset;
     }
@@ -84,16 +84,47 @@
     .collection-sidebar__group {
       border: none;
     }
+    #FilterDrawer .tag--active > a, .tag--active > label {
+      font-weight: 400;
+    }
     .collapsible-content__inner .no-bullets.tag-list {
       column-count: 2;
       margin-bottom: 0;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 30px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #2B2725;
     }
+    .no-bullets.tag-list.tag-list--active-tags a.btn.btn--small {
+      background-color: #2B2725;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 30px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+    }
+    
     .collection-sidebar__group .collapsible-content__inner {
       padding-top: 20px;
     }
     .collapsible-trigger-btn {
       padding-top: 13px;
-      padding-bottom: 13px;
+      padding-bottom: 0px;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 21px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #2B2725;
     }
     .collection-sidebar__group {
       padding-top: 0;
@@ -118,6 +149,7 @@
     }
     .drawer__fixed-header, .drawer__scrollable {
       padding-left: 44px;
+      margin-bottom: 32px;
     }
     .mobile-filter-btn-container {
       margin: 17px 0;
@@ -130,9 +162,36 @@
     .tag--active .tag__checkbox:after, .tag-list--checkboxes .tag--active a:after, input:checked~.tag__checkbox:after {
       background-color: #2B2725;
     }
+    @media (max-width:768px) {
+      .drawer__title {
+        height: 60px;
+        font-family: 'Intervogue';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 27px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #2B2725;
+        padding-top: 30px;
+      }
+      .drawer__close-button .icon {
+        position: absolute;
+        top: 15px;
+        right: 19px;
+      }
+    }
   {% elsif filter_style == "sidebar" %}
     #CollectionAjaxContent .grid {
       margin: 0 0 0 0;
     }
   {% endif %}
 </style>
+
+<script>
+  document.querySelector(".mobile-filter-reset-btn").addEventListener('click', ()=>{
+    const filterDrawer = document.querySelector("#FilterDrawer")
+    filterDrawer.classList.remove("drawer--is-open")
+    window.location.search = "" 
+  })
+</script>

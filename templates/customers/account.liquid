@@ -1,6 +1,6 @@
 {% paginate customer.addresses by 5 %}
 
-<div class="page-width">
+<div class="page-width account-section">
 
   {% if settings.show_breadcrumbs %}
     <nav class="breadcrumb{% if settings.type_headers_align_text %} text-center{% endif %}" role="navigation" aria-label="breadcrumbs">
@@ -11,10 +11,11 @@
   {% endif %}
 
   <div class="grid">
+  
     <div class="grid__item medium-up--two-fifths page-links">
       <a class="page-link spa" id="order-return" href="#" data-handle="none">Orders & Return</a>
       <a class="page-link spa" id="wishlist" href="#" data-handle="none">My Wishlist</a>
-      <a class="page-link spa active" id="account" href="#" data-handle="/account">My Account</a>
+      <a class="page-link spa active " id="account" href="#" data-handle="/account">My Account</a>
       <a class="page-link" href="{{ routes.account_logout_url }}" data-handle="/logout">Logout</a>
     </div>
 
@@ -29,30 +30,31 @@
 
             <div class="grid__item one-half small--one-whole">
               <label for="AddressFirstNameNew">{{ 'customer.addresses.first_name' | t }}</label>
-              <input type="text" id="AddressFirstNameNew" class="input-full" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
+              <input type="text" id="AddressFirstNameNew" class="input-full input-border" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words">
             </div>
 
             <div class="grid__item one-half small--one-whole">
               <label for="AddressLastNameNew">{{ 'customer.addresses.last_name' | t }}</label>
-              <input type="text" id="AddressLastNameNew" class="input-full" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
+              <input type="text" id="AddressLastNameNew" class="input-full input-border" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words">
             </div>
 
           </div>
 
           <label for="AddressCompanyNew">{{ 'customer.addresses.company' | t }}</label>
-          <input type="text" id="AddressCompanyNew" class="input-full" name="address[company]" value="{{form.company}}" autocapitalize="words">
+          <input type="text" id="AddressCompanyNew" class="input-full input-border" name="address[company]" value="{{form.company}}" autocapitalize="words">
 
           <label for="AddressAddress1New">{{ 'customer.addresses.address1' | t }}</label>
-          <input type="text" id="AddressAddress1New" class="input-full" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
+          <input type="text" id="AddressAddress1New" class="input-full input-border" name="address[address1]" value="{{form.address1}}" autocapitalize="words">
 
           <label for="AddressAddress2New">{{ 'customer.addresses.address2' | t }}</label>
-          <input type="text" id="AddressAddress2New" class="input-full" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+          <input type="text" id="AddressAddress2New" class="input-full input-border" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
 
           <div class="grid grid--small">
             <div class="grid__item medium-up--one-half">
               <label for="AddressCityNew">{{ 'customer.addresses.city' | t }}</label>
-              <input type="text" id="AddressCityNew" class="input-full" name="address[city]" value="{{form.city}}" autocapitalize="words">
+              <input type="text" id="AddressCityNew" class="input-full input-border" name="address[city]" value="{{form.city}}" autocapitalize="words">
             </div>
+          
 
             <div
               class="grid__item medium-up--one-half js-address-country"
@@ -60,22 +62,22 @@
               data-province-container-id="AddressProvinceContainerNew"
               data-province-id="AddressProvinceNew">
               <label for="AddressCountryNew">{{ 'customer.addresses.country' | t }}</label>
-              <select id="AddressCountryNew" class="input-full" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+              <select id="AddressCountryNew" class="input-full input-border" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
             </div>
 
             <div class="grid__item" id="AddressProvinceContainerNew" style="display: none;">
               <label for="AddressProvinceNew">{{ 'customer.addresses.province' | t }}</label>
-              <select id="AddressProvinceNew" class="input-full" name="address[province]" data-default="{{form.province}}"></select>
+              <select id="AddressProvinceNew" class="input-full input-border" name="address[province]" data-default="{{form.province}}"></select>
             </div>
 
             <div class="grid__item medium-up--one-half">
               <label for="AddressZipNew">{{ 'customer.addresses.zip' | t }}</label>
-              <input type="text" id="AddressZipNew" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
+              <input type="text" id="AddressZipNew" class="input-full input-border" name="address[zip]" value="{{form.zip}}" autocapitalize="characters">
             </div>
 
             <div class="grid__item medium-up--one-half">
               <label for="AddressPhoneNew">{{ 'customer.addresses.phone' | t }}</label>
-              <input type="tel" id="AddressPhoneNew" class="input-full" name="address[phone]" value="{{form.phone}}">
+              <input type="tel" id="AddressPhoneNew" class="input-full input-border" name="address[phone]" value="{{form.phone}}">
             </div>
           </div>
 
@@ -105,18 +107,41 @@
       </header>
       <div class="required-text hide">*Required</div>
       <div class="account-sub-header">{{ 'customer.account.details' | t }}</div>
-      {% for address in customer.addresses %}
-        <div id="customer-info" class="">
+
+ 
+  
+
+<div class="default-customer-details">
+  <div id="customer-info" class="">
           <div class="customer-info">
-            <div>{{ customer.default_address.first_name }} {{ customer.default_address.last_name }}</div>
-            <div>{{ customer.default_address.address1 }}</div>
-            <div>{{ customer.default_address.city }}, {{ customer.default_address.province }}</div>
-            <div><span>{{ customer.default_address.zip }}</span>, <span>{{ customer.default_address.country }}</span></div>
+            <div>{{ customer.first_name }} {{ customer.last_name }}</div>
           </div>
   
           <div class="customer-contact-info">
             <div>Email: <span class="email">{{ customer.email }}</span></div>
-            <div>Telephone:  {{ customer.default_address.phone }}</div>
+          </div>
+        </div>
+  
+        <div class="account-manipulation-links">
+          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
+        </div>
+  </div>
+
+  {% for address in customer.addresses %}
+       <div class="customer-addresses">
+     <div id="customer-info" class="">
+
+  
+          <div class="customer-info">
+            <div>{{ address.first_name }} {{ address.last_name }}</div>
+            <div>{{ address.address1 }}</div>
+            <div>{{ address.city }}, {{ address.province }}</div>
+            <div><span>{{ address.zip }}</span>, <span>{{ address.country }}</span></div>
+          </div>
+  
+          <div class="customer-contact-info">
+            <div>Email: <span class="email">{{ customer.email }}</span></div>
+            <div>Telephone:  {{address.phone }}</div>
           </div>
         </div>
 
@@ -129,31 +154,48 @@
           {% form 'customer_address', address %}
             <div class="grid grid--small">
               <div class="grid__item one-whole small--one-whole">
-                <label class="np-h10" for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>
-                <input type="text" placeholder="First Name Here" id="AddressFirstName_{{form.id}}" class="input-full" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words" required>
+                <label class="np-h10 label-transform" for="AddressFirstName_{{form.id}}">{{ 'customer.addresses.first_name' | t }}*</label>
+                <input type="text" placeholder="First Name Here" id="AddressFirstName_{{form.id}}" class="input-full input-border" name="address[first_name]" value="{{form.first_name}}" autocapitalize="words" required>
               </div>
 
               <div class="grid__item one-whole small--one-whole">
-                <label class="np-h10" for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}*</label>
-                <input type="text" placeholder="Last Name Here" id="AddressLastName_{{form.id}}" class="input-full" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words" required>
+                <label class="np-h10 label-transform" for="AddressLastName_{{form.id}}">{{ 'customer.addresses.last_name' | t }}*</label>
+                <input type="text" placeholder="Last Name Here" id="AddressLastName_{{form.id}}" class="input-full input-border" name="address[last_name]" value="{{form.last_name}}" autocapitalize="words" required>
               </div>
+            
+<!--               <div class="grid__item one-whole small--one-whole">
+                <label class="np-h10 label-transform" for="AddressLastName_{{form.id}}">Email*</label>
+                <input type="text" placeholder="Email Here" id="AddressLastName_{{form.id}}" class="input-full input-border" name="address[email]" value="{{customer.email}}" autocapitalize="words" required>
+              </div> -->
               
               <div class="grid__item one-whole small--one-whole">
-                <label class="np-h10" for="AddressPhone_{{form.id}}">Phone Number</label>
-                <input type="tel" placeholder="Phone Number Here" id="AddressPhone_{{form.id}}" class="input-full" name="address[phone]" value="{{form.phone}}" required>
+                <label class="np-h10 label-transform" for="AddressPhone_{{form.id}}">Phone Number</label>
+                <input type="tel" placeholder="Phone Number Here" id="AddressPhone_{{form.id}}" class="input-full input-border" name="address[phone]" value="{{form.phone}}" required>
               </div>
             </div>
             {% comment %} <label for="AddressCompany_{{form.id}}">{{ 'customer.addresses.company' | t }}</label>
-            <input type="text" id="AddressCompany_{{form.id}}" class="input-full" name="address[company]" value="{{form.company}}" autocapitalize="words"> {% endcomment %}
+            <input type="text" id="AddressCompany_{{form.id}}" class="input-full input-border" name="address[company]" value="{{form.company}}" autocapitalize="words"> {% endcomment %}
 
-            <label class="np-h10" for="AddressAddress1_{{form.id}}">Address</label>
-            <input type="text" placeholder="Address Line 1" id="AddressAddress1_{{form.id}}" class="input-full" name="address[address1]" value="{{form.address1}}" autocapitalize="words" required>
+            <label class="np-h10 label-transform" for="AddressAddress1_{{form.id}}">Address</label>
+            <input type="text" placeholder="Address Line 1" id="AddressAddress1_{{form.id}}" class="input-full input-border" name="address[address1]" value="{{form.address1}}" autocapitalize="words" required>
 
             {% comment %} <label for="AddressAddress2_{{form.id}}">{{ 'customer.addresses.address2' | t }}</label> {% endcomment %}
-            <input type="text" placeholder="Address Line 2" id="AddressAddress2_{{form.id}}" class="input-full" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
+            <input type="text" placeholder="Address Line 2" id="AddressAddress2_{{form.id}}" class="input-full input-border" name="address[address2]" value="{{form.address2}}" autocapitalize="words">
 
             {% comment %} <label for="AddressCity_{{form.id}}">{{ 'customer.addresses.city' | t }}</label> {% endcomment %}
-            <input type="text" placeholder="Town" id="AddressCity_{{form.id}}" class="input-full" name="address[city]" value="{{form.city}}" autocapitalize="words" required>
+            <input type="text" placeholder="Town" id="AddressCity_{{form.id}}" class="input-full input-border" name="address[city]" value="{{form.city}}" autocapitalize="words" required>
+            
+            {% comment %} <label for="AddressCounty_{{form.id}}">{{ 'customer.addresses.County' | t }}</label> {% endcomment %}
+            <input type="text" placeholder="County" id="AddressCounty_{{form.id}}" class="input-full input-border" name="address[County]" value="{{form.County}}" autocapitalize="words" >
+
+            
+
+            <div class="grid grid--small">
+              <div class="grid__item one-whole small--one-whole">
+                {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
+                <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full input-border" name="address[zip]" value="{{form.zip}}" autocapitalize="characters" required>
+              </div>
+            </div>
 
             <div
               class="js-address-country"
@@ -161,20 +203,13 @@
               data-province-container-id="AddressProvinceContainer_{{form.id}}"
               data-province-id="AddressProvince_{{form.id}}">
               {% comment %} <label for="AddressCountry_{{form.id}}">{{ 'customer.addresses.country' | t }}</label> {% endcomment %}
-              <select id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full" name="address[country]" data-default="{{form.country}}" required>{{ country_option_tags }}</select>
+              <select id="AddressCountry_{{form.id}}" placeholder="Country" class="input-full input-border" name="address[country]" data-default="{{form.country}}" required>{{ country_option_tags }}</select>
             </div>
 
-            <div id="AddressProvinceContainer_{{form.id}}" style="display: none;">
+<!--             <div id="AddressProvinceContainer_{{form.id}}" style="display: none;">
               {% comment %} <label for="AddressProvince_{{form.id}}">{{ 'customer.addresses.province' | t }}</label> {% endcomment %}
-              <select id="AddressProvince_{{form.id}}" placeholder="County" class="input-full" name="address[province]" data-default="{{form.province}}" required></select>
-            </div>
-
-            <div class="grid grid--small">
-              <div class="grid__item one-whole small--one-whole">
-                {% comment %} <label for="AddressZip_{{form.id}}">{{ 'customer.addresses.zip' | t }}</label> {% endcomment %}
-                <input type="text" id="AddressZip_{{form.id}}" placeholder="Postcode" class="input-full" name="address[zip]" value="{{form.zip}}" autocapitalize="characters" required>
-              </div>
-            </div>
+              <select id="AddressProvince_{{form.id}}" placeholder="County" class="input-full input-border" name="address[province]" data-default="{{form.province}}" required></select>
+            </div> -->
 
             {% comment %} <p>
               {{ form.set_as_default_checkbox }}
@@ -191,14 +226,14 @@
             </p>
           {% endform %}
         </div>
+  
         <div class="account-manipulation-links">
-          <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Update Preferences</a></div>
           <div class="account-manipulation-link"><a href="{{ routes.account_addresses_url }}">Delete Account</a></div>
         </div>
+    </div>
 
-        <hr class="hr--medium">
 
-      {% endfor %}
+{% endfor %}
 
       {% if paginate.pages > 1 %}
         {% include 'pagination' %}
@@ -281,10 +316,17 @@
 {% style %}
 /* New development css scripts */
 
-.grid__item.my-account-content, .grid__item.orders-returns-content {
-  padding-left: 0px;
-}
+  .default-customer-details, .customer-addresses{
+    width:74%;
+    max-width:581px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(43, 39, 37, 0.5);
+  }
 
+.grid__item.my-account-content, .grid__item.orders-returns-content {
+  padding-left: 10px;
+}
+  
 .my-account-content .required-text {
   margin-bottom: 41px;
   font-family: 'Intervogue';
@@ -321,21 +363,23 @@
   background-color: #2B2725;
 }
 
-.my-account-content .customer-info {
+.my-account-content .account-sub-header,.my-account-content #customer-info, .my-account-content #customer-info .customer-info, .my-account-content #customer-info .customer-contact-info {
   margin-bottom: 20px;
+  font-family: 'Intervogue';
   font-size: 12.5px;
   line-height: 21px;
   letter-spacing: 0.05em;
   text-transform: capitalize;
+  color: #2B2725;
 }
 
-.my-account-content .customer-contact-info {
-  margin-bottom: 21px;
-  font-size: 12.5px;
-  line-height: 21px;
-  letter-spacing: 0.05em;
-  text-transform: capitalize;
-}
+  .input-full.input-border{
+border-bottom:1px solid #2B2725;
+  }
+
+  .js-address-form.edit-address .np-h10.label-transform{
+text-transform: capitalize;
+  }
 
 .my-account-content .customer-contact-info .email{
   text-transform: lowercase;
@@ -406,7 +450,7 @@ select:focus {
   display: flex;
   flex-direction: column;
   padding-top: 42px;
-  padding-left: 70px;
+  padding-left: 114px;
   font-family: 'Intervogue';
   font-style: normal;
   font-weight: 400;
@@ -430,12 +474,24 @@ select:focus {
   }
 }
 
+@media (max-width: 960px) {
+  .page-links {
+    padding-left: 65px;
+  }
+}
+
 @media (max-width: 768px) {
+  .page-width.account-section{
+    margin-top:-55px;
+  }
+  .grid__item.my-account-content, .grid__item.orders-returns-content {
+    padding-left: 17px;
+  }
   .page-links {
     display: flex;
     flex-direction: row;
     padding-left: 17px;
-
+    justify-content: space-between;
     position: relative;
     height: max-content;
     top: 0px;
@@ -447,11 +503,30 @@ select:focus {
     font-size: 70px;
     margin-bottom: 20px;
   }
+    .my-account-content .update-account-link {
+  border: 1px solid #2B2725;
 }
+
+  .my-account-content .account-sub-header::after {
+  width: 85%;
+}
+
+  .default-customer-details, .customer-addresses{
+    width:85%;
+  }
+  
+}
+
+  @media (max-width:500px){
+    .my-account-content .update-account-link {
+  width:100%
+}
+  }
+  
 /* order and returns */
 
 .orders-returns-content hr.item-hr {
-  margin-bottom: 65px;
+  margin-bottom: 16px;
   max-width: 581px;
   margin-right: 0;
   margin-left: 0;
@@ -531,13 +606,14 @@ select:focus {
 .orders-returns-content .order-meta {
   display: flex;
   flex-direction: row;
-  margin-bottom: 6px;
+  margin-bottom: -6px;
 }
 
 .orders-returns-content .order-line {
   position: relative;
   padding-top: 4px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
+  margin-bottom: 17px;
   cursor: pointer;
   z-index: 1;
   max-width: 581px;
@@ -609,22 +685,6 @@ select:focus {
     line-height: 21px;
     letter-spacing: 0.05em;
   }
-  .page-links {
-  display: flex;
-  flex-direction: column;
-  padding-top: 42px;
-  padding-left: 70px;
-  font-family: 'Intervogue';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 12.5px;
-  line-height: 26px;
-  letter-spacing: 0.05em;
-  color: #2B2725;
-}
-  .page-link.active {
-    text-decoration: underline;
-  }
 
   .orders-returns-content input:active,
   .orders-returns-content input:focus,
@@ -641,7 +701,7 @@ select:focus {
   .orders-returns-content div.return-link {
     border: 0.75px solid #2B2725;
     background-color: white;
-    display: block;
+    display: none;
     text-align: center;
     padding: 0;
     margin-top: 32px;
@@ -676,6 +736,9 @@ select:focus {
 
 
 @media (max-width: 1000px) {
+  .orders-returns-content .order-meta {
+    margin-bottom: 8px;
+  }
   .orders-returns-content .page-title {
     font-size: 60px;
     margin-bottom: 20px;
@@ -683,9 +746,24 @@ select:focus {
   .orders-returns-content .order-date {
     margin-right: 73px;
   }
+  .orders-returns-content .order-line {
+    padding-bottom: 0px;
+  }
 }
 
 @media (max-width: 768px) {
+  .orders-returns-content .product-quantity {
+    margin-bottom: 5px;
+  }
+  .orders-returns-content .product-price {
+    margin-bottom: 10px;
+  }
+  .orders-returns-content .product-image {
+    margin-right: 25px;
+  }
+  .orders-returns-content .order-line {
+    padding-bottom: 0px;
+  }
   .page-links {
     padding-left: 17px;
   }
@@ -699,11 +777,33 @@ select:focus {
   .orders-returns-content {
     flex-direction: column;
   }
+  
+
 }
 
 @media (max-width: 500px) {
+  .orders-returns-content .product-image {
+    margin-right: 12px;
+  }
   .page-title {
     font-size: 50px;
+    margin-bottom: 20px;
+  }
+  .my-account-content .account-title {
+    font-size: 45px;
+  }
+  .orders-returns-content .order-date {
+    margin-right: 4px;
+  }
+  .orders-returns-content .order-number {
+    margin-right: 50px;
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 440px) {
+  .orders-returns-content .page-title {
+    font-size: 45px;
     margin-bottom: 20px;
   }
 }
@@ -711,11 +811,13 @@ select:focus {
 
 <script>
   function toggleMainUpdateBtn(){
+    
     const mainBtn = document.querySelector(".main-update-btn")
     const customerInfo = document.querySelector(".customer-info")
     const customerContactInfo = document.querySelector(".customer-contact-info")
     const requireText = document.querySelector(".required-text")
-    mainBtn.addEventListener('click', ()=>{
+    if(mainBtn){
+      mainBtn.addEventListener('click', ()=>{
       if (!mainBtn.classList.contains("hide")){
         mainBtn.classList.add("hide")
       }
@@ -723,6 +825,7 @@ select:focus {
       customerContactInfo.classList.add("hide")
       requireText.classList.remove("hide")
     })
+    }
     const secondaryBtns = document.querySelectorAll(".secondary-tgl-btn")
     secondaryBtns.forEach(btn=>{
       btn.addEventListener('click', ()=>{

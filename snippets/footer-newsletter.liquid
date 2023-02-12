@@ -11,9 +11,12 @@
     id="Footer-{{ block.id }}"
     class="collapsible-content collapsible-content--small is-open"
     {% endif %}
-    style="height: 59px !important">    <div class="collapsible-content__inner">      <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">        {%- if block.settings.text -%}
+    style="height: 59px !important">    <div class="collapsible-content__inner">     
+      <div class="footer__collapsible{% unless block.settings.show_footer_title %} footer_collapsible--disabled{% endunless %}">        
+      {%- if block.settings.text -%}
           {{ block.settings.text }}
         {%- endif -%}
+        
         {%- form 'customer', id: 'newsletter-footer' -%}
           {%- if form.posted_successfully? -%}
             <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>          {%- endif -%}
@@ -22,7 +25,9 @@
               {{ form.errors | default_errors }}
             {%- endif -%}
           {%- endif -%}
-          <label for="Email-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>          <label for="newsletter-submit-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.submit' | t }}</label>          <input
+          <label for="Email-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>         
+      <label for="newsletter-submit-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.submit' | t }}</label>          
+        <input
             type="hidden"
             name="contact[tags]"
             value="prospect,newsletter">          <input
@@ -45,11 +50,15 @@
                 focusable="false"
                 role="presentation"
                 class="icon icon-email"
-                viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68" /></svg>              <span class="footer__newsletter-btn-label">                {%- comment -%}
+                viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68" /></svg>              
+                  <span class="footer__newsletter-btn-label">                {%- comment -%}
                 {{ 'general.newsletter_form.submit' | t }}
                 {%- endcomment -%}
                 SIGN UP
-              </span>            </button>          </div>        {%- endform -%}
+              </span>            
+                </button>          
+                </div>        
+          {%- endform -%}
         {%- comment -%}
         {% render 'social-icons', additional_classes: 'footer__social' %}
         {%- endcomment -%}

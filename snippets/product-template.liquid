@@ -71,7 +71,68 @@
   <div class="page-content page-content--product">
     <div class="pdp-mobile-header">
       <span class="np-mobile-pdp-title" style="padding-right: 20px;">{{ product.title }}</span>
-      <span class="np-h9 np-mobile-pdp-price">{{ current_variant.price | money }}</span>
+      <span class="np-h9 np-mobile-pdp-price">
+        {%- assign hide_sale_price = true -%}
+        {%- if product.compare_at_price_max > product.price -%}
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            {%- assign hide_sale_price = false -%}
+          {%- endif -%}
+          <span
+            data-a11y-price
+            class="visually-hidden"
+            aria-hidden="{{ hide_sale_price }}">
+            {{ 'products.general.regular_price' | t }}
+          </span>
+          <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
+            <span data-compare-price class="product__price product__price--compare np-mobile-pdp-price">
+              {%- if current_variant.compare_at_price > current_variant.price -%}
+                {{ current_variant.compare_at_price | money }}
+              {%- endif -%}
+            </span>
+          </span>
+          <span data-compare-price-a11y class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+        {%- else -%}
+          <span data-a11y-price class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+        {%- endif -%}
+
+        <span data-product-price class="product__price{% if current_variant.compare_at_price > current_variant.price %} on-sale{% endif %} np-mobile-pdp-price">
+          {%- unless product.empty? -%}
+            {{ current_variant.price | money }}
+          {%- else -%}
+            {{ 1999 | money }}
+          {%- endunless -%}
+        </span>
+
+        {%- if settings.product_save_amount -%}
+          {%- if settings.product_save_type == 'dollar' -%}
+            {%- capture saved_amount -%}
+              {{ current_variant.compare_at_price | minus: current_variant.price | money }}{%- endcapture -%}
+          {%- else -%}
+            {%- capture saved_amount -%}
+              {{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{%- endcapture -%}
+          {%- endif -%}
+          <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %} np-mobile-pdp-price price_save">
+            {%- unless hide_sale_price -%}
+              {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+            {%- endunless -%}
+          </span>
+        {%- endif -%}
+
+        <div data-unit-price-wrapper class="product__unit-price product__unit-price--spacing {% unless current_variant.unit_price_measurement %} hide{% endunless %}">
+          {%- capture unit_price_base_unit -%}
+            <span data-unit-base>
+              {%- if current_variant.unit_price_measurement -%}
+                {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                  {{ current_variant.unit_price_measurement.reference_value }}
+                {%- endif -%}
+                {{ current_variant.unit_price_measurement.reference_unit }}
+              {%- endif -%}
+            </span>
+          {%- endcapture -%}
+
+          <span data-unit-price>{{ current_variant.unit_price | money }}</span>/{{ unit_price_base_unit }}
+        </div>
+      </span>
     </div>
 
     <div class="material-page-title-wrapper mobile-material-wrapper">
@@ -80,7 +141,13 @@
           {%- if tag contains '_tenceltm' or tag contains '_organic-cotton' -%}
             {%- assign include_page_handle = tag | split: '_' -%}
             {%- assign include_page = pages[include_page_handle.last] -%}
-            <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ include_page.title }}, </a>
+            {% assign words = include_page.title | split: ' ' %}
+            {% capture titlecase %}
+              {% for word in words %}
+                {{ word | capitalize }}
+              {% endfor %}
+            {% endcapture %}
+            <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ titlecase }}, </a>
           {%- endif -%}
         {%- endfor -%}
       {%- endcapture -%}
@@ -89,7 +156,7 @@
     </div>
 
         <div class="image-wrap pdp-mobile-slider"
-            style="height: auto;"
+            
             >
 <!--             <img class="grid-product__image lazyload"
                 data-src="{{ img_url }}"
@@ -193,7 +260,13 @@
                   {%- if tag contains '_tenceltm' or tag contains '_organic-cotton' -%}
                     {%- assign include_page_handle = tag | split: '_' -%}
                     {%- assign include_page = pages[include_page_handle.last] -%}
-                    <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ include_page.title }},</a>
+                    {% assign words = include_page.title | split: ' ' %}
+                    {% capture titlecase %}
+                      {% for word in words %}
+                        {{ word | capitalize }}
+                      {% endfor %}
+                    {% endcapture %}
+                    <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ titlecase }},</a>
                   {%- endif -%}
                 {%- endfor -%}
               {%- endcapture -%}
@@ -261,7 +334,7 @@
                         {{ 'products.general.regular_price' | t }}
                       </span>
                       <span data-product-price-wrap class="{% if hide_sale_price %} hide{% endif %}">
-                        <span data-compare-price class="product__price product__price--compare">
+                        <span data-compare-price class="product__price product__price--compare np-h9">
                           {%- if current_variant.compare_at_price > current_variant.price -%}
                             {{ current_variant.compare_at_price | money }}
                           {%- endif -%}
@@ -288,7 +361,7 @@
                         {%- capture saved_amount -%}
                           {{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{%- endcapture -%}
                       {%- endif -%}
-                      <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %}">
+                      <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %} np-h9 price_save">
                         {%- unless hide_sale_price -%}
                           {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
                         {%- endunless -%}
@@ -440,7 +513,7 @@
                   {%- when 'buy_buttons' -%}
                   <div class="product-block" {{ block.shopify_attributes }}>
                     {%- unless product.empty? -%}
-                      <div class="product-block" style="max-width: 464px;">
+                      <div class="product-block" style="max-width: 464px; background-color: #2B2725;">
                         {%- render 'product-form'
                           , form_id: form_id,
                           product: product,
@@ -871,7 +944,7 @@
     padding-left: 22px;
   }
   .pdp-mobile-header {
-    display: none;
+    
     justify-content: space-between;
   }
   .mobile-material-wrapper,  .pdp-mobile-slider {
@@ -879,17 +952,18 @@
   }
 
   .material-page-title-wrapper a{
-    font-family: 'Intervogue';
+    font-family: 'Silvana';
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;   
     letter-spacing: -0.01em;
     color: #2B2725;
+    text-transform: capitalize;
   }
   .product-block--price{
-    padding-top: 30px;
-    padding-bottom: 10px;
+    padding-top: 36px;
+    padding-bottom: 20px;
   }
 
   .show-size-guide-pdp .delivery-retunrs-wrapper, .show-size-guide-pdp .care-instructions-container, .show-size-guide-pdp .pdp-material-container, .pdp-mobile-drawer, .pdp-image-wrap,
@@ -919,6 +993,7 @@
   }
   .related-color-products{
     padding-top: 15px;
+    padding-bottom: 21px;
   }
   .variant-wrapper .variant-input-wrap{
     text-align: left;
@@ -943,18 +1018,35 @@
   .np-prod-template .flickity-viewport{
     margin-left: 24px;
   }
-  .np-prod-template{
-    width: 55%;
-  }
-  .pdp-right-block{
-    width: 45%;
-  }
+
   .product-block--header{
   margin-bottom: 14px;
   }
+  .variant-wrapper.js {
+    padding-bottom: 25px;
+  }
+  .price_save {
+    color: #c20000;
+  }
   @media only screen and (max-width: 768px) {
+    .pdp-mobile-slider{
+      display: block !important;
+    }
+    .related-color-products{
+      padding-bottom: 28px;
+    }
     .np-mobile-pdp-price {
       font-size: 16px;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      line-height: 25px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #2B2725;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
     .pdp-mobile-drawer{
       padding-top: 10px;
@@ -1020,6 +1112,7 @@
       display: flex;
       padding-left: 15px;
       padding-right: 15px;
+      align-items: start;
     }
     .mobile-material-wrapper {
       display: flex;
@@ -1035,7 +1128,7 @@
       text-transform: uppercase;
       color: #2B2725;
     }
-    .pdp-mobile-slider, .pdp-mobile-drawer, .pdp-image-wrap{
+     .pdp-mobile-drawer, .pdp-image-wrap{
       display: block;
     }
     .pdp-mobile-img:not(:last-child), .pdp-mobile-img-last {
@@ -1052,11 +1145,10 @@
     }
   }
   .pdp-clearpay-klarna{
-    padding-bottom: 15px;
+    padding-bottom: 34px;
+    padding-top: 21px;
   }
-  .test-99 .product__main-photos{
-    width: 100%;
-  }
+
   .grid--product-images--partial .pdp-right-block{
     padding-left: 105px;
     padding-top: 100px;
@@ -1074,6 +1166,9 @@
   }
   .sticky-mobile-pdp{
     height: 72px;
+  }
+  .price_save {
+    color: #c20000;
   }
 </style>
 <script>

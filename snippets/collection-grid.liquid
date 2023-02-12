@@ -97,8 +97,9 @@ Snippet Arguments
         {%- endif -%}
       {%- endfor -%}
       {% else %}
-        <div class="np-h6">
-          <div>No products available. Please clear your filters if applied.</div>
+        <div class="np-h3 no-products-available">
+          <div>No Products Available</div>
+          <div class="collection-filter-reset">Clear Filters</div>
         </div>
     {% endif %}
   </div>
@@ -112,6 +113,31 @@ Snippet Arguments
 hr.filter-line-mobile {
   display: none;
 }
+  .no-products-available {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .collection-filter-reset {
+     border: 0.5px solid rgba(43, 39, 37, 0.25);;
+    background-color: white;
+    display: block;
+    padding: 0.3em 0.2em;
+    width: 347px;
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    max-width: 230px;
+    margin-top: 10px;
+    font-family: "Intervogue";
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+  .collection-filter-reset:hover {
+    color: #ffffff;
+    background-color: #111111;
+  }
 #CollectionAjaxContent .collection-filter .btn {
   padding: 0 20px;
   border: none;
@@ -212,6 +238,14 @@ html[dir="rtl"] .collection-filter__item--count {
 {%- endunless -%}
 
 <script>
+  applyClickEventForSorting()
+  function resetFilter(){
+    var target = document.querySelector(".collection-filter-reset")
+    console.log(target)
+    target.addEventListener('click', ()=>{
+      window.location.search = ""
+    })
+  }
   function sortingFunctionWithoutMultipleOptions(){
     var sortItems = document.querySelectorAll(".sort-list-item")
     sortItems.forEach(item=>{
@@ -247,5 +281,5 @@ html[dir="rtl"] .collection-filter__item--count {
     })
   }
   sortingFunctionWithoutMultipleOptions()
-  applyClickEventForSorting()
+  resetFilter()
 </script>

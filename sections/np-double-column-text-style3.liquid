@@ -108,6 +108,11 @@
             .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
               height: {{ block.settings.spacer-height }}px;
           }
+    @media (max-width:768px){
+    .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: 20px;
+                }
+  }
       {% endcase %}
       {% endfor %}
   

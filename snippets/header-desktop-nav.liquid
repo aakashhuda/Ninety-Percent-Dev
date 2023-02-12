@@ -24,7 +24,7 @@
 
     <li class="site-nav__item site-nav__expanded-item{% if has_dropdown %} site-nav--has-dropdown{% endif %}{% if is_megamenu %} site-nav--is-megamenu{% endif %}" {% if has_dropdown %}aria-haspopup="true"{% endif %}>
 
-      <a href="{{ link.url }}" class="site-nav__link site-nav__link--underline{% if has_dropdown %} site-nav__link--has-dropdown{% endif %} np-h6">
+      <a class="site-nav__link site-nav__link--underline{% if has_dropdown %} site-nav__link--has-dropdown{% endif %} np-h6 desktop-nav-item">
         {{ link.title }}
       </a>
       {%- if is_megamenu -%}
@@ -65,11 +65,17 @@
                     {%- endif -%}
                   {%- endif -%}
 
-                  <div class="h5 megamenu-link-title">
-                   
-                    <a href="{{ childlink.url }}" class="site-nav__dropdown-link site-nav__dropdown-link--top-level ">{{ childlink.title }}</a>
+                  {% if childlink.url contains '/collections/' %}
+                  <div class="megamenu-link-title hide">
+                    <a class="np-h6 site-nav__dropdown-link site-nav__dropdown-link--top-level dropdown-menu-header-part">{{ childlink.title }}</a>
                   </div>
 
+                    {% else %}
+                    <div class="megamenu-link-title">
+                    <a class="np-h6 site-nav__dropdown-link site-nav__dropdown-link--top-level dropdown-menu-header-part">{{ childlink.title }}</a>
+                  </div>
+                    {% endif %}
+                    
                   {%- liquid
                     if childlink.levels > 0
                       assign previous_column_type = 'full'
@@ -79,8 +85,8 @@
                   -%}
                 
                   {%- for grandchildlink in childlink.links -%}
-                    <div>                 
-                      <a href="{{ grandchildlink.url }}" class="site-nav__dropdown-link">{{grandchildlink.title}}</a>
+                    <div class="grandchildlink-style">                 
+                      <a href="{{ grandchildlink.url }}" class="site-nav__dropdown-link np-h6 dropdown-menu-child-part">{{grandchildlink.title}}</a>
                     </div>
                   {%- endfor -%}
                 {%- endfor -%}
@@ -131,7 +137,9 @@
 </script>
 
 <style>
-  .new-custom-dropdown {}
+  .site-nav__item:nth-child(3) .megamenu-link-title:nth-child(1) {
+    display:none;
+  }
 </style>
 
 <!-- 
@@ -164,7 +172,7 @@ role="navigation" aria-label="Primary"
 class="site-nav__item site-nav__expanded-item{% if has_dropdown %} site-nav--has-dropdown{% endif %}{% if is_megamenu %} site-nav--is-megamenu{% endif %} {% if link.handle == 'sale' %} sale-off{% endif %}"
 {% if has_dropdown %}aria-haspopup="true"{% endif %}>
 
-<a href="{{ link.url }}"  data-sale="{{ link.handle }}"  class="site-nav__link site-nav__link--underline{% if has_dropdown %} site-nav__link--has-dropdown{% endif %}">
+<a href="{{ link.url }}"  data-sale="{{ link.handle }}"  class="np-h6 site-nav__link site-nav__link--underline{% if has_dropdown %} site-nav__link--has-dropdown{% endif %}">
 {{ link.title }}
 </a>
 {% if is_megamenu %}
@@ -295,44 +303,45 @@ style="background-image: url({{ articles[article_handle].image | img_url: '400x'
 </ul>
 
 <style>
-a.site-nav__item .sale-off {
-color: #ff0007;
-}
-.megamenu__colection-image ~ .h5 {
-display: none;
-}
-
-.site-nav__dropdown.megamenu {
-padding: 30px 10px;
-}
-
-.site-nav__dropdown.megamenu > .page-width {
-padding: 0;
-}
-
-.site-header .site-nav__dropdown.megamenu > .grid:after {
-display: none;
-}
-
-.site-header .site-nav__dropdown.megamenu .grid__item:not(:first-child) {
-padding-left: 10px;
-}
-
-@media (min-width: 1024px) {
-.site-header .site-nav__dropdown.megamenu .grid__item:not(:first-child) {
-padding-left: 20px;
-}
-.site-nav__dropdown.megamenu {
-padding: 50px 10px;
-}
-}
-.site-nav__link--underline::after {
-
-transform: scaleX(0);  
-transition: transform 0.5s ease-in-out;
-}
-
-.site-nav__link--underline:hover:after { transform: scaleX(1); }
+                    
+    a.site-nav__item .sale-off {
+    color: #ff0007;
+    }
+    .megamenu__colection-image ~ .h5 {
+    display: none;
+    }
+    
+    .site-nav__dropdown.megamenu {
+    padding: 30px 10px;
+    }
+    
+    .site-nav__dropdown.megamenu > .page-width {
+    padding: 0;
+    }
+    
+    .site-header .site-nav__dropdown.megamenu > .grid:after {
+    display: none;
+    }
+    
+    .site-header .site-nav__dropdown.megamenu .grid__item:not(:first-child) {
+    padding-left: 10px;
+    }
+    
+    @media (min-width: 1024px) {
+    .site-header .site-nav__dropdown.megamenu .grid__item:not(:first-child) {
+    padding-left: 20px;
+    }
+    .site-nav__dropdown.megamenu {
+    padding: 50px 10px;
+    }
+    }
+    .site-nav__link--underline::after {
+    
+    transform: scaleX(0);  
+    transition: transform 0.5s ease-in-out;
+    }
+    
+    .site-nav__link--underline:hover:after { transform: scaleX(1); }
 </style>
 
 <script>
@@ -361,6 +370,13 @@ setTimeout(start, 25);
     text-decoration: underline;
     text-underline-offset: 12px;
   } */
+
+  .dropdown-menu-child-part, .dropdown-menu-header-part{
+    line-height:21px !important;
+    letter-spacing:0.04em !important;
+}
+
+  
   .site-navigation li:nth-child(2) .new-custom-dropdown .megamenu-link-title a{
     text-decoration: underline;
     text-underline-offset: 18px;

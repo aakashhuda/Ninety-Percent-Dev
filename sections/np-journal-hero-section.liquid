@@ -1,0 +1,189 @@
+<section class="section-wrapper-{{ section.id }}">   
+ {% for block in section.blocks %}
+    {% case block.type %}
+        {% when "hero-block" %}
+            <div class="block-{{ block.id }}">     
+                <div class="hero-block-inner"> 
+                    <div class="hero-image-part">
+                        <img src="{{ block.settings.hero-image | img_url: 'grande' }}" alt=""> 
+                       
+                    </div>
+                    <div class="hero-text-part">
+                        <div class="hero-title">
+                            <span> {{ block.settings.hero-title }} </span>
+                        </div>
+                        <div class="hero-desc-wrapper">
+                            <div class="hero-desc">
+                                <span> {{ block.settings.hero-desc }} </span>
+                            </div>
+                            <div class="'hero-sub-desc'">
+                                <span> {{ block.settings.hero-sub-desc }} </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span class="image-block-caption np-h6"> {{ block.settings.caption }} </span> 
+                </div>
+             </div>     
+        {% when 'spacer-block' %}
+            <div class="spacer-{{ block.id }}">           
+            </div>     
+        {% endcase %}
+{% endfor %}
+</section>
+
+<style>   
+    
+.section-wrapper-{{ section.id }} {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when "hero-block" %}
+.block-{{ block.id }} {
+                padding: 0px {{ block.settings.padding }}px;
+                
+             }
+            .block-{{ block.id }} .hero-block-inner  {
+                display: flex;
+                flex-direction: row;
+            }
+            .block-{{ block.id }} .hero-image-part, .block-{{ block.id }} .hero-text-part {
+                flex: 1;
+
+            }
+            .block-{{ block.id }} .hero-image-part {
+                margin-right: 10.21%;
+            }
+            .block-{{ block.id }} .hero-text-part {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .block-{{ block.id }} .hero-title {
+                font-family: 'Silvana';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 100px;
+                line-height: 100px;
+                letter-spacing: -0.03em;
+                color: #2B2725;
+            }
+
+            .block-{{ block.id }} .hero-desc {
+                font-family: 'Silvana';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 34px;
+                line-height: 44px;
+                text-align: justify;
+                letter-spacing: -0.01em;
+                color: #2B2725;
+            }
+        {% when 'spacer-block' %}
+            .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                height: {{ block.settings.spacer-height }}px;
+            }
+    {% endcase %}
+{% endfor %}
+</style>
+
+{% schema %}
+{
+"name": "Journal page Hero Section",
+"settings": [
+],
+"blocks": [
+    {
+        "type": "hero-block",
+        "name": "Hero Block",
+        "settings": [
+            
+  {
+    "type": "checkbox",
+    "id": "show-caption",
+    "label": "Show caption",
+    "default": true
+  },
+  {
+                "type": "range",
+                "id":"padding",
+                "label":"Left-Right Space of the block",
+                "min":0,
+                "max":200,
+                "step":2,
+                "unit":"px",
+                "default":52
+            },
+            {
+                "type": "image_picker",
+                "label": "Image Pick",
+                "id": "hero-image"
+            },
+               
+          {
+                "type": "richtext",
+                "label": "Add caption",
+                "id": "caption"
+            },
+            {
+                "type":"color",
+                "id":"caption-color",
+                "label":"caption text color",
+                "default": "#2B2725"
+            },
+            {
+                "type": "richtext",
+                "label": "Add Title",
+                "id": "hero-title",
+                "default": "<p>Behind the collection</p>"
+            },
+            {
+                "type": "richtext",
+                "label": "Add Description",
+                "id": "hero-desc",
+                "default": "<p>Get to know the artists inspiring our Spring/Summer 2023 collection.</p>"
+            },
+            {
+                "type": "richtext",
+                "label": "Add Sub-description",
+                "id": "hero-sub-desc",
+                "default": "<p>words</p>"
+            }
+        ]
+    },
+    {
+        "type": "spacer-block",
+        "name": "Spacer",
+          "settings":[
+            {
+                "type": "range",
+                "id": "spacer-height",
+                "label": "Spacer Height",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "default": 30
+            }
+          ]
+    }
+],
+"presets": [
+    {
+     "category":"content",
+       "name":"Journal page Hero Section",
+       "blocks": [
+    {
+      "type": "hero-block"
+    },
+    {
+      "type": "spacer-block"
+    }
+  ]
+    }
+]
+}
+{% endschema %}

@@ -46,7 +46,8 @@
 {%- endif -%}
 {% endunless %}
    {%- endfor -%}
-   <style>     .grid__item.single-pd-width{
+   <style>     
+     .grid__item.single-pd-width{
       width: 70%;
       margin: 0 auto;
       float: inherit;
@@ -60,9 +61,25 @@
       text-align: left;
      }
      .grid-product__meta .np-regular_price.look-price{
-      padding-top: 3px;
+      padding-top: 3.5px;
+       font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+       letter-spacing: 0.05em;
+      text-transform: uppercase;
+color: #2B2725;
      }
-
+      .fabric-type {
+        text-transform: capitalize;
+        font-family: "Silvana";
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: -0.01em;
+        padding: 0 10px;
+      }
      @media (max-width: 1000px) {
       .fabric-type{
         display: none;
@@ -94,8 +111,10 @@
                 {%- else -%}
                   {% capture saved_amount %}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{% endcapture %}
                 {%- endif -%}
-                <span class="grid-product__price--savings" style="color:#fff;">                  {{ saved_amount}} off
-                </span>              {%- endif -%}
+                <span class="grid-product__price--savings" style="color:#fff;">
+                  {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+                </span>
+                {%- endif -%}
             {%- endif -%}
           </div>        {%- endif -%}
       {% endcomment%}
@@ -160,35 +179,51 @@
                   {%- assign values = values | split: ',' %}
                   {%- if variant.image -%}
                     <div
-                      class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">                      {% if variant.compare_at_price >  variant.price %}
-                        <div class="grid-product__tag grid-product__tag--sale">                              {%- if settings.product_save_type == 'dollar' -%}
+                      class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">                      
+                    {% if variant.compare_at_price >  variant.price %}
+                        <div class="grid-product__tag grid-product__tag--sale">                              
+                      {%- if settings.product_save_type == 'dollar' -%}
                                 {% capture np_saved_amount %}{{ variant.compare_at_price | minus: variant.price | money }}{% endcapture %}
                               {%- else -%}
                                 {% capture np_saved_amount %}{{ variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round }}%{% endcapture %}
                               {%- endif -%}
-                              <span class="grid-product__price--savings" style="color:#fff;">                                {{ np_saved_amount}} off
-                              </span>                        </div>                      {% endif %}
+                              <span class="grid-product__price--savings" style="color:#fff;"> 
+                                {{ np_saved_amount}} off
+                              </span>                   
+                        </div>                      {% endif %}
                     </div>                  {%- endif -%}
                 {%- endunless -%}
               {%- endfor -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endif -%}
-      </div>    </a>    <div class="grid-product__meta">      <!-- <script>        console.log( {{ product.variants | json }})
-      </script> -->        <div class="grid-product-title grid-product__title--{{ settings.type_product_style }} np-h6">{{ product.title }}</div>        {%- if settings.vendor_enable -%}
-          <div class="grid-product__vendor">{{ product.vendor }}</div>        {%- endif -%}
-        <div class="grid-product__price{% if on_sale or discount %} np_custom_price{% endif %}">          {%- if on_sale -%}
-          <div class="np-sale_price">            <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>            <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>          {%- endif -%}
-          {%- if on_sale -%}
+      </div>    </a>    <div class="grid-product__meta">      
+        <!-- <script>        console.log( {{ product.variants | json }})
+      </script> -->        
+        <a href="{{ product.url | within: collection }}" class="grid-product-title grid-product__title--{{ settings.type_product_style }} np-h6">{{ product.title }}</a>
+        {%- if settings.vendor_enable -%}
+          <div class="grid-product__vendor">{{ product.vendor }}</div>        
+          {%- endif -%}
+        <div class="grid-product__price np-h6 {% if on_sale or discount %} np_custom_price{% endif %}">          {%- if on_sale -%}
+          <div class="np-sale_price">            
+            <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>            
+            <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>            
+            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>          
+          {%- endif -%}
+          
+         {%- if on_sale -%}
             {%- if settings.product_save_amount -%}
               {%- if settings.product_save_type == 'dollar' -%}
                   {% capture np_saved_amount %}{{ product.compare_at_price | minus: product.price | money }}{% endcapture %}
                   {%- else -%}
                   {% capture np_saved_amount %}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{% endcapture %}
                 {%- endif -%}
-              <span class="grid-product__price--savings">                -{{ np_saved_amount}}
-              </span>            {%- endif -%}
-          </div>          {%- endif -%}
+<!--               <span class="grid-product__price--savings">                -{{ np_saved_amount}}
+              </span>             -->
+              {%- endif -%}
+          </div>          
+            {%- endif -%} 
+            
           {%- if discount -%}
             <div class="np-sale_price">              <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>              <span class="grid-product__price--original">{{ product.price | money }}</span>              <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>                <span class="grid-product__price--savings">                -30%
               </span>             </div>          {%- endif -%}
@@ -218,12 +253,12 @@
             </div>          {%- endif -%}
         </div>        {%- if settings.enable_product_reviews -%}
           <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>        {%- endif -%}
-      </div>      <div class="fabric-type">        {% for materiall in product.metafields.custom.material.value %}
+      </div>      <a href="{{ product.url | within: collection }}" class="fabric-type">        {% for materiall in product.metafields.custom.material.value %}
           {% if forloop.last %}
             <span>{{ materiall }}</span>            {% else %}
           <span>{{ materiall }}, </span>            {% endif %}
         {% endfor %}
-      </div>  </div>  {%- if settings.collection_color_swatches -%}
+      </a>  </div>  {%- if settings.collection_color_swatches -%}
     {%- assign swatch_file_extension = 'png' -%}
     {%- assign color_count = 0 -%}
     {%- for option in product.options_with_values -%}

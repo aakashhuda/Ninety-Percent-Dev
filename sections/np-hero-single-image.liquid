@@ -8,7 +8,7 @@
                         <div class="image-block-inner" >
                             
                             <div class="image-block-text">
-                                <div class="image-block-title np-h1"> <span> {{ block.settings.title }} </span>  </div>
+                                <div class="image-block-title np-h1"> {{ block.settings.title }}</div>
                                 <div class="image-block-desc np-h4"> <span> {{ block.settings.desc }}  </span> </div>
                             </div>
                            
@@ -49,21 +49,24 @@
                     overflow: hidden;
                     background-size: cover;
                     background-position: 100% center;
+          display: flex;
+          justify-content:center;
+    align-items: {{block.settings.text-position}};
                  }
                  
                  .block-{{ block.id }} .image-block-inner .image-block-text {
                     text-align: center;
                    display: flex;
                    flex-direction: column;
-                   align-items: center;
-                
-                    margin-top: 120px;                
-                    color: white;
                     
                  } 
              
-              .image-block-title , .image-block-desc, .image-block-caption {
+              .block-{{ block.id }} .image-block-title , .block-{{ block.id }} .image-block-desc, .block-{{ block.id }} .image-block-caption {
                 display: none;
+              }
+          
+              .block-{{ block.id }} .image-block-title , .block-{{ block.id }} .image-block-desc {
+          color:{{block.settings.text-color}};
               }
                
                  .block-{{ block.id }} .image-block-text .image-block-title p {
@@ -201,14 +204,16 @@
                     "id": "bg-image"
                 },
                 {
-                    "type": "text",
+                    "type": "richtext",
                     "label": "Add title",
                     "id": "title",
-                    "default": "For The World We Want."
+                    "default": "<p>For The World We Want.</p>"
                 },
-              
-              
-               
+                   {
+                    "type":"color",
+                    "id":"text-color",
+                    "label":"Text color"
+                },
                 {
                     "type": "text",
                     "label": "Add description",
@@ -222,7 +227,33 @@
                     "label": "Add caption",
                     "id": "caption"
                 
-                }
+                },
+              {
+                    "type": "font",
+                    "label": "Add caption",
+                    "id": "captionFont"
+                
+                },
+              {
+                        "type": "select",
+                        "id": "text-position",
+                        "label": "Text Position",
+                        "options": [
+                          {
+                            "value": "flex-start",
+                            "label": "Top"                          
+                          },
+                          {
+                            "value": "center",
+                            "label": "Middle"                          
+                          },
+                          {
+                            "value": "flex-end",
+                            "label": "Bottom"                          
+                          }
+                        ],
+                        "default": "center"                    
+              }
                
               
        

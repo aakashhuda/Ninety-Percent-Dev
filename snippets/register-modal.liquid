@@ -1,0 +1,293 @@
+<div class="register-overlay"></div>
+<div class="page-width page-width--tiny page-content register-section">
+  <header class="section-header">
+    <h1 class="section-header__title">{{ 'customer.register.title' | t }}</h1>
+    <div class="register-section-close">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L16 16M1 16L16 1" stroke="#2B2725"/>
+</svg>
+
+      </div>
+  </header>
+
+  <div id="CustomerRegisterForm" class="form-vertical">
+    {%- form 'create_customer' -%}
+
+    <p class="register-form-font required-field">*Required</p>
+
+      {{ form.errors | default_errors }}
+
+      <label class="register-form-font" for="FirstName">{{ 'customer.register.first_name' | t }}*</label>
+      <input placeholder="First Name*" type="text" name="customer[first_name]" id="FirstName" class="input-full"{% if form.first_name %} value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus required>
+
+      <label class="register-form-font" for="LastName">{{ 'customer.register.last_name' | t }}*</label>
+      <input placeholder="Last Name*" type="text" name="customer[last_name]" id="LastName" class="input-full"{% if form.last_name %} value="{{ form.last_name }}"{% endif %} autocapitalize="words" required>
+
+      <label class="register-form-font" for="Email">{{ 'customer.register.email' | t }}*</label>
+      <input placeholder="Email*" type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}"{% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off" required>
+
+      <label class="register-form-font" for="CreatePassword">{{ 'customer.register.password' | t }}*</label>
+      <input placeholder="Password*" type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" required minlength="8" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,32}$">
+      
+    <label class="register-form-font" for="CreateConfirmPassword">Confirm Password*</label>
+      <input placeholder="Confirm Password*" type="password" name="customer[confirmPassword]" id="CreateConfirmPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" required>
+
+
+    <p class="hide confirm-error">
+      Passwords are not matching.
+    </p>
+    
+    <p class="register-form-font pass-style">
+      Password must be at least 8 characters; must contain at least one uppercase letter, one numeric digit, and one special character.
+    </p>
+
+    
+
+    <div class="subs-label">
+      <label class="checkbox_container register-form-font">Subscribe to our newsletter?
+          <input type="hidden" name="customer[accepts_marketing]" value="false" />
+              <input type="checkbox" name="customer[accepts_marketing]" class="input-full{% if form.errors contains 'email' %} error{% endif %}" id="accepts_marketing" value="true">
+              <span class="checkmark"></span>
+          </label>
+    </div>
+
+    <p>
+        <label for="register-submit" class="hidden-label">{{ 'customer.register.submit' | t }}</label>
+        <input type="submit" id="register-submit" value="{{ 'customer.register.submit' | t }}" class="btn btn--full login-new-button new-register-button">
+      </p>
+
+    {%- endform -%}
+  </div>
+</div>
+
+<style>
+input{
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px !important;
+line-height: 21px !important;
+letter-spacing: 0.05em !important;
+color: rgba(43, 39, 37, 0.5);
+}
+  
+    input, select{
+  border: none;
+  border-bottom: 1px solid;
+  border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+  border-color: var(--colorBorder);
+  width: 100%;
+  max-width: 581px;
+  padding: 4px 10px;
+  padding-left: 0;
+  border-radius: 0;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+  
+input:active,
+input:focus,
+select:active,
+select:focus {
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+
+  .register-overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #231f20b3;
+    left: 0;
+    display: none;
+  }
+
+  .register-overlay.register-overlay-appeared{
+    display:block;
+  }
+
+  .register-section .section-header{
+    display:flex;
+    justify-content:space-between;
+  }
+
+  .register-section{
+    max-width: 530px;
+    width:100%;
+    position: absolute;
+    top:0;
+    right:-100%;
+    background-color:white;
+    height:100vh;
+    overflow:scroll;
+    padding: 30px 50px 100px 50px;
+  }
+
+.register-section-appeared{
+    right: 0%;
+    transition: right .45s !important;
+    z-index:99999999999999;
+  }
+
+  .register-section .section-header .section-header__title{
+  text-align:left;
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+}
+
+  .register-section .form-vertical{
+padding-top: 42px;
+    border-top: 0.25px solid rgba(43, 39, 37, 0.5);
+  }
+
+  .register-section .form-vertical input{
+    color:#000000;
+  }
+  .register-section .form-vertical .register-form-font{
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12.5px !important;
+line-height: 21px !important;
+letter-spacing: 0.05em !important;
+color: #2B2725;
+    text-transform: capitalize;
+    text-align:left;
+    margin:0;
+  }
+
+  .register-section .form-vertical .register-form-font.required-field{
+    margin-bottom:48px;
+  }
+  
+  .register-section .form-vertical .register-form-font.pass-style{
+    text-transform: none;
+    margin-bottom:34px;
+    margin-top:23px;
+  }
+
+  .subs-label{
+    display:flex;
+    justify-content: start;
+    gap:20px;
+    margin: 35px 0;
+  }
+  .subs-label input{
+width:16px;
+    height:25px;
+
+  }
+  .subs-label .register-form-font{
+text-transform: none;
+
+  }
+
+   .btn.new-register-button{
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+    margin:0;
+    border: 1px solid #000000;
+    text-align:left;
+    background: white !important;
+padding: 25px 24px;
+  }
+
+  .register-section-close{
+    cursor:pointer;
+  }
+
+  #register-submit{
+    padding:24px !important;
+  }
+
+  .confirm-error, .register-form-font.pass-style.confirm-error{
+ color: red;
+    
+  }
+
+  /* The container */
+.checkbox_container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox_container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 21px;
+  width: 16px;
+  background-color: white;
+  border: 0.5px solid #2B2725;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox_container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox_container input:checked ~ .checkmark {
+  background-color: #111;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox_container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox_container .checkmark:after {
+  left: 4px;
+  top: 0px;
+  width: 7px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+  
+</style>

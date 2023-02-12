@@ -59,6 +59,12 @@
                         display: block;
                      }
                  {% endif %}
+
+  @media (max-width:960px){
+.section-wrapper-{{ section.id }} .block-{{ block.id }} {
+                    padding: 0px 20px;
+                }
+  }
                  @media only screen and (max-width: 768px) {
                         .section-wrapper-{{ section.id }} {
                     padding: 0px 20px;

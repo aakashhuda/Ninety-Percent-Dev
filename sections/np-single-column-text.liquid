@@ -4,7 +4,7 @@
           {% case block.type %}
           {% when 'text-block' %}
               <div class="text-block-{{ block.id }}">
-            <div class="text-block-inner np-h5">{{ block.settings.text-content }}</div>
+            <div class="text-block-inner {{ block.settings.typography }}">{{ block.settings.text-content }}</div>
             </div>
   
           {% when 'spacer-block' %}
@@ -28,21 +28,22 @@
           {% when "text-block" %}
   
             .text-block-{{ block.id }} {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+              margin: 0 auto;
+              max-width:{{block.settings.max-width}}px;
+              width:100%;
             }
-            .text-block-inner {
-                max-width: 576px;
+            .text-block-{{ block.id }} .text-block-inner {
+                width: {{block.settings.width}}%;
                 margin: 5px;
             }
-            .text-block-inner p {
-              margin: 0 auto;
+            .text-block-{{ block.id }} .text-block-inner p {
+              margin: 0;
+/*               font-family:{{block.settings.font-family}}; */
           }
 
         
           .section-wrapper-{{ section.id }} .text-block-{{ block.id }} {
-              text-align: center;
+              text-align: {{block.settings.text-alignment}};
           }
 
 
@@ -77,9 +78,113 @@
                    "id":"text-content",
                    "label":"Change Text Block",
                    "default":"<p>We're focused on sustainable practices and materials, creating collections with longevity and circularity at their heart. But what sets us apart is our revolutionary profit sharing model, providing the tools of empowerment for everyone involved in the creation of those collections and giving back to the causes close to our heart.</p>"
+                },
+
+                {
+                    "type": "range",
+                    "id":"max-width",
+                    "label":"Max Width of Section",
+                    "min":500,
+                    "max":1000,
+                    "step":5,
+                    "unit":"px",
+                    "default":500
+                },
+                {
+                    "type": "range",
+                    "id":"width",
+                    "label":"Paragraph Width",
+                    "min":0,
+                    "max":100,
+                    "step":1,
+                    "unit":"%",
+                    "default":50
+                },
+                {
+                        "type": "select",
+                        "id": "text-alignment",
+                        "label": "Paragraph Text Alignment",
+                        "options": [
+                          {
+                            "value": "left",
+                            "label": "Left"                         
+                          },
+                          {
+                            "value": "center",
+                            "label": "Center"                          
+                          },
+                          {
+                            "value": "right",
+                            "label": "Right"                          
+                          }
+                        ],
+                        "default": "left"                   
+                },
+                {
+                        "type": "select",
+                        "id": "typography",
+                        "label": "Paragraph Typography",
+                        "options": [
+                          {
+                            "value": "np-h1",
+                            "label": "H1"                          
+                          },
+                          {
+                            "value": "np-h2",
+                            "label": "H2"                          
+                          },
+                          {
+                            "value": "np-h3",
+                            "label": "H3"                          
+                          },
+                          {
+                            "value": "np-h4",
+                            "label": "H4"                          
+                          },
+                          {
+                            "value": "np-h5",
+                            "label": "H5"                          
+                          },
+                          {
+                            "value": "np-h6",
+                            "label": "H6"                          
+                          },
+                          {
+                            "value": "np-h7",
+                            "label": "H7"                          
+                          },
+                          {
+                            "value": "np-h8",
+                            "label": "H8"                          
+                          },
+                          {
+                            "value": "np-h9",
+                            "label": "H9"                          
+                          },
+                          {
+                            "value": "np-h10",
+                            "label": "H10"                          
+                          }
+                        ],
+                        "default": "np-h5"                    
+                },
+                {
+                        "type": "select",
+                        "id": "font-family",
+                        "label": "Paragraph Font",
+                        "options": [
+                          {
+                            "value": "Intervogue",
+                            "label": "Intervogue"                         
+                          },
+                          {
+                            "value": "Silvana",
+                            "label": "Silvana"                          
+                          }
+                        ],
+                        "default": "Silvana"                   
                 }
-               
-                  
+
               ]
           },
           {
@@ -102,7 +207,7 @@
       "presets": [
           {
            "category":"content",
-            "name":"Single Column Text",
+            "name":"Single Column Text With Font",
             "blocks": [
               {
           "type": "spacer-block"

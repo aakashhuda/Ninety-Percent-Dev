@@ -5,7 +5,7 @@
             <div id="wrapper-{{ block.id }}"> 
                 <section class="about-us-{{ block.id }} full-page-width">
 
-                <div class="image-container-{{ block.id }}">
+                <div class="image-container-{{ block.id }} notLoaded-gc-hero">
                             <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "grande" }}">
                         </div> 
                    
@@ -39,12 +39,16 @@
     {% for block in section.blocks %}
         {% case block.type %}
             {% when 'hero-block' %}
-
+#wrapper-{{ block.id }} .image-container-{{ block.id }} .notLoaded-gc-hero{
+  height: 627px;
+  animation: skeleton-loading 1s linear infinite alternate;
+          }
+          
                 #wrapper-{{ block.id }} {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-          padding-top: 55px;
+                    padding-top: 55px;
                 }
                 .about-us-{{ block.id }} {
                     display: flex;
@@ -208,11 +212,15 @@
                        
                         padding: 0;
                     }
+                   #wrapper-{{ block.id }} {
+          padding-top: 0px;
+                }
                 }
             {% when 'spacer' %}
                 .custom-spacer-{{ block.id }} {
                     height: {{ block.settings.spacer }}px;
                 }
+  
         {% endcase %}
     {% endfor %}
 {% endstyle %}
@@ -314,3 +322,17 @@
     ]
 }
 {% endschema %}
+
+<script>
+  // content loader removing
+if(document.readyState === 'ready' || document.readyState === 'complete') {
+} else {
+  document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+      document.querySelectorAll(".notLoaded-gc-hero").forEach(item=>{
+        item.classList.remove("notLoaded-gc-hero");
+      })
+    }
+  }
+}
+</script>

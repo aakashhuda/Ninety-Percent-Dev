@@ -55,7 +55,7 @@
             {% comment %} {%- if section.settings.enable_newsletter -%}
               <div class="popup-cta">                {%- render 'np-new-welcome-popup', section_id: section.id, snippet_context: 'popup' -%}
               </div>            {%- endif -%} {% endcomment %}
-          </div>        </div>      </div>      <button type="button" class="modal__close js-modal-close text-link">        <svg
+          </div>        </div>      </div>      <button type="button" class="modal__close js-modal-close text-link np-welcome-close">        <svg
             width="17"
             height="17"
             viewBox="0 0 17 17"
@@ -72,6 +72,7 @@
 <style>      
   .welcome-new-modal.modal--is-active {
     z-index:999999999;
+    overflow:hidden;
   }
   
   .modal__centered-content.welcome-back-popup{
@@ -146,12 +147,14 @@
       @media(max-width: 768px) {
         .welcome-block-{{ block.id }}{
           max-width: 360px;
-          padding: 59px 45px 94px;
+          
         }
 
         .modal__centered-content.welcome-back-popup{
-        margin: auto;
+        margin: 0 20px;
+          padding: 20px;
       }
+        
         
         .offer-text {
           font-family: 'Intervogue';

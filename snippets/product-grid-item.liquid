@@ -201,7 +201,7 @@ Arguments
               {%- else -%}
                 {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{%- endcapture -%}
               {%- endif -%}
-              <span class="grid-product__price--savings hide">
+              <span class="grid-product__price--savings">
                 {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
               </span>
             {%- endif -%}
@@ -405,18 +405,18 @@ Arguments
   }
   
   #CollectionAjaxContent .custom-title {
+    font-family: "Intervogue";
+    font-size: 12.5px;
+    line-height: 21px;
+    letter-spacing: 0.03em;
+    display: block;
+    max-width: 248px;
+  }
+  #CollectionAjaxContent .custom-material {
     font-family: "Silvana";
     font-size: 12px;
     line-height: 18px;
     letter-spacing: -0.01em;
-    display: block;
-    max-width: 250px;
-  }
-  #CollectionAjaxContent .custom-material {
-    font-family: "Intervogue";
-    font-size: 12.5px;
-    line-height: 18px;
-    letter-spacing: 0.03em;
     display: inline-block;
   }
   #CollectionAjaxContent .image-list-{{ product.id }} {
@@ -479,7 +479,7 @@ Arguments
     right: 0;
     font-size: 12px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   #CollectionAjaxContent .grid-product__vendor {
     font-size: 12px;
@@ -501,7 +501,7 @@ Arguments
     [data-center-text=true] .grid-product__meta {
       text-align: left;
       padding: 0;
-      padding-left: 4px;
+      padding-left: 10px;
       font-size: 9px;
       line-height: 15px;
       letter-spacing: 0.05em;
@@ -541,7 +541,7 @@ Arguments
     [data-center-text=true] .grid-product__meta {
       text-align: left;
       padding: 0;
-      padding-left: 4px;
+      padding-left: 10px;
       font-size: 9px;
       line-height: 15px;
       letter-spacing: 0.05em;
@@ -553,6 +553,7 @@ Arguments
       margin: 0;
       top: 0;
       right: 0;
+      font-size: 9px;
     }
 
     #CollectionAjaxContent .grid__item.grid-product {

@@ -1,11 +1,11 @@
-{%- paginate blog.articles by 21 -%}
+{%- paginate blog.articles by 9 -%}
 
 <div data-section-id="{{ section.id }}" data-section-type="blog">
-  <div class="page-width page-content">
+  <div class="np-page-width page-content">
 
     {%- render 'breadcrumbs' -%}
 
-    <header class="section-header{% if section.settings.blog_show_tag_filter and blog.tags.size > 0 %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">
+    <header class="section-header hide{% if section.settings.blog_show_tag_filter and blog.tags.size > 0 %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">
       <h1 class="section-header__title">
         {{ blog.title }}
 
@@ -35,7 +35,7 @@
     </div>
 
     {%- if paginate.pages > 1 -%}
-      {%- render 'pagination', paginate: paginate -%}
+      {%- render 'blog-pagination', paginate: paginate -%}
     {%- endif -%}
 
   </div>
@@ -115,3 +115,77 @@
   ]
 }
 {% endschema %}
+
+<style>
+   .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    .blog-tag{
+      font-family: 'Silvana';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 27px;
+      text-align: justify;
+      letter-spacing: -0.01em;
+      color: #2B2725;
+    }     
+
+  .blog-tag-title{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  .blog-tag-title .blog-tag, .blog-tag-title .article__title{
+    text-align:left;
+  }
+
+  .blog-tag-title .article__title{
+    padding-left:30px;
+  }
+
+  .grid__item.blog-padding{
+    padding-left:5px;
+  }
+
+  .article__excerpt.blog-excerpt{
+    font-family: 'Silvana';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25.76px;
+    text-align: left;
+    letter-spacing: -0.01em;
+    color: #2B2725;
+  }
+
+  .pagination .next, .pagination .prev{
+    color:#2B2725;
+    background:white;
+    width:75px;
+    border: 0.75px solid #2B2725;
+  }
+
+  .pagination .next a, .pagination .prev a{
+    padding:12px 15px;
+  }
+
+  .pagination .page.current{
+    opacity:1;
+    font-size:20px;
+  }
+
+  .grid.blog-grid{
+    margin:0;
+  }
+
+  @media (max-width:768px){
+    .grid__item.blog-padding{
+    padding-left:0px;
+  }
+  }
+
+  
+</style>

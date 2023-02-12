@@ -154,9 +154,11 @@
     {%- include 'currency-modal' -%}
   {%- endif -%}
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="{{ 'cookies.js' | asset_url }}" defer="defer"></script>      
+    <script src="{{ 'login.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'cart-size-dropdown.js' | asset_url }}" defer="defer"></script>
-    <script src="{{ 'cookies.js' | asset_url }}" defer="defer"></script>
-      {% include 'swymSnippet' %} 
+    <script src="{{ 'currency-selector-modal.js' | asset_url }}" defer="defer"></script>
   </body>
 
   {% include 'kiwiSizing' %}

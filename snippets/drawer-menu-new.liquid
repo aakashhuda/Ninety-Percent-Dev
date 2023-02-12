@@ -7,17 +7,21 @@
 <div id="NavDrawer" class="drawer drawer--{{ drawer_position }}">
   <div class="drawer__contents">
 
-    <div class="drawer__fixed-header">
+    <div class="drawer__fixed-header ">
       <div class="drawer__header appear-animation ">
 <!--         <div class="h2 drawer__title"></div> -->
-        <div class="drawer-menu-close">
-          <button type="button" class="menu-drawer__close-button js-drawer-close">
+        <div class="drawer-menu-close mobile-menu-header-section">
+          <div class="mobile-menu-close-button">
+            <button type="button" class="menu-drawer__close-button js-drawer-close">
             <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1 1L16 16M1 16L16 1" stroke="black"/>
+<path d="M1 1L16 16M1 16L16 1" stroke="#2B2725"/>
 </svg>
             <span class="icon__fallback-text">{{ 'general.drawers.close_menu' | t }}</span>
           </button>
-              <svg class="ninetypercent-icon" width="130" height="8" viewBox="0 0 130 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+          </div>
+              <div class="ninety-percent-logo-mobile">
+                <a href="/">
+                  <svg class="ninetypercent-icon" width="200" height="8" viewBox="0 0 130 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_1640_477)">
                   <path d="M0 7.5468V0L5.55314 5.39245V0.479475H6.69913V7.98029L1.146 2.60099V7.5468H0Z" fill="#2B2725"/>
                   <path d="M12.8818 0.453125V7.52702H11.7358V0.453125H12.8818Z" fill="#2B2725"/>
@@ -39,6 +43,8 @@
                   </clipPath>
                   </defs>
               </svg>
+                </a>
+              </div>
             <div class="header-item header-item--icons nav-drawer-icons">
               {%- render 'header-icons', section: section -%}
             </div>
@@ -75,8 +81,8 @@
       </li> -->
       {% endfor %}
     </ul>
-   <div class="bottom-hr-line"></div>
     <div class="nav-drawer-footer">
+   <div class="bottom-hr-line"></div>
       <ul class="mobile-nav__social appear-animation ">
         {%- if settings.social_instagram_link != blank -%}
           <li class="mobile-nav__social-item">
@@ -106,7 +112,7 @@
         {%- endif -%}
       </ul> 
       <a class="localization-selector-drawer">UK/EN</a>
-      <a href="{{ routes.account_url }}">LOGIN</a>          
+      <a class="logIn-button" href="{{ routes.account_url }}">LOGIN</a>          
     </div>
 
   </div>
@@ -114,26 +120,57 @@
 </div>
 
 <style>
+
+  @media (min-width:769px){
+    #NavDrawer{
+      display:none;
+    }
+  }
+
+  .drawer__fixed-header{
+    margin-bottom:30px;
+    padding-left:10px;
+    padding-right:20px;
+  }
+
+  .mobile-menu-header-section{
+    display:flex;
+    justify-content:  space-between;
+    align-items:center;
+  }
+
+  .mobile-menu-close-button{
+    padding-top: 6px;
+  }
+
+  
   .mobile-menu-wrapper {
     list-style-type: none;
     position: relative;
     display: flex;
-    border-bottom: 1px solid;
-    width: 85%;
-    border-bottom-color: var(--colorDrawerBorder);
+    border-bottom: 0.25px solid;
+    width: 92%;
+    border-bottom-color: rgba(43, 39, 37, 0.5);
+    margin: 20px 0 15px 15px;
   }
+
   .mobile-menu-wrapper li{
     padding-bottom: 0.75em;
   }
   .parent-link {
     padding-right: 15px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 0.7em;
-    line-height: 15px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 15px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+
   }
+
+  
   .hidden {
     display: none;
   }
@@ -150,27 +187,22 @@
   }
   .drawer-menu-close{
     text-align: left;
-    position: absolute;
-    top: 30%;
   }
   .ninetypercent-icon{
-    position: absolute;
-    left: 233%;
-    top: 39%;
+
   }
   .menu-drawer__close-button{
     padding-top: 3px;
   }
   .nav-drawer-icons{
-    position: absolute;
-    left: 736%;
-    top: -23%;
+
   }
   .nav-drawer-footer{
     position: absolute;
     bottom: 0;
     display: flex;
     align-items: center;
+    width:100%;
   }
   .localization-selector-drawer{
     padding-left: 30px;
@@ -179,14 +211,23 @@
   .child-link-container a{
     display: block;
     padding-bottom: 1em;
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 18px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725 !important;
   } 
   .bottom-hr-line{
     position: absolute;
-    bottom: 8%;
-    width: 85%;
-    left: 7%;
-    border-bottom: 1px solid;
-    border-bottom-color: #cfcfc2;
+    top: 8%;
+    width: 92%;
+    border-bottom: 0.25px solid;
+    border-bottom-color: rgba(43, 39, 37, 0.5);
+    margin-left:15px;
+    margin-right:15px;
   }
 </style>
 

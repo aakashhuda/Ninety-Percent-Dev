@@ -40,7 +40,7 @@
 
     <div class="page-width page-width--flush-small">
       <div class="grid-overflow-wrapper">
-        <div id="RecentlyViewed-{{ section.id }}" class="grid grid--uniform recently-viewed-slide" data-aos="overflow__animation"></div>
+        <div id="RecentlyViewed-{{ section.id }}" class="grid grid--uniform recently-viewed-grid" data-aos="overflow__animation"></div>
       </div>
     </div>
   </div>
@@ -67,7 +67,29 @@
 }
 {% endschema %}
 <style>
-  .recently-viewed-slide .slick-track{
+  .recently-viewed-grid .custom-title {
+    max-width: 230px;
+  }
+  @media (max-width: 1000px) {
+    .recently-viewed-grid .custom-title {
+      max-width: 100%;
+    }
+    .recently-viewed-grid .grid-product__meta{
+      flex-direction: column;
+    }
+    .grid-product__price {
+      text-align: left;
+    }
+  }
+  .recently-viewed-grid .pdp-recently-viewed-price {
+    margin-top: 0px;
+  }
+  @media (max-width: 768px) {
+    .recently-viewed-grid .custom-title {
+      max-width: 180px;
+    }
+  }
+  .recently-viewed-grid .slick-track{
     display: flex;
   }
   .recently-viewed-grid .grid-product__meta{
@@ -75,28 +97,45 @@
     display: flex;
   }
   .recently-viewed-grid .grid-product__meta .grid-product__title{
-    padding-right: 20px;
+    padding-right: 0px;
   }
+  .recently-viewed-grid .grid-product__meta{
+      display: flex;
+      justify-content: space-between;
+      padding-top: 6px;
+      padding-bottom: 0px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   @media only screen and (max-width: 768px){
-     .recently-viewed-slide .grid-product__content:nth-child(1){
+    .recently-viewed-grid .slick-track{
+      display: block;
+    }
+     .recently-viewed-grid .grid-product__content:nth-child(1){
       margin-right: 4px;
     }
     .material-tag-pdp{
       display: none;
     }
     .recently-viewed-grid .grid-product__meta{
+      display: flex;
+      justify-content: space-between;
+      padding-top: 6px;
+      padding-bottom: 0px;
+      padding-left: 10px;
+      padding-right: 10px;
       flex-direction: column;
       padding-left: 4px;
     }
     .recently-viewed-grid .grid-product__meta .grid-product__title{
-      padding-right: 10px;
+      padding-right: 0px;
       padding-bottom: 4px;
     }
-/*     .recently-viewed-slide .slick-track{
+/* .recently-viewed-grid .slick-track{
      margin-left: -16px;
-    } */
-/*      .recently-viewed-slide .slick-track .slick-active{
+    }*/
+/* .recently-viewed-grid .slick-track .slick-active{
       width: 12rem !important;
-    } */
+    }*/
   }
 </style>

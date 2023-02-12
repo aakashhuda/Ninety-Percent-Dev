@@ -1,0 +1,330 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+  {% for block in section.blocks %}
+  {% case block.type %}
+      {% when "image-with-caption" %}
+    <div class="image-with-caption">
+      <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: 'master' }}">
+      <p class="image-caption-{{ block.id }}"> {{ block.settings.image-caption }} </p>
+    </div>
+
+  {% endcase %}
+{% endfor %}
+
+    
+    <div class="arthur-part-{{ section.id }}">
+      {% for block in section.blocks %}
+  {% case block.type %}
+      {% when "arthur" %}
+      <p class="arthur-name">
+        {{ block.settings.arthur-name }}
+      </p>
+
+      {% when "description" %}
+      <div class="part-description">
+        {{ block.settings.description }}
+      </div>
+
+    {% when "arthur-quotes" %}
+      <div class="quotes-alignment">
+        <p class="arthur-quotes np-h3">
+          {{ block.settings.arthur-quotes }}
+        </p>
+
+      <p class="arthur-quotes-name">
+        {{ block.settings.arthur-quotes-name }}
+      </p>
+      </div>
+      
+    </div>
+
+    {% when 'spacer' %}
+      <section class="custom-spacer-{{ block.id }} image-text-spacer">
+    
+      </section>
+
+    {% endcase %}
+{% endfor %}
+</section>
+
+<style>
+  .np-page-width {
+          max-width: 1440px;
+          margin: 0 auto;
+      }
+
+  .section-wrapper-{{ section.id }}{
+    max-width: {{section.settings.section-width}}px;
+  }
+  
+  .section-wrapper-{{ section.id }} .arthur-part-{{ section.id }}{
+    max-width:{{section.settings.text-width}}px;
+    margin:0 auto;
+    }
+  
+  .section-wrapper-{{ section.id }} p{
+    margin:0;
+  }
+
+  @media (max-width: 768px) {
+          .np-page-width {
+              padding: 0 20px;
+          }
+    
+  .section-wrapper-{{ section.id }}{
+    max-width: 100%;
+  }
+    
+   .section-wrapper-{{ section.id }} .arthur-part-{{ section.id }}{
+    max-width:100%;
+    }
+      }
+
+  {% for block in section.blocks %}
+  {% case block.type %}
+      {% when "image-with-caption" %}
+    .image-{{ block.id }}{
+      width:100%;
+    }
+    
+    .image-caption-{{ block.id }}{
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12.5px;
+      line-height: 21px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: rgba(43, 39, 37, 0.4);
+      }
+
+  {% if block.settings.show-caption == false %}
+                  .image-caption-{{ block.id }}{
+                      display: none;
+                  }
+              {% endif %}
+
+    
+    {% when "arthur" %}   
+
+  .section-wrapper-{{ section.id }} .arthur-name{
+    font-family: 'Silvana';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 31px;
+    text-align: justify;
+    letter-spacing: -0.01em;
+    font-feature-settings: 'ordn' on, 'ss03' on;
+    color: #2B2725;
+    text-transform: capitalize;
+    margin-bottom:40px;
+  }
+
+    {% when "description" %} 
+  .section-wrapper-{{ section.id }} .part-description{
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    text-align: justify;
+    letter-spacing: 0.02em;
+    color: #2B2725;
+    margin-bottom:60px;
+    margin-left:{{ block.settings.description-left-margin }}px;
+  }
+
+    {% when "arthur-quotes" %} 
+    .section-wrapper-{{ section.id }} .quotes-alignment{
+      max-width:{{ block.settings.quotes-width }}px;
+      margin:0;
+    }
+
+    .section-wrapper-{{ section.id }} .arthur-quotes{
+      font-style: italic;
+    }
+    
+    .section-wrapper-{{ section.id }} .arthur-quotes{
+      margin-bottom:22px;
+    }
+  
+    .section-wrapper-{{ section.id }} .arthur-quotes-name{
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 27px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #2B2725;
+    }
+
+
+  @media (max-width:768px){  
+    .section-wrapper-{{ section.id }} .quotes-alignment{
+      margin:0 auto;
+    }
+  }
+
+  {% when 'spacer' %}
+              .custom-spacer-{{ block.id }}.image-text-spacer{
+                  height: {{ block.settings.spacer }}px;
+              }
+
+    {% endcase %}
+{% endfor %}
+</style>
+
+{% schema %}
+  {
+    "name": "Arthor Creation",
+    "settings": [
+      {
+                    "type": "range",
+                    "id": "section-width",
+                    "min": 350,
+                    "max": 850,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 350,
+                    "label": "Section Width"
+                },
+                    {
+                    "type": "range",
+                    "id": "text-width",
+                    "min": 300,
+                    "max": 800,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 300,
+                    "label": "Width od Text Part"
+                }
+    ],
+    "blocks":[
+      {
+            "name": "Image With Caption",
+            "type": "image-with-caption",
+            "settings": [
+          {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Select Image"
+          },
+          {
+                    "type": "text",
+                    "id": "image-caption",
+                    "label": "Caption",
+                    "default": "obsidian by lee krasner"
+          },
+          {
+            "type": "checkbox",
+            "id": "show-caption",
+            "label": "Show Caption",
+            "default":true
+          }
+            ]
+      },
+      {
+            "name": "Arthur",
+            "type": "arthur",
+            "settings": [
+              {
+                    "type": "text",
+                    "id": "arthur-name",
+                    "label": "Arthur Name",
+                    "default": "lee krasner"
+                }       
+            ]
+      },
+       {
+            "name": "Description",
+            "type": "description",
+            "settings": [
+                 {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "<p>lee krasner</p>"
+                },
+               {
+                    "type": "range",
+                    "id": "description-left-margin",
+                    "min": 0,
+                    "max": 500,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0,
+                    "label": "Left Margin of Description"
+                }
+            ]
+       },
+       {
+            "name": "Arthur Quotes",
+            "type": "arthur-quotes",
+            "settings": [
+              {
+                    "type": "range",
+                    "id": "quotes-width",
+                    "min": 100,
+                    "max": 600,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 100,
+                    "label": "Width of Quotes Section"
+                },
+              {
+                    "type": "html",
+                    "id": "arthur-quotes",
+                    "label": "Arthur Quotes",
+                    "default": "lee krasner"
+                },
+              {
+                    "type": "text",
+                    "id": "arthur-quotes-name",
+                    "label": "Arthur Quotes",
+                    "default": "lee krasner"
+                }
+            ]
+       },
+      {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "spacer",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 10,
+                    "label": "Height"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Arthor Creation Trail",
+          "blocks":[
+            {
+              "type":"image-with-caption"
+            },
+            {
+              "type":"arthur"
+            },
+            {
+              "type":"description"
+            },
+            {
+              "type":"arthur-quotes"
+            },
+            {
+              "type":"spacer"
+            }
+          ]
+        }
+    ]
+  }
+{% endschema %}
+

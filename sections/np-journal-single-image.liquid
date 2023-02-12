@@ -1,0 +1,228 @@
+<section class="section-wrapper-{{ section.id }}">   
+ {% for block in section.blocks %}
+    {% case block.type %}
+        {% when "image-block" %}
+            <div class="block-{{ block.id }}">     
+              <div class="image-block-wrapper">
+                <div class="image-block-inner block-width-{{ block.settings.block-width }} " >          
+                           <img src="{{ block.settings.bg-image | img_url: 'grande' }}" alt=""> 
+
+                           <span class="image-block-caption np-h6"> {{ block.settings.caption }} </span>        
+                 </div> 
+</div>        
+             </div>     
+        {% when 'spacer-block' %}
+            <div class="spacer-{{ block.id }}">           
+            </div>     
+        {% endcase %}
+{% endfor %}
+</section>
+
+<style>   
+    
+.section-wrapper-{{ section.id }} {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+{% for block in section.blocks %}
+    {% case block.type %}
+        {% when "image-block" %}
+            .block-{{ block.id }} .block-width-full{
+         width: 100%;
+       }
+       .block-{{ block.id }} .block-width-custom{
+         width: {{ block.settings.custom-block-width | append: "px" }};
+       }
+             .block-{{ block.id }} {
+                padding: 0px {{ block.settings.padding }}px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+             }
+             .block-{{ block.id }} .image-block-inner {
+                height: 100%;
+                position: relative;
+                margin: {{ block.settings.inner-padding-top-bottom }}px  auto;
+                max-width: 66.5%;
+                
+             }
+.image-block-wrapper {
+  background-color: {{ block.settings.inner-background-color }};
+  width: 100%;
+}
+             .block-{{ block.id }} .image-block-inner img {
+                width: 100%;
+                height: 100%;
+             }
+             .block-{{ block.id }} .image-block-inner span {
+                display: none;
+             }
+              .block-{{ block.id }} .image-block-inner .image-block-caption  {
+                margin-top: 12px;
+                opacity: 40%;
+             } 
+             .block-{{ block.id }} .image-block-inner .image-block-caption p {
+                margin: 0 auto;
+             }
+             {% if block.settings.show-caption %}
+                .block-{{ block.id }} .image-block-inner .image-block-caption {
+                    display: block;
+                 }
+             {% endif %}
+@media only screen and (max-width: 1024px) {
+            .block-{{ block.id }} .image-block-inner {
+                
+                margin: {{ block.settings.inner-padding-top-bottom-tab }}px  auto;
+               
+                
+             }
+     
+              }
+             @media only screen and (max-width: 768px) {
+                    .section-wrapper-{{ section.id }} {
+                padding: 0px 20px;
+            }
+                  .block-{{ block.id }} {
+                     padding: 0px 0px;
+                  }
+     
+              }
+        {% when 'spacer-block' %}
+            .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                height: {{ block.settings.spacer-height }}px;
+            }
+    {% endcase %}
+{% endfor %}
+</style>
+
+{% schema %}
+{
+"name": "Journal page Single Image",
+"settings": [
+],
+"blocks": [
+    {
+        "type": "image-block",
+        "name": "Image",
+        "settings": [
+            {
+              "type": "select",
+              "id": "block-width",
+              "label": "Image width",
+              "options": [
+              {
+              "value": "full",
+              "label": "Full"
+              },
+              {
+              "value": "custom",
+              "label": "Custom"
+              }
+          ],
+          "default": "full"
+          },
+          {  
+              "type": "range",
+              "id": "custom-block-width",
+              "label": "Custom block width",
+              "min": 200,
+              "max": 1900,
+              "step": 50,
+              "unit": "px",
+              "default": 800
+          },
+  {
+    "type": "checkbox",
+    "id": "show-caption",
+    "label": "Show caption",
+    "default": true
+  },
+  {
+                "type": "range",
+                "id":"padding",
+                "label":"Left-Right Space of the block",
+                "min":0,
+                "max":200,
+                "step":2,
+                "unit":"px",
+                "default":52
+            },
+            {
+                "type": "image_picker",
+                "label": "Image Pick",
+                "id": "bg-image"
+            },
+          {
+                "type": "range",
+                "id":"inner-padding-top-bottom",
+                "label":"Top-Bottom space of the image",
+                "min":0,
+                "max":200,
+                "step":2,
+                "unit":"px",
+                "default":20
+            },
+ {
+                "type": "range",
+                "id":"inner-padding-top-bottom-tab",
+                "label":"Top-Bottom space of the image for tab devices",
+                "min":0,
+                "max":200,
+                "step":2,
+                "unit":"px",
+                "default":20
+            },
+
+           {
+                "type":"color",
+                "id":"inner-background-color",
+                "label":"Image Background Color",
+                "default": "#F4F0F0"
+            },
+          
+          {
+                "type": "richtext",
+                "label": "Add caption",
+                "id": "caption"
+            },
+            {
+                "type":"color",
+                "id":"caption-color",
+                "label":"caption text color",
+                "default": "#2B2725"
+            }
+        ]
+    },
+    {
+        "type": "spacer-block",
+        "name": "Spacer",
+          "settings":[
+            {
+                "type": "range",
+                "id": "spacer-height",
+                "label": "Spacer Height",
+                "min": 0,
+                "max": 200,
+                "step": 5,
+                "unit": "px",
+                "default": 30
+            }
+          ]
+    }
+],
+"presets": [
+    {
+     "category":"content",
+       "name":"Journal page Single Image",
+       "blocks": [
+    {
+      "type": "image-block"
+    },
+    {
+      "type": "spacer-block"
+    }
+  ]
+    }
+]
+}
+{% endschema %}

@@ -21,9 +21,10 @@
               {%- assign supported_codes = supported_codes | append: currency.iso_code | append: ' ' -%}
                 {{ currency.iso_code }}
             {%- endfor -%} -->
+
   <div class="page-width">
 
-    <div class="grid">
+    <div class="grid footer-padding">
       {%- assign row_width = 0 -%}
       {%- for block in section.blocks -%}
         {%- assign row_width = row_width | plus: block.settings.container_width -%}
@@ -58,6 +59,8 @@
       render 'footer-custom-text', block: block
       when 'newsletter'
       render 'footer-newsletter', block: block
+      when 'cookies'
+      render 'np-cookies', block: block
 
       endcase
       -%}
@@ -82,23 +85,14 @@
 
 
     
-<!--       {%- if show_selectors -%}
-      <div class="footer__section">
-      {%- render 'multi-selectors'
-      , locale_selector: locale_selector
-      , currency_selector: currency_selector
-      , show_currency_flags: section.settings.show_currency_flags
-      location: 'footer'
-      -%}
-      </div>
-      {%- endif -%}  -->
+    {% comment %}   
 
-<!--       {% if shop.enabled_currencies %}
+     {% if shop.enabled_currencies %}
        
           {% include 'currency-picker', picker_id: 'header', currency_class: 'currency-picker--toolbar' %}
        
-      {% endif %} -->
-
+      {% endif %} 
+ {% endcomment %} 
 
 
     {%- if section.settings.show_payment_icons -%}
@@ -127,7 +121,15 @@
     {%- endcomment -%}
 
       <div class="footer-wrapper">
-        <a class="footer-links localization-selector">UK / GBP (£)</a>
+        <div>
+          <!-- <a class="footer-links localization-selector">UK / GBP (£)</a> -->
+<span class="footer-links currency-selector-toggler">
+            {{ localization.country.iso_code }} / {{ localization.country.currency.iso_code }} ( {{ localization.country.currency.symbol }})
+          </span>
+              
+        </div>
+     
+        
         {%- for block in section.blocks -%}
           {% if block.type == 'menu' %}
             {% if block.settings.menu == 'footer-menu-new-web-development' %}
@@ -197,7 +199,10 @@
               {% endif %}
             {% endif %}
           {%- endfor -%}
-          <a class="footer-links-mobile">UK / GBP (£)</a>
+<!--           <a class="footer-links-mobile">UK / GBP (£)</a> -->
+<span class="footer-links currency-selector-toggler">
+            {{ localization.country.iso_code }} / {{ localization.country.currency.iso_code }} ( {{ localization.country.currency.symbol }})
+          </span>
           <br>
           <div class="social-links-mobile">
             {%- if settings.social_instagram_link != blank -%}
@@ -345,7 +350,15 @@
       </div> -->
     </div>
 
+   <div class="footer-links np-currency-selector">
 
+                    {%- render 'multi-selectors'
+                    , locale_selector: locale_selector
+                    , currency_selector: currency_selector
+                    , show_currency_flags: section.settings.show_currency_flags
+                    location: 'footer'
+                    -%}
+      </div>
   </div>
 </footer>
 
@@ -527,6 +540,25 @@
             "unit": "%"
           }
         ]
+      },{
+        "type": "cookies",
+        "name": "Cookies",
+        "settings":[{
+    "type":"textarea",
+    "label":"Cookies Text",
+    "id":"cookiesText",
+    "default":"This site uses cookies and similar technologies for its operation and for the provision of the services. We use analytical cookies (our own and from third parties) to understand and improve the user’s browsing experience, and profiling cookies (our own and third party) to send you advertisements in line with your preferences when surfing the web. To modify or opt-out of the use of some or all cookies, go to “Cookie Settings” or consult our Cookie Policy to find out more. By clicking on “Accept all cookies” you consent to the use of these cookies. By clicking “Allow technical cookies only”, you give your consent to the use of technical cookies only."
+    },
+  {
+    "type":"text",
+    "label":"Cookies All Text",
+    "id":"cookiesAllText",
+    "default":"accept all cookies"    },
+    {
+    "type":"text",
+    "label":"Cookies Necessary Text",
+    "id":"cookiesNecessaryText",
+    "default":"accept only necessary cookies"}]
       }
     ],
     "default": {
@@ -539,6 +571,7 @@
           "type": "logo_social",
           "settings": {}
         }
+        
       ]
     }
   }
@@ -606,6 +639,47 @@
     padding-right: 15px;
     padding-left: 15px;
   }
+.np-currency-selector {
+  display: none; /* Hidden by default */
+
+  position: fixed; /* Stay in place */
+  z-index: 999999999999999; /* Sit on top */
+  padding-top: 10%; /* Location of the box */
+  left: 0;
+
+  top: 0;
+
+    
+    padding-right: 0px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: visible; /* Enable scroll if needed */
+ 
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+  .disclosure-list {
+    position: relative;
+    max-height: 450px;
+box-shadow: none;
+  }
+  .close-currency-selector {
+background-color: white;
+width: 100%;
+    display: inline-block;
+    padding-left: 90%;
+    padding-top: 1%;
+cursor: pointer;
+  }
+.currency-selector-toggler {
+   color: #2B2527;
+    
+    font-family: Intervogue;
+    font-style: normal;
+    font-size: 12.5px;
+    line-height: 21px;
+cursor: pointer;
+}
+   
   @media only screen and (max-width: 514px){
 
       .mobile-menu{
@@ -646,6 +720,10 @@ letter-spacing: 0.05em;
 text-transform: uppercase;
 color: #000000;
     }
+
+  .grid.footer-padding{
+    margin:0;
+  }
   }
   
   @media only screen and (min-width: 500px) and (max-width:768px){

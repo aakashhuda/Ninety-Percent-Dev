@@ -4955,7 +4955,7 @@ lazySizesConfig.expFactor = 4;
                 ${image}
               </div>
               <div class="grid-product__meta">
-                <div class="grid-product__title np-h10">${product.title} </div>
+                <div class="grid-product__title np-h10 custom-title">${product.title} </div>
                 <div class="pdp-recently-viewed-price">${theme.Currency.formatMoney(product.price, theme.moneyFormat)}</div>
                 ${priceMarkup}
                 ${vendorMarkup}
@@ -6802,7 +6802,7 @@ lazySizesConfig.expFactor = 4;
           .renderPage(window.location.pathname, searchParams, updateURLHash)
           .then(() => {
             theme.sections.reinit('collection-grid');
-            this.updateScroll(true);
+            this.updateScroll(true)
             this.initPriceRange();
             theme.reinitProductGridItem();
   
@@ -8433,6 +8433,142 @@ lazySizesConfig.expFactor = 4;
     }
   });
 
+/* currency switcher */
+  theme.currencySwitcher = (function() {
+  
+    var selectors = {
+      dataDiv: '#CurrencyData',
+      currencyOptions: '.currency-options__btn',
+      pickerFlag: '.currency-picker .currency-flag',
+      pickerLabel: '.currency-picker .currency-picker__label'
+    };
+  
+    var data = {};
+    var modal;
+  console.log("test currency switcher");
+    function init() {
+      console.log('test222');
+      var $dataDiv = $(selectors.dataDiv);
+  
+      if (!$dataDiv.length) {
+        return;
+      }
+   
+      modal = new theme.Modals('CurrencyModal', 'currency-modal', {
+        closeOffContentClick: false
+      });
+  
+      $('.currency-options__btn').on('click', setNewCurrency);
+  
+      data = {
+        currency: $dataDiv.data('shop-currency'),
+        format: $dataDiv.data('format'),
+        moneyFormat: $dataDiv.data('money-format'),
+        moneyCurrencyFormat: $dataDiv.data('money-currency-format')
+      };
+  
+      if (!theme.settings.nativeMultiCurrency) {
+        Currency.format = data.format;
+  
+        // Rely on the shop's currency format, not Shopify defaults (in case merchant changes it)
+        Currency.money_format[data.currency] = data.moneyFormat;
+        Currency.money_with_currency_format[data.currency] = data.moneyCurrencyFormat;
+  
+        // Fix for customer account page
+        $('span.money span.money').each(function() {
+          $(this).parents('span.money').removeClass('money');
+        });
+  
+        // Save current price
+        $('span.money').each(function() {
+          $(this).attr('data-currency-' + data.currency, $(this).html());
+        });
+  
+        checkCookie();
+      }
+    }
+  
+    function setNewCurrency() {
+     
+      var newCurrency = $(this).data('value');
+  
+      if (theme.settings.nativeMultiCurrency) {
+        $(this).addClass('is-active');
+        theme.cart.updateCurrency(newCurrency);
+        return;
+      }
+  
+      if (newCurrency !== data.currency) {
+        data.currency = newCurrency;
+        $(selectors.dataDiv).data('current-currency', newCurrency);
+        updatePicker(newCurrency);
+  
+        refresh();
+      }
+  
+      modal.close();
+    }
+  
+    function updatePicker(currency) {
+      $(selectors.pickerFlag).attr('data-flag', currency);
+      $(selectors.pickerLabel).text(currency);
+  
+      // Update modal options active states
+      $(selectors.currencyOptions).removeClass('is-active');
+      $(selectors.currencyOptions + '[data-value=' + currency + ']').addClass('is-active');
+    }
+  
+    // Refresh functions only needed when not using native multi-currency
+    function refresh() {
+      if (theme.settings.nativeMultiCurrency) {
+        return;
+      }
+  
+      var newCurrency = $(selectors.dataDiv).data('current-currency');
+      Currency.convertAll(Currency.currentCurrency, newCurrency);
+    }
+  
+    function ajaxrefresh() {
+      if (theme.settings.nativeMultiCurrency) {
+        return;
+      }
+  
+      var shopCurrency = $(selectors.dataDiv).data('shop-currency');
+      var newCurrency = $(selectors.dataDiv).data('current-currency');
+  
+      // Ajax cart always returns shop's currency, not what theme settings defines
+      Currency.convertAll(shopCurrency, newCurrency);
+    }
+  
+    function checkCookie() {
+      var cookieCurrency = Currency.cookie.read();
+  
+      if (cookieCurrency == null) {
+        Currency.currentCurrency = cookieCurrency = data.currency;
+      } else if ($(selectors.currencyOptions).length && $(selectors.currencyOptions + '[data-value=' + cookieCurrency + ']').length === 0) {
+        // If the cookie value does not correspond to any value in the currency dropdown
+        Currency.currentCurrency = data.currency;
+        Currency.cookie.write(data.currency);
+      } else if (cookieCurrency === data.currency) {
+        Currency.currentCurrency = data.currency;
+      } else {
+        Currency.convertAll(data.currency, cookieCurrency);
+      }
+  
+      // Update current currency with cookie value
+      $(selectors.dataDiv).data('current-currency', cookieCurrency);
+      data.currency = cookieCurrency;
+      updatePicker(cookieCurrency);
+    }
+  
+    return {
+      init: init,
+      refresh: refresh,
+      ajaxrefresh: ajaxrefresh
+    };
+  })();
+
+  
   /*============================================================================
     Things that require DOM to be ready
   ==============================================================================*/
@@ -8852,7 +8988,7 @@ lazySizesConfig.expFactor = 4;
 
 //megamenu click function
 
-  $('.site-nav--has-dropdown .site-nav__link--underline').on('click', function(){
+  $('.site-nav--has-dropdown .site-nav__link--underline').on('click touchstart', function(){
     if($(this).parent().hasClass('show-megamenu-dropdown')){
       $(this).parent().removeClass('show-megamenu-dropdown');
     }
@@ -8862,7 +8998,7 @@ lazySizesConfig.expFactor = 4;
     }   
   });
 
-  $('.main-content').on('click', function(){
+  $('.main-content').on('click touchstart', function(){
       console.log("np shopify");
      if($('.site-nav--has-dropdown').hasClass('show-megamenu-dropdown')){
       $('.site-nav--has-dropdown').removeClass('show-megamenu-dropdown'); 
@@ -8871,139 +9007,76 @@ lazySizesConfig.expFactor = 4;
 
 
 
-  theme.currencySwitcher = (function() {
-  console.log("test currency switcher");
-    var selectors = {
-      dataDiv: '#CurrencyData',
-      currencyOptions: '.currency-options__btn',
-      pickerFlag: '.currency-picker .currency-flag',
-      pickerLabel: '.currency-picker .currency-picker__label'
-    };
   
-    var data = {};
-    var modal;
-  
-    function init() {
-      var $dataDiv = $(selectors.dataDiv);
-  
-      if (!$dataDiv.length) {
-        return;
-      }
-  
-      modal = new theme.Modals('CurrencyModal', 'currency-modal', {
-        closeOffContentClick: false
-      });
-  
-      $(selectors.currencyOptions).on('click', setNewCurrency);
-  
-      data = {
-        currency: $dataDiv.data('shop-currency'),
-        format: $dataDiv.data('format'),
-        moneyFormat: $dataDiv.data('money-format'),
-        moneyCurrencyFormat: $dataDiv.data('money-currency-format')
-      };
-  
-      if (!theme.settings.nativeMultiCurrency) {
-        Currency.format = data.format;
-  
-        // Rely on the shop's currency format, not Shopify defaults (in case merchant changes it)
-        Currency.money_format[data.currency] = data.moneyFormat;
-        Currency.money_with_currency_format[data.currency] = data.moneyCurrencyFormat;
-  
-        // Fix for customer account page
-        $('span.money span.money').each(function() {
-          $(this).parents('span.money').removeClass('money');
-        });
-  
-        // Save current price
-        $('span.money').each(function() {
-          $(this).attr('data-currency-' + data.currency, $(this).html());
-        });
-  
-        checkCookie();
-      }
-    }
-  
-    function setNewCurrency() {
-      var newCurrency = $(this).data('value');
-  
-      if (theme.settings.nativeMultiCurrency) {
-        $(this).addClass('is-active');
-        theme.cart.updateCurrency(newCurrency);
-        return;
-      }
-  
-      if (newCurrency !== data.currency) {
-        data.currency = newCurrency;
-        $(selectors.dataDiv).data('current-currency', newCurrency);
-        updatePicker(newCurrency);
-  
-        refresh();
-      }
-  
-      modal.close();
-    }
-  
-    function updatePicker(currency) {
-      $(selectors.pickerFlag).attr('data-flag', currency);
-      $(selectors.pickerLabel).text(currency);
-  
-      // Update modal options active states
-      $(selectors.currencyOptions).removeClass('is-active');
-      $(selectors.currencyOptions + '[data-value=' + currency + ']').addClass('is-active');
-    }
-  
-    // Refresh functions only needed when not using native multi-currency
-    function refresh() {
-      if (theme.settings.nativeMultiCurrency) {
-        return;
-      }
-  
-      var newCurrency = $(selectors.dataDiv).data('current-currency');
-      Currency.convertAll(Currency.currentCurrency, newCurrency);
-    }
-  
-    function ajaxrefresh() {
-      if (theme.settings.nativeMultiCurrency) {
-        return;
-      }
-  
-      var shopCurrency = $(selectors.dataDiv).data('shop-currency');
-      var newCurrency = $(selectors.dataDiv).data('current-currency');
-  
-      // Ajax cart always returns shop's currency, not what theme settings defines
-      Currency.convertAll(shopCurrency, newCurrency);
-    }
-  
-    function checkCookie() {
-      var cookieCurrency = Currency.cookie.read();
-  
-      if (cookieCurrency == null) {
-        Currency.currentCurrency = cookieCurrency = data.currency;
-      } else if ($(selectors.currencyOptions).length && $(selectors.currencyOptions + '[data-value=' + cookieCurrency + ']').length === 0) {
-        // If the cookie value does not correspond to any value in the currency dropdown
-        Currency.currentCurrency = data.currency;
-        Currency.cookie.write(data.currency);
-      } else if (cookieCurrency === data.currency) {
-        Currency.currentCurrency = data.currency;
-      } else {
-        Currency.convertAll(data.currency, cookieCurrency);
-      }
-  
-      // Update current currency with cookie value
-      $(selectors.dataDiv).data('current-currency', cookieCurrency);
-      data.currency = cookieCurrency;
-      updatePicker(cookieCurrency);
-    }
-  
-    return {
-      init: init,
-      refresh: refresh,
-      ajaxrefresh: ajaxrefresh
-    };
-  })();
-
+// mobile menu click function
 if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
   document.querySelector(".mobile-menu-wrapper .parent-link").click();
 }
+
+
+// welcome popUp close function
+if(document.querySelector(".np-welcome-close")){
+  document.querySelector(".np-welcome-close").addEventListener("click",()=>{
+    sessionStorage.setItem("welcome-popUp-new", "true");
+})
+}
+
+
+if(sessionStorage.getItem("welcome-popUp-new")){
+      document.querySelector("#shopify-section-np-welcome-popUp").style.display="none";
+    
+    }
+
+  if (location.href.indexOf("products") == -1) {
+      $(document).on("click", function(event){
+        var $trigger = $("#CartDrawer");
+        if($trigger !== event.target  && !$trigger.has(event.target).length){
+            $(".cart-window-bg").removeClass("window-show")
+        }
+      })
+  }
+
+
+
+
+// function for register confirm password validation
+
+if(document.querySelector("#CustomerRegisterForm")){
+  
+  document.querySelector("#CreatePassword").addEventListener("change",()=>{
+    console.log(document.querySelector("#CreatePassword").value)
+    if(!document.querySelector("#CreatePassword").value.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/g)){
+      document.querySelector(".register-form-font.pass-style").classList.add("confirm-error");
+      document.querySelector("#register-submit").disabled = true;
+    }
+    else{
+      if(document.querySelector(".register-form-font.pass-style").classList.contains("confirm-error")){
+      document.querySelector(".register-form-font.pass-style").classList.remove("confirm-error");
+      document.querySelector("#register-submit").disabled = false;
+    }
+    }
+
+    
+  })
+
+  
+  document.querySelector("#CreatePassword").addEventListener("change",()=>{
+      document.querySelector("#CreateConfirmPassword").addEventListener("change",()=>{
+      if(document.querySelector("#CreateConfirmPassword").value.trim() === document.querySelector("#CreatePassword").value.trim()){
+        document.querySelector("#register-submit").disabled = false;
+        document.querySelector(".confirm-error").classList.add("hide");
+      }
+        else{
+          document.querySelector("#register-submit").disabled = true;
+          document.querySelector(".confirm-error").classList.remove("hide");
+}
+})
+      
+})
+
+    }
+
+
+
+
   

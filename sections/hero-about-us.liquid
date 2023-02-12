@@ -195,6 +195,11 @@
                 .custom-spacer-{{ block.id }} {
                     height: {{ block.settings.spacer }}px;
                 }
+  @media (max-width:900px){
+    .custom-spacer-{{ block.id }} {
+                    height: 0px;
+                }
+  }
         {% endcase %}
     {% endfor %}
 </style>

@@ -3,8 +3,8 @@
   {%- assign fixed_aspect_ratio = true -%}
 {% endunless %}
 
-<div class="grid__item {{ grid_item_width }}" data-aos="row-of-{{ per_row }}">
-  <div class="grid">
+<div class="grid__item {{ grid_item_width }} blog-padding" data-aos="row-of-{{ per_row }}">
+  <div class="grid blog-grid">
     <div class="grid__item small--one-third">
       {%- if article.image -%}
         <a href="{{ article.url }}" class="article__grid-image" aria-label="{{ article.title | escape }}">
@@ -55,12 +55,6 @@
       <div class="article__grid-meta">
         {%- if section.settings.blog_show_date or article.tags.size > 0 or articles.comments_count > 0 -%}
           <div class="article__date">
-            {%- if section.settings.blog_show_tags and article.tags.size > 0 -%}
-              {%- for tag in article.tags -%}
-                {% if tag contains "_" %}{%- assign tag_starts_with = tag | slice: 0 -%}{% if tag_starts_with == "_" %}{% if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif %}{% continue %}{% endif %}{% endif %}
-                <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a> &middot;
-              {%- endfor -%}
-            {%- endif -%}
             {%- if section.settings.blog_show_comments and article.comments_count > 0 -%}
               <a href="{{ article.url }}#comments">
                 {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
@@ -72,14 +66,23 @@
           </div>
         {%- endif -%}
 
-        <a href="{{ article.url }}" class="article__title">{{ article.title }}</a>
+        <div class="blog-tag-title">
+          {%- if section.settings.blog_show_tags and article.tags.size > 0 -%}
+              {%- for tag in article.tags -%}
+                {% if tag contains "_" %}{%- assign tag_starts_with = tag | slice: 0 -%}{% if tag_starts_with == "_" %}{% if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif %}{% continue %}{% endif %}{% endif %}
+                <p class="blog-tag">{{ tag }}:</p>
+              {%- endfor -%}
+            {%- endif -%}
+
+          <a href="{{ article.url }}" class="article__title np-h9">{{ article.title }}</a>
+        </div>
 
         {%- if section.settings.blog_show_author -%}
           <div class="article__author">by {{ article.author }}</div>
         {%- endif -%}
 
         {%- if section.settings.blog_show_excerpt -%}
-          <div class="rte article__excerpt">
+          <div class="rte article__excerpt blog-excerpt">
             {%- if article.excerpt.size > 0 -%}
               {{ article.excerpt }}
             {%- else -%}

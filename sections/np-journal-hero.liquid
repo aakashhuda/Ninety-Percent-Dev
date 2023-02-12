@@ -1,0 +1,318 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'image-with-text' %}
+      <div class="image-with-text-{{ block.id }}">
+        <div class="image-section-{{ block.id }}">
+          <img class="image-{{ block.id }}-width" src="{{ block.settings.upload_image | img_url: 'grande' }}">
+        </div>
+        <div class="text-section-{{ block.id }}">
+          <div class="upper-part-text">
+            <div class="upper-part-text-type np-h1">{{ block.settings.fabric-type }}</div>
+          </div>
+          <div class="lower-part-text">
+            <div class="lower-part-text-origin">
+              <p class="np-h5">
+                {{ block.settings['fabric-origin'] }}:
+                <span class="country np-h9">{{ block.settings.fabric-origin-country }}</span>
+              </p>
+            </div>
+            <div class="lower-part-text-details">
+              {{ block.settings.lower-part-text-details }}
+            </div>
+            <div class="lower-part-button-section">
+              <a class="lower-part-button" href="{{ block.settings.lower-part-text-button-url }}">{{ block.settings.lower-part-text-button }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  {% when 'spacer-block' %}
+          <div class="spacer-{{ block.id }}">          </div>     
+  
+    {% endcase %}
+  {% endfor %}
+</section>
+<style>
+  .np-page-width {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  @media(max-width: 768px) {
+    .np-page-width {
+      padding: 0 20px;
+    }
+  }
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'image-with-text' %}
+      .image-with-text-{{ block.id }}{
+        display: flex;
+      flex-direction: row;
+        gap:9.5%;
+        padding: 0 {{ block.settings.both-side-padding }}px;
+      }
+
+      {% if block.settings.text-first %}
+  .image-with-text-{{ block.id }}{
+        flex-direction: row-reverse;
+      }
+      {% endif %}
+      
+      {% if block.settings.show-title %}
+  .text-section-{{ block.id }} .upper-part-text{
+        display:block;
+      }
+        {% else %}
+        .text-section-{{ block.id }} .upper-part-text{
+        display:none;
+      }
+      {% endif %}
+      
+      .image-section-{{ block.id }}{
+        width: 40.5%;
+      }
+      .text-section-{{ block.id }}{
+      width: 50%
+      }
+      .text-section-{{ block.id }}{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .upper-part-text-type {
+        margin-bottom: 25px;
+        font-feature-settings: 'ordn' on;
+      }
+      .image-{{ block.id }}-width{
+        width:100%
+      }
+      .lower-part-text-details {
+        max-width: 581px;
+        font-family: 'Silvana';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 25.76px;
+        text-align: justify;
+        letter-spacing: -0.01em;
+        color: #2B2725;
+      margin-top:55px;
+      }
+
+      .country {
+        padding-left: 20px;
+      }
+
+      .image-with-text-{{ block.id }} .lower-part-text .lower-part-button{
+      display: inline-block;
+      padding: 12px 120px;
+      border: 0.75px solid #2B2725;
+      margin-top:54px;
+      }
+      
+      @media(max-width: 1120px) {
+         .upper-part-text-type{
+          font-size:80px;
+          line-height:80px;
+        }
+        .image-with-text-{{ block.id }}{
+        padding: 0 90px;
+      }
+      .image-with-text-{{ block.id }}{
+        gap:120px;
+      }
+      .lower-part-text-details {
+        max-width: 100%;
+        margin-top:40px;
+      }
+
+
+      }
+      @media(max-width: 950px) {
+        .upper-part-text-type{
+          font-size:60px;
+          line-height:60px;
+        }
+        .image-with-text-{{ block.id }}{
+        padding: 0 70px;
+      }
+      .image-with-text-{{ block.id }}{
+        gap:100px;
+      }
+      .lower-part-text-details {
+        width: 100%;
+        font-size: 16px;
+      }
+
+      }
+      @media(max-width: 850px) {
+        .image-with-text-{{ block.id }}{
+        padding: 0 50px;
+      }
+      .image-with-text-{{ block.id }}{
+        gap:80px;
+      }
+      .lower-part-text-details {
+        width: 100%;
+        font-size: 18px;
+      }
+
+      }
+      @media(max-width: 790px) {
+      .lower-part-text-origin p, .lower-part-text-origin p span{
+        font-size: 14px;
+      }
+      }
+      @media(max-width: 768px) {
+        .image-with-text-{{ block.id }}{
+        padding: 0;
+        display: block;
+      }
+
+        .image-section-{{ block.id }}{
+        margin-bottom: 50px;
+      }
+      .image-section-{{ block.id }},
+      .text-section-{{ block.id }},
+      .lower-part-text-details,
+      .lower-part-text-process {
+        width: 100%;
+      }
+      .image-section-{{ block.id }}{
+        order: 0;
+      }
+      .text-section-{{ block.id }}{
+        order: 1;
+      }
+      .upper-part-text-type{
+        font-size: 100px;
+      }
+      .lower-part-text-origin p{
+        font-size: 20px;
+      margin: 20px 0;
+      }
+      .lower-part-text-origin p span{
+        font-size: 18px;
+      }
+      .lower-part-text-details {
+        font-size: 18px;
+      }
+
+        .lower-part-button-section{
+          margin:0 auto;
+          display:table;
+        }
+
+      }
+
+  {% when 'spacer-block' %}
+      .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
+        height: {{ block.settings.spacer-height }}px;
+      }
+    {% endcase %}
+  {% endfor %}
+</style>
+{% schema %}
+  {
+    "name": "Fibre Hero",
+    "blocks": [
+      {
+        "name": "Image with Text ",
+        "type": "image-with-text",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "text-first",
+            "label": "Text First",
+            "default":false
+          },
+          {
+            "type": "image_picker",
+            "id": "upload_image",
+            "label": "Change Your Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "show-title",
+            "label": "Show Blog Title",
+            "default":true
+          },
+          {
+            "type": "text",
+            "id": "fabric-type",
+            "label": "Change Blog Type",
+            "default": "Cotton"
+          },
+          {
+            "type": "text",
+            "id": "fabric-origin",
+            "label": "Change Tag Text",
+            "default": "Origins"
+          },
+          {
+            "type": "text",
+            "id": "fabric-origin-country",
+            "label": "Change Blog Name",
+            "default": "Portugal Bangladesh"
+          },
+          {
+            "type": "html",
+            "id": "lower-part-text-details",
+            "label": "Change Description"
+          }, 
+          {
+            "type": "html",
+            "id": "lower-part-text-button",
+            "label": "Change Button Text"
+          },
+          {
+            "type": "url",
+            "id": "lower-part-text-button-url",
+            "label": "Change Button URL",
+            "default":"/"
+          },
+          {
+        "type": "range",
+        "id": "both-side-padding",
+        "label": "Both Side Padding",
+        "min": 0,
+        "max": 500,
+        "step": 5,
+        "unit": "px",
+        "default": 0
+      }
+        ]
+      },{
+        "name": "Spacer",
+        "type": "spacer-block",
+        "settings": [
+          {
+            "type": "range",
+            "id": "spacer-height",
+            "label": "Spacer Height",
+            "min": 0,
+            "max": 200,
+            "step": 5,
+            "unit": "px",
+            "default": 30
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Journal Hero",
+        "blocks": [
+          {
+            "type": "image-with-text"
+          },
+          {
+            "type": "spacer-block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

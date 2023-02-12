@@ -49,7 +49,7 @@
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormSubject-{{ blockId }}">{{ 'contact.form.subject' | t }}<span>*</span></label>
                 <select id="ContactFormSubject-{{ blockId }}" class="contact-input input-full contact-form" name="contact[subject]" required>
-                   <option value="">Please Select Subject</option>
+                   <option value="">Subject</option>
                   <option value="Product Query">Product Query</option>
                   <option value="Order Query">Order Query</option>
                   <option value="Returns or Exchange">Returns or Exchange</option>
@@ -80,7 +80,7 @@
             </div>
 
             <label class="input-label" for="ContactFormMessage-{{ blockId }}">{{ 'contact.form.message' | t }} <span>*</span> </label>
-            <textarea required rows="17"  placeholder="Message" id="ContactFormMessage-{{ blockId }}" class="input-full ContactFormMessage" name="contact[body]" >{% if form.body %}{{ form.body }}{% endif %}  </textarea>
+            <textarea required rows="17"  placeholder="Message" id="ContactFormMessage-{{ blockId }}" class="input-full ContactFormMessage" name="contact[body]" >{% if form.body %}{{ form.body }}{% endif %}</textarea>
 
             <div class="submission-with-error">
               <button type="submit" class="update-account-link">
@@ -320,6 +320,14 @@ letter-spacing: 0.05em;
 
 color: #2B2725;
 }
+
+  [name = "contact[subject]"] {
+  color: gray;
+}
+[name = "contact[subject]"] option:not(:first-of-type) {
+  color: black;
+}
+  
 @media (max-width: 1000px) {
   .page-title {
     font-size: 70px;

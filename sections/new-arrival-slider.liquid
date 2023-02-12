@@ -4,14 +4,14 @@
 {% if section.settings.divider %}
   <div class="section--divider">  {% endif %}
   <div
-    id="CollectionSection-{{ section.id }} np-page-width"
+    id="CollectionSection-{{ section.id }}" class="np-page-width"
     data-section-id="{{ section.id }}"
     data-section-type="collection-template">    {% if section.settings.title != blank %}
       <div class="new-arrival-slider-container">        <div class="section-header{% if section.settings.view_all %}{% unless settings.type_headers_align_text %} section-header--with-link{% endunless %}{% endif %}">          <p class="section-header__title arrival-slider-title np-h6">            {{ section.settings.title }}
           </p>          {% if section.settings.view_all and section.settings.rows == 1 %}
             <a href="{{ collections[section.settings.home_featured_products].url }}" class="btn btn--secondary btn--small section-header__link">{{ 'collections.general.all_of_collection' | t }}</a>          {% endif %}
         </div>      </div>    {% endif %}
-    <div class="new-arrival-container {% if section.settings.mobile_scrollable %}page-width--flush-small{% endif %} page-width">      <div>        <div class="slider-container">          {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+    <div class="new-arrival-container {% if section.settings.mobile_scrollable %}page-width--flush-small{% endif %} np-page-width">      <div>        <div class="slider-container">          {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
           {% case per_row %}
             {% when 1 %}
             {%- assign grid_item_width = '' -%}
@@ -42,7 +42,13 @@
               <div class="grid__item grid__item--view-all text-center {{ grid_item_width }} medium-up--hide">              <a href="{{ collections[section.settings.home_featured_products].url }}" class="grid-product__see-all">              {{ 'collections.general.view_all_products_html' | t: count: collection.products_count }}
               </a>              </div>              {% endif %} -->            {% endif %}
           {% endif %}
-        </div>      </div>    </div>  </div>  <div class="shop-all-btn">    <button>      <a class="shop-all-button" href="{{section.settings.shop-all-url}}">{{ section.settings.shop-all }}</a>    </button>  </div>  {% if settings.quick_shop_enable %}
+        </div>      </div>    </div>  </div>  
+        <div  id="slider-button-{{ section.id }}" class="shop-all-btn">    
+          <button>      
+            <a class="shop-all-button" href="{{section.settings.shop-all-url}}">{{ section.settings.shop-all }}</a>    
+          </button>  
+        </div>  
+        {% if settings.quick_shop_enable %}
     {% for product in collections[section.settings.home_featured_products].products limit: product_limit %}
       {% include 'quick-shop-modal' %}
     {% endfor %}
@@ -119,6 +125,16 @@
         "id": "show-button",
         "label": "Show Button",
         "default": true
+      },
+      {
+        "type": "range",
+        "id": "button-width",
+        "label": "Button Width",
+        "default": 65,
+        "min": 0,
+        "max": 500,
+        "unit":"px",
+        "step": 5
       }
     ],
     "presets": [
@@ -135,12 +151,15 @@
     margin: 0 auto;
   }
 
+  .new-arrival-container{
+    padding: 0 20px;
+  }
   {% if section.settings.show-button %}
-.shop-all-btn{
+#slider-button-{{ section.id }}.shop-all-btn{
   display:block;
 }  
   {% else %}
-    .shop-all-btn{
+    #slider-button-{{ section.id }}.shop-all-btn{
   display:none;
 }
     {% endif %}
@@ -160,24 +179,27 @@ color: #2B2725;
     {% endif %}
   
   @media(max-width: 768px) {
-    .CollectionSection-{{ section.id }}{
+    #CollectionSection-{{ section.id }}{
       padding: 0 10px;
     }
     .np-page-width {
       padding: 0 20px;
     }
   }
-  .shop-all-btn {
+  #slider-button-{{ section.id }}.shop-all-btn {
     text-align: center;
     padding-top: 17px;
     margin-top: 63px;
     padding-bottom: 70px;
   }
-  .shop-all-btn button {
-    text-align: left;
+  
+  #slider-button-{{ section.id }}.shop-all-btn button {
+    width: {{section.settings.button-width}}px;
     border-bottom: 0.75px solid #2B2725;
+    padding:0;
+    margin:0;
   }
-  .shop-all-button {
+  #slider-button-{{ section.id }} .shop-all-button {
     font-family: 'Intervogue';
     font-style: normal;
     font-weight: 400;
@@ -186,6 +208,7 @@ color: #2B2725;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: #2B2725;
+    text-align: left;
   }
   .new-arrival-container .slick-list {
     margin: 0 -10px;

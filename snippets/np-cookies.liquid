@@ -1,0 +1,79 @@
+<section class="section-wrapper-{{block.id }} popUp-cookies">
+  <div class="cookies-wrapper-{{ block.id }}">
+    <p class="cookiesText">
+      {{ block.settings.cookiesText }}
+    </p>
+
+    <div class="cookiesButton">
+      <button class="allCookies">{{ block.settings.cookiesAllText }}</button>
+      <button class="necessaryCookies">{{ block.settings.cookiesNecessaryText }}</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-wrapper-{{block.id }}{
+  display:none;
+    position:fixed;
+    bottom:0;
+    left:0;
+    background: white;
+    margin:0 auto;
+    z-index:99999999999999999999999999999;
+  }
+   .cookies-wrapper-{{ block.id }}{
+   width: 100%;
+   padding: 55px 164px 55px 89px;
+  }
+
+  .cookiesText{
+    color: #000000;
+    
+  }
+
+  .cookiesButton{
+  display:flex;
+  align-items:center;
+  justify-content: flex-start;
+  gap: 50px;
+    margin-top: 42px;
+  }
+
+  .cookiesText,  .allCookies, .necessaryCookies{
+  font-family: 'Intervogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+  text-align:left;
+  }
+
+
+    .allCookies, .necessaryCookies{
+      text-align: center;
+    background: #2B2725;
+    color: #FFFFFF;
+      text-transform: uppercase;
+    }
+
+  .allCookies{
+  padding: 3px 31px;
+  }
+
+  .necessaryCookies{
+  padding: 3px 37px;
+  }
+
+  @media (max-width:950px){
+    .cookies-wrapper-{{ block.id }}{
+   padding: 35px;
+  }
+  }
+  @media (max-width:768px){
+    .cookies-wrapper-{{ block.id }}{
+   padding: 25px;
+  }
+  }
+</style>
+

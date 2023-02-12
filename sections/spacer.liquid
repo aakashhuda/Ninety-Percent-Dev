@@ -1,14 +1,14 @@
-<section class="custom-spacer">
+<section class="custom-spacer-{{ section.id }}">
 
 </section>
 
 <style>
-    .custom-spacer {
+    .custom-spacer-{{ section.id }}{
         height: {{ section.settings.spacer }}px;
     }
     @media (max-width: 768px) {
-      .custom-spacer {
-        height: calc({{ section.settings.spacer }}px/2)
+      .custom-spacer-{{ section.id }}{
+        height: calc({{ section.settings.spacer }}px/2);
       }
     }
 </style>

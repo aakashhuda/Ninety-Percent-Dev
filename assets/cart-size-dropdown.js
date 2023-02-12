@@ -50,11 +50,17 @@ const mainFunc = {
       `;
     },
     mainJS: function() {
+
+     
+      
+
         cartSizeDropdown();
+        removeCartItem();
        
             let target = document.querySelector(".cart-items-wrapper-np");
             let observer = new MutationObserver(function() {
                 cartSizeDropdown();
+                removeCartItem();
             });
             observer.observe(target, {
                  childList: true,
@@ -66,6 +72,7 @@ const mainFunc = {
             let target = document.querySelector(".cart__page-col");
             let observer = new MutationObserver(function() {
                 cartSizeDropdown();
+                removeCartItem();
             });
             observer.observe(target, {
                  childList: true,
@@ -83,9 +90,9 @@ const mainFunc = {
                    
 
                     if (clickedBtn.target.closest(".dropdown").querySelector(".size-dropdown-wrapper").classList.contains("show-dropdown")) {
-                        clickedBtn.target.closest(".dropdown").nextElementSibling.style.transform = "rotate(-135deg)"
+                        clickedBtn.target.closest(".dropdown").querySelector(".updown-arrow").style.transform = "rotate(-180deg)"
                     } else {
-                        clickedBtn.target.closest(".dropdown").nextElementSibling.style.transform = "rotate(45deg)"
+                        clickedBtn.target.closest(".dropdown").querySelector(".updown-arrow").style.transform = "rotate(0deg)"
                     }
                 })
             });
@@ -153,14 +160,7 @@ const mainFunc = {
                                 const lineItem = addItem(newVariantId, 1);
                                 executed = true;
                             }
-                            console.log( typeof(newVariantComparePrice) )
-                            if (newVariantComparePrice === "0") {
-                               
-                                clickedOption.target.closest(".np-cart-dropdown-style").closest(".cart__item-title").querySelector(".compared-price").style.display = "none"
-                            } 
-                            else {
-                                clickedOption.target.closest(".np-cart-dropdown-style").closest(".cart__item-title").querySelector(".compared-price").innerText = "€" + newVariantComparePrice
-                            }
+                       
                             
                             function addItem(variantId, quantity) {
                                const result =  fetch("/cart/add.json", {
@@ -175,20 +175,10 @@ const mainFunc = {
                                     })
                                 }).then(response => response.json())
                                 .then ( (cartItem) => {
-                                    let varPrice = parseInt(cartItem.price)
-                                    clickedOption.target.closest(".np-cart-dropdown-style").closest(".cart__item-title").querySelector(".cart__price").innerText = "€" + varPrice
-                                    clickedOption.target.closest(".cart__item-details").querySelector(".js-qty__num").value = (cartItem.quantity).toString();
-                                    jQuery.getJSON('/cart.js', function(cart) {
-                                        let totPrice = (cart.total_price / 100).toFixed()
-                                        document.querySelector("[data-subtotal]").innerText = "€" + totPrice
-                                        if (location.href.indexOf("cart") > -1) {
-                                            document.querySelectorAll("[data-subtotal]")[0].innerText = "€" + totPrice
-                                            document.querySelectorAll("[data-subtotal]")[1].innerText = "€" + totPrice
-                                          }
-                                        let newProductInfoUrl = clickedOption.target.closest(".cart-item-name").querySelector("a").href;
-                                        let newUrl = newProductInfoUrl.split("?variant=")[0];
-                                        clickedOption.target.closest(".cart-item-name").querySelector("a").href = newUrl + "?variant=" + cartItem.id 
-                                     } );
+
+                                    var cart = new theme.CartDrawer;
+                                                    cart.init();
+                                                    cart.open();
                                 } )
                             }
                             
@@ -215,6 +205,47 @@ const mainFunc = {
 
                 })
             });
+        }
+
+        function removeCartItem () {
+            document.querySelectorAll(".cart__remove").forEach((removeBtn)=>{
+                console.log("removebtn");
+                    removeBtn.addEventListener("click", function (clickedBtn) { 
+                        console.log("clicked");
+                       
+                        let productInfoUrl = clickedBtn.target.closest(".cart__item-details").querySelector(".cart-item-name a").href;
+                        let url = productInfoUrl.split("?variant=")[0];
+                        let variant = productInfoUrl.split("?variant=")[1];
+                        console.log("variant: " + variant);
+                        removeItemById();
+                    function removeItemById() {
+                        return removeItem({
+                            id: variant
+                        });
+                    };
+                   
+
+                    function removeItem(data) {
+                        fetch("/cart/change.json", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+                            body: JSON.stringify({
+                                ...data,
+                                quantity: 0
+                            })
+                        }).then(()=> {
+                            var cart = new theme.CartDrawer;
+                                            cart.init();
+                        })
+
+
+                    }
+                    }
+                    )
+            })
         }
 
 

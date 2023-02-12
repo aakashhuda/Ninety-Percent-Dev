@@ -36,14 +36,14 @@
       data-section-type="collection-grid"
       class="index-section">
       <div class="page-width">
-        <header class="section-header">
+        <header class="section-header custom-header">
           <h3 class="section-header__title np-h8 mobile-header">
             {{ section.settings.product_recommendations_heading }}
           </h3>
         </header>
       </div>
 
-      <div class="page-width page-width--flush-small">
+      <div class="page-width page-width--flush-small custom-padding">
         <div class="grid-overflow-wrapper">
           {%- if recommend_products -%}
             <div class="product-recommendations-placeholder">
@@ -108,9 +108,14 @@
 {% endschema %}
 
 <style>
-  .product-recommendations .grid-product__title.custom-title {
-    max-width: 250px;
+  .product-recommendations .custom-title {
+    max-width: 230px;
     font-size: 12px;
+  }
+  @media (min-width: 1000px) {
+    .product-recommendations {
+      padding-left: 20px;
+    }
   }
   @media (max-width: 1000px) {
     .product-recommendations .custom-title {
@@ -119,10 +124,24 @@
     .product-recommendations .grid-product__meta{
       flex-direction: column;
     }
+    .grid-product__price {
+      text-align: left;
+    }
   }
-  @media (max-width: 768px) {
-    .product-recommendations .custom-title {
-      max-width: 180px;
+  .product-recommendations .grid-product__price {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 5px;
+    position: absolute;
+    right: 5px;
+  }
+  
+  @media only screen and (max-width: 1300px){
+    .product-recommendations .custom-title{
+      max-width: 150px;
+      padding-right: 11px;
     }
   }
   .product-recommendations .grid__item .grid-product__image-mask ul{
@@ -135,17 +154,42 @@
   .product-recommendations .grid-product__meta{
     display: flex;
     justify-content: space-between;
+    padding-top: 6px;
+    padding-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
   }
    .product-recommendations .grid-product__title{
     text-align: left;
   }
    .material-tag-pdp{
-    font-family: 'Intervogue';
+    font-family: 'Silvana';
     font-style: normal;
     font-weight: 400;
-    font-size: 12.5px;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.01em;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #2B2725;
+  }
+  .section-header.custom-header {
+    margin-bottom: 10px;
+  }
+  @media only screen and (max-width: 1000px) {
+    .material-tag-pdp{
+      display: none;
+    }
+    .product-recommendations .grid-product__price {
+      margin-left: 0;
+      position: relative;
+    }
   }
   @media only screen and (max-width: 768px){
+    .custom-padding {
+      padding: 0 20px;
+    }
     .product-recommendations .grid-product__content:nth-child(1){
       margin-right: 4px;
     }
@@ -155,6 +199,7 @@
     }
      .product-recommendations .grid-product__title{
        padding-right: 11px;
+       font-size: 9px !important;
      }
      .grid-overflow-wrapper .grid__item{
       flex: none !important;
@@ -162,14 +207,26 @@
     .grid-overflow-wrapper{
       overflow: hidden;
     }
-    .grid-product__price{
+    .product-recommendations .grid-product__price{
       padding-right: 5px;
+      display: flex;
+      font-size: 9px;
     }
     .section-header__title.np-h8.mobile-header {
       font-size: 12px;
+      margin-bottom: 5px;
+    }
+    header.section-header {
+      margin-bottom: 0px;
+    }
+    .product-recommendations .grid-product__meta{
+      padding-left: 4px;
     }
     .material-tag-pdp{
       display: none;
+    }
+    .product-recommendations .grid-product__price {
+      right: 0px;
     }
   }
 </style>

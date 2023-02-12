@@ -1,21 +1,44 @@
-<section class="section-wrapper-{{section.id}} np-page-width {{ section.settings.alignment }}">    {% for block in section.blocks %}
+<section class="section-wrapper-{{section.id}} np-page-width {{ section.settings.alignment }}">    
+{% for block in section.blocks %}
         {% case block.type %}
         {% when 'text-with-button' %}
-            <div class="text-with-button-{{ block.id }}">                <div class="text-title">                    <div class="np-h9">{{ block.settings.text-title }}</div>                <div class="np-h4">{{ block.settings.text-subTitle }}</div>                </div>                {% if block.settings.change-paragraph-size %}
-                  <div class="text-paragraph np-h3 text-alignment">                    {{ block.settings.text-paragraph }}
-                </div>                {%else%}
-                <div class="text-paragraph np-h5">                  {{ block.settings.text-paragraph }}
-              </div>        {%endif%}
+            <div class="text-with-button-{{ block.id }}">       
+         <div class="text-title">                    
+<div class="np-h9">{{ block.settings.text-title }}</div>     
+           <div class="np-h4">{{ block.settings.text-subTitle }}</div>    
+            </div>         
+       {% if block.settings.change-paragraph-size %}
+                  <div class="text-paragraph np-h3 text-alignment">     
+               {{ block.settings.text-paragraph }}
+                </div>             
+   {%else%}
+                <div class="text-paragraph np-h5">          
+        {{ block.settings.text-paragraph }}
+              </div>  
+      {%endif%}
                 {% if block.settings.change-button-size  %}
-                <div class="change-button np-h6 button-border">                    <a href="{{ block.settings.button-url }}">                        {{ block.settings.button-text}}
-                    </a>                    <div class="border-bottom">                    </div>                </div>                
+                <div class="change-button np-h6 button-border">               
+     <a href="{{ block.settings.button-url }}">                        {{ block.settings.button-text}}  </a>                 
+   <div class="border-bottom">              
+      </div>           
+     </div>                
                   {% else %}
-                <div class="text-button">                    <a href="{{ block.settings.button-url }}">                        {{ block.settings.button-text}}
-                    </a>                    <div class="border-bottom">                    </div>                </div>                {% endif %}
-            </div>          {% when 'spacer-block' %}
-          <div class="spacer-{{ block.id }}">          </div>        {% endcase %}
+                <div class="text-button">          
+          <a href="{{ block.settings.button-url }}">                        {{ block.settings.button-text}}  </a>          
+          <div class="border-bottom">                 
+   </div>             
+   </div>         
+       {% endif %}
+            </div>      
+    {% when 'spacer-block' %}
+          <div class="spacer-{{ block.id }}">          </div>     
+   {% endcase %}
       {% endfor %}
-</section><style>  .np-page-width {
+</section>
+
+<style> 
+
+ .np-page-width {
     max-width: 1440px;
     margin: 0 auto;
   }
@@ -115,6 +138,14 @@
     padding: 9px 22px;
   border: 0.75px solid #2B2725;
   margin:0 auto;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  }
+
+  @media (max-width:768px){
+.section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .button-border{
+  border: 1px solid #2B2725 !important;     
+  }
   }
 
   .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .button-border a{
@@ -197,8 +228,8 @@ color: #2B2725;
          "type": "range",
            "id":"paragraph-Size",
            "label":"Text Paragraph Size",
-           "min": 400,
-           "max": 880,
+           "min": 450,
+           "max": 950,
            "step": 5,
            "unit": "px",
            "default": 465

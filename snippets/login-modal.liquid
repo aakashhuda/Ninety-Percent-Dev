@@ -1,0 +1,279 @@
+<div class="login-overlay"></div>
+<div class="page-width page-width--tiny page-content login-section">
+  <div class="upper-part">
+    <header class="section-header">
+    <h1 class="section-header__title">{{ 'customer.login.title' | t }}</h1>
+      <div class="login-section-close">
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 1L16 16M1 16L16 1" stroke="#2B2725"/>
+</svg>
+
+      </div>
+  </header>
+
+  <div class="note note--success hide" id="ResetSuccess">
+    {{ 'customer.recover_password.success' | t }}
+  </div>
+
+  <div id="CustomerLoginForm" class="form-vertical">
+    {%- form 'customer_login' -%}
+
+      {{ form.errors | default_errors }}
+
+      <input required placeholder="Email Address" type="email" name="customer[email]" id="CustomerEmail" class="input-full{% if form.errors contains 'email' %} error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
+
+      {%- if form.password_needed -%}
+        <input placeholder="Password" type="password" value="" name="customer[password]" id="CustomerPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" required>
+
+    <div class="grid login-forgot-pass">
+          <div class="grid__item one-half text-left">
+            <small class="label-info">
+              <a href="#recover" id="RecoverPassword">
+                {{ 'customer.login.forgot_password' | t }}
+              </a>
+            </small>
+          </div>
+        </div>
+        
+        {%- endif -%}
+
+      <p>
+        <button type="submit" class="btn btn--full login-new-button">
+          {{ 'customer.login.title' | t }}
+        </button>
+      </p>
+
+    {%- endform -%}
+  </div>
+
+  <div id="RecoverPasswordForm" class="hide">
+    <div class="form-vertical">
+      <h2>{{ 'customer.recover_password.title' | t }}</h2>
+      <p>{{ 'customer.recover_password.subtext' | t }}</p>
+
+      {%- form 'recover_customer_password' -%}
+
+        {{ form.errors | default_errors }}
+
+        {%- if form.posted_successfully? -%}
+          <span class="hide reset-password-success"></span>
+        {%- endif -%}
+
+        <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
+        <input type="email" value="" name="email" id="RecoverEmail" class="input-full" autocorrect="off" autocapitalize="off">
+
+        <p>
+          <button type="submit" class="btn">
+            {{ 'customer.recover_password.submit' | t }}
+          </button>
+        </p>
+        <button type="button" id="HideRecoverPasswordLink">{{ 'customer.recover_password.cancel' | t }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+
+    <div class="lower-part">
+      <p class="create-an-account np-h5">Create an account</p>
+      <ul class="account-facilities np-h5">
+        You will able to:
+        <li>Recieve our exclusive newsletter</li>
+        <li>Save your wishlist Items</li>
+        <li>Shop Faster</li>
+        <li>Check your orders and returns</li>
+      </ul>
+
+
+        
+         <span class="new-register-button">{{ 'customer.register.submit' | t }}</span> 
+  
+      
+
+      
+    </div>
+
+  </div>
+
+  {%- if shop.checkout.guest_login -%}
+    <hr class="hr--clear">
+
+    <h1>{{ 'customer.login.guest_title' | t }}</h1>
+    <hr class="hr--small">
+
+    {%- form 'guest_login' -%}
+      <button type="submit" class="btn">
+        {{ 'customer.login.guest_continue' | t }}
+      </button>
+    {%- endform -%}
+  {%- endif -%}
+</div>
+
+<style>
+  .login-section input{
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+letter-spacing: 0.05em;
+color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .login-section input, select{
+  border: none;
+  border-bottom: 1px solid;
+  border-color: {{ settings.color_borders | default: "#1c1d1d" }};
+  border-color: var(--colorBorder);
+  width: 100%;
+  max-width: 581px;
+  padding: 12px 0px !important;
+  padding-left: 0;
+  border-radius: 0;
+  font-size: 12.5px;
+  line-height: 21px;
+  letter-spacing: 0.05em;
+}
+  
+input:active,
+input:focus,
+select:active,
+select:focus {
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+}
+
+  .login-overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #231f20b3;
+    left: 0;
+    display: none;
+  }
+
+  .login-overlay.login-overlay-appeared{
+    display:block;
+    
+  }
+  
+  .login-section{
+    max-width: 530px;
+    width:100%;
+    position: absolute;
+    top:0;
+    right:-100%;
+    background-color:white;
+    height:100vh;
+    overflow:scroll;
+    padding: 30px 50px 100px 50px;
+    transition: right .5s;
+    z-index:99999999999999;
+  }
+
+.login-section-appeared{
+    right: 0;
+  }
+
+  #CustomerLoginForm input:focus{
+    color: #000000;
+  }
+  
+  .label-info a{
+    text-decoration:underline;
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 28px;
+text-align: justify;
+letter-spacing: 0.02em;
+text-decoration-line: underline;
+color: #2B2725;
+  }
+
+  .grid.login-forgot-pass{
+  margin:0px;
+}
+  .grid.login-forgot-pass .grid__item{
+  padding:0px;
+}
+
+  
+  .btn.login-new-button, .new-register-button{
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+    margin:0;
+    border: 1px solid #000000;
+    text-align:left;
+    background: white !important;
+padding: 25px 24px;
+    width:100%;
+    display: inline-block;
+  }
+
+
+  .grid__item .label-info{
+margin-bottom: 35px;
+  }
+
+
+  .upper-part .section-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom: 82px;
+  }
+  
+.upper-part .section-header .section-header__title{
+  text-align:left;
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 24px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #2B2725;
+}
+  
+  .upper-part input{
+    margin-bottom: 40px;
+  }
+  .upper-part #CustomerLoginForm{
+    padding: 45px 0;
+    border-top: 0.25px solid rgba(43, 39, 37, 0.5);
+    border-bottom: 0.25px solid rgba(43, 39, 37, 0.5);
+  }
+
+  .create-an-account{
+    margin-bottom: 35px;
+    margin-top: 20px;
+  }
+  
+  .account-facilities{
+    margin-bottom: 40px;
+    margin-left: 0px;
+  }
+
+  .account-facilities li{
+    list-style-type: none;
+  }
+
+  .login-section-close, .new-register-button{
+    cursor:pointer;
+  }
+
+  @media (max-width:768px){
+      .upper-part .section-header{
+    margin-bottom: 40px;
+  }
+  }
+  
+</style>

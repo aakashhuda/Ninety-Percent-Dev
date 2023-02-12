@@ -1,36 +1,13 @@
-{% section 'breadcrumb-section' %}
 
-{% section 'faq-menu' %}
-
-{% section 'faq-menu-second' %}
-
-{% section 'faq-menu-fourth' %}
-
-{% section 'faq-menu-seventh' %}
-
-{% section 'faq-menu-nine' %}
-
-{% section 'faq-menu-third' %}
-
-
-
-
-<!-- 
-
-
-
-
-
-{% section 'faq-menu-eight' %}
-
-
-{% section 'faq-menu-ten' %} -->
 
 <style>
   :root {
   --backgroud-color: #F2F2F2;
-  --border-color: #E6E6E6;
+  --border-color: #2B2725;
 }
+
+
+
 .fmt-3{
   margin-top: 30px;
 }
@@ -124,6 +101,7 @@
   display: block;
   padding: 12px;
   padding-right: 30px;
+  padding-top: 18px;
   text-decoration: none;
   border-bottom: 1px solid var(--border-color);
   -webkit-transition:all 0.2s linear;
@@ -138,13 +116,14 @@
 
 }
 .content {
-  border-bottom: 1px solid var(--border-color);
   display:none;
 }
 .content p {
   padding: 12px;
+  padding-left: 0;
+  padding-top: 18px;
   margin: 0;
-  color: #000;
+  color: #2B2725;;
 }
 .faq-card-custom-font{
 font-family: 'Intervogue';
@@ -195,6 +174,7 @@ color: #2B2725 !important;
     padding-top: 50px;
     margin-top: 50px;
   }
+
   .faq-banner--img-container div {
   	width: 100%;
   }
@@ -241,7 +221,29 @@ color: #2B2725 !important;
   }
 }
 
+#faq-fourth,#faq-second,#faq-nine,#faq-seven,#faq-six{
+  display:none
+}
+  
+
+ 
 </style>
+
+{% section 'breadcrumb-section' %}
+
+{% section 'faq-menu' %}
+
+{% section 'faq-menu-fourth' %}
+
+{% section 'faq-menu-second' %}
+
+{% section 'faq-menu-seventh' %}
+
+{% section 'faq-menu-nine' %}
+
+{% section 'faq-menu-sixth' %}
+
+
 
 <script type="text/javascript">
   

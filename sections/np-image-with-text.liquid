@@ -113,7 +113,7 @@
              {% endif %}
            @media only screen and (max-width: 1200px) {
           .block-{{ block.id }}  {
-               padding: 0 80px;
+               padding: 0 29px;
              }
           .block-{{ block.id }} .image-part   {
                 width: 50%;
@@ -195,6 +195,14 @@ margin-bottom: 50px;
                     width: 100%;
                  }
              }
+
+  @media (max-width:450px){
+    .block-{{ block.id }} .text-part .title {
+                    font-size: 52px;
+                   margin-bottom: 20px;
+                   margin-top: 20px;
+                 }
+  }
             {% when "spacer-block" %}
                 .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
                     height: {{ block.settings.spacer-height }}px;

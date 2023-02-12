@@ -169,6 +169,14 @@
 {% endschema %}
 
 <style>
+  .the-look .np-sale_price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .np-regular_price look-price {
+    padding-top: 0px;
+  }
   .the-look{
     text-align: center;
   }
@@ -202,29 +210,70 @@
   }
   .wear-it-with-pdp .grid-product__meta{
     display: flex;
+    position: relative;
+    padding-bottom: 0;
   }
    .wear-it-with-pdp .grid-product__price{
      margin-top: 0px;
+     position: absolute;
+     top: 8px;
+     right: 10px;
    }
   .wear-it-with-pdp .grid-product-title{
     padding-right: 10px;
+    max-width: 240px;
   }
   .wear-it-with-pdp .feature-row__text{
     padding-left: 0px;
     padding-right: 0px;
   }
+  .np-h8.mobile-header {
+      padding-bottom: 8px;
+  }
+
+  @media only screen and (max-width: 1220px){
+    .wear-it-with-pdp .grid-product-title{
+      max-width: 180px;
+    }
+  }
+  
   @media only screen and (min-width: 1050px){
     .wear-it-with-pdp .feature-row{
       margin: 0;
     }
-
+  }
+  @media only screen and (max-width: 1050px){
+    .wear-it-with-pdp .grid-product__meta{
+      flex-direction: column;
+    }
+    .wear-it-with-pdp .grid-product__price{
+       margin-top: 0px;
+       position: relative;
+       top: 0;
+       right: 0;
+       display: flex;
+       flex-direction: column;
+   }
   }
     @media only screen and (max-width: 768px){
+      .wear-it-with-pdp .grid-product-title{
+        font-size: 9px;
+      }
+      .wear-it-with-pdp .grid-product__price{
+         font-size: 9px;
+       }
       .wear-it-with-pdp .medium-up--one-quarter{
         margin-right: 3px;
       }
       .np-h8.mobile-header {
         font-size: 12px;
+        padding-bottom: 0;
+      }
+      .index-section {
+        margin-top: 0px;
+      }
+      .grid-product__meta .np-regular_price.look-price {
+        font-size: 9px;
       }
 
   }

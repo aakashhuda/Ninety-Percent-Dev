@@ -1,0 +1,262 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'double-image' %}
+                <div class="content-wrapper-{{ block.id }}">
+                    <div class="image-container-{{ block.id }} first-image-{{ block.id }}">
+                        <img class="image-{{ block.id }}" src="{{ block.settings.first_image | img_url: 'grande' }}">
+                        <div class="image-caption-{{ block.id }} first-image-caption-{{ block.id }}">
+                            {{ block.settings.first_image_caption }}
+                            <a href="{{ block.settings.first_image_url }}">{{ block.settings.first_image_url_txt }}</a>
+                        </div>
+                    </div>
+                    <div class="image-container-{{ block.id }} second-image-{{ block.id }}">
+                        <img class="image-{{ block.id }}" src="{{ block.settings.second_image | img_url: 'grande' }}">
+                        <div class="image-caption-{{ block.id }} second-image-caption-{{ block.id }}">
+                            {{ block.settings.second_image_caption }}
+                            <a href="{{ block.settings.second_image_url }}">{{ block.settings.second_image_url_txt }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-wrapper-{{ block.id }} single-caption-{{ block.id }}">
+                    {{ block.settings.single_caption }}
+                    <a href="{{ block.settings.single_caption_url }}">{{ block.settings.single_caption_url_txt }}</a>
+                </div>
+            {% when 'spacer' %}
+                <div class="spacer-{{ block.id }}"></div> 
+        {% endcase %}
+    {% endfor %}
+</section>
+
+{% style %}
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    @media(max-width: 768px) {
+        .np-page-width {
+            padding: 0 20px;
+        }
+    }
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'double-image' %}
+                .content-wrapper-{{ block.id }} {
+                    display: flex;
+                    gap: 3px;
+                    margin-left: {{ block.settings.margin-left }}px;
+                    margin-right: {{ block.settings.margin-right }}px;
+                }
+                .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
+                    display: none;
+                }
+                .image-container-{{ block.id }} {
+                    width: 50%;
+                }
+                .image-caption-{{ block.id }} {
+                    word-break: break-word;
+                }
+                .image-{{ block.id }} {
+                    width: 100%;
+                }
+
+                {% if block.settings.show_first_image_caption == false %}
+                    .first-image-caption-{{ block.id }} {
+                        display: none;
+                    }
+                {% endif %}
+
+                {% if block.settings.show_second_image_caption == false %}
+                    .second-image-caption-{{ block.id }} {
+                        display: none;
+                    }
+                {% endif %}
+                
+                {% if block.settings.show_single_caption %}
+                    .image-caption-{{ block.id }} {
+                        display: none;
+                    }
+                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
+                        display: block;
+                        margin-left: {{ block.settings.margin-left }}px;
+                        margin-right: {{ block.settings.margin-right }}px;
+                    }
+                {% endif %}
+
+                .image-caption-{{ block.id }}, .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
+                    text-align: {{ block.settings.caption-alignment }};
+                }
+
+                @media (max-width: 768px) {
+                    .content-wrapper-{{ block.id }}, .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
+                        margin: 0;
+                    }
+                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
+                        max-width: 312px;
+                    }
+                }
+                
+            {% when 'spacer' %}
+        {% endcase %}
+    {% endfor %}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Np Journal Double Image",
+    "settings": [],
+    "blocks": [
+        {
+            "name": "Double Image",
+            "type": "double-image",
+            "settings": [
+                {
+                    "type": "range",
+                    "id": "margin-left",
+                    "label": "Content Padding Left",
+                    "min": 0,
+                    "max": 500,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0
+                },
+                {
+                    "type": "range",
+                    "id": "margin-right",
+                    "label": "Content Padding Right",
+                    "min": 0,
+                    "max": 500,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 0
+                },
+                {
+                    "type": "image_picker",
+                    "id": "first_image",
+                    "label": "Select First Image"
+                },
+                {
+                    "type": "text",
+                    "id": "first_image_caption",
+                    "label": "Caption for First Image",
+                    "default": "Workers at our factory in Bangladesh learn about our profit sharing model here"
+                },
+                {
+                    "type": "url",
+                    "id": "first_image_url",
+                    "label": "First Image URL",
+                    "default": "/"
+                },
+                {
+                    "type": "text",
+                    "id": "first_image_url_txt",
+                    "label": "First Image URL text",
+                    "default": "Shop Here"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_first_image_caption",
+                    "label": "Show First Image Caption",
+                    "default": true
+                },
+                {
+                    "type": "image_picker",
+                    "id": "second_image",
+                    "label": "Select Second Image"
+                },
+                {
+                    "type": "text",
+                    "id": "second_image_caption",
+                    "label": "Caption for Second Image",
+                    "default": "Workers at our factory in Bangladesh learn about our profit sharing model here"
+                },
+                {
+                    "type": "url",
+                    "id": "second_image_url",
+                    "label": "Second Image URL",
+                    "default": "/"
+                },
+                {
+                    "type": "text",
+                    "id": "second_image_url_txt",
+                    "label": "Second Image URL text",
+                    "default": "Shop Here"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_second_image_caption",
+                    "label": "Show Second Image Caption",
+                    "default": true
+                },
+                {
+                    "type": "text",
+                    "id": "single_caption",
+                    "label": "Single caption for both images",
+                    "default": "Workers at our factory in Bangladesh learn about our profit sharing model here"
+                },
+                {
+                    "type": "url",
+                    "id": "single_caption_url",
+                    "label": "Single Caption URL",
+                    "default": "/"
+                },
+                {
+                    "type": "text",
+                    "id": "single_caption_url_txt",
+                    "label": "Single Caption URL text",
+                    "default": "Shop Here"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_single_caption",
+                    "label": "Use Single Caption",
+                    "default": false
+                },
+                {
+                    "type": "select",
+                    "id": "caption-alignment",
+                    "label": "Caption alignment",
+                    "options": [
+                      {
+                        "value": "left",
+                        "label": "Left"
+                      },
+                      {
+                        "value": "center",
+                        "label": "Center"
+                      },
+                      {
+                        "value": "right",
+                        "label": "Right"
+                      }
+                    ],
+                    "default": "left"
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                  "type": "range",
+                  "id": "spacer-height",
+                  "label": "Spacer Height",
+                  "min": 0,
+                  "max": 200,
+                  "step": 5,
+                  "unit": "px",
+                  "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Np Journal Double Image"
+      }
+    ]
+  }
+{% endschema %}

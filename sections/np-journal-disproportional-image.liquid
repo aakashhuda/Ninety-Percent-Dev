@@ -3,24 +3,20 @@
         {% case block.type %}
             {% when 'double-image' %}
                 <div class="content-wrapper-{{ block.id }}">
-                    <div class="image-container-{{ block.id }} first-image-{{ block.id }}">
-                        <img class="image-{{ block.id }}" src="{{ block.settings.first_image | img_url: 'grande' }}">
+                    <div class="image-container-{{ block.id }} large-image-{{ block.id }}">
+                        <img class="image-{{ block.id }} image-lg-{{ block.id }}" src="{{ block.settings.first_image | img_url: 'grande' }}">
                         <div class="image-caption-{{ block.id }} first-image-caption-{{ block.id }}">
                             {{ block.settings.first_image_caption }}
                             <a href="{{ block.settings.first_image_url }}">{{ block.settings.first_image_url_txt }}</a>
                         </div>
                     </div>
-                    <div class="image-container-{{ block.id }} second-image-{{ block.id }}">
-                        <img class="image-{{ block.id }}" src="{{ block.settings.second_image | img_url: 'grande' }}">
+                    <div class="image-container-{{ block.id }} small-image-{{ block.id }}">
+                        <img class="image-{{ block.id }} image-sm-{{ block.id }}" src="{{ block.settings.second_image | img_url: 'grande' }}">
                         <div class="image-caption-{{ block.id }} second-image-caption-{{ block.id }}">
                             {{ block.settings.second_image_caption }}
                             <a href="{{ block.settings.second_image_url }}">{{ block.settings.second_image_url_txt }}</a>
                         </div>
                     </div>
-                </div>
-                <div class="content-wrapper-{{ block.id }} single-caption-{{ block.id }}">
-                    {{ block.settings.single_caption }}
-                    <a href="{{ block.settings.single_caption_url }}">{{ block.settings.single_caption_url_txt }}</a>
                 </div>
             {% when 'spacer' %}
                 <div class="spacer-{{ block.id }}"></div> 
@@ -45,7 +41,7 @@
             {% when 'double-image' %}
                 .content-wrapper-{{ block.id }} {
                     display: flex;
-                    gap: 3px;
+                    gap: 8%;
                     margin-left: {{ block.settings.margin-left }}px;
                     margin-right: {{ block.settings.margin-right }}px;
                 }
@@ -55,10 +51,7 @@
                 .image-container-{{ block.id }} {
                     width: 50%;
                 }
-                .image-caption-{{ block.id }}, 
-                .image-caption-{{ block.id }} a, 
-                .content-wrapper-{{ block.id }}.single-caption-{{ block.id }},
-                .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} a {
+                .image-caption-{{ block.id }}, .image-caption-{{ block.id }} a {
                     word-break: break-word;
                     font-family: 'Intervogue';
                     font-style: normal;
@@ -67,10 +60,19 @@
                     line-height: 21px;
                     letter-spacing: 0.03em;
                     text-transform: uppercase;
-                    color: #2b272566;
+                    color: rgba(43, 39, 37, 0.4)
                 }
                 .image-{{ block.id }} {
                     width: 100%;
+                }
+                .image-lg-{{ block.id }}{
+                    width: 100%;
+                    max-width: 698px;
+                    max-height: 934px;
+                }
+                .image-sm-{{ block.id }}{
+                    max-width: 460px;
+                    max-height: 612px;
                 }
 
                 {% if block.settings.show_first_image_caption == false %}
@@ -84,42 +86,45 @@
                         display: none;
                     }
                 {% endif %}
-                
-                {% if block.settings.show_single_caption %}
-                    .image-caption-{{ block.id }} {
-                        display: none;
-                    }
-                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
-                        display: block;
-                        margin-left: {{ block.settings.margin-left }}px;
-                        margin-right: {{ block.settings.margin-right }}px;
-                    }
-                {% endif %}
 
-                .image-caption-{{ block.id }}, .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
-                    text-align: {{ block.settings.caption-alignment }};
+                @media (max-width: 1200px) {
+                    .image-lg-{{ block.id }}{
+                        aspect-ratio: 488/650;
+                    }
+                    .image-sm-{{ block.id }}{
+                        max-width: 405px;
+                        aspect-ratio: 405/460;
+                    }
                 }
 
                 @media (max-width: 1024px) {
-                    .image-caption-{{ block.id }}, 
-                    .image-caption-{{ block.id }} a, 
-                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }},
-                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} a {
+                    .image-caption-{{ block.id }}, .image-caption-{{ block.id }} a {
                         font-size: 11px;
                     }
                 }
 
                 @media (max-width: 768px) {
-                    .content-wrapper-{{ block.id }}, .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
+                    .content-wrapper-{{ block.id }} {
                         margin: 0;
+                        flex-direction: column;
                     }
-                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} {
-                        max-width: 312px;
+                    .image-lg-{{ block.id }}{
+                        width: 100%;
+                        max-width: unset;
+                        max-height: unset;
                     }
-                    .image-caption-{{ block.id }}, 
-                    .image-caption-{{ block.id }} a, 
-                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }},
-                    .content-wrapper-{{ block.id }}.single-caption-{{ block.id }} a {
+                    .image-sm-{{ block.id }}{
+                        width: 100%;
+                        max-width: unset;
+                        max-height: unset;
+                    }
+                    .large-image-{{ block.id }} {
+                        margin-bottom: 10px;
+                    }
+                    .image-container-{{ block.id }} {
+                        width: 100%;
+                    }
+                    .image-caption-{{ block.id }}, .image-caption-{{ block.id }} a {
                         font-size: 8px;
                     }
                 }
@@ -131,7 +136,7 @@
 
 {% schema %}
   {
-    "name": "Np Journal Double Image",
+    "name": "Np Journal Uneven Img",
     "settings": [],
     "blocks": [
         {
@@ -167,7 +172,7 @@
                     "type": "text",
                     "id": "first_image_caption",
                     "label": "Caption for First Image",
-                    "default": "Workers at our factory in Bangladesh learn about our profit sharing model here"
+                    "default": "argo dress in driftwood"
                 },
                 {
                     "type": "url",
@@ -196,7 +201,7 @@
                     "type": "text",
                     "id": "second_image_caption",
                     "label": "Caption for Second Image",
-                    "default": "Workers at our factory in Bangladesh learn about our profit sharing model here"
+                    "default": "naxos crop jean in Black"
                 },
                 {
                     "type": "url",
@@ -215,50 +220,6 @@
                     "id": "show_second_image_caption",
                     "label": "Show Second Image Caption",
                     "default": true
-                },
-                {
-                    "type": "text",
-                    "id": "single_caption",
-                    "label": "Single caption for both images",
-                    "default": "Workers at our factory in Bangladesh learn about our profit sharing model here"
-                },
-                {
-                    "type": "url",
-                    "id": "single_caption_url",
-                    "label": "Single Caption URL",
-                    "default": "/"
-                },
-                {
-                    "type": "text",
-                    "id": "single_caption_url_txt",
-                    "label": "Single Caption URL text",
-                    "default": "Shop Here"
-                },
-                {
-                    "type": "checkbox",
-                    "id": "show_single_caption",
-                    "label": "Use Single Caption",
-                    "default": false
-                },
-                {
-                    "type": "select",
-                    "id": "caption-alignment",
-                    "label": "Caption alignment",
-                    "options": [
-                      {
-                        "value": "left",
-                        "label": "Left"
-                      },
-                      {
-                        "value": "center",
-                        "label": "Center"
-                      },
-                      {
-                        "value": "right",
-                        "label": "Right"
-                      }
-                    ],
-                    "default": "left"
                 }
             ]
         },
@@ -281,7 +242,7 @@
     ],
     "presets": [
       {
-        "name": "Np Journal Double Image"
+        "name": "Np Journal Uneven Img"
       }
     ]
   }

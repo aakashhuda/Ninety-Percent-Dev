@@ -1,0 +1,179 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'triple-image' %}
+                <div class="content-wrapper-{{ block.id }}">
+                    <div class="full-image-container-{{ block.id }}">
+                        <img class="image-{{ block.id }} image-fl-{{ block.id }}" src="{{ block.settings.full_image | img_url: 'master' }}">
+                        <div class="product-meta-{{ block.id }}">
+                            <div class="product-title-{{ block.id }}">Hydra Blouse in Pine Bark</div>
+                            <div class="product-material-{{ block.id }}">Tencel</div>
+                        </div>
+                    </div>
+                    <div class="dual-image-container-{{ block.id }}">
+                        <div class="first-image-container-{{ block.id }}">
+                            <img class="image-{{ block.id }} first-image-{{ block.id }}" src="{{ block.settings.first_image | img_url: 'grande' }}">
+                        </div>
+                        <div class="second-image-container-{{ block.id }}">
+                            <img class="image-{{ block.id }} second-image-{{ block.id }}" src="{{ block.settings.second_image | img_url: 'grande' }}">
+                        </div>
+                    </div>
+                </div>
+            {% when 'spacer' %}
+                <div class="spacer-{{ block.id }}"></div> 
+        {% endcase %}
+    {% endfor %}
+</section>
+
+{% style %}
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    @media(max-width: 768px) {
+        .np-page-width {
+            padding: 0 20px;
+        }
+    }
+
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when 'triple-image' %}
+                .image-{{ block.id }} {
+                    width: 100%;
+                }
+                .full-image-container-{{ block.id }} {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 {{ block.settings.full_image_margin }}px;
+                    position: relative;
+                    margin-bottom: 10px;
+                }
+                .product-meta-{{ block.id }} {
+                    position: absolute;
+                    top: 101%;
+                    left: 0;
+                }
+                .product-title-{{ block.id }} {
+                    font-family: "Intervogue";
+                    font-weight: 400;
+                    font-size: 12.5px;
+                    line-height: 21px;
+                    letter-spacing: 0.03em;
+                    text-transform: uppercase;
+                }
+                .product-material-{{ block.id }} {
+                    font-family: "Silvana";
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 18px;
+                    letter-spacing: -0.01em;
+                }
+                .dual-image-container-{{ block.id }} {
+                    display: flex;
+                    margin: 0 {{ block.settings.dual_image_margin }}px;
+                }
+                .first-image-container-{{ block.id }}, 
+                .second-image-container-{{ block.id }} {
+                    width: 50%;
+                }
+                .first-image-container-{{ block.id }} {
+                    padding: {{ block.settings.padding-top-bottom }}% {{ block.settings.padding-left-right }}%; 
+                }
+            {% when 'spacer' %}
+        {% endcase %}
+    {% endfor %}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Np Journal Triple Image",
+    "settings": [],
+    "blocks": [
+        {
+            "name": "Triple Image",
+            "type": "triple-image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "full_image",
+                    "label": "Full Size Image"
+                },
+                {
+                    "type": "range",
+                    "id": "full_image_margin",
+                    "label": "Full Image Both Side Padding",
+                    "min": 0,
+                    "max": 500,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 20
+                },
+                {
+                    "type": "image_picker",
+                    "id": "first_image",
+                    "label": "Left Image"
+                },
+                {
+                    "type": "range",
+                    "id": "padding-top-bottom",
+                    "label": "Left Image Padding for Top & Bottom",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 10
+                },
+                {
+                    "type": "range",
+                    "id": "padding-left-right",
+                    "label": "Left Image Padding for Right & Left",
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "unit": "%",
+                    "default": 7
+                },
+                {
+                    "type": "image_picker",
+                    "id": "second_image",
+                    "label": "Right Image"
+                },
+                {
+                    "type": "range",
+                    "id": "dual_image_margin",
+                    "label": "Dual Image Both Side Padding",
+                    "min": 0,
+                    "max": 500,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 20
+                }
+            ]
+        },
+        {
+            "name": "Spacer",
+            "type": "spacer",
+            "settings": [
+                {
+                  "type": "range",
+                  "id": "spacer-height",
+                  "label": "Spacer Height",
+                  "min": 0,
+                  "max": 200,
+                  "step": 5,
+                  "unit": "px",
+                  "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Np Journal Triple Image"
+      }
+    ]
+  }
+{% endschema %}

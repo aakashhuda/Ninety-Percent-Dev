@@ -1,0 +1,131 @@
+<section class="shopify-wrapper-{{ section.id }}">
+  <table class="table-width">
+    <tbody>
+  {% for block in section.blocks %}
+        {% case block.type %}
+          {% when "table-row" %}
+          <tr class="table-row-section">
+            <td class="np-h5 first-data">{{ block.settings.first-data }}</td>
+            <td class="np-h9 second-data">{{ block.settings.second-data }}</td>
+          </tr>
+        {% endcase %}
+    {% endfor %}
+    </tbody>
+    </table>
+</section>
+
+
+<style>
+  .shopify-wrapper-{{ section.id }} .table-width{
+    max-width: {{section.settings.table-width}}px;
+    margin:0 auto;
+  }
+
+  {% for block in section.blocks %}
+        {% case block.type %}
+          {% when "table-row" %}
+          table, tr, td, th{
+          background: none;
+          }
+
+          .shopify-wrapper-{{ section.id }} .table-row-section td{
+            background: none;
+          }
+          .shopify-wrapper-{{ section.id }} .first-data{
+            text-align:right;
+            font-size:{{block.settings.first-data-font}}px;
+            color:{{block.settings.left-side-text-color}};
+          }
+
+          .shopify-wrapper-{{ section.id }} .second-data{
+            text-align:left;
+            font-size:{{block.settings.second-data-font}}px;
+            color:{{block.settings.right-side-text-color}};
+          }
+          .shopify-wrapper-{{ section.id }} .first-data, .shopify-wrapper-{{ section.id }} .second-data{
+            padding: 10px;
+          }
+        {% endcase %}
+    {% endfor %}
+</style>
+
+{% schema %}
+  {
+    "name": "Lookbook Table",
+    "settings": [
+       {
+          "type": "range",
+          "id":"table-width",
+          "label":"Width of Table",
+          "min":200,
+          "max":700,
+          "step":5,
+          "unit":"px",
+          "default":200
+      }
+    ],
+    "blocks":[
+      {
+        "name": "Table Row",
+        "type": "table-row",
+        "settings":[
+          {
+            "type":"richtext",
+            "id":"first-data",
+            "label":"Left Side Data",
+      "default":"<p>Photography:</p>"
+        },
+          {
+            "type":"richtext",
+            "id":"second-data",
+            "label":"Right Side Data",
+            "default":"<p>Daniel Archer</p>"
+        },
+          {
+          "type": "range",
+          "id":"first-data-font",
+          "label":"Font Size of Left Side",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"px",
+          "default":16
+        },
+          {
+            "type":"color",
+            "id":"left-side-text-color",
+            "label":"Font Color Left Side",
+            "default":"#2B2725"
+        },
+          {
+          "type": "range",
+          "id":"second-data-font",
+          "label":"Font Size of Right Side",
+          "min":0,
+          "max":100,
+          "step":1,
+          "unit":"px",
+          "default":18
+        },
+          {
+            "type":"color",
+            "id":"right-side-text-color",
+            "label":"Font Color Right Side",
+            "default":"#2B2725"
+        }
+        ]
+      }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"LookBook Table",
+           "blocks": [
+              {
+              "type": "table-row"
+              }
+      ]
+        }
+    ]
+  }
+{% endschema %}

@@ -80,6 +80,17 @@ const mainFunc = {
             });
           }
 
+      const itemCount =()=>{
+          jQuery.getJSON('/cart.js', function(cart) {
+           document.querySelectorAll(".site-nav .cart-item-count.cart-link__bubble").forEach(e=>{
+             e.innerText= cart.item_count;
+           });
+          } );
+        }
+
+
+        
+
         function cartSizeDropdown() {
             let dropDownBtn = Array.from(document.querySelectorAll(".dropbtn"));
 
@@ -175,7 +186,8 @@ const mainFunc = {
                                     })
                                 }).then(response => response.json())
                                 .then ( (cartItem) => {
-
+                                  console.log(cartItem)
+                                      // document.querySelector(".site-nav .cart-item-count.cart-link__bubble").innerText = cart
                                     var cart = new theme.CartDrawer;
                                                     cart.init();
                                                     cart.open();
@@ -209,14 +221,11 @@ const mainFunc = {
 
         function removeCartItem () {
             document.querySelectorAll(".cart__remove").forEach((removeBtn)=>{
-                console.log("removebtn");
                     removeBtn.addEventListener("click", function (clickedBtn) { 
-                        console.log("clicked");
                        
                         let productInfoUrl = clickedBtn.target.closest(".cart__item-details").querySelector(".cart-item-name a").href;
                         let url = productInfoUrl.split("?variant=")[0];
                         let variant = productInfoUrl.split("?variant=")[1];
-                        console.log("variant: " + variant);
                         removeItemById();
                     function removeItemById() {
                         return removeItem({

@@ -138,16 +138,18 @@
     <div class="material-page-title-wrapper mobile-material-wrapper">
       {%- capture product_fabric_types -%}
         {%- for tag in product.tags -%}
-          {%- if tag contains '_tenceltm' or tag contains '_organic-cotton' -%}
+          {%- if tag contains '_organic-cotton' or tag contains '_tenceltm' or tag contains '_seacell-1' or tag contains '_ecovero-viscose' or tag contains '_micromodal-1' or tag contains '_velour' or tag contains '_recycled-polyamide' or tag contains '_polyester-1' or tag contains '_linen-1' or tag contains '_nylon' or tag contains '_enka®-viscose' or tag contains '_viscose-1'-%}
             {%- assign include_page_handle = tag | split: '_' -%}
             {%- assign include_page = pages[include_page_handle.last] -%}
-            {% assign words = include_page.title | split: ' ' %}
-            {% capture titlecase %}
+             {% comment %}
+             {% assign words = include_page.title | split: ' ' %}
+             {% capture titlecase %}
               {% for word in words %}
                 {{ word | capitalize }}
               {% endfor %}
             {% endcapture %}
-            <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ titlecase }}, </a>
+            {% endcomment %}
+            <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ include_page.title }},</a>
           {%- endif -%}
         {%- endfor -%}
       {%- endcapture -%}
@@ -196,8 +198,26 @@
               video_style: video_style -%}
             <div class="pdp-description-container">
               <div class="fabrication-container">
-                {{ product.metafields.custom.fabrication }}
-                {{ product.metafields.custom.factory }}
+                {%- capture product_fabrication -%}
+                {% assign fabrications = product.metafields.custom.fabrication | split: '.' %}
+                  <div class="model-wears">{{ fabrications.first | capitalize }}.</div>
+                {% if fabrications.last contains "," %}
+                {% assign words = fabrications.last | split: ',' %}
+                  <div class="fabric-percentage">
+                    {% for word in words %}
+                      <span><u>{{ word }}</u>,</span>
+                    {% endfor %}
+                  </div>
+
+                  {% else %}
+                  <div class="fabric-percentage">
+                  <span><u>{{ fabrications.last }}</u>,</span>
+                  </div>
+                  {% endif %}
+                {% endcapture %}
+                {%- assign product_fabrication = product_fabrication | remove_last: "," -%}
+                  {{ product_fabrication }}      
+                <div class="factory-location">{{ product.metafields.custom.factory }}</div>  
               </div>
               <div class="description-container">
                 {% if product.description contains "Model wears" %}
@@ -257,16 +277,18 @@
             <div class="material-page-title-wrapper">
               {%- capture product_fabric_types -%}
                 {%- for tag in product.tags -%}
-                  {%- if tag contains '_tenceltm' or tag contains '_organic-cotton' -%}
+                  {%- if tag contains '_organic-cotton' or tag contains '_tenceltm' or tag contains '_seacell-1' or tag contains '_ecovero-viscose' or tag contains '_micromodal-1' or tag contains '_velour' or tag contains '_recycled-polyamide' or tag contains '_polyester-1' or tag contains '_linen-1' or tag contains '_nylon' or tag contains '_enka®-viscose' or tag contains '_viscose-1'-%}
                     {%- assign include_page_handle = tag | split: '_' -%}
                     {%- assign include_page = pages[include_page_handle.last] -%}
-                    {% assign words = include_page.title | split: ' ' %}
+                    {% comment %}
+                     {% assign words = include_page.title | split: ' ' %}
                     {% capture titlecase %}
                       {% for word in words %}
                         {{ word | capitalize }}
                       {% endfor %}
                     {% endcapture %}
-                    <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ titlecase }},</a>
+                    {% endcomment %}
+                    <a href="#" class="pdp-drawer-item drawer-material-pdp">{{ include_page.title }},</a>
                   {%- endif -%}
                 {%- endfor -%}
               {%- endcapture -%}
@@ -846,8 +868,26 @@
             </div>
 
             <div class="pdp-mobile-fabrication">
-              {{ product.metafields.custom.fabrication }}
-              {{ product.metafields.custom.factory }}
+               {%- capture product_fabrication -%}
+               {% assign fabrications = product.metafields.custom.fabrication | split: '.' %}
+                  <div class="model-wears">{{ fabrications.first | capitalize }}.</div>
+               {% if fabrications.last contains "," %}
+               {% assign words = fabrications.last | split: ',' %}
+                  <div class="fabric-percentage">
+                    {% for word in words %}
+                      <span>{{ word }} </span>
+                    {% endfor %}.
+                  </div>
+
+                {% else %}
+                  <div class="fabric-percentage">
+                      <span>{{ fabrications.last }} </span>
+                  </div>
+                {% endif %}
+                {% endcapture %}
+                {{ product_fabrication }}   
+                        
+                <div class="factory-location">{{ product.metafields.custom.factory }}</div>
             </div>                        
 
             <div class="image-wrap pdp-image-wrap" style="height: auto; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;">
@@ -912,6 +952,14 @@
   .pdp-drawer-item, .pdp-description-container, .material-page-title-wrapper {
     display: flex;
   }
+
+  .pdp-description-container{
+    padding-top: 80px;
+  }
+
+  .pdp-drawer-item.drawer-material-pdp{
+    text-transform: capitalize;
+  }
   .show-drawer-delivery .care-instructions-container, .show-care-instructions .delivery-retunrs-wrapper,
   .show-material-pdp .care-instructions-container,
   .show-material-pdp .delivery-retunrs-wrapper
@@ -930,6 +978,7 @@
     color: #2B2725;
     letter-spacing: 0.02em;
     line-height: 28px;
+    text-align: justify;
   }
   .fabrication-container {
     width: 50%;
@@ -943,8 +992,12 @@
     line-height: 23px;
     padding-left: 22px;
   }
+
+  .fabrication-container .model-wears{
+    margin-bottom:30px;
+  }
+  
   .pdp-mobile-header {
-    
     justify-content: space-between;
   }
   .mobile-material-wrapper,  .pdp-mobile-slider {
@@ -1029,11 +1082,27 @@
     color: #c20000;
   }
   @media only screen and (max-width: 768px) {
+    .pdp-mobile-fabrication .model-wears{
+        margin-bottom:20px;
+      }
+    
+    .pdp-mobile-fabrication .factory-location{
+        margin-top:20px;
+      }
+    
+    span.ProductcolourSwatches__Square {
+      width: 25px !important;
+      height: 32px !important;
+    }
+    .related-products-list-container .ProductcolourSwatches__Item:first-child{
+      padding-bottom: 6px;
+    }
     .pdp-mobile-slider{
       display: block !important;
     }
     .related-color-products{
       padding-bottom: 28px;
+      padding-top: 0;
     }
     .np-mobile-pdp-price {
       font-size: 16px;
@@ -1050,6 +1119,9 @@
     }
     .pdp-mobile-drawer{
       padding-top: 10px;
+    }
+    .pdp-mobile-drawer a{
+      color:#2B2725 !important;
     }
     .pdp-right-block .variant__button-label{
         font-size: 22px !important;

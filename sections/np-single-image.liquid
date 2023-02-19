@@ -1,20 +1,24 @@
-<section class="section-wrapper-{{ section.id }}">    {% for block in section.blocks %}
+<section class="section-wrapper-{{ section.id }}">    
+{% for block in section.blocks %}
         {% case block.type %}
             {% when "image-block" %}
-                <div class="block-{{ block.id }}">   
+         <div class="block-{{ block.id }}">   
           <div class="image-block-inner block-width-{{ block.settings.block-width }} " >           
-            <img src="{{ block.settings.bg-image | img_url: 'grande' }}" alt="">           
+            <img src="{{ block.settings.bg-image | img_url: 'master' }}" alt="">           
             <p class="image-block-caption np-h6"> 
-          {{ block.settings.caption }} 
-              <a class="np-h6" href="{{ block.settings.image-url }}">{{ block.settings.image-url-text }}</a> 
+          {{ block.settings.caption-one }} 
+              <a class="np-h6" href="{{ block.settings.image-url-one }}">{{ block.settings.image-url-text-one }}</a> 
+          {{ block.settings.caption-two }} 
+              <a class="np-h6" href="{{ block.settings.image-url-two }}">{{ block.settings.image-url-text-two }}</a> 
             </p>                        
           </div>                
-                </div>            
+        </div>            
           
           {% when 'spacer-block' %}
                 <div class="spacer-{{ block.id }}">                </div>        {% endcase %}
     {% endfor %}
-</section><style>    .section-wrapper-{{ section.id }} {
+</section>
+<style>    .section-wrapper-{{ section.id }} {
         max-width: 1440px;
         margin: 0 auto;
     }
@@ -141,8 +145,8 @@
                 },
               {
                     "type": "text",
-                    "label": "Add caption",
-                    "id": "caption",
+                    "label": "Add First caption",
+                    "id": "caption-one",
                 "default":"(above) look 00 from collection 20 made of x material."
                 },
                 {
@@ -153,14 +157,32 @@
                 },
               {
                 "type":"url",
-                "id":"image-url",
-                "label":"Image URL",
+                "id":"image-url-one",
+                "label":"First URL",
                 "default":"/"
               },
               {
                 "type":"text",
-                "id":"image-url-text",
-                "label":"Image URL Text",
+                "id":"image-url-text-one",
+                "label":"First URL Text",
+                "default":"Shop Here"
+              },
+              {
+                    "type": "text",
+                    "label": "Add Second caption",
+                    "id": "caption-two",
+                "default":"(above) look 00 from collection 20 made of x material."
+                },
+              {
+                "type":"url",
+                "id":"image-url-two",
+                "label":"Second URL",
+                "default":"/"
+              },
+              {
+                "type":"text",
+                "id":"image-url-text-two",
+                "label":"Second URL Text",
                 "default":"Shop Here"
               }
             ]

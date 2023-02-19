@@ -3,8 +3,8 @@
         {% case block.type %}
             {% when "image-block" %}
           <div class="image-block-inner block-width-{{ block.id }} " >                   
-            <img class="desktop-image" src="{{ block.settings.desktop-image | img_url: 'grande' }}" alt="">              
-            <img class="mobile-image" src="{{ block.settings.mobile-image | img_url: 'grande' }}" alt="">           
+            <img class="desktop-image" src="{{ block.settings.desktop-image | img_url: 'master' }}" alt="">              
+            <img class="mobile-image" src="{{ block.settings.mobile-image | img_url: 'master' }}" alt="">           
           </div>                       
           
           {% when 'spacer-block' %}
@@ -40,6 +40,12 @@
     animation: fade-in {{ block.settings.delay-time }}s ease 0s forwards;
   }
 
+  {% if block.settings.change-aspect-ratio %}
+ .section-wrapper-{{ section.id }} .block-width-{{ block.id }} .desktop-image{
+             width:100%;
+            aspect-ratio: 1400/677;
+           }
+    {% endif %}
   {% if block.settings.mobile-image %}
     .mobile-image{
         display:none;
@@ -124,6 +130,12 @@
                     "step":1,
                     "unit":"s",
                     "default":3
+                },
+              {
+                    "type": "checkbox",
+                    "label": "Change Aspect Ratio",
+                    "id": "change-aspect-ratio",
+                "default":false
                 }
             ]
         },

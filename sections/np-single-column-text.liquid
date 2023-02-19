@@ -38,12 +38,14 @@
             }
             .text-block-{{ block.id }} .text-block-inner p {
               margin: 0;
+              text-align: justify;
 /*               font-family:{{block.settings.font-family}}; */
           }
 
         
           .section-wrapper-{{ section.id }} .text-block-{{ block.id }} {
-              text-align: {{block.settings.text-alignment}};
+            display:flex;
+              justify-content: {{block.settings.text-alignment}};
           }
 
 
@@ -57,6 +59,13 @@
           .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
               height: {{ block.settings.spacer-height }}px;
           }
+
+    @media only screen and (max-width: 768px) { 
+          .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+              height: 40px;
+          }
+        }
+    
       {% endcase %}
       {% endfor %}
   
@@ -106,7 +115,7 @@
                         "label": "Paragraph Text Alignment",
                         "options": [
                           {
-                            "value": "left",
+                            "value": "start",
                             "label": "Left"                         
                           },
                           {
@@ -114,11 +123,11 @@
                             "label": "Center"                          
                           },
                           {
-                            "value": "right",
+                            "value": "end",
                             "label": "Right"                          
                           }
                         ],
-                        "default": "left"                   
+                        "default": "start"                   
                 },
                 {
                         "type": "select",
@@ -167,24 +176,7 @@
                           }
                         ],
                         "default": "np-h5"                    
-                },
-                {
-                        "type": "select",
-                        "id": "font-family",
-                        "label": "Paragraph Font",
-                        "options": [
-                          {
-                            "value": "Intervogue",
-                            "label": "Intervogue"                         
-                          },
-                          {
-                            "value": "Silvana",
-                            "label": "Silvana"                          
-                          }
-                        ],
-                        "default": "Silvana"                   
                 }
-
               ]
           },
           {

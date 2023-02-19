@@ -28,6 +28,7 @@
 
   .cookiesText{
     color: #000000;
+    text-align:justify;
     
   }
 
@@ -36,7 +37,7 @@
   align-items:center;
   justify-content: flex-start;
   gap: 50px;
-    margin-top: 42px;
+  margin-top: 42px;
   }
 
   .cookiesText,  .allCookies, .necessaryCookies{
@@ -74,6 +75,14 @@
     .cookies-wrapper-{{ block.id }}{
    padding: 25px;
   }
+
+    .cookiesButton{
+  flex-direction:column;
+      gap:25px;
+  }
+    .allCookies, .necessaryCookies{
+     width:100%;
+    }
   }
 </style>
 

@@ -310,7 +310,8 @@
         color: #2B2725;
         padding-bottom: 12px;
         border-bottom: 1px solid #2B2725;
-        width: 581px;
+        width: 100%;
+        max-width: 581px;
         margin-bottom: 17px;
     }
     .size-guide-page .custom-message {
@@ -323,7 +324,14 @@
         margin-bottom: 57px;
     }
     .size-guide-page .sojo-message {
-        width: 607px;
+        width: 100%;
+        max-width: 607px;
+    }
+
+    @media (max-width: 768px) {
+      .custom-page-title {
+        font-size: 80px;
+      }
     }
 
 {% endstyle %}

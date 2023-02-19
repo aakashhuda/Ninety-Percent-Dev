@@ -15,6 +15,8 @@
   }
 }
 </style>
+  {% if product.metafields.custom.wear_it_with_products %}
+    <span>{{ product.metafields.custom.wear_it_with_products | size }}</span>
 <div class="page-width the-look wear-it-with-pdp">
   <h5 class="np-h8 mobile-header">HOW TO WEAR IT</h5>
   {% capture image_layout %}
@@ -73,6 +75,8 @@
     {% endif %}
   </div>
 </div>
+
+    {% endif %}
 
 {% if section.settings.divider %}</div>{% endif %}
 
@@ -275,6 +279,14 @@
       .grid-product__meta .np-regular_price.look-price {
         font-size: 9px;
       }
+
+      {% if product.metafields.custom.wear_it_with_products.size < 2 %}
+
+      .feature-row__item.feature-row__text{
+        min-width:100%;
+      }
+      
+      {% endif %}
 
   }
 </style>

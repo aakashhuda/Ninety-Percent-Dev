@@ -1,0 +1,294 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">    
+{% for block in section.blocks %}
+        {% case block.type %}
+            {% when "three-image-block" %}
+                <div class="upper-part-{{ block.id }}">   
+                  <div class="first-image-block">
+                    <img src="{{ block.settings.first-image | img_url: 'master' }}" alt="">   
+                  </div>
+                  <div class="text-block">
+          <div class="first-description np-h5">{{ block.settings.description-one }}</div>
+          <div class="second-description np-h5">{{ block.settings.description-two }}</div>
+                    
+                  </div>
+                </div>            
+                <div class="lower-part-{{ block.id }}">   
+                  <div class="second-image-block">
+                    <img src="{{ block.settings.second-image | img_url: 'master' }}" alt="">   
+                  </div>
+                  <div class="third-image-block">
+                    <img src="{{ block.settings.third-image | img_url: 'master' }}" alt="">
+                  </div>
+                </div>            
+          
+          {% when 'spacer-block' %}
+                <div class="spacer-{{ block.id }}">                </div>        
+          {% endcase %}
+    {% endfor %}
+</section>
+
+<style>
+    .np-page-width {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+  @media (max-width: 768px) {
+    .np-page-width {
+        padding: 0 20px;
+    }
+    }
+
+  .section-wrapper-{{ section.id }}.np-page-width{
+    padding-left: 20px;
+    padding-right: 90px;
+  }
+
+   @media (max-width: 1280px) {
+    .section-wrapper-{{ section.id }}.np-page-width{
+    padding-right: 5%;
+  }
+    }
+  
+   @media (max-width: 1050px) {
+    .section-wrapper-{{ section.id }}.np-page-width{
+    padding-right: 20px;
+  }
+    }
+  
+{% for block in section.blocks %}
+        {% case block.type %}
+            {% when "three-image-block" %}
+            .upper-part-{{ block.id }}, .lower-part-{{ block.id }}{
+              display:flex;
+              justify-content:flex-start;
+              align-items:start;
+              gap:9%;
+            }
+
+  .section-wrapper-{{ section.id }} .first-image-block{
+    width:44%;
+  }
+  
+  .section-wrapper-{{ section.id }} .first-image-block img{
+    width:100%;
+  }
+
+  .section-wrapper-{{ section.id }} .text-block{
+    width: 47%;
+  }
+
+          .upper-part-{{ block.id }} .first-description{
+          margin-bottom:45px;
+          }
+
+          .upper-part-{{ block.id }} .first-description, .upper-part-{{ block.id }} .second-description{
+          max-width:581px;
+          }
+          
+  .section-wrapper-{{ section.id }} .text-block p{
+          text-align:justify;
+  }
+
+          .lower-part-{{ block.id }}{
+          min-height:405px;
+            margin-top: -45px;
+          }
+
+
+          .section-wrapper-{{ section.id }} .second-image-block{
+          justify-self: end;
+          width:45%;
+          height:405px;
+          display: flex;
+          justify-content: end;
+          align-items: end;
+          
+          }
+          .section-wrapper-{{ section.id }} .second-image-block img{
+          aspect-ratio:230/234;
+          max-width:230px;
+          }
+
+          .section-wrapper-{{ section.id }} .third-image-block{
+          width:48%;
+          }
+          
+  @media (max-width:1280px){
+    .upper-part-{{ block.id }}, .lower-part-{{ block.id }}{
+              gap:5%;
+            }
+    .section-wrapper-{{ section.id }} .text-block{
+    width: 50%;
+  }
+
+    .section-wrapper-{{ section.id }} .text-block p{
+      font-size: 14px;
+      line-height:24px;
+  }
+  }
+  
+  @media (max-width:1050px){
+    .upper-part-{{ block.id }}, .lower-part-{{ block.id }}{
+              gap:3%;
+            }
+   .section-wrapper-{{ section.id }} .text-block{
+    width: 52%;
+  }
+
+    .section-wrapper-{{ section.id }} .text-block p{
+      font-size: 12px;
+      line-height:20px;
+  }
+  }
+  
+  @media (max-width:900px){
+    .section-wrapper-{{ section.id }} .text-block p{
+      font-size: 12px;
+      line-height:18px;
+  }
+  }
+  
+  @media (max-width:830px){
+    .section-wrapper-{{ section.id }} .text-block p{
+    margin-bottom:10px;
+  }
+    .lower-part-{{ block.id }}{
+            margin-top: -25px;
+          }
+  }
+  
+  @media (max-width:800px){
+    .section-wrapper-{{ section.id }} .text-block p{
+      line-height:16px;
+  }
+  }
+  
+  @media (max-width:768px){
+.upper-part-{{ block.id }}, .lower-part-{{ block.id }}{
+              display:block;
+            }
+
+  .section-wrapper-{{ section.id }} .first-image-block{
+    width:100%;
+  }
+  
+  .section-wrapper-{{ section.id }} .first-image-block img{
+    width:100%;
+  }
+
+  .section-wrapper-{{ section.id }} .text-block{
+    width: 100%;
+          margin-bottom:40px;
+  }
+  
+  .section-wrapper-{{ section.id }} .text-block p{
+    margin-top:30px;
+    margin-bottom:0;
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .lower-part-{{ block.id }}{
+    margin-top: 10px;
+  }
+
+
+  .section-wrapper-{{ section.id }} .second-image-block{
+  width:100%;
+    height:auto;
+    justify-content:center;
+    margin-bottom:40px;
+  }
+    
+  .section-wrapper-{{ section.id }} .second-image-block img{
+  aspect-ratio:1/1;
+  max-width:100%;
+  }
+
+  .section-wrapper-{{ section.id }} .third-image-block{
+  width:100%;
+    display:flex;
+    justify-content:center;
+  }
+  }
+  
+            {% when 'spacer-block' %}
+
+                .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                    height: {{ block.settings.spacer-height }}px;
+                }
+        {% endcase %}
+    {% endfor %}
+</style>
+{% schema %}
+  {
+    "name": "Three Image With Text",
+    "settings": [],
+    "blocks":[
+      {
+        "type": "three-image-block",
+        "name": "Three Image Block",
+        "settings": [
+            {
+              "type": "image_picker",
+              "label": "First Image Pick",
+              "id": "first-image"
+            },
+          {
+              "type": "richtext",
+              "label": "First Description",
+              "id": "description-one",
+              "default":"<p>In 1956, while Krasner was in Europe, Pollock died in a car crash. A year later, Krasner moved into the barn studio that Pollock had used on their property, and the scale and energy of her paintings expanded. Nature became an immersive theme: The Seasons (1957) stretched 17 feet wide, and Gaea (1966), after the Greek earth goddess, shows her moving toward broad swaths of color and rhythm. In 1965, she had her first solo exhibition at Whitechapel Gallery in London, and in 1975, at the Whitney Museum of American Art. She died in 1984, just a few months before her retrospective opened at MoMA.</p>"
+          },
+          {
+              "type": "richtext",
+              "label": "Second Description",
+              "id": "description-two",
+              "default":"<p>In 1956, while Krasner was in Europe, Pollock died in a car crash. A year later, Krasner moved into the barn studio that Pollock had used on their property, and the scale and energy of her paintings expanded. Nature became an immersive theme: The Seasons (1957) stretched 17 feet wide, and Gaea (1966), after the Greek earth goddess, shows her moving toward broad swaths of color and rhythm. In 1965, she had her first solo exhibition at Whitechapel Gallery in London, and in 1975, at the Whitney Museum of American Art. She died in 1984, just a few months before her retrospective opened at MoMA.</p>"
+          },
+          {
+              "type": "image_picker",
+              "label": "Second Image Pick",
+              "id": "second-image"
+            },
+          {
+              "type": "image_picker",
+              "label": "Third Image Pick",
+              "id": "third-image"
+            }
+        ]
+      },
+      {
+        "type": "spacer-block",
+        "name": "Spacer",
+        "settings":[
+        {
+          "type": "range",
+          "id": "spacer-height",
+          "label": "Spacer Height",
+          "min": 0,
+          "max": 200,
+          "step": 5,
+          "unit": "px",
+          "default": 30
+        }
+          ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+           "name":"Journal Three Image Text",
+           "blocks": [
+        {
+          "type": "three-image-block"
+        },
+        {
+          "type": "spacer-block"
+        }
+      ]
+        }
+    ]
+  }
+{% endschema %}

@@ -64,8 +64,15 @@
                       <a href="{{ childlink.url }}" class="megamenu__colection-image" aria-label="{{collections[childlink.object.handle].title}}" style="background-image: url({{ collections[childlink.object.handle].image | img_url: '400x' }})"></a>
                     {%- endif -%}
                   {%- endif -%}
+                  
+                  {%- if childlink.levels > 0 and childlink.url contains '/pages/' -%}
+<!--                     <a href="{{ childlink.url }}" class="megamenu__colection-image" aria-label="{{pages[childlink.object.handle].image }}">
+                    {{ pages[childlink.object.handle].content }}
+                    </a> -->
+                      <a href="{{ childlink.url }}" class="megamenu__colection-image" aria-label="{{pages[childlink.object.handle].title }}" style="background-image: url({{ pages[childlink.object.handle].content }})"></a>
+                  {%- endif -%}
 
-                  {% if childlink.url contains '/collections/' %}
+                  {% if childlink.url contains '/collections/' or  childlink.url contains '/pages/' %}
                   <div class="megamenu-link-title hide">
                     <a class="np-h6 site-nav__dropdown-link site-nav__dropdown-link--top-level dropdown-menu-header-part">{{ childlink.title }}</a>
                   </div>
@@ -212,6 +219,7 @@ class="megamenu__colection-image"
 style="background-image: url({{ collections[subcollection_handle].image | img_url: '400x' }})"><span class="hide">{{ childlink.title }}</span></a>
 {% endif %}
 {% endif %}
+  
 {% if childlink.levels > 0 and childlink.url contains '/pages/' and is_megamenu %}
 {% if childlink.handle == "our-story" %}
 <div class="h5 {{ link.handle }}">

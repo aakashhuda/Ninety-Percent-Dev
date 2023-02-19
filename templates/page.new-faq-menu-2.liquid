@@ -235,15 +235,15 @@ color: #2B2725 !important;
 
 {% section 'faq-menu-fourth' %}
 
-{% section 'faq-menu-second' %}
+<!-- {% section 'faq-menu-second' %} -->
 
 {% section 'faq-menu-seventh' %}
 
 {% section 'faq-menu-nine' %}
 
-{% section 'faq-menu-sixth' %}
-
 {% section 'faq-menu-ten' %}
+
+{% section 'faq-menu-sixth' %}
 
 
 
@@ -271,7 +271,7 @@ color: #2B2725 !important;
                   if (queryString) {
                     queryString = queryString.split('#')[0];
                     var arr = queryString.split('&');
-
+                    
                     for (var i = 0; i < arr.length; i++) {
                         var a = arr[i].split('=');
                         var paramName = a[0];
@@ -338,7 +338,7 @@ color: #2B2725 !important;
                     $(".faq-content section:not(:first-child) .faq-card .content").css("display", "none");
                     setNav(self[0].hash);
                 });
-                   }, 1000);
+                   }, 100);
             } catch (err) {
                 console.log('Try error FAQ section: ' + err);
             }
@@ -351,6 +351,7 @@ color: #2B2725 !important;
 })();
 
 function setNav(href) {
+  console.log("Huda vai")
     switch (href) {
         case "#faq-second":
             $("#faq-second").css("display", "block");
@@ -399,6 +400,15 @@ function setNav(href) {
             break;
     }
 }
+  
+  let params = new URLSearchParams(document.location.search);
+  let param = params.get("param");
+  console.log(param);
+  if (param==="size-guide") {
+    // setNav("#faq-ten");
+    // $("#faq-nav nav a[href='#faq-ten']").click();
+    setTimeout(()=>{document.querySelector("a[href='#faq-ten']").click() }, 110);
+  }
  </script>
 
 

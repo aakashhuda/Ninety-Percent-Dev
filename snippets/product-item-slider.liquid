@@ -116,26 +116,41 @@
                   {%- assign values = values | split: ',' %}
                   {%- if variant.image -%}
                     <div
-                      class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">                      {% if variant.compare_at_price >  variant.price %}
-                        <div class="grid-product__tag grid-product__tag--sale">                              {%- if settings.product_save_type == 'dollar' -%}
-                                {% capture np_saved_amount %}{{ variant.compare_at_price | minus: variant.price | money }}{% endcapture %}
-                              {%- else -%}
-                                {% capture np_saved_amount %}{{ variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round }}%{% endcapture %}
-                              {%- endif -%}
-                              <span class="grid-product__price--savings" style="color:#fff;">                                {{ np_saved_amount}} off
-                              </span>                        </div>                      {% endif %}
-                    </div>                  {%- endif -%}
+                      class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">                      
+                    {% if variant.compare_at_price >  variant.price %}
+                        <div class="grid-product__tag grid-product__tag--sale">                              
+                      {%- if settings.product_save_type == 'dollar' -%}
+                        {% capture np_saved_amount %}{{ variant.compare_at_price | minus: variant.price | money }}{% endcapture %}
+                      {%- else -%}
+                        {% capture np_saved_amount %}{{ variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round }}%{% endcapture %}
+                      {%- endif -%}
+                      <span class="grid-product__price--savings" style="color:#fff;">                                
+                      {{ np_saved_amount}} off
+                      </span>                        
+                    </div>                      
+                      {% endif %}
+                    </div>                  
+                    {%- endif -%}
                 {%- endunless -%}
               {%- endfor -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endif -%}
-      </div>    </a>    <div class="grid-product__meta">        <div class="grid-product__title--{{ settings.type_product_style }}">          <p class="np-h10"> {{ product.title }}</p>          <p class="grid-product-metaFields">            {% for materiall in product.metafields.custom.material.value %}
+      </div>    
+    </a>    
+  <div class="grid-product__meta">        
+    <div class="grid-product__title--{{ settings.type_product_style }}">          
+      <a href="{{ product.url | within: collection }}" class="np-h10"> {{ product.title }}</a>          
+      <a href="{{ product.url | within: collection }}" class="grid-product-metaFields">            
+      {% for materiall in product.metafields.custom.material.value %}
               {% if forloop.last %}
                 <span>{{ materiall }}</span>            {% else %}
               <span>{{ materiall }}, </span>            {% endif %}
             {% endfor %}
-      </div>      <div class=""></div>        {%- if settings.vendor_enable -%}
+      </a>
+      </div>      
+        <div class=""></div>        
+        {%- if settings.vendor_enable -%}
           <div class="grid-product__vendor">{{ product.vendor }}</div>        {%- endif -%}
         <div class="np-h6">          {%- if on_sale -%}
             <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>            <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>          {%- endif -%}

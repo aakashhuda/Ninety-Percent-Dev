@@ -3,7 +3,7 @@
     {%- if shop.customer_accounts_enabled -%}
       <p class="site-nav__link site-nav__link--icon small--hide" >
 <!--         <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-user" viewBox="0 0 64 64"><path d="M35 39.84v-2.53c3.3-1.91 6-6.66 6-11.41 0-7.63 0-13.82-9-13.82s-9 6.19-9 13.82c0 4.75 2.7 9.51 6 11.41v2.53c-10.18.85-18 6-18 12.16h42c0-6.19-7.82-11.31-18-12.16z"/></svg> -->
-        <span class="icon__fallback-text np-h6">
+        <span class="np-h6">
           {%- if customer -%}
             <a href="{{ routes.account_url }}" class="account-underline">{{ 'layout.customer.account' | t }}</a>
           {%- else -%}
@@ -45,14 +45,29 @@
           <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-bag" viewBox="0 0 64 64"><g fill="none" stroke="#000" stroke-width="2"><path d="M25 26c0-15.79 3.57-20 8-20s8 4.21 8 20"/><path d="M14.74 18h36.51l3.59 36.73h-43.7z"/></g></svg>
         {%- endif -%}
         <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
-        <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
+        <span class="cart-item-count cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}">{{ cart.item_count }}</span>
       </span>
     </a>
   </div>
 </div>
 
        <style>
-          span.icon__fallback-text:first-child {
+
+         [data-icon=bag-minimal] .cart-item-count.cart-link__bubble--visible{
+           top:27%;
+           right:6%;
+         }
+
+          .cart-item-count.cart-link__bubble--visible{
+            width:10px;
+            height:10px;
+            background-color: transparent;
+            border:0;
+            font-size:9px;
+          }
+         
+          span.icon__fallback
+         -text:first-child {
           position: relative;
 
           }

@@ -9009,10 +9009,8 @@ lazySizesConfig.expFactor = 4;
 
   
 // mobile menu click function
-if(document.querySelector(".mobile-menu-wrapper .parent-link")) {
-  if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
-    document.querySelector(".mobile-menu-wrapper .parent-link").click();
-  }
+if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
+  document.querySelector(".mobile-menu-wrapper .parent-link").click();
 }
 
 
@@ -9078,11 +9076,18 @@ if(document.querySelector("#CustomerRegisterForm")){
 
     }
 
-//
+// function for onload
 
 window.addEventListener("unload", ()=>{
   window.scrollTo(0, 0);
 });
+
+
+//function for cart item count
+// jQuery.getJSON('/cart.js', function(cart) {
+//  document.querySelector(".site-nav .cart-item-count.cart-link__bubble").innerText = cart.item_count;
+//    alert('There are now ' + cart.item_count + ' items in the cart.');
+// } );
 
 
 

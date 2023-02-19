@@ -59,9 +59,9 @@
   </div>
 {%- endif -%}
 
-<div class="page-width page-width--narrow page-content">
+<div class="page-content">
   <article class="article">
-    {%- unless section.settings.image_hero and article.image -%}
+{% comment %}    {%- unless section.settings.image_hero and article.image -%}
       {%- render 'breadcrumbs' -%}
 
       <header class="section-header">
@@ -88,12 +88,13 @@
           <div class="article__author">by {{ article.author }}</div>
         {%- endif -%}
       </header>
-    {%- endunless -%}
+    {%- endunless -%} 
+    {% endcomment %}  
 
     <div class="article__body rte">
       {{ article.content }}
     </div>
-
+{% comment %} 
     {%- if section.settings.social_sharing_blog -%}
       {%- render 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image -%}
     {%- endif -%}
@@ -177,12 +178,11 @@
                 {{ 'blogs.comments.post' | t }}
               </button>
 
-              {% comment %}
                 Remove the following three lines of code to remove the note
                 about being protected by Google's reCAPTCHA service.
                 By removing it, the small reCAPTCHA widget will appear in the
                 bottom right corner of the page.
-              {% endcomment %}
+
               {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
 
             {%- endform -%}
@@ -193,12 +193,12 @@
     {%- endif -%}
 
     <hr class="hr--large">
-
+{% endcomment %} 
   </article>
 
-  <div class="text-center">
+<!--   <div class="text-center">
     <a href="{{ blog.url }}" class="btn return-link"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-left" viewBox="0 0 50 15"><path d="M50 5.38v4.25H15V15L0 7.5 15 0v5.38z"/></svg> {{ 'blogs.article.back_to_blog' | t: title: blog.title }}</a>
-  </div>
+  </div> -->
 </div>
 
 <script type="application/ld+json">

@@ -1,14 +1,40 @@
 <section class="section-{{ section.id }} np-page-width">{% for block in section.blocks %}
     {% case block.type %}
         {% when 'hero-about-us' %} 
-            <div id="wrapper-{{ block.id }}">                <section class="about-us-{{ block.id }}">                    {% if block.settings.image-first-layout == false %}
-                        <div class="text-container-{{ block.id }}">                            <div class="np-h1 title-{{ block.id }}">{{ block.settings.title }}</div>                            <div class="description-container-{{ block.id }}">                                <div class="np-h3 main-description-{{ block.id }}">                                    {{ block.settings.description }}
-                                </div>                                <div class="np-h5 sub-description-{{ block.id }}">                                    {{ block.settings.sub-description }}
-                                </div>                            </div>                        </div>                        <div class="image-container-{{ block.id }}">                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "grande" }}">                        </div>                    {% else %}
-                        <div class="image-container-{{ block.id }}">                            <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "grande" }}">                        </div>                        <div class="text-container-{{ block.id }}">                            <div class="np-h1 title-{{ block.id }}">{{ block.settings.title }}</div>                            <div class="description-container-{{ block.id }}">                                <div class="np-h3 main-description-{{ block.id }}">                                    {{ block.settings.description }}
-                                </div>                                <div class="np-h5 sub-description-{{ block.id }}">                                    {{ block.settings.sub-description }}
-                                </div>                            </div>                        </div>                    {% endif %}
-                </section>            </div>        
+            <div id="wrapper-{{ block.id }}">                
+              <section class="about-us-{{ block.id }}">                    
+      {% if block.settings.image-first-layout == false %}
+                        <div class="text-container-{{ block.id }}">
+                          <div class="np-h1 title-{{ block.id }}">{{ block.settings.title }}</div> 
+                          <div class="description-container-{{ block.id }}">                                <div class="np-h3 main-description-{{ block.id }}">                                    {{ block.settings.description }}
+                                </div>       
+                            <div class="np-h5 sub-description-{{ block.id }}">     
+                              {{ block.settings.sub-description }}
+                                </div>                           
+        </div>                        
+                        </div>              
+                <div class="image-container-{{ block.id }}">      
+                  <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "master" }}"> 
+                </div>                    
+        {% else %}
+                        
+                <div class="image-container-{{ block.id }}"> 
+                  <img class="image-{{ block.id }}" src="{{ block.settings.image | img_url: "master" }}">
+        </div>                        
+                <div class="text-container-{{ block.id }}">
+                  <div class="np-h1 title-{{ block.id }}">{{ block.settings.title }}</div>
+                  <div class="description-container-{{ block.id }}"> 
+                    <div class="np-h3 main-description-{{ block.id }}">   
+                      {{ block.settings.description }}
+                                </div>                      
+                    <div class="np-h5 sub-description-{{ block.id }}">  
+                      {{ block.settings.sub-description }}
+                                </div>      
+                  </div>                   
+                </div>                  
+                {% endif %}
+                </section>            
+            </div>        
       {% when 'spacer' %}
             <section class="custom-spacer-{{ block.id }}">  
             

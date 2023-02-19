@@ -1,0 +1,44 @@
+.swym-remind-me .swym-remind-me-mailing-list-container {
+  display: none !important;
+}
+.swym-modal-content .swym-remind-me {
+    padding: 95px !important;
+    width: 90%;
+}
+#swym-remind-auth-form {
+    border-bottom: 1px solid;
+    display: flex;
+    justify-content: space-between;
+}
+#swym-remind-email-auth-input {
+    border-block-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    width: auto;
+    padding: 0px 0px;
+}
+.swym-modal-content #swym-remind-email-auth-button {
+    display: inline;
+    width: auto !important;
+    background-color: white !important;
+    color: black;
+    padding: 0px 0px;
+}
+.swym-privacy-info {
+    display: none;
+}
+
+.swym-remind-me .swym-title {
+    margin-bottom: 36px;
+}
+
+.swym-remind-me p.swym-remind-description {
+    margin-bottom: 25px;
+}
+.swym-ui-component .swym-generic-modal .swym-generic-modal-dialog .swym-close-btn::before {
+    font-size: 15px;
+}
+.swym-ui-component .swym-generic-modal .swym-generic-modal-dialog .swym-close-btn {
+        top: 20px;
+        right: 22px;
+}

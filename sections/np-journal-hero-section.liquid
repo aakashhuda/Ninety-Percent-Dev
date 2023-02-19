@@ -4,9 +4,9 @@
         {% when "hero-block" %}
             <div class="block-{{ block.id }}">     
                 <div class="hero-block-inner"> 
-                    <div class="hero-image-part">
-                        <img src="{{ block.settings.hero-image | img_url: 'grande' }}" alt=""> 
-                       
+                    <div class="hero-image-part {{ block.settings.caption-align }}-align">
+                        <img src="{{ block.settings.hero-image | img_url: 'master' }}" alt=""> 
+                       <span class="image-block-caption"> {{ block.settings.caption }} </span> 
                     </div>
                     <div class="hero-text-part">
                         <div class="hero-title">
@@ -16,15 +16,13 @@
                             <div class="hero-desc">
                                 <span> {{ block.settings.hero-desc }} </span>
                             </div>
-                            <div class="'hero-sub-desc'">
-                                <span> {{ block.settings.hero-sub-desc }} </span>
+                            <div class="hero-sub-desc">
+                                 <span class="list-name"> Words: </span> <span class="auther-name"> {{ block.settings.hero-auther-name }} </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <span class="image-block-caption np-h6"> {{ block.settings.caption }} </span> 
-                </div>
+               
              </div>     
         {% when 'spacer-block' %}
             <div class="spacer-{{ block.id }}">           
@@ -39,11 +37,15 @@
     max-width: 1440px;
     margin: 0 auto;
 }
+  .section-wrapper-{{ section.id }} p {
+    margin: 0px 0px;
+    display: inline-block;
+  }
 {% for block in section.blocks %}
     {% case block.type %}
         {% when "hero-block" %}
 .block-{{ block.id }} {
-                padding: 0px {{ block.settings.padding }}px;
+                padding: 0px {{ block.settings.padding }}%;
                 
              }
             .block-{{ block.id }} .hero-block-inner  {
@@ -55,13 +57,40 @@
 
             }
             .block-{{ block.id }} .hero-image-part {
-                margin-right: 10.21%;
+                margin-right: 9.5%;
+                max-width: 464px;
             }
             .block-{{ block.id }} .hero-text-part {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
             }
+          .block-{{ block.id }} .hero-image-part img {
+                height: 100%;
+                width: 100%;
+            }
+
+            .block-{{ block.id }} .hero-image-part .image-block-caption {
+                      font-family: 'Intervogue';
+                      font-style: normal;
+                      font-weight: 400;
+                      font-size: 11px;
+                      line-height: 13px;
+                      letter-spacing: -0.01em;
+                      text-transform: uppercase;
+                      color: rgba(43, 39, 37, 0.4);          
+               }
+
+            .block-{{ block.id }} .hero-image-part.right-align {
+                              text-align: right; 
+               }
+      .block-{{ block.id }} .hero-image-part.left-align {
+                              text-align: left; 
+               }
+      .block-{{ block.id }} .hero-image-part.center-align {
+                              text-align: center; 
+               }
+      
             .block-{{ block.id }} .hero-title {
                 font-family: 'Silvana';
                 font-style: normal;
@@ -71,17 +100,133 @@
                 letter-spacing: -0.03em;
                 color: #2B2725;
             }
+            .block-{{ block.id }} .hero-desc-wrapper {
+              display: flex;
+              flex-direction: column;
+              gap: 3vw; 
+            }
 
             .block-{{ block.id }} .hero-desc {
+             
                 font-family: 'Silvana';
                 font-style: normal;
                 font-weight: 400;
                 font-size: 34px;
                 line-height: 44px;
-                text-align: justify;
+                
                 letter-spacing: -0.01em;
                 color: #2B2725;
             }
+            .block-{{ block.id }} .list-name {
+              font-family: 'Silvana';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 18px;
+              line-height: 30px;       
+              letter-spacing: -0.01em;   
+              color: #2B2725;
+              margin-right: 50px;
+              }
+
+              .block-{{ block.id }} .auther-name {
+              font-family: 'Intervogue';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 27px;        
+              letter-spacing: 0.05em;
+              text-transform: uppercase;        
+              color: #2B2725;
+              }
+{% if block.settings.hide-caption %}
+                .block-{{ block.id }} .hero-image-part .image-block-caption {
+                    display: none;
+                 }
+             {% endif %}
+{% if block.settings.show-author == false %}
+                .block-{{ block.id }} .hero-text-part .hero-sub-desc {
+                    display: none;
+                 }
+             {% endif %}
+  
+  @media only screen and (max-width: 1024px) {
+             .block-{{ block.id }} .hero-title {
+               
+                font-size: 70px;
+                line-height: 70px;
+               letter-spacing: -0.03em;
+            }
+            .block-{{ block.id }} .hero-desc {
+            font-size: 26px;
+            line-height: 34px;   
+            letter-spacing: -0.01em;
+                      }
+     
+              }
+@media only screen and (max-width: 768px) {
+.block-{{ block.id }} {
+                padding: 0px 20px;
+                
+             }
+
+      .block-{{ block.id }} .hero-text-part{
+          margin-bottom:30px;
+      }
+             .block-{{ block.id }} .hero-block-inner  {
+               
+                flex-direction: column-reverse;
+            }
+
+.block-{{ block.id }} .hero-image-part {
+                padding-top: 10px;
+                padding-bottom: 8px;
+                margin-right: 0%;
+                max-width: 100%;
+            }
+      {% if block.settings.image-border-top %}
+                .block-{{ block.id }} .hero-image-part {
+                    border-top: 1px solid rgba(43, 39, 37, 0.2);
+                 }
+             {% endif %}
+      {% if block.settings.image-border-bottom %}
+                .block-{{ block.id }} .hero-image-part {
+                    border-bottom: 1px solid rgba(43, 39, 37, 0.2);
+                 }
+             {% endif %}
+
+          .block-{{ block.id }} .hero-title {
+                             
+          font-size: 60px;
+          line-height: 55px;
+          letter-spacing: -2px;
+                 margin-bottom: 43px;
+                      }
+          .block-{{ block.id }} .hero-desc {
+                  font-size: 20px;
+                  line-height: 23px;
+                  
+                  
+                  letter-spacing: -0.01em;
+          }
+         .block-{{ block.id }} .list-name {
+                   font-size: 12px;
+                line-height: 30px;
+                letter-spacing: -0.01em;
+         }
+              .block-{{ block.id }} .auther-name {
+                font-size: 10px;
+                line-height: 27px;   
+                letter-spacing: 0.05em;
+              }
+ .block-{{ block.id }} .hero-image-part .image-block-caption  {
+             font-size: 8px;
+          line-height: 10px;
+          
+          
+          letter-spacing: -0.01em;
+ }
+              }
+  
         {% when 'spacer-block' %}
             .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
                 height: {{ block.settings.spacer-height }}px;
@@ -103,19 +248,51 @@
             
   {
     "type": "checkbox",
-    "id": "show-caption",
-    "label": "Show caption",
-    "default": true
+    "id": "hide-caption",
+    "label": "Hide caption",
+    "default": false
   },
+{
+    "type": "checkbox",
+    "id": "image-border-top",
+    "label": "Add border top of the Image part in mobile devices",
+    "default": false
+  },
+          {
+    "type": "checkbox",
+    "id": "image-border-bottom",
+    "label": "Add border bottom of the Image part in mobile devices",
+    "default": false
+  },
+          {
+              "type": "select",
+              "id": "caption-align",
+              "label": "Select Caption Alignment",
+              "options": [
+              {
+              "value": "left",
+              "label": "Left"
+              },
+              {
+              "value": "right",
+              "label": "Right"
+              },
+                {
+              "value": "center",
+              "label": "Center"
+              }
+          ],
+          "default": "left"
+          },
   {
                 "type": "range",
                 "id":"padding",
                 "label":"Left-Right Space of the block",
                 "min":0,
-                "max":200,
-                "step":2,
-                "unit":"px",
-                "default":52
+                "max":10,
+                "step":0.1,
+                "unit":"%",
+                "default":9.6
             },
             {
                 "type": "image_picker",
@@ -126,7 +303,8 @@
           {
                 "type": "richtext",
                 "label": "Add caption",
-                "id": "caption"
+                "id": "caption",
+                "default": "<p>sculpture by isamu noguchi</p>"
             },
             {
                 "type":"color",
@@ -138,7 +316,7 @@
                 "type": "richtext",
                 "label": "Add Title",
                 "id": "hero-title",
-                "default": "<p>Behind the collection</p>"
+                "default": "<p>Behind The Collection</p>"
             },
             {
                 "type": "richtext",
@@ -148,10 +326,16 @@
             },
             {
                 "type": "richtext",
-                "label": "Add Sub-description",
-                "id": "hero-sub-desc",
-                "default": "<p>words</p>"
-            }
+                "label": "Add Author Name",
+                "id": "hero-auther-name",
+                "default": "<p>Morgane Nyfeler</p>"
+            },
+          {
+            "type":"checkbox",
+            "id":"show-author",
+            "label":"Show Author",
+            "default":true
+          }
         ]
     },
     {

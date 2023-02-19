@@ -108,6 +108,50 @@
 {% endschema %}
 
 <style>
+    .product-recommendations .slick-slider .slick-dots li button:before{
+    content:"" !important;
+     padding:0;
+  } 
+  .product-recommendations .slick-slider .slick-dots li.slick-active,
+  .product-recommendations .slick-slider .slick-dots li.slick-active button,
+  .product-recommendations .slick-slider .slick-dots li.slick-active button:before {
+    /*width: 6px;*/
+    margin-top: 0px;
+    width:9px;
+    height:12px;
+    background: #2B2725;
+    content:"";
+    padding:0;
+  }
+
+   .product-recommendations .slick-dots{
+    position:relative;
+  }
+  
+  .product-recommendations .slick-dots ul{
+    margin:0;
+  }
+  
+  .product-recommendations .slick-dots li button {    
+    border: 1px solid #2B2725;
+    width:9px !important;
+    height:12px !important;
+    padding:0;
+  }
+  .product-recommendations .slick-dots li {
+    position: relative;
+    display: inline-block;
+     width: 9px;
+    height: 12px; 
+    /* margin: 0 !important;
+    padding: 0 !important; */
+    cursor: pointer;
+  }
+
+  .product-recommendations .grid__item{
+    padding-left:5px;
+  }
+  
   .product-recommendations .custom-title {
     max-width: 230px;
     font-size: 12px;
@@ -227,6 +271,9 @@
     }
     .product-recommendations .grid-product__price {
       right: 0px;
+    }
+    #Recommendations-{{ section.id }} .grid-overflow-wrapper .grid {
+      display: block;
     }
   }
 </style>

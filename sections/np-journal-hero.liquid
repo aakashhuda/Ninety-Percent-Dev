@@ -4,7 +4,7 @@
       {% when 'image-with-text' %}
       <div class="image-with-text-{{ block.id }}">
         <div class="image-section-{{ block.id }}">
-          <img class="image-{{ block.id }}-width" src="{{ block.settings.upload_image | img_url: 'grande' }}">
+          <img class="image-{{ block.id }}-width" src="{{ block.settings.upload_image | img_url: 'master' }}">
         </div>
         <div class="text-section-{{ block.id }}">
           <div class="upper-part-text">
@@ -38,18 +38,20 @@
     max-width: 1440px;
     margin: 0 auto;
   }
+  
 
   @media(max-width: 768px) {
     .np-page-width {
       padding: 0 20px;
     }
   }
+  
   {% for block in section.blocks %}
     {% case block.type %}
       {% when 'image-with-text' %}
       .image-with-text-{{ block.id }}{
         display: flex;
-      flex-direction: row;
+        flex-direction: row;
         gap:9.5%;
         padding: 0 {{ block.settings.both-side-padding }}px;
       }
@@ -70,38 +72,49 @@
       }
       {% endif %}
       
+      {% if block.settings.show-button == false %}
+        .image-with-text-{{ block.id }} .lower-part-button-section{
+        display:none !important;
+      }
+      {% endif %}
+      
       .image-section-{{ block.id }}{
         width: 40.5%;
       }
+      
       .text-section-{{ block.id }}{
       width: 50%
       }
+      
       .text-section-{{ block.id }}{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
       }
-      .upper-part-text-type {
+      
+      .image-with-text-{{ block.id }} .upper-part-text-type {
         margin-bottom: 25px;
         font-feature-settings: 'ordn' on;
       }
+  
       .image-{{ block.id }}-width{
         width:100%
       }
-      .lower-part-text-details {
+  
+      .image-with-text-{{ block.id }} .lower-part-text-details {
         max-width: 581px;
-        font-family: 'Silvana';
+        font-family: {{ block.settings.font-family }};
         font-style: normal;
         font-weight: 400;
-        font-size: 18px;
-        line-height: 25.76px;
+        font-size: {{ block.settings.font-size }}px;
+        line-height: {{ block.settings.line-height }}px;
         text-align: justify;
-        letter-spacing: -0.01em;
+        letter-spacing: calc({{ block.settings.letter-spacing }}em/100);
         color: #2B2725;
       margin-top:55px;
       }
 
-      .country {
+      .text-section-{{ block.id }} .country {
         padding-left: 20px;
       }
 
@@ -111,57 +124,59 @@
       border: 0.75px solid #2B2725;
       margin-top:54px;
       }
+
+
+      @media (max-width:1200px){
+      .image-with-text-{{ block.id }}{
+        padding: 0 calc({{block.settings.both-side-padding}}px/2);
+      }
+      }
       
       @media(max-width: 1120px) {
-         .upper-part-text-type{
+         .image-with-text-{{ block.id }} .upper-part-text-type{
           font-size:80px;
           line-height:80px;
         }
-        .image-with-text-{{ block.id }}{
-        padding: 0 90px;
-      }
-      .image-with-text-{{ block.id }}{
-        gap:120px;
-      }
-      .lower-part-text-details {
+      .image-with-text-{{ block.id }} .lower-part-text-details {
         max-width: 100%;
         margin-top:40px;
       }
-
-
       }
+
+  @media (max-width:1050px){
+      .image-with-text-{{ block.id }}{
+        padding: 0 calc({{block.settings.both-side-padding}}px/3);
+      }
+      }
+  
       @media(max-width: 950px) {
-        .upper-part-text-type{
+        .image-with-text-{{ block.id }} .upper-part-text-type{
           font-size:60px;
           line-height:60px;
         }
         .image-with-text-{{ block.id }}{
-        padding: 0 70px;
-      }
-      .image-with-text-{{ block.id }}{
-        gap:100px;
+        padding: 0 30px;
       }
       .lower-part-text-details {
-        width: 100%;
-        font-size: 16px;
+        font-size: calc({{block.settings.font-size}}px - 2px);
       }
 
       }
       @media(max-width: 850px) {
-        .image-with-text-{{ block.id }}{
-        padding: 0 50px;
-      }
       .image-with-text-{{ block.id }}{
-        gap:80px;
+        gap:6%;
       }
-      .lower-part-text-details {
-        width: 100%;
-        font-size: 18px;
+      .image-with-text-{{ block.id }} .lower-part-text-details {
+        font-size: calc({{block.settings.font-size}}px - 4px);
+      }
+
+      .text-section-{{ block.id }} .country {
+        font-size: 16px;
       }
 
       }
       @media(max-width: 790px) {
-      .lower-part-text-origin p, .lower-part-text-origin p span{
+      .image-with-text-{{ block.id }} .lower-part-text-origin p, .image-with-text-{{ block.id }} .lower-part-text-origin p span{
         font-size: 14px;
       }
       }
@@ -176,8 +191,8 @@
       }
       .image-section-{{ block.id }},
       .text-section-{{ block.id }},
-      .lower-part-text-details,
-      .lower-part-text-process {
+      .image-with-text-{{ block.id }} .lower-part-text-details,
+      .image-with-text-{{ block.id }} .lower-part-text-process {
         width: 100%;
       }
       .image-section-{{ block.id }}{
@@ -186,24 +201,29 @@
       .text-section-{{ block.id }}{
         order: 1;
       }
-      .upper-part-text-type{
+      .image-with-text-{{ block.id }} .upper-part-text-type{
         font-size: 100px;
+        line-height:100px;
       }
-      .lower-part-text-origin p{
+      .image-with-text-{{ block.id }} .lower-part-text-origin p{
         font-size: 20px;
       margin: 20px 0;
       }
-      .lower-part-text-origin p span{
+      .image-with-text-{{ block.id }} .lower-part-text-origin p span{
         font-size: 18px;
       }
-      .lower-part-text-details {
-        font-size: 18px;
+      .image-with-text-{{ block.id }} .lower-part-text-details {
+        font-size: {{ block.settings.font-size }}px;
       }
 
-        .lower-part-button-section{
+        .image-with-text-{{ block.id }} .lower-part-button-section{
           margin:0 auto;
-          display:table;
+          display:table ;
         }
+
+        .text-section-{{ block.id }} .country {
+        font-size: 18px;
+      }
 
       }
 
@@ -216,7 +236,7 @@
 </style>
 {% schema %}
   {
-    "name": "Fibre Hero",
+    "name": "Main Hero Section",
     "blocks": [
       {
         "name": "Image with Text ",
@@ -240,7 +260,13 @@
             "default":true
           },
           {
-            "type": "text",
+            "type": "checkbox",
+            "id": "show-button",
+            "label": "Show Button",
+            "default":true
+          },
+          {
+            "type": "html",
             "id": "fabric-type",
             "label": "Change Blog Type",
             "default": "Cotton"
@@ -262,6 +288,52 @@
             "id": "lower-part-text-details",
             "label": "Change Description"
           }, 
+          {
+            "type": "select",
+            "id": "font-family",
+            "label": "Description Font",
+            "options": [
+              {
+                "value": "Intervogue",
+                "label": "Intervogue"                         
+              },
+              {
+                "value": "Silvana",
+                "label": "Silvana"                          
+              }
+            ],
+            "default": "Silvana"                   
+          },
+          {
+            "type": "range",
+            "id": "font-size",
+            "label": "Description Font Size",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 18
+          },
+          {
+            "type": "range",
+            "id": "line-height",
+            "label": "Description Line Height",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "px",
+            "default": 26
+          },
+          {
+            "type": "range",
+            "id": "letter-spacing",
+            "label": "Description Letter Spacing",
+            "min": -5,
+            "max": 5,
+            "step": 1,
+            "unit": "em",
+            "default": -1
+          },
           {
             "type": "html",
             "id": "lower-part-text-button",
@@ -303,7 +375,7 @@
     ],
     "presets": [
       {
-        "name": "Journal Hero",
+        "name": "Journal Main Hero",
         "blocks": [
           {
             "type": "image-with-text"

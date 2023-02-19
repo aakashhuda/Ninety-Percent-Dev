@@ -1,21 +1,27 @@
 {%- style -%}
   .flex-grid--{{ section.id }} {
     margin-top: -{{ section.settings.gutter_size }}px;
-    margin-left: -{{ section.settings.gutter_size }}px;
+/*     margin-left: -{{ section.settings.gutter_size }}px; */
     {% if section.settings.full_width %}
-      padding-left: {{ section.settings.gutter_size }}px;
-      padding-right: {{ section.settings.gutter_size }}px;
+      padding: 0 {{ section.settings.gutter_size }}px;
     {% endif %}
   }
-  .flex-grid--{{ section.id }} .flex-grid--gutters {
+/*  .flex-grid--{{ section.id }} .flex-grid--gutters {
     margin-top: -{{ section.settings.gutter_size }}px;
     margin-left: -{{ section.settings.gutter_size }}px;
   }
-  .flex-grid--{{ section.id }} .flex-grid__item {
+   .flex-grid--{{ section.id }} .flex-grid__item {
     padding-top: {{ section.settings.gutter_size }}px;
     padding-left: {{ section.settings.gutter_size }}px;
-  }
+  } */
 
+  @media only screen and (max-width: 1024px) {
+      .flex-grid--{{ section.id }} {
+    {% if section.settings.full_width %}
+      padding: 0 20px;
+    {% endif %}
+  }
+  }
   @media only screen and (max-width: 589px) {
     .flex-grid--{{ section.id }} {
       margin-top: -{{ section.settings.gutter_size | divided_by: 2 }}px;
@@ -47,17 +53,23 @@
         {% if block.settings.height %}
           {% unless block.settings.boxed %}
             .flex-grid__item--{{ block.id }} {
-              min-height: {{ block.settings.height | times: 0.6 }}px;
+              min-height: {{ block.settings.height}}px;
             }
           {% endunless %}
-          @media only screen and (max-width: 768px) {
+          
+          @media only screen and (max-width: 500px) {
             .flex-grid {
-flex-wrap: nowrap;
-}
+              flex-wrap: wrap;
+            }
           }
-          @media only screen and (min-width: 769px) {
+          @media only screen and (min-width: 500px) {
             .flex-grid__item--{{ block.id }} {
-              min-height: {{ block.settings.height | times: 0.8 }}px;
+              min-height: {{ block.settings.height}}px;
+            }
+
+            
+            .flex-grid {
+              flex-wrap: nowrap;
             }
           }
           @media only screen and (min-width: 1140px) {

@@ -40,7 +40,7 @@
 
   <div class="pdp-material-container">
     {%- for tag in product.tags -%}
-      {%- if tag contains '_organic-cotton' or tag contains '_tenceltm' -%}
+      {%- if tag contains '_organic-cotton' or tag contains '_tenceltm' or tag contains '_seacell-1' or tag contains '_ecovero-viscose' or tag contains '_micromodal-1' or tag contains '_velour' or tag contains '_recycled-polyamide' or tag contains '_polyester-1' or tag contains '_linen-1' or tag contains '_nylon' or tag contains '_enka®-viscose' or tag contains '_viscose-1'-%}
         {%- assign include_page_handle = tag | split: '_' -%}
         {%- assign include_page = pages[include_page_handle.last] -%}
         <div class="pdp-drawer-header">

@@ -1,0 +1,135 @@
+<div class="button-{{ section.id }}">
+  <a href="{{ section.settings.button-url }}">
+    {{ section.settings.button-text }}
+  </a>
+</div>
+
+<style>
+  .button-{{ section.id }}{
+    display:flex;
+    justify-content:{{section.settings.button-position}};
+  }
+  
+  .button-{{ section.id }} a{
+    display:inline-block;
+    padding: {{section.settings.padding-top-bottom}}px {{section.settings.padding-left-right}}px; 
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: {{ section.settings.font-size }}px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: {{section.settings.button-text-color}};
+    border: 0.75px solid #2B2725;
+  }
+
+  {% if section.settings.enable-border == false %}
+  .button-{{ section.id }} a{
+    border:0;
+    border-bottom: 0.75px solid #2B2725;
+  }
+
+  @media (max-width:768px){
+     .button-{{ section.id }} a{
+       border:0;
+    border-bottom: 1px solid #2B2725;
+  }
+  }
+  
+  {% endif %}
+
+  @media (max-width:768px){
+     .button-{{ section.id }} a{
+    border: 1px solid #2B2725;
+  }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Single Button",
+    "settings": [
+      {
+        "type":"text",
+        "id":"button-text",
+        "label":" Button Text",
+        "default":"Anything"
+      },
+      {
+        "type":"url",
+        "id":"button-url",
+        "label":" Button URL",
+        "default":"/"
+      },
+      {
+            "type": "range",
+            "id": "font-size",
+            "min": 0,
+            "max": 50,
+            "step": 0.5,
+            "unit": "px",
+            "default": 12.5,
+            "label": "Button Text Font-Size"
+        },
+      {
+        "type":"color",
+        "id":"button-text-color",
+        "label":" Button Text Color",
+        "default":"#2B2725"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable-border",
+        "label": "Enable Border",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "padding-top-bottom",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "default": 0,
+        "label": "Top-Bottom Padding"
+        },
+      {
+        "type": "range",
+        "id": "padding-left-right",
+        "min": 0,
+        "max": 300,
+        "step": 5,
+        "unit": "px",
+        "default": 0,
+        "label": "Left-Right Padding"
+        },
+      {
+        "type": "select",
+        "id": "button-position",
+        "label": "Button Position",
+        "options": [
+          {
+            "value": "flex-start",
+            "label": "Left"                          
+          },
+          {
+            "value": "center",
+            "label": "Center"                          
+          },
+          {
+            "value": "flex-end",
+            "label": "Right"                          
+          }
+        ],
+        "default": "center"  
+      }
+    ],
+    "presets": [
+        {
+            "name": "Ninety Single Button"
+        }
+    ]
+  }
+{% endschema %}

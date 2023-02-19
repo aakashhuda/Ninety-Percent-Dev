@@ -1,11 +1,47 @@
 <section class="section-wrapper-{{ section.id }} np-page-width">    {% for block in section.blocks %}
         {% case block.type %}
             {% when 'image-text-block' %} 
-  <div class="block-{{ block.id }}">    <div class="first-row">        <div class="first-row-image">        <img class="first-row-image-{{ block.id }}" src="{{ block.settings.first-row-image | img_url: "master" }}">        <div class="first-row-image-text-{{ block.id }}">              <p>{{ block.settings.first-row-image-text }} <a class="np-h6" href="{{ block.settings.first-row-image-url }}">Shop Here</a></p>            </div>      </div>      <div class="first-row-text np-h5">        {{ block.settings.first-row-text }}
-        <div class="first-text-button">            <a href="{{ block.settings.first-button-url }}">                {{ block.settings.first-button-text}}
-            </a>            <div class="border-bottom">            </div>        </div>      </div>    </div>    <div class="second-row">      <div class="second-row-text np-h5">        {{ block.settings.second-row-text }}
-        <div class="second-text-button button-border">                    <a href="{{ block.settings.second-button-url }}">                        {{ block.settings.second-button-text}}
-                    </a>                    <div class="border-bottom">                    </div></div>      </div>      <div class="second-row-image">            <img class="second-row-image-{{ block.id }}" src="{{ block.settings.second-row-image| img_url: "master" }}">            <div class="second-row-image-text-{{ block.id }}">                <p>{{ block.settings.second-row-image-text }} <a class="np-h6" href="{{ block.settings.Second-row-image-url }}">Shop Here</a></p>            </div>      </div>    </div>  </div>  {% when 'spacer-block' %}
+  <div class="block-{{ block.id }}">    
+    <div class="first-row">        
+      <div class="first-row-image">        
+        <img class="first-row-image-{{ block.id }}" src="{{ block.settings.first-row-image | img_url: "master" }}">        
+        <div class="first-row-image-text-{{ block.id }}">              
+          <p>{{ block.settings.first-row-image-text }} <a class="np-h6" href="{{ block.settings.first-row-image-url }}">Shop Here</a>
+          </p>            
+        </div>      
+      </div>      
+      <div class="first-row-text np-h5">        
+          {{ block.settings.first-row-text }}
+        <div class="first-text-button">
+          <a href="{{ block.settings.first-button-url }}">
+            {{ block.settings.first-button-text}}
+            </a>            
+          <div class="border-bottom">           
+          </div>        
+        </div>      
+      </div>    
+    </div>    
+    <div class="second-row">      
+      <div class="second-row-text np-h5">       
+        {{ block.settings.second-row-text }}
+        <div class="second-text-button button-border">
+          <a href="{{ block.settings.second-button-url }}"> 
+            {{ block.settings.second-button-text}}
+          </a>                    
+          <div class="border-bottom">                    
+          </div>
+        </div>      
+      </div>      
+      <div class="second-row-image">            
+        <img class="second-row-image-{{ block.id }}" src="{{ block.settings.second-row-image| img_url: "master" }}">            
+        <div class="second-row-image-text-{{ block.id }}">                
+          <p>{{ block.settings.second-row-image-text }} <a class="np-h6" href="{{ block.settings.Second-row-image-url }}">Shop Here</a></p>            
+        </div>      
+      </div>    
+    </div>  
+  </div>  
+          
+{% when 'spacer-block' %}
     <div class="spacer-{{ block.id }}">    </div>{% endcase %}
 {% endfor %}
 </section> <style> .np-page-width {
@@ -70,11 +106,11 @@ color: #2B2725;
         justify-content: flex-end;
     }
     .first-row-text{
-        margin-left: 12%;
+        margin-left: {{ block.settings.first-gap }}%;
       margin-top: -14%;
     }
     .second-row-text{
-        margin-right: 16.5%;
+        margin-right: {{ block.settings.second-gap }}%;
     }
     .first-row-text, .second-row-text { 
         width: 45%;
@@ -84,7 +120,7 @@ color: #2B2725;
         width:100%;
     }
     .block-{{ block.id }} .second-row-image {
-        margin-top: -130px;
+        margin-top: -185px;
     }
     .block-{{ block.id }} .second-row-text {
         width: 435px;
@@ -164,6 +200,20 @@ color: #2B2725;
   }
   }
  {% endif %}
+
+  @media (max-width:1250px){
+    .first-row-text{
+        margin-left: 12%;
+    }
+  }
+  @media (max-width:1024px){
+       .block-{{ block.id }} .second-row-image {
+        margin-top: -120px;
+    }
+    .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text{
+      font-size:14px;
+    }
+  }
  @media only screen and (max-width: 768px){
     .block-{{ block.id }} .second-row{
         display: flex;
@@ -176,6 +226,7 @@ color: #2B2725;
     .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text{
         width: 100%;
         margin: 0;
+      font-size:14px;
     }
     .block-{{ block.id }} .second-row-image {
         margin-top: 30px;
@@ -191,6 +242,12 @@ color: #2B2725;
         .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
             height: {{ block.settings.spacer-height }}px;
         }
+
+  @media (max-width:768px){
+    .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+            height: 50px;
+        }
+}
 {% endcase %}
 {% endfor %}
 </style>{% schema %}
@@ -326,6 +383,17 @@ color: #2B2725;
                  "unit":"px",
                  "default":136.8
               },
+                {
+                 "type":"range",
+                 "id":"first-gap",
+                 "label":"First Row Gap",
+                 "min":0,
+                 "max":50,
+                 "step":0.5,
+                 "unit":"%",
+                 "default":17.5
+              },
+          
               {
                     "type": "image_picker",
                     "id": "second-row-image",
@@ -393,6 +461,16 @@ color: #2B2725;
                  "step":11,
                  "unit":"px",
                  "default":169
+              },
+          {
+                 "type":"range",
+                 "id":"second-gap",
+                 "label":"Second Row Gap",
+                 "min":0,
+                 "max":50,
+                 "step":0.5,
+                 "unit":"%",
+                 "default":17.5
               }
         ]
       }, {

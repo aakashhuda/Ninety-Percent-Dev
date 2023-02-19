@@ -36,12 +36,16 @@
   }
 
   .section-wrapper-{{ section.id }}.np-page-width{
-    margin-top:150px;
+    margin-top:160px;
   }
   @media(max-width: 768px) {
     .np-page-width {
       padding: 0 20px;
     }
+
+    .section-wrapper-{{ section.id }}.np-page-width{
+    margin-top:140px;
+  }
   }
   {% for block in section.blocks %}
     {% case block.type %}
@@ -52,10 +56,10 @@
         padding: 0 {{ block.settings.both-side-padding }}px;
       }
       .image-section-{{ block.id }}{
-        width: 40.5%;
+        width: 40%;
       }
       .text-section-{{ block.id }}{
-      width: 50%
+      width: 50.5%
       }
       .text-section-{{ block.id }}{
         display: flex;
@@ -70,7 +74,7 @@
         width:100%
       }
       .lower-part-text-details {
-        width: 585px;
+        width: {{ block.settings.paragraph-width }}px;
         font-family: 'Silvana';
         font-style: normal;
         font-weight: 400;
@@ -82,7 +86,8 @@
       }
       .lower-part-text-process {
         width: 447px;
-        margin-top: 49px;
+        margin-top: 43px;
+      text-align:justify;
       }
       .country {
         padding-left: 20px;
@@ -208,7 +213,18 @@
             "type": "html",
             "id": "lower-part-text-details",
             "label": "Change Lower Part Text"
-          }, {
+          }, 
+             {
+        "type": "range",
+        "id": "paragraph-width",
+        "label": "Paragraph Width",
+        "min": 585,
+        "max": 1085,
+        "step": 5,
+        "unit": "px",
+        "default": 585
+      },
+          {
             "type": "html",
             "id": "lower-part-text-process",
             "label": "Change Process Text"

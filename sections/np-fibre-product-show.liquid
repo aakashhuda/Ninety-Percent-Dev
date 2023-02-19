@@ -1,0 +1,203 @@
+<section class="section-wrapper-{{ section.id }} np-page-width">
+  <p class="section-title np-h8">{{ section.settings.section-title }}</p>
+  <div class="single-product-block">
+    {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "image-block" %}
+            <div class="image-block-{{ block.id }}">           
+              <a class="image-block" href="{{ block.settings.image-url }}"><img src="{{ block.settings.bg-image | img_url: 'master' }}" alt=""></a>           
+            
+              <div class="image-details-{{ block.id }}">
+                <div class="product-details">
+                  <a href="{{ block.settings.product-url }}" class="np-h10"> {{ block.settings.product-title }}</a>
+                  <a href="{{ block.settings.product-url }}" class="product-fabric"> {{ block.settings.product-fabric }}</a>
+                </div>
+                <div class="product-price np-h6">
+                  {{ block.settings.products-price }}
+                </div>
+              </div>                     
+          </div>                    
+          {% endcase %}
+    {% endfor %}
+  </div>
+    {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'spacer-block' %}
+                <div class="spacer-{{ block.id }}">                </div>        
+          {% endcase %}
+    {% endfor %}
+</section>
+
+<style>
+  .np-page-width {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .section-wrapper-{{ section.id }}.np-page-width .single-product-block{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  
+  .section-wrapper-{{ section.id }} .section-title{
+    margin-bottom:40px;
+    text-align:center;
+  }
+  @media (max-width:1024px){
+   .section-wrapper-{{ section.id }}.np-page-width {
+    padding: 0 40px;
+  }
+  }
+  @media (max-width:768px){
+   .section-wrapper-{{ section.id }}.np-page-width {
+    padding: 0 20px;
+  }
+
+    .section-wrapper-{{ section.id }}.np-page-width .single-product-block{
+    flex-wrap: wrap;
+    justify-content:start;
+    align-items:flex-start;
+      gap:2%;
+  }
+  }
+
+  {% for block in section.blocks %}
+        {% case block.type %}
+          {% when "image-block" %}
+             .image-block-{{ block.id }}{
+               max-width:355px;
+               margin-right:5px;
+             }   
+  
+             .image-block-{{ block.id }} .image-block img{
+               width:100%;
+             }                 
+
+            .image-details-{{ block.id }}{
+              display:flex;
+              justify-content:space-between;
+              align-items:baseline;
+              width:90%;
+              margin:0 auto;
+            }
+            .image-details-{{ block.id }} .product-details{
+              display:flex;
+              flex-direction:column;
+              justify-content:start;
+              align-items:flex-start;
+            }
+            .image-details-{{ block.id }} .product-fabric{
+              font-family: 'Silvana';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 12px;
+              line-height: 18px;
+              letter-spacing: 0.05em;
+              color: #2B2725;
+            }
+
+          @media (max-width:768px){
+             .image-block-{{ block.id }}{
+               max-width:49%;
+               height:auto;
+               margin-right:0;
+               margin-bottom:10px;
+             } 
+          }
+          
+          {% when 'spacer-block' %}
+              .section-wrapper-{{ section.id }}  .spacer-{{ block.id }} {
+                  height: {{ block.settings.spacer-height }}px;
+              }       
+          {% endcase %}
+    {% endfor %}
+  
+</style>
+
+{% schema %}
+  {
+    "name": "Fibre Product",
+    "settings": [
+       {
+          "type":"text",
+          "id":"section-title",
+          "label":"Section Title",
+          "default":"Shop Cotton"
+        }
+    ],
+    "blocks":[
+      {
+         "type": "image-block",
+         "name": "Image",
+         "settings": [
+           {
+                "type": "image_picker",
+                "label": "Product Image",
+                "id": "bg-image"
+            },
+            {
+                "type":"url",
+                "id":"image-url",
+                "label":"Image URL",
+                "default":"/"
+              },
+            {
+                "type":"text",
+                "id":"product-title",
+                "label":"Product Title",
+                "default":"Hydra Blouse in Pine Bark"
+              },
+            {
+                "type":"url",
+                "id":"product-url",
+                "label":"Product URL",
+                "default":"/"
+              },
+            {
+                "type":"text",
+                "id":"product-fabric",
+                "label":"Product Fabric Type",
+                "default":"Tencel"
+              },
+            {
+                "type":"text",
+                "id":"products-price",
+                "label":"Product Price",
+                "default":"£240"
+              }
+         ]
+      },
+      {
+            "type": "spacer-block",
+            "name": "Spacer",
+              "settings":[
+                {
+                    "type": "range",
+                    "id": "spacer-height",
+                    "label": "Spacer Height",
+                    "min": 0,
+                    "max": 200,
+                    "step": 5,
+                    "unit": "px",
+                    "default": 30
+                }
+              ]
+        }
+    ],
+    "presets": [
+        {
+         "category":"content",
+         "name":"Fibre Product Show",
+         "blocks": [
+                {
+                  "type": "image-block"
+                },
+                {
+                  "type": "spacer-block"
+                }
+      ]
+        }
+    ]
+  }
+{% endschema %}

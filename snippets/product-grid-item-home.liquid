@@ -60,6 +60,15 @@
      .grid-product-title{
       text-align: left;
      }
+
+     .grid__item.grid-product .grid-product__meta {
+       padding-bottom:0px;
+     }
+
+     .grid-product__content .grid-product__image{
+       max-width:325px;
+     }
+     
      .grid-product__meta .np-regular_price.look-price{
       padding-top: 3.5px;
        font-family: 'Intervogue';
@@ -67,9 +76,9 @@
       font-weight: 400;
       font-size: 12px;
       line-height: 15px;
-       letter-spacing: 0.05em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-color: #2B2725;
+      color: #2B2725;
      }
       .fabric-type {
         text-transform: capitalize;
@@ -78,7 +87,8 @@ color: #2B2725;
         font-size: 12px;
         line-height: 18px;
         letter-spacing: -0.01em;
-        padding: 0 10px;
+        padding: 10px 10px;
+        padding-top:0px;
       }
      @media (max-width: 1000px) {
       .fabric-type{
@@ -88,6 +98,9 @@ color: #2B2725;
         display: block;
         text-align: left !important;
       }
+       .grid-product__content .grid-product__image{
+       max-width:100%;
+     }
        
 
      }

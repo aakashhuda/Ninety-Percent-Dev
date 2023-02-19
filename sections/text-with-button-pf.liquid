@@ -47,6 +47,12 @@
       padding: 0 20px;
     }
   }
+
+.section-wrapper-{{section.id}}{
+  width:{{section.settings.section-width}}px;
+  margin:0 auto;
+}
+  
 {% for block in section.blocks %}
     {% case block.type %}
     {% when 'text-with-button' %}
@@ -54,7 +60,7 @@
         display: none;
       }
 .text-with-button-{{ block.id }}{
-    max-width: {{ block.settings.paragraph-Size }}px;
+    max-width: {{ block.settings.section-width }}px;
     margin:0 auto;
   }
   .text-with-button-{{ block.id }} .text-title{
@@ -62,7 +68,9 @@
   }
   .text-with-button-{{ block.id }} .text-paragraph{
     display: block;
-    margin: 67px 0;
+    margin: {{ block.settings.text-margin }}px 0;
+    max-width: {{ block.settings.paragraph-Size }}px;
+      text-align:justify;
   }
   .text-with-button-{{ block.id }} .text-paragraph.text-alignment{
     text-align: center;
@@ -85,14 +93,14 @@
     color:{{ block.settings.button-text-color }};
   }
   .text-with-button-{{ block.id }} .border-bottom{
-    margin-top: 12.86px;
+    margin-top: {{ block.settings.button-padding }}px;
     width: 100%;
-    border: 1px solid #2B2725;
+    border-bottom: 1px solid #2B2725 !important;
   }
+      
   @media(max-width: 768px) {
   .text-with-button-{{ block.id }} .text-paragraph{
-  margin-top:0;
-  margin-bottom: 30px 0;
+  margin:10px 0;
   }
   {% if block.settings.only-desktop==true %}
   .text-with-button-{{ block.id }} .text-title, .text-with-button-{{ block.id }} .text-paragraph, .text-with-button-{{ block.id }} .text-button, .text-with-button-{{ block.id }} .change-button{
@@ -125,7 +133,7 @@
   }
   {%  else %}
   .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .change-button{
-    margin: 0 auto;
+    margin: 30px auto;
   }
 {% endif %}
 
@@ -146,6 +154,7 @@
 .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .button-border{
   border: 1px solid #2B2725 !important;     
   }
+
   }
 
   .section-wrapper-{{section.id}} .text-with-button-{{ block.id }} .button-border a{
@@ -161,6 +170,13 @@ color: #2B2725;
   }
 
         {% endif %}
+
+@media (max-width:900px){
+.section-wrapper-{{section.id}}.np-page-width{
+      padding:0 20px;
+}
+
+  }
   
       {% when 'spacer-block' %}
       .section-wrapper-{{ section.id }} .spacer-{{ block.id }}{
@@ -184,6 +200,8 @@ color: #2B2725;
 </style>{% schema %}
   {
     "name": "Text With Button",
+    "settings":[
+    ],
     "blocks": [
         {
         "name": "Text With Button",
@@ -214,6 +232,16 @@ color: #2B2725;
            "label":"Change the Button Text",
            "default":"EXPLORE SUSTAINABILITY"
          },
+          {
+         "type": "range",
+           "id":"section-width",
+           "label":"Section Width",
+           "min": 400,
+           "max": 900,
+           "step": 5,
+           "unit": "px",
+           "default": 400
+         },
          {
          "type": "range",
            "id":"font-size-button-text",
@@ -234,6 +262,16 @@ color: #2B2725;
            "unit": "px",
            "default": 465
          },
+          {
+         "type": "range",
+           "id":"text-margin",
+           "label":"Paragraph Margin Top-Bottom",
+           "min": 10,
+           "max": 110,
+           "step": 1,
+           "unit": "px",
+           "default": 67
+         },
          {
          "type": "range",
            "id":"button-Size",
@@ -243,6 +281,16 @@ color: #2B2725;
            "step": 5,
            "unit": "px",
            "default": 205
+         },
+         {
+         "type": "range",
+           "id":"button-padding",
+           "label":"Button Border Position",
+           "min": 0,
+           "max": 100,
+           "step": 1,
+           "unit": "px",
+           "default": 13
          },
          {
          "type": "color",

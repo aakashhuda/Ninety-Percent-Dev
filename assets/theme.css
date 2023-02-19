@@ -9921,8 +9921,9 @@ overflow: hidden
 }
 
 .variant-input-wrap label.disabled {
-color: #e8e8e1;
-color: var(--colorBorder);
+ 
+  color:#2B2725;
+  opacity:0.3;
 }
 
 .variant-input-wrap label.disabled:after {
@@ -14023,7 +14024,7 @@ display: block !important;
 
 @font-face {
     font-family: "Silvana";
-    src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-Regular?27880) format("woff");
+    src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-Regular?29221) format("woff");
     font-style: normal;
     font-weight: 400;
     font-display: swap
@@ -14031,7 +14032,7 @@ display: block !important;
 
 @font-face {
     font-family: "Silvana";
-    src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-RegularItalic?27880) format("woff");
+    src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-RegularItalic?29221) format("woff");
     font-style: italic;
     font-weight: 400;
     font-display: swap
@@ -14050,7 +14051,7 @@ input:active{
   background-color: #fff;
 }
 .pdp-drawer-wrapper {
-  width: 50%;
+  width: 45%;
   height: auto;
   position: fixed;
   background-color: #fff;
@@ -14068,7 +14069,9 @@ input:active{
   transition: right 0.45s;
 }
 body.pdp-drawer-is-open {
-  background: rgba(217, 217, 217, 1);
+/*   background: rgba(217, 217, 217, 1); */
+       background: none;  
+/* removing background for pdp drawer overlay issues   */
 }
 .adjust-header .ninetypercent-icon{
       left: 160%;
@@ -14129,17 +14132,17 @@ body.pdp-drawer-is-open {
   padding-top: 8px;
 }
   .slick-dots li button:before {
-    font-size: 25px !important;
+/*     font-size: 25px !important;
     content: ' \25A0' !important;
-    color: #2B2725 !important;
+    color: #2B2725 !important; */
   }
   .slick-dots li {
     position: relative;
     display: inline-block;
-    width: 20px;
+/*     width: 20px;
     height: 20px;
     margin: 0 !important;
-    padding: 0 !important;
+    padding: 0 !important; */
     cursor: pointer;
   }
   .product-main-slide:not(.is-selected) button, .product-main-slide:not(.is-selected) iframe, .product-main-slide:not(.is-selected) model-viewer, .product-main-slide:not(.is-selected) video{
@@ -14196,8 +14199,9 @@ body.pdp-drawer-is-open {
   }
   .np-atc-btn {
     font-size: 12px !important;
+    color: #ffffff;
   }
-  disabled.np-atc-btn{
+  disabled.btn .np-atc-btn{
     color: #B6B6B6B6;
   }
 }
@@ -14295,6 +14299,12 @@ body.pdp-drawer-is-open {
 }
 
 #CollectionAjaxContent .not-loaded {
+  width: 100%;
+  height: 100%;
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.the-look.wear-it-with-pdp .not-loaded {
   width: 100%;
   height: 100%;
   animation: skeleton-loading 1s linear infinite alternate;

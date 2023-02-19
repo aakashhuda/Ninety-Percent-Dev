@@ -9009,8 +9009,10 @@ lazySizesConfig.expFactor = 4;
 
   
 // mobile menu click function
-if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
-  document.querySelector(".mobile-menu-wrapper .parent-link").click();
+if(document.querySelector(".mobile-menu-wrapper .parent-link")) {
+  if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
+    document.querySelector(".mobile-menu-wrapper .parent-link").click();
+  }
 }
 
 
@@ -9075,6 +9077,12 @@ if(document.querySelector("#CustomerRegisterForm")){
 })
 
     }
+
+//
+
+window.addEventListener("unload", ()=>{
+  window.scrollTo(0, 0);
+});
 
 
 

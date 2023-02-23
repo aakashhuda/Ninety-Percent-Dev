@@ -11,9 +11,15 @@
 
   {%- for filter_value in filter.active_values -%}
   <li class="tag tag--remove">
-    <a class="btn btn--small" href="{{ filter_value.url_to_remove }}">
-      {{ filter_value.label | escape }}
-    </a>
+    {% if filter_value.param_name contains 'size' %}
+      <a class="btn btn--small" href="{{ filter_value.url_to_remove | replace: '&filter.v.availability=1', '' }}">
+        {{ filter_value.label | escape }}
+      </a>
+    {% else %}
+      <a class="btn btn--small" href="{{ filter_value.url_to_remove }}">
+        {{ filter_value.label | escape }}
+      </a>
+    {% endif %}
     <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/></svg>
   </li>
   {%- endfor -%}

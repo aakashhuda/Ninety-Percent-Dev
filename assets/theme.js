@@ -1454,8 +1454,14 @@ lazySizesConfig.expFactor = 4;
         const updatedParams = this.getUpdatedParams(currentParams, newParams)
   
         const sectionRenders = this.sections.map(section => {
-  
-          const url = `${basePath}?section_id=${section.sectionId}&${updatedParams.toString()}`;
+          var url;
+          if (updatedParams.toString().includes("size")){
+            url = `${basePath}?section_id=${section.sectionId}&${updatedParams.toString()}&filter.v.availability=1`;
+          }
+          else {
+            url = `${basePath}?section_id=${section.sectionId}&${updatedParams.toString()}`;
+          }
+          console.log('converted',url)
           const cachedSectionUrl = cachedSection => cachedSection.url === url;
   
           return this.cachedSections.some(cachedSectionUrl)
@@ -9009,9 +9015,9 @@ lazySizesConfig.expFactor = 4;
 
   
 // mobile menu click function
-if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
-  document.querySelector(".mobile-menu-wrapper .parent-link").click();
-}
+// if(document.querySelector(".mobile-menu-wrapper .parent-link").innerText==="SHOP"){
+//   document.querySelector(".mobile-menu-wrapper .parent-link").click();
+// }
 
 
 // welcome popUp close function

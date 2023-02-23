@@ -132,7 +132,7 @@ Arguments
           <a href="{{ product.url | within: collection }}" class="image-list-{{ product.id }} not-loaded">
             {% for image in product.images %}
                 {% if forloop.index == 1 %}
-                    <div class="image-item-{{ product.id }} active">
+                    <div class="{{ product.id }} image-item-{{ product.id }} active">
                       <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}">
                     </div>
                 {% else %}    

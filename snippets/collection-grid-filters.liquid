@@ -44,7 +44,8 @@
           {%- render 'collection-grid-filters-form', location: 'SidebarDrawer', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
         </div>
         <div class="mobile-filter-btn-container">
-          <button class="mobile-filter-reset-btn">RESET FILTER</button>
+          {{ filter.active_values }}
+          <a href="{{ collection.url }}" class="mobile-filter-reset-btn">RESET FILTER</a>
         </div>
       </div>
     </div>
@@ -53,145 +54,10 @@
 
 <style>
   {% if filter_style == "topbar" %}
-    .drawer.drawer--left.custom-filter-drawer.drawer--is-open {
-      position: absolute;
-      width: 100%;
-      max-width: 343px !important;
-      max-height: 494px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      top: 25vh;
-      transform: unset;
-      transition: unset;
-    }
-    #CollectionAjaxContent .grid {
-      margin-left: -8px;
-    }
-    #CollectionAjaxContent .medium-up--one-fifth {
-      width: 100%;
-    }
-    #CollectionAjaxContent .grid__item--sidebar {
-      max-height: none;
-      overflow-y: visible;
-    }
-    #CollectionSidebar .medium-up--four-fifths {
-      width: 100%;
-    }
-    #CollectionSidebar .collection-filter {
-      display: none;
-    }
-    .collection-sidebar__group {
-      border: none;
-    }
-    #FilterDrawer .tag--active > a, .tag--active > label {
-      font-weight: 400;
-    }
-    .collapsible-content__inner .no-bullets.tag-list {
-      column-count: 2;
-      margin-bottom: 0;
-      font-family: 'Intervogue';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 30px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #2B2725;
-    }
-    .no-bullets.tag-list.tag-list--active-tags a.btn.btn--small {
-      background-color: #2B2725;
-      font-family: 'Intervogue';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 30px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #FFFFFF;
-    }
     
-    .collection-sidebar__group .collapsible-content__inner {
-      padding-top: 20px;
-    }
-    .collapsible-trigger-btn {
-      padding-top: 13px;
-      padding-bottom: 0px;
-      font-family: 'Intervogue';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 21px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #2B2725;
-    }
-    .collection-sidebar__group {
-      padding-top: 0;
-      margin-bottom: 0;
-    }
-    .drawer__fixed-header {
-      height: 60px;
-    }
-    .mobile-filter-reset-btn {
-      padding: 7px 25px;
-      border: 1px solid #2B2725;
-      background: #FFFFFF;
-      font-family: 'Intervogue';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 21px;
-      text-align: center;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #2B2725;
-    }
-    .drawer__fixed-header, .drawer__scrollable {
-      padding-left: 44px;
-      margin-bottom: 32px;
-    }
-    .mobile-filter-btn-container {
-      margin: 17px 0;
-      margin-left: 18px;
-    }
-    .tag__checkbox:before, .tag__checkbox:after {
-      width: 11px;
-      height: 14px;
-    }
-    .tag--active .tag__checkbox:after, .tag-list--checkboxes .tag--active a:after, input:checked~.tag__checkbox:after {
-      background-color: #2B2725;
-    }
-    @media (max-width:768px) {
-      .drawer__title {
-        height: 60px;
-        font-family: 'Intervogue';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 27px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: #2B2725;
-        padding-top: 30px;
-      }
-      .drawer__close-button .icon {
-        position: absolute;
-        top: 15px;
-        right: 19px;
-      }
-    }
   {% elsif filter_style == "sidebar" %}
     #CollectionAjaxContent .grid {
       margin: 0 0 0 0;
     }
   {% endif %}
 </style>
-
-<script>
-  document.querySelector(".mobile-filter-reset-btn").addEventListener('click', ()=>{
-    const filterDrawer = document.querySelector("#FilterDrawer")
-    filterDrawer.classList.remove("drawer--is-open")
-    window.location.search = "" 
-  })
-</script>

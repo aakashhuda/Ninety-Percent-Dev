@@ -14533,6 +14533,9 @@ body.pdp-drawer-is-open {
     .text-link, a {
       color: #2B2725;
     }
+    #CollectionAjaxContent .grid__item.medium-up--four-fifths.grid__item--content.custom-collection-width {
+      width: 100%;
+    }
 
     @media (max-width: 768px) {
         .sort-list-mobile li {
@@ -14593,3 +14596,271 @@ body.pdp-drawer-is-open {
     .desktop-nav-item {
       cursor: pointer;
     }
+
+    /* remove these codes */
+    #shopify-section-header {
+      display: none;
+    }
+
+    /* css for mobile filter */
+    /* start of collection grid */
+    .collection-sidebar__group {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    }
+    .filter-sort-mobile-container .btn--tertiary-active:hover {
+      background: none;
+    }
+  .filter-bar-btn {
+    width: 30px;
+    margin-right: 50px;
+  }
+  
+  hr.filter-line-mobile {
+    display: none;
+  }
+    .no-products-available {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .collection-filter-reset {
+       border: 0.5px solid rgba(43, 39, 37, 0.25);;
+      background-color: white;
+      display: block;
+      padding: 0.3em 0.2em;
+      width: 347px;
+      text-align: center;
+      margin-bottom: 20px;
+      cursor: pointer;
+      max-width: 230px;
+      margin-top: 10px;
+      font-family: "Intervogue";
+      text-transform: uppercase;
+      font-size: 20px;
+    }
+    .collection-filter-reset:hover {
+      color: #ffffff;
+      background-color: #111111;
+    }
+  #CollectionAjaxContent .collection-filter .btn {
+    padding: 0;
+    border: none;
+    outline: none;
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 9px;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #2B2725;
+    min-width: 30px;
+    width: 30px;
+  }
+  #CollectionAjaxContent .collection-filter .btn svg {
+    display: none;
+  }
+  .collection-filter select {
+    border: none;
+    outline: none;
+    appearance: none;
+  }
+  
+  .product-count-mobile, .filter-sort-mobile-container {
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 9px;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #2B2725;
+    width: 50%;
+  }
+  
+  .btn--tertiary-active {
+    background-color: #ffffff;
+    color: #2B2725;
+  }
+  
+  
+  .collection-filter__item {
+    margin-bottom: 0;
+  }
+  .filter-sort-mobile-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* padding-left: 51px; */
+  }
+  .filter-sort-mobile-container .collection-filter__item {
+    width: 30px;
+    flex: 0;
+  }
+  @media (max-width: 768px) {
+    .sorting-section-mobile {
+      width: 38px;
+    }
+    .collection-filter {
+      margin: 0 17px;
+  }
+    hr.filter-line-mobile {
+      display: block;
+      margin: 0 17px;
+      margin-bottom: 7px;
+    }
+  }
+  @media screen and (min-width: 769px) {
+    .collection-filter__item--drawer {
+      display: none;
+    }
+    .collection-filter__item--count {
+      text-align: left;
+    }
+    html[dir="rtl"] .collection-filter__item--count {
+      text-align: right;
+    }
+    .collection-filter {
+      display: none;
+    }
+  }
+  /* end of collection grid  */
+
+  /* start of collection-grid-filters  */
+  .drawer.drawer--left.custom-filter-drawer.drawer--is-open {
+    position: absolute;
+    width: 100%;
+    max-width: 343px !important;
+    max-height: 494px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 15vh;
+    bottom: 30vh;
+    transform: unset;
+    transition: unset;
+  }
+  #CollectionAjaxContent .grid {
+    margin-left: -8px;
+  }
+  #CollectionAjaxContent .medium-up--one-fifth {
+    width: 100%;
+  }
+  #CollectionAjaxContent .grid__item--sidebar {
+    max-height: none;
+    overflow-y: visible;
+  }
+  #CollectionSidebar .medium-up--four-fifths {
+    width: 100%;
+  }
+  #CollectionSidebar .collection-filter {
+    display: none;
+  }
+  .collection-sidebar__group {
+    border: none;
+  }
+  #FilterDrawer .tag--active > a, .tag--active > label {
+    font-weight: 400;
+  }
+  .collapsible-content__inner .no-bullets.tag-list {
+    margin-bottom: 0;
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 30px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #2B2725;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .collapsible-content__inner .no-bullets.tag-list li {
+    width: 50%;
+    margin-bottom: 0px;
+  }
+  .no-bullets.tag-list.tag-list--active-tags a.btn.btn--small {
+    background-color: #2B2725;
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 30px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  
+  .collection-sidebar__group .collapsible-content__inner {
+    padding-top: 20px;
+  }
+  .collapsible-trigger-btn {
+    padding-top: 13px;
+    padding-bottom: 0px;
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 21px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #2B2725;
+  }
+  .collection-sidebar__group {
+    padding-top: 0;
+    margin-bottom: 0;
+  }
+  .drawer__fixed-header {
+    height: 60px;
+  }
+  .mobile-filter-reset-btn {
+    padding: 7px 25px;
+    border: 1px solid #2B2725;
+    background: #FFFFFF;
+    font-family: 'Intervogue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 21px;
+    text-align: center;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #2B2725;
+  }
+  .drawer__fixed-header, .drawer__scrollable {
+    padding-left: 44px;
+    margin-bottom: 32px;
+  }
+  .mobile-filter-btn-container {
+    margin: 17px 0;
+    margin-left: 18px;
+  }
+  .tag__checkbox:before, .tag__checkbox:after {
+    width: 11px;
+    height: 14px;
+    left: 0;
+  }
+  .tag--active .tag__checkbox:after, .tag-list--checkboxes .tag--active a:after, input:checked~.tag__checkbox:after {
+    background-color: #2B2725;
+  }
+  @media (max-width:768px) {
+    .drawer__title {
+      height: 60px;
+      font-family: 'Intervogue';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 27px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #2B2725;
+      padding-top: 30px;
+    }
+    .drawer__close-button .icon {
+      position: absolute;
+      top: -4px;
+      right: 11px;
+    }
+  }
+  /* end of collection-grid-filters  */

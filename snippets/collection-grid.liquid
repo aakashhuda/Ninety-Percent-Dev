@@ -39,10 +39,10 @@ Snippet Arguments
       SHOP - {{ collection.title }} ({{ collection.products_count }})
     </div>
     <div class="filter-sort-mobile-container">
-      <div class="collection-filter__item collection-filter__item--drawer">
+      <div class="collection-filter__item  filter-bar-btn">
         <button
           type="button"
-          class="js-drawer-open-collection-filters btn btn--tertiary{% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
+          class="js-drawer-open-collection-filters btn btn--tertiary collection-filter__item--drawer {% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
           aria-controls="FilterDrawer">
             <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5zM7 42h31M16 22H6M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5zM57 22H26"/></svg>
             {{ 'collections.filters.title_tags' | t }}
@@ -110,104 +110,7 @@ Snippet Arguments
   Sidebar enabled but not in drawer mode, only show filter button on mobile
 {% endcomment %}
 {% style %}
-hr.filter-line-mobile {
-  display: none;
-}
-  .no-products-available {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .collection-filter-reset {
-     border: 0.5px solid rgba(43, 39, 37, 0.25);;
-    background-color: white;
-    display: block;
-    padding: 0.3em 0.2em;
-    width: 347px;
-    text-align: center;
-    margin-bottom: 20px;
-    cursor: pointer;
-    max-width: 230px;
-    margin-top: 10px;
-    font-family: "Intervogue";
-    text-transform: uppercase;
-    font-size: 20px;
-  }
-  .collection-filter-reset:hover {
-    color: #ffffff;
-    background-color: #111111;
-  }
-#CollectionAjaxContent .collection-filter .btn {
-  padding: 0 20px;
-  border: none;
-  outline: none;
-  font-family: 'Intervogue';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 9px;
-  line-height: 15px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #2B2725;
-}
-#CollectionAjaxContent .collection-filter .btn svg {
-  display: none;
-}
-.collection-filter select {
-  border: none;
-  outline: none;
-  appearance: none;
-}
-
-.product-count-mobile, .filter-sort-mobile-container {
-  font-family: 'Intervogue';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 9px;
-  line-height: 15px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #2B2725;
-}
-
-.btn--tertiary-active {
-  background-color: #ffffff;
-  color: #2B2725;
-}
-
-
-.collection-filter__item {
-  margin-bottom: 0;
-}
-.filter-sort-mobile-container {
-  display: flex;
-  align-items: center;
-}
-@media (max-width: 768px) {
-  .collection-filter {
-    margin: 0 17px;
-}
-  hr.filter-line-mobile {
-    display: block;
-    margin: 0 17px;
-    margin-bottom: 7px;
-  }
-}
-@media screen and (min-width: 769px) {
-  .collection-filter__item--drawer {
-    display: none;
-  }
-  .collection-filter__item--count {
-    text-align: left;
-  }
-  html[dir="rtl"] .collection-filter__item--count {
-    text-align: right;
-  }
-  .collection-filter {
-    display: none;
-  }
-}
+  
 {% endstyle %}
 {%- endif -%}
 
@@ -241,10 +144,11 @@ html[dir="rtl"] .collection-filter__item--count {
   applyClickEventForSorting()
   function resetFilter(){
     var target = document.querySelector(".collection-filter-reset")
-    console.log(target)
-    target.addEventListener('click', ()=>{
-      window.location.search = ""
-    })
+    if (target) {
+      target.addEventListener('click', ()=>{
+        window.location.search = ""
+      })
+    }
   }
   function sortingFunctionWithoutMultipleOptions(){
     var sortItems = document.querySelectorAll(".sort-list-item")

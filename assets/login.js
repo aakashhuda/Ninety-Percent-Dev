@@ -45,7 +45,7 @@ waitForElem(".logIn-button", (element) => {
             e.preventDefault();
             document
               .querySelector(".login-section")
-              .classList.add("login-section-appeared");
+              .classList.add("drawer--is-open");
             document
               .querySelector(".login-overlay")
               .classList.add("login-overlay-appeared");
@@ -92,7 +92,7 @@ waitForElem(".logIn-button", (element) => {
             .addEventListener("click", () => {
               document
                 .querySelector(".login-section")
-                .classList.remove("login-section-appeared");
+                .classList.remove("is-transitioning" , "drawer--is-open");
               document
                 .querySelector(".login-overlay")
                 .classList.remove("login-overlay-appeared");
@@ -106,14 +106,14 @@ waitForElem(".logIn-button", (element) => {
             .addEventListener("click", () => {
               document
                 .querySelector(".register-section")
-                .classList.add("register-section-appeared");
+                .classList.add("is-transitioning" , "drawer--is-open");
               document
                 .querySelector(".register-overlay")
                 .classList.add("register-overlay-appeared");
               document.body.classList.add("overflow--none");
               document
                 .querySelector(".login-section")
-                .classList.remove("login-section-appeared");
+                .classList.remove("is-transitioning" , "drawer--is-open");
               document
                 .querySelector(".login-overlay")
                 .classList.remove("login-overlay-appeared");
@@ -137,7 +137,7 @@ waitForElem(".logIn-button", (element) => {
             .addEventListener("click", () => {
               document
                 .querySelector(".register-section")
-                .classList.remove("register-section-appeared");
+                .classList.remove("is-transitioning" , "drawer--is-open");
               document
                 .querySelector(".register-overlay")
                 .classList.remove("register-overlay-appeared");

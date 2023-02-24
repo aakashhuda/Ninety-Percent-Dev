@@ -120,6 +120,9 @@
       justify-content: flex-start;
       gap:10%;
   }
+  .first-row-image, .second-row-image {
+      width: 55%;
+  }
   .first-row-text, .second-row-text {
       width: 45%;
       text-align: justify;
@@ -135,7 +138,6 @@
     padding-left: 50px;
   }
   .block-{{ block.id }} .first-row-text{
-      width: 445px;
     margin-left: 90px;
   }
   .block-{{ block.id }} .first-row-text, .block-{{ block.id }} .second-row-text   {
@@ -249,6 +251,10 @@
   }
   .block-{{ block.id }} .second-row-image {
       margin-top: 0px;
+  }
+
+  .first-row-image, .second-row-image {
+      width: 100%;
   }
 
     .first-row-image-{{ block.id }}{

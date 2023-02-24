@@ -39,16 +39,16 @@ Snippet Arguments
       SHOP - {{ collection.title }} ({{ collection.products_count }})
     </div>
     <div class="filter-sort-mobile-container">
-      <div class="collection-filter__item  filter-bar-btn">
+      <div class="collection-filter__item filter-bar-btn">
         <button
           type="button"
           class="js-drawer-open-collection-filters btn btn--tertiary collection-filter__item--drawer {% unless current_filter_size == 0 %} btn--tertiary-active{% endunless %}"
           aria-controls="FilterDrawer">
             <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-filter" viewBox="0 0 64 64"><path d="M48 42h10M48 42a5 5 0 1 1-5-5 5 5 0 0 1 5 5zM7 42h31M16 22H6M16 22a5 5 0 1 1 5 5 5 5 0 0 1-5-5zM57 22H26"/></svg>
             {{ 'collections.filters.title_tags' | t }}
-            {%- if current_filter_size > 0 -%}
+<!--             {%- if current_filter_size > 0 -%}
                 ({{ current_filter_size }})
-            {%- endif -%}
+            {%- endif -%} -->
         </button>
       </div>
       <div class="collection-filter__item collection-filter__item--sort">
@@ -99,7 +99,7 @@ Snippet Arguments
       {% else %}
         <div class="np-h3 no-products-available">
           <div>No Products Available</div>
-          <div class="collection-filter-reset">Clear Filters</div>
+          <a href="{{ collection.url }}" class="collection-filter-reset">Clear Filters</a>
         </div>
     {% endif %}
   </div>
@@ -110,7 +110,7 @@ Snippet Arguments
   Sidebar enabled but not in drawer mode, only show filter button on mobile
 {% endcomment %}
 {% style %}
-  
+
 {% endstyle %}
 {%- endif -%}
 
@@ -141,15 +141,6 @@ html[dir="rtl"] .collection-filter__item--count {
 {%- endunless -%}
 
 <script>
-  applyClickEventForSorting()
-  function resetFilter(){
-    var target = document.querySelector(".collection-filter-reset")
-    if (target) {
-      target.addEventListener('click', ()=>{
-        window.location.search = ""
-      })
-    }
-  }
   function sortingFunctionWithoutMultipleOptions(){
     var sortItems = document.querySelectorAll(".sort-list-item")
     sortItems.forEach(item=>{
@@ -172,18 +163,6 @@ html[dir="rtl"] .collection-filter__item--count {
       })
     })
   }
-  function applyClickEventForSorting() {
-    var target = document.querySelector(".sort-btn-mobile")
-    target.addEventListener('click', ()=>{
-      // sorting
-      if (document.querySelector(".sort-list-mobile").classList.contains('show-sort-list')){
-        document.querySelector(".sort-list-mobile").classList.remove('show-sort-list')
-      }
-      else {
-        document.querySelector(".sort-list-mobile").classList.add('show-sort-list')
-      }
-    })
-  }
-  sortingFunctionWithoutMultipleOptions()
-  resetFilter()
+  sortingFunctionWithoutMultipleOptions();
+
 </script>

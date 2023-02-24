@@ -46,9 +46,17 @@
             }
             @media only screen and (min-width: 960px) {
               .footer__item--{{ block.id }}{
-                width: {{ block.settings.container_width }}%;
+                width: 100%;
               }
+.grid.footer-padding{
+  margin:0;
+}
+            }
 
+            @media (max-width:768px){
+              .grid__item{
+                padding-left:0;
+              }
             }
           {%- endstyle -%}
 
@@ -134,11 +142,7 @@
           {% if block.type == 'menu' %}
             {% if block.settings.menu == 'footer-menu-new-web-development' %}
               {%- for link in linklists[block.settings.menu].links -%}
-                {% if link.title != "Size Guide" %}
                   <a class="footer-links" href="{{ link.url }}">{{ link.title }}</a>
-                {% else %}
-                  <a class="footer-links" href="{{ link.url | append: '?param=size-guide' }}">{{ link.title }}</a>
-                {% endif %}
                 <br/>
               {%- endfor -%}
             {% endif %}
@@ -728,6 +732,13 @@ color: #000000;
   .grid.footer-padding{
     margin:0;
   }
+
+    .social-links-mobile a{
+    display:inline-block;
+      margin-top:30px;
+      margin-right:10px;
+  }
+    
   }
   
   @media only screen and (min-width: 500px) and (max-width:768px){

@@ -33,7 +33,13 @@
       </div>
     </div>
     <div class="pdp-drawer-contents">
-      {{ product.metafields.custom.care_instructions }}
+      {% assign care-instructions = product.metafields.custom.care_instructions | split: "." %}
+      <ul>
+        {% for instruction in care-instructions %}
+            <li>{{ instruction }}</li>
+        {% endfor %}
+      </ul>
+<!--       {{ product.metafields.custom.care_instructions }} -->
     </div>
   </div>
 

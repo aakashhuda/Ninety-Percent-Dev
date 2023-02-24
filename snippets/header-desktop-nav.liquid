@@ -12,8 +12,8 @@
   {% endunless %}>
   {%- for link in main_menu.links limit: limit offset: offset -%}
     {%- liquid
-      assign has_dropdown = false
-      assign is_megamenu = false
+      assign has_dropdown = true
+      assign is_megamenu = true
       if link.links != blank
         assign has_dropdown = true
         if link.levels > 1
@@ -137,6 +137,9 @@
 
 <script>
   document.querySelectorAll('.grid__item.medium-up--one-fifth.appear-animation').forEach(elem => {
+    console.log(elem)
+    console.log(elem.firstChild)
+    console.log(elem.firstChild.classList)
     if (elem.firstChild.classList[0] == "megamenu__colection-image") {
       elem.childNodes[2].style.display = "none";
     };
@@ -163,8 +166,8 @@ class="site-nav site-navigation small--hide"
 role="navigation" aria-label="Primary"
 {% endunless %}>
 {% for link in main_menu.links limit: limit offset: offset %}
-{%- assign has_dropdown = false -%}
-{%- assign is_megamenu = false -%}
+{%- assign has_dropdown = true -%}
+{%- assign is_megamenu = true -%}
 {% if link.links != blank %}
 {%- assign has_dropdown = true -%}
 {% if link.levels > 1 %}

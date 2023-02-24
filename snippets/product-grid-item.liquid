@@ -132,7 +132,7 @@ Arguments
           <a href="{{ product.url | within: collection }}" class="image-list-{{ product.id }} not-loaded">
             {% for image in product.images %}
                 {% if forloop.index == 1 %}
-                    <div class="{{ product.id }} image-item-{{ product.id }} active">
+                    <div class="image-item-{{ product.id }} active">
                       <img class="grid-product__image lazyload" data-src="{{ image | img_url: 'grande' }}">
                     </div>
                 {% else %}    
@@ -142,8 +142,8 @@ Arguments
                 {% endif %}
             {% endfor %}
           </a>
-          <span class="left-{{ product.id }}"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
-          <span class="right-{{ product.id }}"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
+          <span class="left-{{ product.id }} left-arrow"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
+          <span class="right-{{ product.id }} right-arrow"><i class="arrow-{{ product.id }} image-changing-arrow"></i></span>
         {% endif %}
 
         {%- if settings.enable_swatches -%}
@@ -201,7 +201,7 @@ Arguments
               {%- else -%}
                 {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{%- endcapture -%}
               {%- endif -%}
-              <span class="grid-product__price--savings">
+              <span class="grid-product__price--savings hide">
                 {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
               </span>
             {%- endif -%}
@@ -590,34 +590,7 @@ Arguments
     }
     return {index: index, images: images}
 }
-// function for changing class
-function changeNextImage(productId, event) {
-    var data = findActvieIndex(productId)
-    var index = data.index
-    var images = data.images
-    images[index].classList.remove("active")
-    if (images[index + 1] !== undefined){
-      images[index+1].classList.add("active")
-    }
-    if (images[index + 1] === undefined) {
-      images[0].classList.add("active")
-    }
-}
-function changePreviousImage(productId, event) {
-    var data = findActvieIndex(productId)
-    var index = data.index
-    var images = data.images
-    if (images[index - 1] !== undefined){
-        images[index-1].classList.add("active")
-        images[index].classList.remove("active")
-    }
-    if(images[index-1] === undefined){
-      if (images.length > 1) {
-        images[images.length -1].classList.add("active")
-        images[index].classList.remove("active")
-      }
-    }
-}
+
 // hover effect for mouseover
 {% if settings.product_hover_multi_image == true %}
   document.querySelector(".grid-product__link-{{ product.id }}").addEventListener("mouseover", (e)=>{
@@ -634,20 +607,6 @@ function changePreviousImage(productId, event) {
       element.classList.remove("show-arrow-{{ product.id }}")
     })
     var data = findActvieIndex({{ product.id }})
-  })
-  // slider button changing to right
-  document.querySelectorAll(".right-{{ product.id }}").forEach(arrow=>{
-    arrow.addEventListener('click', (e)=>{
-        changeNextImage({{ product.id }}, e)
-        e.preventDefault()
-    })
-  })
-  // slider button changing to previous
-  document.querySelectorAll(".left-{{ product.id }}").forEach(arrow=>{
-    arrow.addEventListener('click', (e)=>{
-        changePreviousImage({{ product.id }}, e)
-        e.preventDefault()
-    })
   })
 {% endif %}
   if(document.readyState === 'ready' || document.readyState === 'complete') {

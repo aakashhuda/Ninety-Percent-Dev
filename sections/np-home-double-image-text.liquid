@@ -1,11 +1,52 @@
-<section class="section-wrapper-{{ section.id }} np-page-width">    {% for block in section.blocks %}
+<section class="section-wrapper-{{ section.id }} np-page-width">    
+{% for block in section.blocks %}
         {% case block.type %}
             {% when 'image-text-block' %} 
-  <div class="block-{{ block.id }}">    <div class="first-row">        <div class="first-row-image">        <img class="first-row-image-{{ block.id }}" src="{{ block.settings.first-row-image | img_url: "master" }}">      </div>      <div class="first-row-text">        <p class="first-title np-h3 np-h3-italic">{{block.settings.first-row-title}}</p>            <p class="first-paragraph np-h5">{{ block.settings.first-row-text }}</p>        <div class="first-text-button">            <a href="{{ block.settings.first-button-url }}">                {{ block.settings.first-button-text}}
-            </a>            <div class="border-bottom">            </div>        </div>        <div class="first-row-mobile-button np-h6">          <a href="{{ block.settings.first-button-url }}">            {{ block.settings['first-row-mobile-button-text'] }}
-          </a>        </div>      </div>    </div>    <div class="second-row">      <div class="second-row-text">        <p class="second-title np-h3 np-h3-italic">{{block.settings.second-row-title}}</p>        <p class="second-paragraph np-h5">{{ block.settings.second-row-text }}</p>        <div class="second-text-button">                    <a href="{{ block.settings.second-button-url }}">                        {{ block.settings.second-button-text}}
-                    </a>                    <div class="border-bottom">                    </div></div><div class="second-row-mobile-button np-h6">          <a href="{{ block.settings.second-button-url }}">            {{ block.settings['second-row-mobile-button-text'] }}
-          </a>        </div>      </div>      <div class="second-row-image">            <img class="second-row-image-{{ block.id }}" src="{{ block.settings.second-row-image| img_url: "master" }}">      </div>    </div>  </div>  {% when 'spacer-block' %}
+  <div class="block-{{ block.id }}">    
+    <div class="first-row">        
+      <div class="first-row-image">        
+        <img class="first-row-image-{{ block.id }}" src="{{ block.settings.first-row-image | img_url: "master" }}">      
+      </div>      
+          <div class="first-row-text">        
+            <p class="first-title np-h3 np-h3-italic">{{block.settings.first-row-title}}</p>            
+            <p class="first-paragraph np-h5">{{ block.settings.first-row-text }}</p>        
+            <div class="first-text-button">            
+              <a href="{{ block.settings.first-button-url }}">
+          {{ block.settings.first-button-text}}
+            </a>            
+              <div class="border-bottom">            
+              </div>       
+            </div>        
+            <div class="first-row-mobile-button np-h6">          
+              <a href="{{ block.settings.first-button-url }}">
+                {{ block.settings['first-row-mobile-button-text'] }}
+          </a>        
+            </div>      
+          </div>    
+    </div>    
+    <div class="second-row">      
+      <div class="second-row-text">        
+        <p class="second-title np-h3 np-h3-italic">{{block.settings.second-row-title}}</p>
+        <p class="second-paragraph np-h5">{{ block.settings.second-row-text }}</p>       
+        <div class="second-text-button">                    
+          <a href="{{ block.settings.second-button-url }}"> 
+            {{ block.settings.second-button-text}}
+                    </a>                    
+          <div class="border-bottom">                    
+          </div>
+        </div>
+        <div class="second-row-mobile-button np-h6">          
+          <a href="{{ block.settings.second-button-url }}">            {{ block.settings['second-row-mobile-button-text'] }}
+          </a>        
+        </div>      
+      </div>      
+      <div class="second-row-image">            
+        <img class="second-row-image-{{ block.id }}" src="{{ block.settings.second-row-image| img_url: "master" }}">      
+      </div>   
+    </div>  
+  </div>  
+          
+          {% when 'spacer-block' %}
     <div class="spacer-{{ block.id }}">    </div>{% endcase %}
 {% endfor %}
 </section> <style> 
@@ -64,6 +105,25 @@ color: #2B2725;
         display: flex;
         flex-direction: column;
     }
+
+      {% if block.settings.display-settings %}
+ .block-{{ block.id }} .first-row {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+    }
+    .block-{{ block.id }} .second-row {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row-reverse;
+    }
+        .first-row-text{
+        margin-right: 9%;
+    }
+    .second-row-text{
+        margin-left: 9%;
+    }
+        {% endif %}
     .block-{{ block.id }} .first-row {
         display: flex;
         justify-content: flex-start;
@@ -261,6 +321,12 @@ color: #2B2725;
         "name": "image-text-block",
         "type": "image-text-block",
         "settings": [
+         {
+          "type": "checkbox",
+          "id":"display-settings",
+          "label": "Display Settings",
+          "default": false
+         },
          {
           "type": "checkbox",
           "id":"show-first-row",

@@ -1,3 +1,4 @@
+
 {%- form 'product', product, id: form_id, class: 'product-single__form' -%}
 
   {%- liquid
@@ -22,13 +23,24 @@
         assign button_text = 'products.product.sold_out' | t
       endunless
     -%}
+{% assign swymProduct = true %}
+  {% for tag in product.tags %}
+{% if tag == "repeat-disabled" %}
+{% assign swymProduct = false %}
+{% break %}
+{% endif %}
+
+  {% endfor %}
+
 
     <button
       {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
       name="add"
       data-add-to-cart
-      class="btn btn--full add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups == empty %} btn--secondary{% endif %} sticky-mobile-pdp"
-      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+      class="btn btn--full add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups == empty %} btn--secondary{% endif %} sticky-mobile-pdp {% if swymProduct == true %} swymProduct{% endif %}"
+      {% unless current_variant.available %} disabled="disabled"{% endunless %} 
+
+ >
       <span class="np-atc-btn" data-add-to-cart-text data-default-text="{{ default_text }}">
 <!--         {% unless current_variant.available %} {% render 'swym-product-view', product: product %} <button data-swaction="addToWatchlist" data-product-id="{{product.id | json}}"></button> {% endunless %}
         Add To Bag -->
@@ -64,6 +76,24 @@
 {%- endform -%}
 
 <style>
+.swymProduct[disabled="disabled"] {
+  background: white;
+height: 0px;
+margin: 0px; 
+padding: 0px;
+letter-spacing: normal;
+opacity: 0;
+position: absolute !important; 
+/*     top: -999%;
+    left: -9999%;
+    z-index: -999; */
+}
+.swymProduct[disabled="disabled"] .np-atc-btn{
+  display: none;
+} 
+.swymProduct.disabled {
+  display: none;
+}
   button.btn.btn--full.add-to-cart.sticky-mobile-pdp.disabled {
     background-color: #2B2725;
   }

@@ -40,7 +40,7 @@
     }
 
   .section-wrapper-{{ section.id }}.np-page-width{
-    padding-left: 20px;
+    padding-left: 30px;
     padding-right: 90px;
   }
 
@@ -148,6 +148,13 @@
       line-height:18px;
   }
   }
+
+  @media (max-width: 860px) {
+    .section-wrapper-{{ section.id }} .third-image-block{
+      position: relative;
+      top: 40px;
+    }
+  }
   
   @media (max-width:830px){
     .section-wrapper-{{ section.id }} .text-block p{
@@ -210,6 +217,7 @@
   width:100%;
     display:flex;
     justify-content:center;
+    top: 0px;
   }
   }
   

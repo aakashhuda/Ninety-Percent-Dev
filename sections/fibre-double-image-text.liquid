@@ -1,4 +1,5 @@
-<section class="section-wrapper-{{ section.id }} np-page-width">    {% for block in section.blocks %}
+<section class="section-wrapper-{{ section.id }} np-page-width">    
+{% for block in section.blocks %}
         {% case block.type %}
             {% when 'image-text-block' %} 
   <div class="block-{{ block.id }}">    
@@ -49,7 +50,7 @@
         margin: 0 auto;
     }
     @media (max-width: 768px) {
-.np-page-width {
+.section-wrapper-{{ section.id }}.np-page-width {
                         padding: 0 20px;
                     }
 }
@@ -97,6 +98,29 @@ color: #2B2725;
         display: flex;
         flex-direction: column;
     }
+
+      {% if block.settings.display-settings %}
+ .block-{{ block.id }} .first-row {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+    }
+    .block-{{ block.id }} .second-row {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row-reverse;
+    }
+        .block-{{ block.id }} .first-row-text{
+        margin-right: {{ block.settings.first-gap }}%;
+        margin-left:0;
+    }
+    .block-{{ block.id }} .second-row-text{
+        margin-left: {{ block.settings.second-gap }}%;
+        margin-right:0;
+    }
+         }
+        
+        {% endif %}
     .block-{{ block.id }} .first-row {
         display: flex;
         justify-content: flex-start;
@@ -236,6 +260,10 @@ color: #2B2725;
         margin-top: 30px;
         margin-bottom: 30px;
     }
+    .block-{{ block.id }} .first-text-button, .block-{{ block.id }} .second-text-button{
+        display:inline-block;
+      margin:20px auto;
+    }
    
  }
     {% when "spacer-block" %}
@@ -270,9 +298,9 @@ color: #2B2725;
         "name": "image-text-block",
         "type": "image-text-block",
         "settings": [
-            {
+           {
           "type": "checkbox",
-          "id":"flip-position",
+          "id":"display-settings",
           "label": "Display Settings",
           "default": false
          },
@@ -377,11 +405,11 @@ color: #2B2725;
                  "type":"range",
                  "id":"first-row-button-size",
                  "label":"First Row Button size",
-                 "min":136.8,
-                 "max":400,
-                 "step":9.4,
+                 "min":50,
+                 "max":550,
+                 "step":5,
                  "unit":"px",
-                 "default":136.8
+                 "default":140
               },
                 {
                  "type":"range",
@@ -456,11 +484,11 @@ color: #2B2725;
                  "type":"range",
                  "id":"second-row-button-size",
                  "label":"Second Row Button size",
-                 "min":169,
-                 "max":400,
-                 "step":11,
+                 "min":50,
+                 "max":550,
+                 "step":5,
                  "unit":"px",
-                 "default":169
+                 "default":170
               },
           {
                  "type":"range",

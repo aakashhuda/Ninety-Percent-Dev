@@ -111,7 +111,7 @@
             {%- capture saved_amount -%}
               {{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{%- endcapture -%}
           {%- endif -%}
-          <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %} np-mobile-pdp-price price_save">
+          <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %} np-mobile-pdp-price price_save hide">
             {%- unless hide_sale_price -%}
               {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
             {%- endunless -%}
@@ -383,7 +383,7 @@
                         {%- capture saved_amount -%}
                           {{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}%{%- endcapture -%}
                       {%- endif -%}
-                      <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %} np-h9 price_save">
+                      <span data-save-price class="product__price-savings{% if hide_sale_price %} hide{% endif %} np-h9 price_save hide">
                         {%- unless hide_sale_price -%}
                           {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
                         {%- endunless -%}
@@ -532,10 +532,23 @@
                       {%- endfor -%}
                     {%- endunless -%}
                   </div>
+
+{% comment %} {% assign swymProduct = true %}
+  {% for tag in product.tags %}
+{% if tag == "repeat-disabled" %}
+{% assign swymProduct = false %}
+{% break %}
+{% endif %}
+
+  {% endfor %}
+<ul>
+ {% if swymProduct == false %}  <li> {{ swymProduct }}   </li>  {% else %} {% assign swymProduct = true %} <li> {{ swymProduct }}   </li>  {% endif %} 
+</ul> {% endcomment %}
+
                   {%- when 'buy_buttons' -%}
-                  <div class="product-block" {{ block.shopify_attributes }}>
+                  <div style="position: relative;" class="product-block" {{ block.shopify_attributes }}>
                     {%- unless product.empty? -%}
-                      <div class="product-block" style="max-width: 464px; background-color: #2B2725;">
+                      <div class="product-block" style="max-width: 464px; ">
                         {%- render 'product-form'
                           , form_id: form_id,
                           product: product,
@@ -905,7 +918,7 @@
               <a href="#" class="pdp-drawer-item delivery-return np-h7">→ Delivery & Returns</a>
               <a href="#" class="pdp-drawer-item size-guide np-h7">→ Size Guide</a>
               <a href="#" class="pdp-drawer-item care-instruction np-h7">→ Care Instructions</a>
-              <a href="#" class="pdp-drawer-item add-to-wishlist np-h7">→ Add To Wishlist</a>
+              <a href="#" class="pdp-drawer-item add-to-wishlist np-h7 hide">→ Add To Wishlist</a>
             </div>
             <!--                                     <span class="popupModal pdp-size-guide" data-id="size-guide">Size guide</span> -->
           </div>

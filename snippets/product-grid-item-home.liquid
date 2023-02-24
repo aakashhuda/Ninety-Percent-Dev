@@ -65,13 +65,13 @@
        padding-bottom:0px;
      }
 
-     .grid-product__content .grid-product__image{
-       max-width:325px;
+     .grid-product__meta.the-product-deatils-home{
+       padding:2px;
      }
+
      
      .grid-product__meta .np-regular_price.look-price{
-      padding-top: 3.5px;
-       font-family: 'Intervogue';
+      font-family: 'Intervogue';
       font-style: normal;
       font-weight: 400;
       font-size: 12px;
@@ -87,7 +87,6 @@
         font-size: 12px;
         line-height: 18px;
         letter-spacing: -0.01em;
-        padding: 10px 10px;
         padding-top:0px;
       }
      @media (max-width: 1000px) {
@@ -104,9 +103,15 @@
        
 
      }
-   </style><div class="grid__item grid-product {{ grid_item_width }}{% if settings.quick_shop_enable and sold_out == false %} grid-product__has-quick-shop{% endif %}" data-aos="row-of-{{ per_row }} orginal">  <div class="grid-product__content">    {%- if has_custom_label -%}
-      <div class="grid-product__tag grid-product__tag--custom">        {{ custom_label }}
-      </div>    {%- else -%}
+   </style>
+   <div class="grid__item grid-product {{ grid_item_width }}
+   {% if settings.quick_shop_enable and sold_out == false %} grid-product__has-quick-shop{% endif %}" data-aos="row-of-{{ per_row }} orginal">  
+     <div class="grid-product__content the-look-home">    
+     {%- if has_custom_label -%}
+      <div class="grid-product__tag grid-product__tag--custom">        
+       {{ custom_label }}
+      </div>    
+       {%- else -%}
       {%- if sold_out -%}
         <div class="grid-product__tag grid-product__tag--sold-out">          {{ 'products.product.sold_out' | t }}
         </div>      {%- endif -%}
@@ -210,7 +215,8 @@
             {%- endif -%}
           {%- endfor -%}
         {%- endif -%}
-      </div>    </a>    <div class="grid-product__meta">      
+      </div>    </a>   
+      <div class="grid-product__meta the-product-deatils-home">      
         <!-- <script>        console.log( {{ product.variants | json }})
       </script> -->        
         <a href="{{ product.url | within: collection }}" class="grid-product-title grid-product__title--{{ settings.type_product_style }} np-h6">{{ product.title }}</a>

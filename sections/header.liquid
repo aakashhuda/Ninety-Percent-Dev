@@ -221,10 +221,24 @@
               </button>
             </div>
           </div>
-          {%- if settings.predictive_search_enabled -%}
+          {% comment %}{%- if settings.predictive_search_enabled -%}
             <div id="PredictiveWrapper" class="predictive-results hide" data-image-size="{{ settings.predictive_image_size }}">
               <div class="page-width">
                 <div id="PredictiveResults" class="predictive-result__layout"></div>
+                <div class="text-center predictive-results__footer">
+                  <button type="button" class="btn btn--small" data-predictive-search-button>
+                    <small>
+                      {{ 'general.search.view_more' | t }}
+                    </small>
+                  </button>
+                </div>
+              </div>
+            </div>
+          {%- endif -%} {% endcomment %}
+          {%- if settings.predictive_search_enabled -%}
+            <div class="predictive-results hide">
+              <div class="page-width">
+                <div id="PredictiveResults"></div>
                 <div class="text-center predictive-results__footer">
                   <button type="button" class="btn btn--small" data-predictive-search-button>
                     <small>

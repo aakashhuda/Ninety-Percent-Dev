@@ -42,7 +42,7 @@
             <span class="currency-flag currency-flag--{{ localization.country.iso_code | downcase }}" data-flag="{{ localization.country.currency.iso_code }}" aria-hidden="true"></span>
           {%- endif -%}
 
-          <span class="disclosure-list__label">
+    <span class="disclosure-list__label">
             {{ localization.country.name }}  ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})
           </span>
 
@@ -50,10 +50,14 @@
         </button> 
 <span class="close-currency-selector">&times;</span>
         <ul id="CurrencyList-{{ location }}" class="disclosure-list{% if location == 'toolbar' %} disclosure-list--down disclosure-list--left{% endif %}" data-disclosure-list  >
-
+{% assign npCountries = "EUR, AUD, CAD, HKD, JPY, NZD, KRW, USD " | split: ", " %}
+{% assign britain = "United Kingdom" %}
           {%- for country in form.available_countries-%}
 
-            <li class="disclosure-list__item{% if country.iso_code == localization.country.iso_code %} disclosure-list__item--current{% endif %}">
+
+{% for npCountry in npCountries %}
+ {% if country.currency.iso_code == npCountry  %}
+ <li class="disclosure-list__item{% if country.iso_code == localization.country.iso_code %} disclosure-list__item--current{% endif %}">
               <a class="disclosure-list__option" href="#"{% if country.iso_code == localization.country.iso_code %} aria-current="true"{% endif %} data-value="{{ country.iso_code }}" data-disclosure-option>
                 {%- if show_currency_flags -%}
                   <span class="currency-flag currency-flag--{{ country.iso_code | downcase }}" data-flag="{{ country.currency.iso_code }}" aria-hidden="true"></span>
@@ -64,6 +68,25 @@
                 </span>
               </a>
             </li>
+{% endif %}
+
+{% endfor %}
+
+{% if country.name == britain  %} 
+ <li class="disclosure-list__item{% if country.iso_code == localization.country.iso_code %} disclosure-list__item--current{% endif %}">
+              <a class="disclosure-list__option" href="#"{% if country.iso_code == localization.country.iso_code %} aria-current="true"{% endif %} data-value="{{ country.iso_code }}" data-disclosure-option>
+                {%- if show_currency_flags -%}
+                  <span class="currency-flag currency-flag--{{ country.iso_code | downcase }}" data-flag="{{ country.currency.iso_code }}" aria-hidden="true"></span>
+                {%- endif -%}
+
+                <span class="disclosure-list__label">
+                  {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                </span>
+              </a>
+            </li>
+     {% endif %}
+
+           
           {%- endfor -%}
         </ul>
         <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}" data-disclosure-input>

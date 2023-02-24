@@ -1,8 +1,44 @@
+/* .product-single__form {
+  height: 70px;
+} */
+
+/* .swym-button-bar .btn.swym-button  {
+  width: 464px !important;
+}
+ */
+
+
+
+.swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text {
+  height: 70px;
+ width: 100%;
+font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 27px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #FFFFFF;
+text-align: left;
+padding: 0 5%;
+}
+.swym-btn-container[data-position=default] {
+  display: block;
+}
+ .swym-button-bar {
+  display: block;
+  margin: 0px;
+
+} 
+.swym-button-bar.swym-bbar-nomargin {
+  display: none !important;
+}
 .swym-remind-me .swym-remind-me-mailing-list-container {
   display: none !important;
 }
 .swym-modal-content .swym-remind-me {
-    padding: 95px !important;
+    padding: 95px;
     width: 90%;
 }
 #swym-remind-auth-form {
@@ -14,7 +50,7 @@
     border-block-style: none;
     border-left-style: none;
     border-right-style: none;
-    width: auto;
+    width: 70%;
     padding: 0px 0px;
 }
 .swym-modal-content #swym-remind-email-auth-button {
@@ -23,6 +59,22 @@
     background-color: white !important;
     color: black;
     padding: 0px 0px;
+    margin-top: 0px !important;
+    font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+text-align: right;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+
+color: #000000;
+}
+
+
+input#swym-remind-email-auth-input:focus {
+  outline: none;
 }
 .swym-privacy-info {
     display: none;
@@ -30,10 +82,30 @@
 
 .swym-remind-me .swym-title {
     margin-bottom: 36px;
+    
+}
+
+.swym-remind-me .swym-title h2 {
+  font-family: 'Intervogue';
+font-weight: 400;
+font-size: 24px;
+
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #000000;
 }
 
 .swym-remind-me p.swym-remind-description {
     margin-bottom: 25px;
+font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 25px;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+
+color: #000000;
 }
 .swym-ui-component .swym-generic-modal .swym-generic-modal-dialog .swym-close-btn::before {
     font-size: 15px;
@@ -42,3 +114,39 @@
         top: 20px;
         right: 22px;
 }
+ @media screen and (max-width: 768px) {
+
+ .swym-button-bar {
+  width: 100%;
+position: fixed !important;
+    left: 0;
+    bottom: 0;
+    background-color: #2B2725;
+    color: aliceblue;
+    text-align: center !important;
+    z-index: 999999;
+}   
+.swymProduct[disabled="disabled"] {
+  position: relative !important;
+}
+
+ .swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text  {
+   line-height: 100%; 
+ }
+.swym-modal-content .swym-remind-me {
+  padding: 30px;
+}
+.swym-ui-component .swym-generic-modal .swym-generic-modal-dialog {
+  max-width: 400px;
+}
+} 
+
+@media screen and (max-width: 400px) {
+ 
+.swym-modal-content .swym-remind-me {
+  padding: 10px;
+}
+.swym-ui-component .swym-generic-modal .swym-generic-modal-dialog {
+  max-width: 320px;
+}
+} 

@@ -4,7 +4,7 @@
     
     <div class="np-h1 custom-page-title">Size Guide</div>
     <div class="custom-subtitle">Size Conversion</div>
-    <div class="np-h7 custom-message">If you are not sure about your size, please contact us <a href="{{ section.settings.contact-us-link-text }}">{{ section.settings.contact-us-link-text }}</a></div>
+    <div class="np-h7 custom-message">If you are not sure about your size, please contact us <a href="{{ section.settings.contact-us-link }}">{{ section.settings.contact-us-link-text }}</a></div>
     <table class="size-guide-table np-h6">
         <tr class="row1">
             <td class="col0">
@@ -272,11 +272,12 @@
         }
     }
     .size-guide-page table, .size-guide-page th, .size-guide-page td {
-        border: 0.25px solid rgba(43, 39, 37, 0.5);
-        border-top: none;
-        border-right: none;
-        border-left: none;
+        border-bottom: 0.25px solid rgba(43, 39, 37, 0.2);
         border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .size-guide-page tbody {
+      background: #fff;
     }
     .size-guide-page td {
         padding: 17px 0;
@@ -332,6 +333,9 @@
       .custom-page-title {
         font-size: 80px;
       }
+      .size-guide-page table, .size-guide-page th, .size-guide-page td {
+        border-bottom: 1px solid rgba(43, 39, 37, 0.2);
+    }
     }
 
 {% endstyle %}

@@ -44,7 +44,6 @@
           {%- render 'collection-grid-filters-form', location: 'SidebarDrawer', filters: collection.filters, collapsed: collapsed, enable_color_swatches: enable_color_swatches -%}
         </div>
         <div class="mobile-filter-btn-container">
-          {{ filter.active_values }}
           <a href="{{ collection.url }}" class="mobile-filter-reset-btn">RESET FILTER</a>
         </div>
       </div>
@@ -61,3 +60,11 @@
     }
   {% endif %}
 </style>
+
+<script>
+  document.querySelector(".mobile-filter-reset-btn").addEventListener('click', ()=>{
+    const filterDrawer = document.querySelector("#FilterDrawer")
+    filterDrawer.classList.remove("drawer--is-open")
+    window.location.search = "" 
+  })
+</script>

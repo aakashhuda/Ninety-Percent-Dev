@@ -568,6 +568,12 @@ Arguments
     #CollectionAjaxContent .custom-title {
       max-width: 160px;
     }
+    #CollectionAjaxContent .arrow-{{ product.id }} {
+      padding: 7px;
+    }
+    #CollectionAjaxContent .left-{{ product.id }}, #CollectionAjaxContent .right-{{ product.id }}  {
+        padding: 8px;
+    }
   }
   {% if settings.product_hover_multi_image == true %}
     #CollectionAjaxContent .image-wrap {

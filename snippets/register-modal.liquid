@@ -1,5 +1,5 @@
 <div class="register-overlay"></div>
-<div class="page-width page-width--tiny page-content register-section drawer drawer--right">
+<div class="page-width page-width--tiny page-content register-section">
   <header class="section-header">
     <h1 class="section-header__title">{{ 'customer.register.title' | t }}</h1>
     <div class="register-section-close">
@@ -27,7 +27,7 @@
       <input placeholder="Email*" type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}"{% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off" required>
 
       <label class="register-form-font" for="CreatePassword">{{ 'customer.register.password' | t }}*</label>
-      <input placeholder="Password*" type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" required minlength="8" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?/~_+-=|\]).{8,32}$">
+      <input placeholder="Password*" type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" required minlength="8" pattern="^(?=.*[0-9])(?=.*[!@#$%^*])[a-zA-Z0-9!@#$%^*].{8,}$">
       
     <label class="register-form-font" for="CreateConfirmPassword">Confirm Password*</label>
       <input placeholder="Confirm Password*" type="password" name="customer[confirmPassword]" id="CreateConfirmPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" required>

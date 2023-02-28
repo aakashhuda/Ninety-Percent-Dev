@@ -111,7 +111,7 @@
           </li>
         {%- endif -%}
       </ul> 
-      <a class="localization-selector-drawer">UK/EN</a>
+      <a class="localization-selector-drawer currency-selector-toggler"> {{ localization.country.iso_code }} / {{ localization.language.iso_code }} </a>
       <a class="logIn-button" href="{{ routes.account_url }}">LOGIN</a>          
     </div>
 
@@ -120,6 +120,12 @@
 </div>
 
 <style>
+
+.localization-selector-drawer, .logIn-button {
+  font-family: 'Intervogue';
+  font-size: 12px;
+  text-transform: uppercase;
+}
 
   @media (min-width:769px){
     #NavDrawer{

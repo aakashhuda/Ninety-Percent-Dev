@@ -1,5 +1,5 @@
 <div class="login-overlay"></div>
-<div class="page-width page-width--tiny page-content login-section drawer drawer--right">
+<div class="page-width page-width--tiny page-content login-section">
   <div class="upper-part">
     <header class="section-header">
     <h1 class="section-header__title">{{ 'customer.login.title' | t }}</h1>
@@ -60,7 +60,7 @@
         {%- endif -%}
 
         <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
-        <input type="email" value="" name="email" id="RecoverEmail" class="input-full" autocorrect="off" autocapitalize="off">
+        <input type="email" value="" name="email" id="RecoverEmail" class="input-full" autocorrect="off" autocapitalize="off" required>
 
         <p>
           <button type="submit" class="btn">
@@ -73,12 +73,12 @@
   </div>
 
     <div class="lower-part">
-      <p class="create-an-account np-h5">Create an account</p>
+      <p class="create-an-account np-h5">Create an Account</p>
       <ul class="account-facilities np-h5">
-        You will able to:
+        You will be able to:
         <li>Recieve our exclusive newsletter</li>
-        <li>Save your wishlist Items</li>
-        <li>Shop Faster</li>
+        <li>Save your wishlist items</li>
+        <li>Shop faster</li>
         <li>Check your orders and returns</li>
       </ul>
 

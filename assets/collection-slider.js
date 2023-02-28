@@ -216,7 +216,7 @@ function showClearFilter(){
     })
   }
   function applyClickEventForSorting() {
-    var target = document.querySelector(".sorting-section")
+    var target = document.querySelector(".sorting-section .sort-btn")
     target.addEventListener('click', ()=>{
       // sorting
       document.querySelectorAll(".filter-options-list").forEach(option=>{

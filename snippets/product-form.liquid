@@ -38,9 +38,7 @@
       name="add"
       data-add-to-cart
       class="btn btn--full add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups == empty %} btn--secondary{% endif %} sticky-mobile-pdp {% if swymProduct == true %} swymProduct{% endif %}"
-      {% unless current_variant.available %} disabled="disabled"{% endunless %} 
-
- >
+      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
       <span class="np-atc-btn" data-add-to-cart-text data-default-text="{{ default_text }}">
 <!--         {% unless current_variant.available %} {% render 'swym-product-view', product: product %} <button data-swaction="addToWatchlist" data-product-id="{{product.id | json}}"></button> {% endunless %}
         Add To Bag -->

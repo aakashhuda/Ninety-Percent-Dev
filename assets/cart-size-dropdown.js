@@ -186,7 +186,7 @@ const mainFunc = {
                                     })
                                 }).then(response => response.json())
                                 .then ( (cartItem) => {
-                                  console.log(cartItem)
+                                  // console.log(cartItem)
                                       // document.querySelector(".site-nav .cart-item-count.cart-link__bubble").innerText = cart
                                     var cart = new theme.CartDrawer;
                                                     cart.init();
@@ -204,7 +204,8 @@ const mainFunc = {
 
                     clickedOption.target.closest(".dropdown").querySelector('.dropbtn').innerText = clickedOption.currentTarget.innerText;
                  
-                    clickedOption.target.closest(".dropdown").nextElementSibling.style.transform = "rotate(45deg)"
+clickedOption.target.closest(".dropdown").querySelector(".updown-arrow").style.transform = "rotate(0deg)";
+                    // clickedOption.target.closest(".dropdown").nextElementSibling.style.transform = "rotate(45deg)"
 
                     if (clickedOption.target.closest(".dropdown").querySelector(".size-dropdown-wrapper.show-dropdown")) {
                         clickedOption.target.closest(".dropdown").querySelector(".size-dropdown-wrapper").classList.remove('show-dropdown');
@@ -248,6 +249,7 @@ const mainFunc = {
                         }).then(()=> {
                             var cart = new theme.CartDrawer;
                                             cart.init();
+                                            cart.open();
                         })
 
 

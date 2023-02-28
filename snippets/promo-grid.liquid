@@ -69,7 +69,8 @@
         {% if block.settings.height %}
           {% unless block.settings.boxed %}
             .flex-grid__item--{{ block.id }} {
-              min-height: {{ block.settings.height}}px;
+/*               min-height: {{ block.settings.height}}px; */
+              aspect-ratio:670/900;
             }
           {% endunless %}
           
@@ -80,17 +81,17 @@
           }
           @media only screen and (max-width: 1024px) {
             .flex-grid__item--{{ block.id }} {
-              min-height: 600px;
+/*               min-height: 600px; */
             }
           }
           @media only screen and (max-width: 768px) {
             .flex-grid__item--{{ block.id }} {
-              min-height: 480px;
+/*               min-height: 480px; */
             }
           }
           @media only screen and (min-width: 768px) {
             .flex-grid__item--{{ block.id }} {
-              min-height: {{ block.settings.height}}px;
+/*               min-height: {{ block.settings.height}}px; */
             }
 
             
@@ -108,7 +109,7 @@
           }
           @media only screen and (min-width: 1140px) {
             .flex-grid__item--{{ block.id }} {
-              min-height: {{ block.settings.height }}px;
+/*               min-height: {{ block.settings.height }}px; */
             }
           }
         {% endif %}

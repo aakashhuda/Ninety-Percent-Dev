@@ -1462,7 +1462,6 @@ lazySizesConfig.expFactor = 4;
           else {
             url = `${basePath}?section_id=${section.sectionId}&${updatedParams.toString()}`;
           }
-          console.log('converted',url)
           const cachedSectionUrl = cachedSection => cachedSection.url === url;
   
           return this.cachedSections.some(cachedSectionUrl)
@@ -4943,9 +4942,7 @@ lazySizesConfig.expFactor = 4;
       let priceMarkup = '';
       let vendorMarkup = '';
       let tagName ='';
-      console.log("product is",product);
       if(product.tags.includes("Organic Cotton")){
-        console.log("got the tag");
         tagName = "Organic Cotton";
       }
       else if(product.tags.includes("Tencel")){
@@ -9052,10 +9049,11 @@ if(sessionStorage.getItem("welcome-popUp-new")){
 // function for register confirm password validation
 
 if(document.querySelector("#CustomerRegisterForm")){
-  
+  document.querySelector("#CreatePassword").addEventListener("focus",()=>{
+    document.querySelector("#register-submit").disabled = false;
+  })
   document.querySelector("#CreatePassword").addEventListener("change",()=>{
-    console.log(document.querySelector("#CreatePassword").value)
-    if(!document.querySelector("#CreatePassword").value.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/g)){
+    if(!document.querySelector("#CreatePassword").value.match(/^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/g)){
       document.querySelector(".register-form-font.pass-style").classList.add("confirm-error");
       document.querySelector("#register-submit").disabled = true;
     }
@@ -9094,16 +9092,16 @@ window.addEventListener("unload", ()=>{
 
 
 //sticky header function
-const header = document.querySelector('#shopify-section-header');
+const header = document.querySelector('#SiteHeader');
 const headerHeight = header.offsetHeight;
 let prevScrollPos = window.pageYOffset;
 
 window.addEventListener('scroll', () => {
   let currentScrollPos = window.pageYOffset;
   if (window.scrollY <=  headerHeight || currentScrollPos < prevScrollPos) {
-    header.classList.remove('hidden');
+    header.classList.remove('hide');
   } else {
-    header.classList.add('hidden');
+    header.classList.add('hide');
   }
   prevScrollPos = currentScrollPos;
 });
@@ -9132,8 +9130,16 @@ window.addEventListener('scroll', () => {
 // })
 
 window.addEventListener('click', (e)=>{
-  targets = document.querySelectorAll(".filter-label")
-  console.log(targets)
+  if (document.querySelector(".filter-label")) {
+    var targets = document.querySelectorAll(".filter-label")
+  var sortTarget = document.querySelector(".sorting-section .sort-btn")
+  var mobileSortTarget = document.querySelector(".sort-btn-mobile")
+  if (e.target != sortTarget) {
+    document.querySelector(".sorting-section .sort-btn + .sort-list").classList.remove("show-sort-list")
+  }
+  if (e.target != mobileSortTarget) {
+    document.querySelector(".sort-list-mobile").classList.remove("show-sort-list")
+  }
   targets.forEach(target=>{
     if (target != e.target) {
       var cls = target.classList[1]
@@ -9141,6 +9147,7 @@ window.addEventListener('click', (e)=>{
       filterList.classList.remove("show-filter")
     }
   })
+  }
 })
 
 

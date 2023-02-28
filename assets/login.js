@@ -45,16 +45,19 @@ waitForElem(".logIn-button", (element) => {
             e.preventDefault();
             document
               .querySelector(".login-section")
-              .classList.add("drawer--is-open");
+              .classList.add("login-section-appeared");
+            // document
+            //   .querySelector(".login-section")
+            //   .classList.add("is-transitioning");
             document
               .querySelector(".login-overlay")
               .classList.add("login-overlay-appeared");
             document.body.classList.add("overflow--none");
-            if (document.querySelector(".mobile-menu-close-button")) {
-              document
-                .querySelector(".menu-drawer__close-button.js-drawer-close")
-                .click();
-            }
+            // if (document.querySelector(".mobile-menu-close-button")) {
+            //   document
+            //     .querySelector(".menu-drawer__close-button.js-drawer-close")
+            //     .click();
+            // }
             if (
               document.querySelector(".login-overlay.login-overlay-appeared")
             ) {
@@ -92,7 +95,7 @@ waitForElem(".logIn-button", (element) => {
             .addEventListener("click", () => {
               document
                 .querySelector(".login-section")
-                .classList.remove("is-transitioning" , "drawer--is-open");
+                .classList.remove("login-section-appeared");
               document
                 .querySelector(".login-overlay")
                 .classList.remove("login-overlay-appeared");
@@ -106,14 +109,14 @@ waitForElem(".logIn-button", (element) => {
             .addEventListener("click", () => {
               document
                 .querySelector(".register-section")
-                .classList.add("is-transitioning" , "drawer--is-open");
+                .classList.add("register-section-appeared");
               document
                 .querySelector(".register-overlay")
                 .classList.add("register-overlay-appeared");
               document.body.classList.add("overflow--none");
               document
                 .querySelector(".login-section")
-                .classList.remove("is-transitioning" , "drawer--is-open");
+                .classList.remove("login-section-appeared");
               document
                 .querySelector(".login-overlay")
                 .classList.remove("login-overlay-appeared");
@@ -137,7 +140,7 @@ waitForElem(".logIn-button", (element) => {
             .addEventListener("click", () => {
               document
                 .querySelector(".register-section")
-                .classList.remove("is-transitioning" , "drawer--is-open");
+                .classList.remove("register-section-appeared");
               document
                 .querySelector(".register-overlay")
                 .classList.remove("register-overlay-appeared");

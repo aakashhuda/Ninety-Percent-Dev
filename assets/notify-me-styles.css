@@ -6,7 +6,19 @@
   width: 464px !important;
 }
  */
+.swym-error, .swym-success {
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 21px;
 
+letter-spacing: 0.02em;
+padding: 0px;
+color: #000000;
+border: none;
+background: none;
+}
 
 
 .swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text {
@@ -42,7 +54,7 @@ padding: 0 5%;
     width: 90%;
 }
 #swym-remind-auth-form {
-    border-bottom: 1px solid;
+    border-bottom: 0.5px solid black;
     display: flex;
     justify-content: space-between;
 }
@@ -75,6 +87,17 @@ color: #000000;
 
 input#swym-remind-email-auth-input:focus {
   outline: none;
+}
+
+#swym-remind-email-auth-input::placeholder {
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+letter-spacing: 0.05em;
+
+color: rgba(0, 0, 0, 0.5)
 }
 .swym-privacy-info {
     display: none;
@@ -114,7 +137,19 @@ color: #000000;
         top: 20px;
         right: 22px;
 }
+@media screen and (max-width: 840px) {
+   .swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text  {
+   line-height: 100%; 
+ }
+}
  @media screen and (max-width: 768px) {
+
+.swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text {
+
+  font-size: 12px !important;
+  text-align: center;
+  height: 60px; 
+}
 
  .swym-button-bar {
   width: 100%;

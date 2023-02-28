@@ -39,7 +39,6 @@ waitForElem(".cart__item", (element) => {
         
         let target = document.querySelector(".cart-items-wrapper-np");
             let observer = new MutationObserver(function() {
-              console.log("From ZiLLur Mutation")
                 itemCount();
             });
             observer.observe(target, {

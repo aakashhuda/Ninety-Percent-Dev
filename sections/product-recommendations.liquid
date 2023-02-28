@@ -221,6 +221,12 @@
   .section-header.custom-header {
     margin-bottom: 10px;
   }
+  .product-recommendations .slick-dotted.slick-slider {
+    margin-bottom: 130px;
+  }
+  .product-recommendations .slick-dots {
+    bottom: 0px;
+  }
   @media only screen and (max-width: 1000px) {
     .material-tag-pdp{
       display: none;
@@ -274,6 +280,12 @@
     }
     #Recommendations-{{ section.id }} .grid-overflow-wrapper .grid {
       display: block;
+    }
+    .product-recommendations .slick-slider .slick-dots li.slick-active,
+    .product-recommendations .slick-slider .slick-dots li.slick-active button,
+    .product-recommendations .slick-slider .slick-dots li.slick-active button:before {
+      width: 7.21px;
+      height: 9.13px;
     }
   }
 </style>

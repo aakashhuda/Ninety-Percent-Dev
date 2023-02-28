@@ -50,7 +50,7 @@
         </button> 
 <span class="close-currency-selector">&times;</span>
         <ul id="CurrencyList-{{ location }}" class="disclosure-list{% if location == 'toolbar' %} disclosure-list--down disclosure-list--left{% endif %}" data-disclosure-list  >
-{% assign npCountries = "EUR, AUD, CAD, HKD, JPY, NZD, KRW, USD " | split: ", " %}
+{% assign npCountries = "EUR, AUD, CAD, HKD, JPY, NZD, KRW, USD" | split: ", " %}
 {% assign britain = "United Kingdom" %}
           {%- for country in form.available_countries-%}
 

@@ -24,7 +24,6 @@ function getCookie(cname) {
 function cookieSetup(){
   document.querySelector(".popUp-cookies").style.display="none";
     setCookie("cookies-appread-new", "true", 30);
-    document.body.classList.remove("overflow--none");
 }
   
 
@@ -35,7 +34,6 @@ if(document.querySelector(".popUp-cookies")){
     
     if(!x){
       document.querySelector(".popUp-cookies").style.display="block";
-      document.body.classList.add("overflow--none");
     
     }
 }

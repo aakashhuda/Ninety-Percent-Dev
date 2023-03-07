@@ -52,9 +52,7 @@ waitForElem(".swym-button-bar", (mainContent) => {
       mainJs: function () {
         
         let soldOutBtn = document.querySelector(".swym-button-bar");
-        console.log(soldOutBtn)
         if (soldOutBtn) {
-        console.log("sold out true")
           document.querySelector(".add-to-cart").style.display = "none"
         }
         

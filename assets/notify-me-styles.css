@@ -6,19 +6,7 @@
   width: 464px !important;
 }
  */
-.swym-error, .swym-success {
-  font-family: 'Intervogue';
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 21px;
 
-letter-spacing: 0.02em;
-padding: 0px;
-color: #000000;
-border: none;
-background: none;
-}
 
 
 .swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text {
@@ -46,7 +34,7 @@ padding: 0 5%;
 .swym-button-bar.swym-bbar-nomargin {
   display: none !important;
 }
-.swym-remind-me .swym-remind-me-mailing-list-container {
+ .swym-remind-me-mailing-list-container {
   display: none !important;
 }
 .swym-modal-content .swym-remind-me {
@@ -136,6 +124,28 @@ color: #000000;
 .swym-ui-component .swym-generic-modal .swym-generic-modal-dialog .swym-close-btn {
         top: 20px;
         right: 22px;
+}
+
+.swym-remind-me .swym-validation-error-msg, .swym-remind-me .swym-success-msg {
+  font-family: 'Intervogue';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 21px;
+
+letter-spacing: 0.02em;
+padding: 0px;
+color: #000000;
+border: none;
+background: none;
+}
+.swym-remind-me .swym-remind-email-container .swym-input-and-error-container.has-error #swym-remind-email-auth-input {
+  border: none;
+}
+.swym-remind-me #remind-me-subscribe-btn {
+  color: white;
+  background: #2B2527;
+  border: none;
 }
 @media screen and (max-width: 840px) {
    .swym-btn-container[data-position=default] .swym-add-to-watchlist.swym-text  {

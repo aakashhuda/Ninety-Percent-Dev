@@ -620,7 +620,6 @@ Arguments
   } else {
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
-        console.log("completed")
         setTimeout(()=>{
           document.querySelectorAll(".not-loaded").forEach(item=>{
             item.classList.remove("not-loaded")

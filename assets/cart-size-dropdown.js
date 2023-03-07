@@ -186,11 +186,13 @@ const mainFunc = {
                                     })
                                 }).then(response => response.json())
                                 .then ( (cartItem) => {
-                                  // console.log(cartItem)
                                       // document.querySelector(".site-nav .cart-item-count.cart-link__bubble").innerText = cart
                                     var cart = new theme.CartDrawer;
                                                     cart.init();
-                                                    cart.open();
+                                                    // cart.open();
+                                             if (location.href.indexOf("cart") > -1) {
+                                                         window.location.reload();
+                                         }
                                 } )
                             }
                             
@@ -249,7 +251,10 @@ clickedOption.target.closest(".dropdown").querySelector(".updown-arrow").style.t
                         }).then(()=> {
                             var cart = new theme.CartDrawer;
                                             cart.init();
-                                            cart.open();
+                                            // cart.open();
+                                      if (location.href.indexOf("cart") > -1) {
+                                                         window.location.reload();
+                                         }
                         })
 
 

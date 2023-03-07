@@ -6515,6 +6515,10 @@ overflow: auto;
 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.09)
 }
 
+.predictive-results .grid__item.grid-product .grid-product__meta {
+  margin-left: 9%;
+}
+
 @media only screen and (min-width:769px) {
 
 .predictive-results {
@@ -14029,7 +14033,7 @@ display: block !important;
 
 @font-face {
     font-family: "Silvana";
-/*     src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-Regular?30537) format("woff"); */
+/*     src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-Regular?30664) format("woff"); */
 src: url('https://cdn.shopify.com/s/files/1/0283/1338/7053/files/Silvana-Regular.otf?v=1658828191') format("woff");
     font-style: normal;
     font-weight: 400;
@@ -14038,7 +14042,7 @@ src: url('https://cdn.shopify.com/s/files/1/0283/1338/7053/files/Silvana-Regular
 
 @font-face {
     font-family: "Silvana";
-/*     src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-RegularItalic?30537) format("woff"); */
+/*     src: url(//cdn.shopify.com/s/files/1/0283/1338/7053/t/25/assets/Silvana-RegularItalic?30664) format("woff"); */
 src: url('https://cdn.shopify.com/s/files/1/0283/1338/7053/files/Silvana-RegularItalic.woff?v=1676905162') format("woff");
 
     font-style: italic;
@@ -15315,4 +15319,7 @@ padding: 25px 24px;
     margin-bottom: 0;
   }
   
+}
+.js-drawer-open .main-content:after {
+  background-color: transparent;
 }

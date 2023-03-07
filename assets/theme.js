@@ -1560,7 +1560,7 @@ lazySizesConfig.expFactor = 4;
   
       log: function (...args) {
         if (this.debug) {
-          console.log(...args);
+
         }
       },
     });
@@ -4800,9 +4800,7 @@ lazySizesConfig.expFactor = 4;
           title: product.title,
           url: product.url,
           image_responsive_url: theme.Images.lazyloadImagePath(product.image),
-          image_aspect_ratio: product.featured_image.aspect_ratio,
-          vendor: product.vendor,
-          price_min: product.price_min,
+          image_aspect_ratio: product.featured_image.aspect_ratio
         };
   
         products.push(new_product);
@@ -4938,33 +4936,16 @@ lazySizesConfig.expFactor = 4;
   
     items.forEach(product => {
       var image = theme.buildProductImage(product, imageSize);
-  
-      let priceMarkup = '';
-      let vendorMarkup = '';
-      let tagName ='';
-      if(product.tags.includes("Organic Cotton")){
-        tagName = "Organic Cotton";
-      }
-      else if(product.tags.includes("Tencel")){
-        tagName = "Tencel";
-      }
-      if (theme.settings.predictiveSearchPrice) priceMarkup = `<div class="grid-product__price">${theme.strings.productFrom}${theme.Currency.formatMoney(product.price_min, theme.moneyFormat)}</div>`;
-      if (theme.settings.predictiveSearchVendor) vendorMarkup = `<div class="grid-product__vendor">${product.vendor}</div>`;
-
       var markup = `
-        <div class="grid__item grid-product ${gridWidth} aos-animate recently-viewed-grid" data-aos="row-of-${rowOf}">
+        <div class="grid__item grid-product ${gridWidth} aos-animate" data-aos="row-of-${rowOf}">
           <div class="grid-product__content">
             <a href="${product.url}" class="grid-product__link">
               <div class="grid-product__image-mask">
                 ${image}
               </div>
               <div class="grid-product__meta">
-                <div class="grid-product__title np-h10 custom-title">${product.title} </div>
-                <div class="pdp-recently-viewed-price">${theme.Currency.formatMoney(product.price, theme.moneyFormat)}</div>
-                ${priceMarkup}
-                ${vendorMarkup}
+                <div class="grid-product__title">${product.title}</div>
               </div>
-              <div class="material-tag-pdp">${tagName}</div>
             </a>
           </div>
         </div>
@@ -5611,7 +5592,6 @@ lazySizesConfig.expFactor = 4;
     Photoswipe.prototype = Object.assign({}, Photoswipe.prototype, {
       init: function() {
         this.container.querySelectorAll(selectors.trigger).forEach(trigger => {
-          console.log(trigger);
           trigger.on('click' + this.namespace, this.triggerClick.bind(this));
         });
       },
@@ -5620,7 +5600,6 @@ lazySizesConfig.expFactor = 4;
         // Streamline changes between a slideshow and
         // stacked images, so recheck if we are still
         // working with a slideshow when initializing zoom
-        console.log(evt);
         if (this.container.dataset && this.container.dataset.hasSlideshow === 'true') {
           this.inSlideshow = true;
         } else {
@@ -7237,7 +7216,6 @@ lazySizesConfig.expFactor = 4;
           dynamicVariantsEnabled
         };
   
-        console.log(options);
   
         var swatches = this.container.querySelectorAll(this.selectors.variantColorSwatch);
         if (swatches.length) {
@@ -8449,9 +8427,7 @@ lazySizesConfig.expFactor = 4;
   
     var data = {};
     var modal;
-  console.log("test currency switcher");
     function init() {
-      console.log('test222');
       var $dataDiv = $(selectors.dataDiv);
   
       if (!$dataDiv.length) {
@@ -8740,7 +8716,7 @@ lazySizesConfig.expFactor = 4;
       });
 
       		} catch (error) {
-      		  console.log("Initialization error:", error);
+      		  // console.log("Initialization error:", error);
       		}
           } else {
               setTimeout(pollFor, 25);
@@ -8802,7 +8778,7 @@ lazySizesConfig.expFactor = 4;
         ]
       });
       		} catch (error) {
-      		  console.log("Initialization error:", error);
+      		  // console.log("Initialization error:", error);
       		}
           } else {
               setTimeout(pollFor, 25);
@@ -8961,7 +8937,6 @@ lazySizesConfig.expFactor = 4;
             //collection filter open-close
             $('.custom-filter-wrapper button.collapsible-trigger-btn').on('click',function(){
                 if($(this).hasClass("is-open")){
-                  console.log("if condition jquery");
                   $(this).removeClass("is-open");
                   $(this).next().removeClass("is-open");
                 }
@@ -9003,7 +8978,6 @@ lazySizesConfig.expFactor = 4;
   });
 
   $('.main-content').on('click touchstart', function(){
-      console.log("np shopify");
      if($('.site-nav--has-dropdown').hasClass('show-megamenu-dropdown')){
       $('.site-nav--has-dropdown').removeClass('show-megamenu-dropdown'); 
      }      
@@ -9122,7 +9096,7 @@ window.addEventListener('scroll', () => {
 // window.addEventListener('scroll', ()=>{
 //   if (window.scrollY > 90){
 //     document.querySelector(".topbar-filter-section").classList.add('hide')
-//     console.log('down')
+//     
 //   }
 //   if (window.scrollY < 90) {
 //     document.querySelector(".topbar-filter-section").classList.remove('hide')

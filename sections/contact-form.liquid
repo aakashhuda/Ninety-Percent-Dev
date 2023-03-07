@@ -49,7 +49,7 @@
               <div class="grid__item one-whole">
                 <label class="input-label" for="ContactFormSubject-{{ blockId }}">{{ 'contact.form.subject' | t }}<span>*</span></label>
                 <select id="ContactFormSubject-{{ blockId }}" class="contact-input input-full contact-form" name="contact[subject]" required>
-                   <option value="">Subject</option>
+<!--                    <option value="">Subject</option> -->
                   <option value="Product Query">Product Query</option>
                   <option value="Order Query">Order Query</option>
                   <option value="Returns or Exchange">Returns or Exchange</option>
@@ -164,7 +164,7 @@
     margin-top: 40px;
   }
   #contact_form label span{
-  	color:#fd0000;
+  	color:#2B2725;
     font-size: 16px;
     position: absolute;
   }
@@ -336,6 +336,12 @@ color: #2B2725;
 }
 
 @media (max-width: 768px) {
+  .contact-us-content {
+    margin: 0 20px;
+  }
+  .contact-us-content .page-links {
+    padding-left: 0;
+  }
   .page-links {
     padding-left: 17px;
     height: max-content;
@@ -351,6 +357,12 @@ color: #2B2725;
   }
   .contact-us-content {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 368px) {
+  .contact-us-content .page-title {
+    font-size: 60px;
   }
 }
 
@@ -390,7 +402,7 @@ color: #2B2725;
                 });
 
             } catch (err) {
-                console.log('TRY ERROR: ' + err);
+                // console.log('TRY ERROR: ' + err);
             }
         } else {
             setTimeout(atPollForjQuery, 25);

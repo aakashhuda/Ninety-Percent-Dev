@@ -240,7 +240,6 @@ color: #2B2725 !important;
 <script>
   $('.parent-link').not(':first').addClass('option-not-selected');
   $('.single-item-menu').on('click', function() {
-    //console.log("clicked on a");
     $('.child-link-container').not(this).addClass('hidden');
     $('.parent-link').not(this).addClass('option-not-selected');
     $(this).find('.child-link-container').removeClass('hidden');

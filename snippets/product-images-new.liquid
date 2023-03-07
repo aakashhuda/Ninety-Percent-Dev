@@ -838,7 +838,7 @@
                 }
 
             } catch (err) {
-                console.log('TRY ERROR: ' + err);
+                // console.log('TRY ERROR: ' + err);
             }
 
             function npColorChange($thiscolor) {
@@ -940,10 +940,7 @@
                     var winScrollTop = scrtop - serollCurrent;
                     var elstOffSet = elHeight + 100 - window.innerHeight;
                     var elStickiOset = winScrollTop + elstOffSet;
-                    //                   console.log('scrtop',scrtop);
-                    //                   console.log('offtop',offtop);
-//                                        console.log('offbtm',offbtm);
-// 										console.log('elHeight',elHeight);
+                    
                     if ($stick.hasClass('stickyFixed') && productSingleMetaBottom > window.innerHeight && elHeight > window.innerHeight) {
                         $stickTop.css('top', -elStickiOset);
                         //$stickTop.css('top', -scrtop);            
@@ -993,7 +990,7 @@
                 $('.np-product-thumbs .image-wrap img').not($(this).children('img')).removeClass('np-active-thumb');
                 $(this).children('img').addClass('np-active-thumb');
                     var videoID = $(this).attr('data-video-id');
-              console.log(videoID);
+              
                 $('html, body').stop(true, false).animate({
                         scrollTop: $('.np-desktop-only .product__video-wrapper video#'+ videoID).offset().top - 90
                     }, 1000);
@@ -1028,7 +1025,6 @@
                       
                         if ($that2.attr('data-variants').trim().indexOf(target) > -1) {
                             $that2.click();
-                          //console.log(target);
                             return false;
                         }
                     });
@@ -1157,7 +1153,6 @@
                   var psIndex = gallery.getCurrentIndex();
                   var psIndexSlick = psIndex;
                   var mailSlider = $('.np-main-slider').attr('id');
-                  // console.log(psIndexSlick);
                   $(mailSlider).slick( "slickGoTo", psIndexSlick); 
                 });
               }
@@ -1173,7 +1168,6 @@
                 }
             setTimeout(function() {
                    if($('.variant-input-wrap .variant-input[data-index="option2"]').hasClass('crossed-out')){
-//                       console.log('true');
                       $(".np-notify-me").removeClass("hide");
                     }
               else {
@@ -1216,7 +1210,6 @@
       if ($(".np-custom-slider").length > 0 && $('form .variant-wrapper input[type="radio"][name="Color"]:checked').val() && $.fn.slick !== undefined) {
           $(".np-custom-slider").addClass("hide");
           var selectedColor = $('form .variant-wrapper input[type="radio"][name="Color"]:checked').val().trim().toLowerCase().replace(/ /g, "-");
-//           console.log('Selected Color is: '+selectedColor);
           $(".np-"+selectedColor).removeClass("hide").addClass("activeColor");
             $('.np-custom-slider').slick({
             	dots: true,
@@ -1305,7 +1298,6 @@
                   var psIndex = gallery.getCurrentIndex();
                   var psIndexSlick = psIndex;
                   var mailSlider = $('.np-main-slider').attr('id');
-                  // console.log(psIndexSlick);
                   $(mailSlider).slick( "slickGoTo", psIndexSlick); 
                 });
               }

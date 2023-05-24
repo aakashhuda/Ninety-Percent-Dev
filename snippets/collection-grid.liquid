@@ -1,3 +1,353 @@
+
+<!-- BEGIN USF -->
+{% comment %}
+Snippet Arguments
+- collection: Liquid 'collection' or 'search' object
+- items: Paginated 'collection.products' or 'search.results' list. Cannot be pulled from the the 'collection' object passed in above
+- enable_sidebar: boolean
+- filter_style: 'sidebar' or 'drawer'collection-filter
+- enable_sort: boolean
+- enable_collection_count
+- per_row
+- mobile_flush_grid
+- quick_shop_enable
+{% endcomment %}
+
+{% liquid
+  if collection.products
+    assign count = collection.products_count
+    assign count_label = 'collections.general.items_with_count'
+  endif
+
+  if collection.results
+    assign count = collection.results_count
+    assign count_label = 'general.search.result_count'
+  endif
+
+  assign filters = collection.filters
+  assign sort_by = collection.sort_by
+  assign default_sort_by = collection.default_sort_by
+  assign sort_options = collection.sort_options
+  assign current_filter_size = 0
+
+  for filter in filters
+    assign current_filter_size = current_filter_size | plus: filter.active_values.size
+  endfor
+%}
+<style>
+  .pagination:not(.usf-pagination) {
+      display: none
+  }
+
+  .collection-content .grid__item--content {
+      width: 100%;
+  }
+</style>
+<div class="collection-grid__wrapper">
+
+    {% capture globalSettings %}
+         {
+            quick_shop_enable: {{ settings.quick_shop_enable | json}},
+  			product_grid_image_size: {{ settings.product_grid_image_size | json }},
+  			product_hover_image: {{ settings.product_hover_image | json }},
+  			enable_swatches: {{ settings.enable_swatches | json }},
+  			type_product_style: {{ settings.type_product_style | json }},
+  			vendor_enable: {{ settings.vendor_enable | json }},
+  			product_zoom_enable: {{ settings.product_zoom_enable | json }},
+  			inventory_enable: {{ settings.inventory_enable | json }},
+  			inventory_transfers_enable: {{ settings.inventory_transfers_enable | json }},
+  			show_breadcrumbs: {{ settings.show_breadcrumbs | json }},
+  			enable_product_reviews: {{ settings.enable_product_reviews | json }},
+  			reviews_layout: {{ settings.reviews_layout | json }},
+  			sku_enable: {{ settings.sku_enable | json }},
+  			product_save_amount: {{ settings.product_save_amount | json }},
+  			product_save_type: {{ settings.product_save_type | json }},
+  			trust_image: {{ settings.trust_image | json }},
+  			trust_image_width: {{ settings.trust_image.width | json}},
+  			trust_image_aspect_ratio:{{ settings.trust_image.aspect_ratio | json}},
+  			trust_img_url: '{{img_url}}',
+  			trust_image_alt: {{ settings.trust_image.alt | json}},
+  			trust_image_src: '{{ settings.trust_image | img_url: '540x' }}',
+  			product_contact_title: {{ settings.product_contact_title | json }},
+  			product_contact: {{ settings.product_contact | json }},
+  			quick_shop_text: {{ settings.quick_shop_text | json }},
+  			product_grid_image_fill: {{ settings.product_grid_image_fill | json }}
+
+         }
+    {% endcapture %}
+  	{% capture sectionSettings %}
+         {
+            per_row: {{ section.settings.per_row | json}},
+  			mobile_flush_grid: {{ section.settings.mobile_flush_grid | default: false | json }},
+         }
+    {% endcapture %}
+    <script>
+        window.usf_gridItemWidth = {{ grid_item_width | json }};
+        window._usfSettingGlobal = {{ globalSettings }};
+        window.usf_sectionSettings = {{ sectionSettings }};
+        window._usfCloseModalText = {{ 'general.accessibility.close_modal' | t | json }};
+    </script>
+    <style>
+#usf_container{
+    visibility:hidden;
+}
+</style>
+<div id="usf_container"></div>
+<div class="usf-skeleton-container">
+	<style>              
+	  @media (max-width: 749px){
+		.usf-mobile-hidden{
+		  display: none !important;
+		}
+		.usf-skeleton-container .usf-sr-config__mobile-filters-wrapper{
+		  display: flex;
+		  width: 100%;
+		  flex-wrap: wrap;
+		}
+		.usf-skeleton-container .usf-filters, 
+		.usf-skeleton-container .usf-sr-config__mobile-filters-wrapper .usf-c-select{
+		  height: 49px;
+		  border: 1px solid #ededed;
+		  width: 50%;
+		  border-left: none;
+		  display: flex !important;
+		  align-items: center;
+		}
+		.usf-skeleton-container .usf-filters{
+		  border-left: 1px solid #ededed;
+		}
+
+		.usf-skeleton-container .usf-results{
+		  height: 400px;
+		  margin-left: -20px;
+		  display: flex;
+		  flex-wrap: wrap;
+		}
+		.usf-skeleton-container .usf-sr-config{
+		  display: flex;
+		  align-items: center;
+		  justify-content: space-between;
+		  margin-top: 13px;
+		  flex-wrap: wrap;
+		}
+		
+		.usf-skeleton-container .usf-sr-summary:before{
+		  margin: 0 !important;
+		  width: 100px !important;
+		}
+		.usf-skeleton-container .usf-views:before{
+		  margin: 0 !important;
+		  width: 50px !important;
+		  margin-left: auto !important;
+		}
+		.usf-skeleton-container .usf-grid__item{
+		  width: 50%;
+		  padding-left: 20px;
+		}
+		.usf-skeleton-container .usf-sr-summary, 
+		.usf-skeleton-container .usf-views{
+		  margin: 30px 0 20px 0;
+		  display: block;
+		  width: 50%;
+		}
+		
+		.usf-skeleton-container .usf-filters:before,
+		.usf-skeleton-container .usf-c-select:before{
+		  margin: 30px;
+		}
+		
+		.usf-skeleton-container .usf-sr-container{
+		  width: 100%;
+		  padding: 0;
+		  float: none;
+		}
+	  }
+	  
+	  .usf-skeleton-container .usf-filters:before,
+	  .usf-skeleton-container .usf-c-select:before,
+	  .usf-skeleton-container .usf-sr-summary:before,
+	  .usf-skeleton-container .usf-views:before,
+	  .usf-skeleton-container .usf-facet .usf-title:before,
+	  .usf-skeleton-container .usf-facet .usf-body:before,
+	  .usf-skeleton-container .usf-facet .usf-body:after              
+	  {
+		content:'';
+		display: block;
+		background-color: #0000000b;
+		-webkit-animation: usf-skeleton-animation 2.3s infinite;
+		animation: usf-skeleton-animation 2.3s infinite;
+		height: 10px;
+		border-radius: 10px;
+		width: 100%;                
+	  }
+	  
+	  @keyframes usf-skeleton-animation {
+		0% {
+			opacity: 1
+		}
+
+		50% {
+			opacity: .5
+		}
+
+		100% {
+			opacity: 1
+		}
+	  }
+	  
+	  @media (min-width: 750px){
+		.usf-skeleton-container .usf-desktop-hidden{
+		  display: none !important;
+		}
+		.usf-skeleton-container .usf-facet .usf-title,
+		.usf-skeleton-container .usf-facet .usf-body,
+		.usf-skeleton-container .usf-c-select
+		{
+		  display: block !important;
+		}              
+	  
+		.usf-skeleton-container .usf-sr-config__mobile-filters-wrapper{
+		  display: none;
+		}
+		
+		.usf-skeleton-container .usf-facets{
+		  display: block;
+		  width: 23%;
+		  float: left;
+		  margin-top: 17px;
+		}
+		
+		.usf-skeleton-container .usf-sr-container {
+		  width: 77%;
+		  float: left;
+		  padding-left: 30px;
+		  margin-top: 17px;
+		}
+		
+		.usf-skeleton-container .usf-sr-config{
+		  display: flex;
+		}
+		
+		.usf-skeleton-container .usf-sr-config > .usf-c-select{
+		  width: 200px;
+		}
+		
+		.usf-skeleton-container .usf-sr-summary{
+		  width: 100%;
+		}
+		.usf-skeleton-container .usf-sr-summary:before{
+		  margin: auto;
+		  width: 200px;
+		}
+		.usf-skeleton-container .usf-views:before{
+		}
+		.usf-skeleton-container .usf-grid__item{
+		  width: 50%;
+		  padding-left: 20px;
+		}
+		.usf-skeleton-container .usf-views{
+		  display: block;
+		  width: 50px;
+		}
+		
+		.usf-skeleton-container .usf-sr-container{
+		  min-height: 700px;
+		}
+	  }  
+	  
+	  .usf-skeleton-container .usf-facet{
+		margin-bottom: 40px;
+	  }
+	  
+	  .usf-skeleton-container .usf-facet .usf-title:before{                
+		margin-bottom: 25px;
+		width: 70%;
+	  }
+	  
+	  .usf-skeleton-container .usf-facet .usf-body:before,
+	  .usf-skeleton-container .usf-facet .usf-body:after
+	  {
+		margin-bottom: 16px;
+	  }
+	</style>
+  
+	<div class="usf-facets usf-mobile-hidden">
+	  <div class="usf-facet">
+		<div class="usf-title"></div>
+		<div class="usf-body"></div>                
+	  </div>
+	  <div class="usf-facet">
+		<div class="usf-title"></div>
+		<div class="usf-body"></div>
+	  </div>
+	</div>
+	<div class="usf-sr-container">
+	  <div class="usf-sr-config">
+		<div class="usf-sr-config__mobile-filters-wrapper">
+		  <div class="usf-filters"></div>
+		  <div class="usf-c-select"></div>
+		</div>
+		<div class="usf-views usf-mobile-hidden"></div>
+		<span class="usf-sr-summary"></span>
+		<div class="usf-views usf-desktop-hidden"></div>
+		<div class="usf-c-select usf-mobile-hidden"></div>
+	  </div>
+	  <div class="usf-results usf-grid">
+		<div class="usf-grid__item"></div>
+		<div class="usf-grid__item"></div>
+		<div class="usf-grid__item"></div>
+		<div class="usf-grid__item"></div>
+	  </div>
+	</div>       
+</div>
+</div>
+
+{%- if enable_sidebar and filter_style != 'drawer' -%}
+{% comment %}
+  Sidebar enabled but not in drawer mode, only show filter button on mobile
+{% endcomment %}
+{% style %}
+@media screen and (min-width: 769px) {
+  .collection-filter__item--drawer {
+    display: none;
+  }
+  .collection-filter__item--count {
+    text-align: left;
+  }
+  html[dir="rtl"] .collection-filter__item--count {
+    text-align: right;
+  }
+}
+{% endstyle %}
+{%- endif -%}
+
+{%- unless enable_sidebar -%}
+{% comment %}
+    Disable sidebar & filter features
+{% endcomment %}
+{% style %}
+.collection-filter__item--drawer {
+  display: none;
+}
+.collection-filter__item--count {
+  text-align: left;
+}
+html[dir="rtl"] .collection-filter__item--count {
+  text-align: right;
+}
+{% endstyle %}
+{%- endunless -%}
+
+{%- unless enable_sort -%}
+{% style %}
+.collection-filter__sort-container {
+  display: none;
+}
+{% endstyle %}
+{%- endunless -%}
+<!-- END USF -->
+
+{% comment %}USF
 {% comment %}
 Snippet Arguments
 - collection: Liquid 'collection' or 'search' object
@@ -129,3 +479,4 @@ html[dir="rtl"] .collection-filter__item--count {
 }
 {% endstyle %}
 {%- endunless -%}
+USF{% endcomment %}

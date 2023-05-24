@@ -1,3 +1,285 @@
+
+<!-- BEGIN USF -->
+{% assign page_title  =  'general.search.title' | t %}
+<script>
+    document.title = '{{ page_title }} - {{ shop.name}}'; 
+</script>
+<div class="page-width page-content">
+{% if settings.show_breadcrumbs %}
+    <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+    <a href="{{ routes.root_url }}" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+      <span class="breadcrumb__divider" aria-hidden="true">/</span>
+      <span>{{ page_title | replace: '*', '' }}</span>
+  </nav>
+    {% endif %}
+  <header class="section-header">
+    <h1 class="section-header__title">
+      {{ 'general.search.title' | t }}
+    </h1>
+  </header>
+
+  {%- render 'search-bar', search_btn_style: 'btn', search_bar_location: 'search-bar--page' -%}
+
+
+    <hr class="hr--medium">
+
+    <div data-section-id="{{ section.id }}" data-section-type="collection-template">
+      {%- assign img_url = settings.trust_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+{% capture globalSettings %}
+         {
+            quick_shop_enable: {{ settings.quick_shop_enable | json}},
+  			product_grid_image_size: {{ settings.product_grid_image_size | json }},
+  			product_hover_image: {{ settings.product_hover_image | json }},
+  			enable_swatches: {{ settings.enable_swatches | json }},
+  			type_product_style: {{ settings.type_product_style | json }},
+  			vendor_enable: {{ settings.vendor_enable | json }},
+  			product_zoom_enable: {{ settings.product_zoom_enable | json }},
+  			inventory_enable: {{ settings.inventory_enable | json }},
+  			inventory_transfers_enable: {{ settings.inventory_transfers_enable | json }},
+  			show_breadcrumbs: {{ settings.show_breadcrumbs | json }},
+  			enable_product_reviews: {{ settings.enable_product_reviews | json }},
+  			reviews_layout: {{ settings.reviews_layout | json }},
+  			sku_enable: {{ settings.sku_enable | json }},
+  			product_save_amount: {{ settings.product_save_amount | json }},
+  			product_save_type: {{ settings.product_save_type | json }},
+  			trust_image: {{ settings.trust_image | json }},
+  			trust_image_width: {{ settings.trust_image.width | json}},
+  			trust_image_aspect_ratio:{{ settings.trust_image.aspect_ratio | json}},
+  			trust_img_url: '{{img_url}}',
+  			trust_image_alt: {{ settings.trust_image.alt | json}},
+  			trust_image_src: '{{ settings.trust_image | img_url: '540x' }}',
+  			product_contact_title: {{ settings.product_contact_title | json }},
+  			product_contact: {{ settings.product_contact | json }},
+  			quick_shop_text: {{ settings.quick_shop_text | json }},
+  			product_grid_image_fill: {{ settings.product_grid_image_fill | json }}
+
+         }
+    {% endcapture %}
+<script>
+    window._usfSettingGlobal = {{ globalSettings }};
+        window._usfCloseModalText = {{ 'general.accessibility.close_modal' | t | json }};
+</script>
+{% render 'collection-grid-filters', section: section %}
+      <style>
+#usf_container{
+    visibility:hidden;
+}
+</style>
+<div id="usf_container"></div>
+<div class="usf-skeleton-container">
+	<style>              
+	  @media (max-width: 749px){
+		.usf-mobile-hidden{
+		  display: none !important;
+		}
+		.usf-skeleton-container .usf-sr-config__mobile-filters-wrapper{
+		  display: flex;
+		  width: 100%;
+		  flex-wrap: wrap;
+		}
+		.usf-skeleton-container .usf-filters, 
+		.usf-skeleton-container .usf-sr-config__mobile-filters-wrapper .usf-c-select{
+		  height: 49px;
+		  border: 1px solid #ededed;
+		  width: 50%;
+		  border-left: none;
+		  display: flex !important;
+		  align-items: center;
+		}
+		.usf-skeleton-container .usf-filters{
+		  border-left: 1px solid #ededed;
+		}
+
+		.usf-skeleton-container .usf-results{
+		  height: 400px;
+		  margin-left: -20px;
+		  display: flex;
+		  flex-wrap: wrap;
+		}
+		.usf-skeleton-container .usf-sr-config{
+		  display: flex;
+		  align-items: center;
+		  justify-content: space-between;
+		  margin-top: 13px;
+		  flex-wrap: wrap;
+		}
+		
+		.usf-skeleton-container .usf-sr-summary:before{
+		  margin: 0 !important;
+		  width: 100px !important;
+		}
+		.usf-skeleton-container .usf-views:before{
+		  margin: 0 !important;
+		  width: 50px !important;
+		  margin-left: auto !important;
+		}
+		.usf-skeleton-container .usf-grid__item{
+		  width: 50%;
+		  padding-left: 20px;
+		}
+		.usf-skeleton-container .usf-sr-summary, 
+		.usf-skeleton-container .usf-views{
+		  margin: 30px 0 20px 0;
+		  display: block;
+		  width: 50%;
+		}
+		
+		.usf-skeleton-container .usf-filters:before,
+		.usf-skeleton-container .usf-c-select:before{
+		  margin: 30px;
+		}
+		
+		.usf-skeleton-container .usf-sr-container{
+		  width: 100%;
+		  padding: 0;
+		  float: none;
+		}
+	  }
+	  
+	  .usf-skeleton-container .usf-filters:before,
+	  .usf-skeleton-container .usf-c-select:before,
+	  .usf-skeleton-container .usf-sr-summary:before,
+	  .usf-skeleton-container .usf-views:before,
+	  .usf-skeleton-container .usf-facet .usf-title:before,
+	  .usf-skeleton-container .usf-facet .usf-body:before,
+	  .usf-skeleton-container .usf-facet .usf-body:after              
+	  {
+		content:'';
+		display: block;
+		background-color: #0000000b;
+		-webkit-animation: usf-skeleton-animation 2.3s infinite;
+		animation: usf-skeleton-animation 2.3s infinite;
+		height: 10px;
+		border-radius: 10px;
+		width: 100%;                
+	  }
+	  
+	  @keyframes usf-skeleton-animation {
+		0% {
+			opacity: 1
+		}
+
+		50% {
+			opacity: .5
+		}
+
+		100% {
+			opacity: 1
+		}
+	  }
+	  
+	  @media (min-width: 750px){
+		.usf-skeleton-container .usf-desktop-hidden{
+		  display: none !important;
+		}
+		.usf-skeleton-container .usf-facet .usf-title,
+		.usf-skeleton-container .usf-facet .usf-body,
+		.usf-skeleton-container .usf-c-select
+		{
+		  display: block !important;
+		}              
+	  
+		.usf-skeleton-container .usf-sr-config__mobile-filters-wrapper{
+		  display: none;
+		}
+		
+		.usf-skeleton-container .usf-facets{
+		  display: block;
+		  width: 23%;
+		  float: left;
+		  margin-top: 17px;
+		}
+		
+		.usf-skeleton-container .usf-sr-container {
+		  width: 77%;
+		  float: left;
+		  padding-left: 30px;
+		  margin-top: 17px;
+		}
+		
+		.usf-skeleton-container .usf-sr-config{
+		  display: flex;
+		}
+		
+		.usf-skeleton-container .usf-sr-config > .usf-c-select{
+		  width: 200px;
+		}
+		
+		.usf-skeleton-container .usf-sr-summary{
+		  width: 100%;
+		}
+		.usf-skeleton-container .usf-sr-summary:before{
+		  margin: auto;
+		  width: 200px;
+		}
+		.usf-skeleton-container .usf-views:before{
+		}
+		.usf-skeleton-container .usf-grid__item{
+		  width: 50%;
+		  padding-left: 20px;
+		}
+		.usf-skeleton-container .usf-views{
+		  display: block;
+		  width: 50px;
+		}
+		
+		.usf-skeleton-container .usf-sr-container{
+		  min-height: 700px;
+		}
+	  }  
+	  
+	  .usf-skeleton-container .usf-facet{
+		margin-bottom: 40px;
+	  }
+	  
+	  .usf-skeleton-container .usf-facet .usf-title:before{                
+		margin-bottom: 25px;
+		width: 70%;
+	  }
+	  
+	  .usf-skeleton-container .usf-facet .usf-body:before,
+	  .usf-skeleton-container .usf-facet .usf-body:after
+	  {
+		margin-bottom: 16px;
+	  }
+	</style>
+  
+	<div class="usf-facets usf-mobile-hidden">
+	  <div class="usf-facet">
+		<div class="usf-title"></div>
+		<div class="usf-body"></div>                
+	  </div>
+	  <div class="usf-facet">
+		<div class="usf-title"></div>
+		<div class="usf-body"></div>
+	  </div>
+	</div>
+	<div class="usf-sr-container">
+	  <div class="usf-sr-config">
+		<div class="usf-sr-config__mobile-filters-wrapper">
+		  <div class="usf-filters"></div>
+		  <div class="usf-c-select"></div>
+		</div>
+		<div class="usf-views usf-mobile-hidden"></div>
+		<span class="usf-sr-summary"></span>
+		<div class="usf-views usf-desktop-hidden"></div>
+		<div class="usf-c-select usf-mobile-hidden"></div>
+	  </div>
+	  <div class="usf-results usf-grid">
+		<div class="usf-grid__item"></div>
+		<div class="usf-grid__item"></div>
+		<div class="usf-grid__item"></div>
+		<div class="usf-grid__item"></div>
+	  </div>
+	</div>       
+</div>
+    </div>
+  
+</div>
+
+<!-- END USF -->
+
+{% comment %}USF
 <div class="search-content" data-section-id="{{ section.id }}" data-section-type="collection-grid">
   <div class="page-width page-content">
     {%- render 'breadcrumbs' -%}
@@ -76,6 +358,8 @@
 </style>
 {%- endif -%}
 
+
+USF{% endcomment %}
 {% schema %}
 {
   "name": "t:sections.main-search.name",
